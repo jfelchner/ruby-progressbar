@@ -1,0 +1,113 @@
+2005-05-21  Satoru Takabayashi  <satoru@namazu.org>
+
+	* progressbar.rb (ProgressBar::show): Call IO#flush. Suggestted by
+	"Geert Fannes" <Geert.Fannes at ikanconsulting.com>
+
+2005-01-07  Satoru Takabayashi  <satoru@namazu.org>
+
+	* progressbar.rb (ProgressBar::VERSION): Bumped version number to 0.9.
+	(ProgressBar::finished?): New method.
+	(ProgressBar::current): New attribute.
+	(ProgressBar::total): New attribute.
+	(ProgressBar::title): New attribute.
+	(ProgressBar::start_time): New attribute.
+	(ProgressBar::inspect): Change the format.
+	(ProgressBar::show_if_needed): Renamed from show_progress.
+	(ProgressBar::clear): New method.
+	(ProgressBar::initialize): Renamed a field: bar_width ->
+	terminal_width.
+	(ProgressBar::do_percentage): New method.
+	(ProgressBar::percentage): Use it.
+	(ReversedProgressBar): New class.
+	(ProgressBar::initialize): Use #clear.
+	(ProgressBar::fmt_bar): Ditto.
+	(ProgressBar::fmt_percentage): Renamed from percentage.
+	(ProgressBar::fmt_stat): Ditto.
+	(ProgressBar::fmt_stat_for_file_transfer): Ditto.
+	(ProgressBar::fmt_title): Ditto.
+
+	* test.rb: Use Test::Unit.
+
+	* Makefile (docs): Removed.
+	(progressbar.ja.html): Ditto.
+	(progressbar.en.html): Ditto.
+	(dist): New rule.
+	(check): New rule.
+
+2004-02-05  Satoru Takabayashi  <satoru@namazu.org>
+
+	* Ruby/ProgressBar: Version 0.8 released!
+
+	* progressbar.rb (ProgressBar::set): Fixed the bug when caused by
+	the invalid count. <http://bugs.debian.org/231009>
+	(ProgressBar::VERSION): Bumped version number to 0.8.
+
+2004-01-19  Satoru Takabayashi  <satoru@namazu.org>
+
+	* Ruby/ProgressBar: Version 0.7 released!
+
+	* progressbar.rb (ProgressBar::initialize): Rename a field:
+	@bar_length -> @bar_width.
+	(ProgressBar::initialize): New field: @title_width.
+	(ProgressBar::title): use it.
+	(ProgressBar::initialize): New field: @previous_time.
+	(ProgressBar::show_progress): Use it and update the progress bar
+	if one sec. elapsed.
+	(ProgressBar::initialize): Call show instead of show_progress.
+
+2004-01-16  Satoru Takabayashi  <satoru@namazu.org>
+
+	* Ruby/ProgressBar: Version 0.6 released!
+
+	* progressbar.rb (ProgressBar::show): Remove the useless condition
+	after "else". Thanks to Neil Spring <nspring@cs.washington.edu>
+	for the report.
+	<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=227966>
+	(ProgressBar): 
+
+2003-07-24  Satoru Takabayashi  <satoru@namazu.org>
+
+	* Ruby/ProgressBar: Version 0.5 released!
+
+	* progressbar.rb (ProgressBar::initialize): New parameter: config.
+	(ProgressBar::convert_prefix_multiplier): New method.
+	(ProgressBar::transfer_rate): New method.
+	(ProgressBar::percentage): New method.
+	(ProgressBar::title): New method.
+	(ProgressBar::initialize): New fields: @bar_mark, @format,
+	@arguments.
+	(ProgressBar::get_width): New method.
+	(ProgressBar::stat_for_file_transfer): New method.
+	(ProgressBar::stat): Renamed from time.
+	(ProgressBar::format=): New method.
+	(ProgressBar::format_arguments=): New method.
+	(ProgressBar::convert_bytes): New method.
+	(ProgressBar::file_transfer_mode): New method.
+
+2002-10-21  Satoru Takabayashi  <satoru@namazu.org>
+
+	* Ruby/ProgressBar: Version 0.4 released!
+
+	* progressbar.rb (ProgressBar::halt): New method. allowing a
+	"broken" ProgressBar in the event of error.
+	- Suggestted by Austin Ziegler <austin@halostatue.ca>
+
+2002-01-05  Satoru Takabayashi  <satoru@namazu.org>
+
+	* Ruby/ProgressBar: Version 0.3 released!
+
+	* progressbar.rb (ProgressBar::show): Shorten @title to fall into
+	the format well.
+
+2001-11-03  Satoru Takabayashi  <satoru@namazu.org>
+
+	* Ruby/ProgressBar: Version 0.2 released!
+
+	* progressbar.rb (ProgressBar::eta): Remove an unnecessary condition.
+
+	* progressbar.rb (ProgressBar::eta): Fix the return value bug.
+
+	* progressbar.rb (ProgressBar::inc): Add an optional parameter `step'.
+
+	* Ruby/ProgressBar: Version 0.1 released!
+
