@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'progressbar'
+require 'lib/progressbar'
 
 class ProgressBarTest < Test::Unit::TestCase
   SleepUnit = 0.01
