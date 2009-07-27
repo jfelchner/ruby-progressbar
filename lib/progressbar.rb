@@ -33,6 +33,7 @@ class ProgressBar
   attr_reader   :current
   attr_reader   :total
   attr_accessor :start_time
+  attr_writer   :bar_mark
 
   private
   def fmt_bar

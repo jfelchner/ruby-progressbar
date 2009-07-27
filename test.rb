@@ -95,6 +95,17 @@ class ProgressBarTest < Test::Unit::TestCase
     pbar = do_make_progress_bar("test(total=0)", total)
     pbar.finish
   end
+
+  def test_alternate_bar
+    total = 100
+    pbar = do_make_progress_bar("test(alternate)", total)
+    pbar.bar_mark = "="
+    total.times {
+      sleep(SleepUnit)
+      pbar.inc
+    }
+    pbar.finish
+  end
 end
 
 class ReversedProgressBarTest < ProgressBarTest
