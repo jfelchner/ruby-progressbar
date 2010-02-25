@@ -51,9 +51,9 @@ class ProgressBarTest < Test::Unit::TestCase
   end
 
   def test_inc_x
-    total = File.size("progressbar.rb")
+    total = File.size("lib/progressbar.rb")
     pbar = do_make_progress_bar("test(inc(x))", total)
-    File.new("progressbar.rb").each {|line|
+    File.new("lib/progressbar.rb").each {|line|
       sleep(SleepUnit)
       pbar.inc(line.length)
     }
