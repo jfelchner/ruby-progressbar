@@ -2,12 +2,12 @@ Gem::Specification.new do |s|
   s.name = "chalofa_ruby-progressbar"
   s.version = "0.0.9.1"
 
-  s.author = "Satoru Takabayashi"
+  s.author = "Gonzalo Fernandez"
   s.date = "2011-03-07"
-  s.description = "Ruby/ProgressBar is a text progress bar library for Ruby."
-  s.email = "satoru@namazu.org"
+  s.description = "Ruby/ProgressBar is a text progress bar library for Ruby. This is a modified version of Satoru Takabayashi gem..."
+  s.email = "chalofa@gmail.com"
   s.files = %w[GPL_LICENSE RUBY_LICENSE README.md lib/progressbar.rb test.rb]
-  s.homepage = "http://github.com/nex3/ruby-progressbar"
+  s.homepage = "http://github.com/chalofa/ruby-progressbar"
   s.require_paths = ["lib"]
   s.summary = <<END
 Ruby/ProgressBar is a text progress bar library for Ruby.
