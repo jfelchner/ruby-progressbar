@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name = "ruby-progressbar"
+  s.name = "chalofa_ruby-progressbar"
   s.version = "0.0.9.1"
 
   s.author = "Satoru Takabayashi"
