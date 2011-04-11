@@ -13,7 +13,7 @@ describe ProgressBar::Base do
 
       describe "#title" do
         it "returns the default title" do
-          @progressbar.title.should eql ProgressBar::Title::DEFAULT_TITLE
+          @progressbar.title.should eql ProgressBar::Components::Title::DEFAULT_TITLE
         end
       end
 

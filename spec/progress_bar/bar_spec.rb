@@ -1,31 +1,31 @@
 require 'spec_helper'
 
-describe ProgressBar::Bar do
+describe ProgressBar::Components::Bar do
   context "when a new bar is created" do
     context "and no parameters are passed" do
-      before { @progressbar = ProgressBar::Bar.new }
+      before { @progressbar = ProgressBar::Components::Bar.new }
 
       describe "#total" do
         it "returns the default total" do
-          @progressbar.total.should eql ProgressBar::Bar::DEFAULT_TOTAL
+          @progressbar.total.should eql ProgressBar::Components::Bar::DEFAULT_TOTAL
         end
       end
 
       describe "#progress_mark" do
         it "returns the default mark" do
-          @progressbar.progress_mark.should eql ProgressBar::Bar::DEFAULT_PROGRESS_MARK
+          @progressbar.progress_mark.should eql ProgressBar::Components::Bar::DEFAULT_PROGRESS_MARK
         end
       end
 
       describe "#current" do
         it "returns the default beginning position" do
-          @progressbar.current.should eql ProgressBar::Bar::DEFAULT_BEGINNING_POSITION
+          @progressbar.current.should eql ProgressBar::Components::Bar::DEFAULT_BEGINNING_POSITION
         end
       end
     end
 
     context "and options are passed" do
-      before { @progressbar = ProgressBar::Bar.new(:total => 12, :progress_mark => "x", :beginning_position => 5) }
+      before { @progressbar = ProgressBar::Components::Bar.new(:total => 12, :progress_mark => "x", :beginning_position => 5) }
 
       describe "#total" do
         it "returns the overridden total" do
@@ -48,7 +48,7 @@ describe ProgressBar::Bar do
   end
 
   context "when just begun" do
-    before { @progressbar = ProgressBar::Bar.new(:beginning_position => 0, :total => 50) }
+    before { @progressbar = ProgressBar::Components::Bar.new(:beginning_position => 0, :total => 50) }
 
     describe "#percentage_completed" do
       it "calculates the amount" do
@@ -62,7 +62,7 @@ describe ProgressBar::Bar do
   end
 
   context "when nothing has been completed" do
-    before { @progressbar = ProgressBar::Bar.new(:beginning_position => 0, :total => 50) }
+    before { @progressbar = ProgressBar::Components::Bar.new(:beginning_position => 0, :total => 50) }
 
     context "and the bar is incremented" do
       before { @progressbar.increment }
@@ -98,7 +98,7 @@ describe ProgressBar::Bar do
   end
 
   context "when a fraction of a percentage has been completed" do
-    before { @progressbar = ProgressBar::Bar.new(:beginning_position => 1, :total => 200) }
+    before { @progressbar = ProgressBar::Components::Bar.new(:beginning_position => 1, :total => 200) }
 
     describe "#percentage_completed" do
       it "always rounds down" do
@@ -114,7 +114,7 @@ describe ProgressBar::Bar do
   end
 
   context "when completed" do
-    before { @progressbar = ProgressBar::Bar.new(:beginning_position => 50, :total => 50) }
+    before { @progressbar = ProgressBar::Components::Bar.new(:beginning_position => 50, :total => 50) }
 
     context "and the bar is incremented" do
       before { @progressbar.increment }
@@ -141,7 +141,7 @@ describe ProgressBar::Bar do
   context "when attempting to set the bar's current value to be greater than the total" do
     describe "#new" do
       it "raises an error" do
-        lambda{ ProgressBar::Bar.new(:beginning_position => 11, :total => 10) }.should raise_error "You can't set the bar's current value to be greater than the total."
+        lambda{ ProgressBar::Components::Bar.new(:beginning_position => 11, :total => 10) }.should raise_error "You can't set the bar's current value to be greater than the total."
       end
     end
   end

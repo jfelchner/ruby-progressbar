@@ -25,8 +25,8 @@ module ProgressBar
 
       @format          = options[:format]                 || DEFAULT_BAR_FORMAT
 
-      @title           = ProgressBar::Title.new(title_options_from(options))
-      @bar             = ProgressBar::Bar.new(bar_options_from(options))
+      @title           = Components::Title.new(title_options_from(options))
+      @bar             = Components::Bar.new(bar_options_from(options))
       # @estimated_time  = ProgressBar::EstimatedTime
       # @elapsed_time    = ProgressBar::ElapsedTime
     end
