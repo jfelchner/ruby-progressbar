@@ -16,14 +16,14 @@ module ProgressBar
     include ProgressBar::Formatter
 
     DEFAULT_OUTPUT_STREAM     = STDERR
-    DEFAULT_BAR_FORMAT        = '%t: |%b|'
+    DEFAULT_FORMAT_STRING     = '%t: |%b|'
 
     def initialize(options = {})
       @out             = options[:output_stream]          || DEFAULT_OUTPUT_STREAM
 
       @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH']  || options[:length]
 
-      @format          = options[:format]                 || DEFAULT_BAR_FORMAT
+      @format_string   = options[:format]                 || DEFAULT_FORMAT_STRING
 
       @title           = Components::Title.new(title_options_from(options))
       @bar             = Components::Bar.new(bar_options_from(options))
@@ -50,6 +50,14 @@ module ProgressBar
       increment
     end
 
+    def current
+      @bar.current
+    end
+
+    def total
+      @bar.total
+    end
+
     def increment
       @bar.increment
       # @previous_time = Time.now
@@ -57,11 +65,11 @@ module ProgressBar
     end
 
     def title
-      @title.to_s
+      @title
     end
 
     def to_s(format_string = nil)
-      format_string ||= @format
+      format_string ||= @format_string
 
       format(format_string)
     end

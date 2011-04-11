@@ -10,7 +10,7 @@ module ProgressBar
       processed_string = @format_string.dup
 
       @format.non_bar_molecules.each do |molecule|
-        processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name))
+        processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name).to_s)
       end
 
       remaining_molecule_match_data = processed_string.match(/%[^%]/)
@@ -20,7 +20,7 @@ module ProgressBar
       leftover_bar_length = length - processed_string.length + placeholder_length
 
       @format.bar_molecules.each do |molecule|
-        processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name, leftover_bar_length / remaining_molecules))
+        processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name, leftover_bar_length / remaining_molecules).to_s)
       end
 
       processed_string

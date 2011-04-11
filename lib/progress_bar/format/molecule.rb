@@ -4,6 +4,8 @@ module ProgressBar
       MOLECULES = {
         :t => [:left_justified_title,  :title],
         :T => [:right_justified_title, :title],
+        :c => [:current_capacity,      :current],
+        :C => [:total_capacity,        :total],
         :b => [:bar,                   :bar]
         # :elapsed_time                     => "%a",
         # :estimated_time_with_unknown      => "%e",

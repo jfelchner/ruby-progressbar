@@ -13,7 +13,7 @@ describe ProgressBar::Base do
 
       describe "#title" do
         it "returns the default title" do
-          @progressbar.title.should eql ProgressBar::Components::Title::DEFAULT_TITLE
+          @progressbar.title.to_s.should eql ProgressBar::Components::Title::DEFAULT_TITLE
         end
       end
 
@@ -43,7 +43,7 @@ describe ProgressBar::Base do
 
       describe "#title" do
         it "returns the overridden title" do
-          @progressbar.title.should eql "We All Float"
+          @progressbar.title.to_s.should eql "We All Float"
         end
       end
 
@@ -141,6 +141,20 @@ describe ProgressBar::Base do
 
       it "displays the bar when passed the '%b' format tag" do
         @progressbar.to_s('%b').should match /^#{" " * 80}\z/
+      end
+
+      it "displays the current capacity when passed the '%c' format tag" do
+        @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :beginning_position => 0, :length => 80)
+
+        @progressbar.to_s('%c').should match /^0\z/
+        @progressbar.increment
+        @progressbar.to_s('%c').should match /^1\z/
+      end
+
+      it "displays the current capacity when passed the '%c' format tag" do
+        @progressbar = ProgressBar::Base.new(:total => 100, :length => 80)
+
+        @progressbar.to_s('%C').should match /^100\z/
       end
     end
   end
