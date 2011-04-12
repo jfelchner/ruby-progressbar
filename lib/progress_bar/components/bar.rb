@@ -41,6 +41,10 @@ module ProgressBar
         current * 100 / total
       end
 
+      def percentage_completed_with_precision
+        (current.to_f * 100.0 / total * 100.0).floor / 100.0
+      end
+
       def to_s(length)
         @length = length
         "#{complete_string}#{empty_string}"

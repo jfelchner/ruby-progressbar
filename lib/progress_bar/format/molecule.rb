@@ -2,19 +2,17 @@ module ProgressBar
   module Format
     class Molecule
       MOLECULES = {
-        :t => [:left_justified_title,  :title],
-        :T => [:right_justified_title, :title],
-        :c => [:current_capacity,      :current],
-        :C => [:total_capacity,        :total],
-        :b => [:bar,                   :bar]
         # :elapsed_time                     => "%a",
+        :t => [:left_justified_title,           :title],
+        :T => [:right_justified_title,          :title],
+        :c => [:current_capacity,               :current],
+        :C => [:total_capacity,                 :total],
+        :p => [:percentage_complete_as_integer, :percentage],
+        :P => [:percentage_complete_as_float,   :percentage_with_precision],
+        :b => [:bar,                            :bar]
         # :estimated_time_with_unknown      => "%e",
         # :estimated_time_with_greater_than => "%E",
         # :force_estimated_time             => "%f",
-        # :percentage_complete_as_integer   => "%p",
-        # :percentage_complete_as_float     => "%P",
-        # :current_capacity                 => "%c",
-        # :total_capacity                   => "%C",
         # :bar_with_percentage              => "%B",
         # :reversed_bar                     => "%r",
         # :reversed_bar_with_percentage     => "%R"

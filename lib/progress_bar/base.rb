@@ -58,6 +58,13 @@ module ProgressBar
       @bar.total
     end
 
+    def percentage
+      @bar.percentage_completed
+    end
+
+    def percentage_with_precision
+      @bar.percentage_completed_with_precision
+    end
     def increment
       @bar.increment
       # @previous_time = Time.now

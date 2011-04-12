@@ -131,30 +131,48 @@ describe ProgressBar::Base do
 
     # Add '@' after any Estimated Time flag to make it show the Elapsed Time when finished
     context "#to_s" do
-      it "displays the title when passed the '%t' format tag" do
+      it "displays the title when passed the '%t' format flag" do
         @progressbar.to_s('%t').should match /^Progress\z/
       end
 
-      it "displays the title when passed the '%T' format tag" do
+      it "displays the title when passed the '%T' format flag" do
         @progressbar.to_s('%T').should match /^Progress\z/
       end
 
-      it "displays the bar when passed the '%b' format tag" do
+      it "displays the bar when passed the '%b' format flag" do
         @progressbar.to_s('%b').should match /^#{" " * 80}\z/
       end
 
-      it "displays the current capacity when passed the '%c' format tag" do
-        @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :beginning_position => 0, :length => 80)
+      it "displays the current capacity when passed the '%c' format flag" do
+        @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :beginning_position => 0)
 
         @progressbar.to_s('%c').should match /^0\z/
         @progressbar.increment
         @progressbar.to_s('%c').should match /^1\z/
       end
 
-      it "displays the current capacity when passed the '%c' format tag" do
-        @progressbar = ProgressBar::Base.new(:total => 100, :length => 80)
+      it "displays the current capacity when passed the '%c' format flag" do
+        @progressbar = ProgressBar::Base.new(:total => 100)
 
         @progressbar.to_s('%C').should match /^100\z/
+      end
+
+      it "displays the percentage complete when passed the '%p' format flag" do
+        @progressbar = ProgressBar::Base.new(:beginning_position => 33, :total => 200)
+
+        @progressbar.to_s('%p').should match /^16\z/
+      end
+
+      it "displays the percentage complete when passed the '%p' format flag" do
+        @progressbar = ProgressBar::Base.new(:beginning_position => 33, :total => 200)
+
+        @progressbar.to_s('%P').should match /^16.5\z/
+      end
+
+      it "displays only up to 2 decimal places when using the %P flag" do
+        @progressbar = ProgressBar::Base.new(:beginning_position => 66, :total => 99)
+
+        @progressbar.to_s('%P').should match /^66.66\z/
       end
     end
   end
