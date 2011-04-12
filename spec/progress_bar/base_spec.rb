@@ -174,6 +174,12 @@ describe ProgressBar::Base do
 
         @progressbar.to_s('%P').should match /^66.66\z/
       end
+
+      it "displays the elapsed time since #start was called when passed the %a flag" do
+        @progressbar = ProgressBar::Base.new
+
+        @progressbar.to_s('%a').should match /^Time: [\d-]{2}:[\d-]{2}:[\d-]{2}\z/
+      end
     end
   end
 end

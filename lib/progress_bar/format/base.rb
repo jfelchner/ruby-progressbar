@@ -19,7 +19,7 @@ module ProgressBar
         def parse(format_string)
           molecules        = []
 
-          format_string.scan(/%([tTcCb])/) do |match|
+          format_string.scan(/%([^%])/) do |match|
             molecules << Molecule.new(match[0])
           end
 

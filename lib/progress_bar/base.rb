@@ -28,7 +28,7 @@ module ProgressBar
       @title           = Components::Title.new(title_options_from(options))
       @bar             = Components::Bar.new(bar_options_from(options))
       # @estimated_time  = ProgressBar::EstimatedTime
-      # @elapsed_time    = ProgressBar::ElapsedTime
+      @elapsed_time    = Components::Timer.new
     end
 
     def clear
@@ -65,6 +65,11 @@ module ProgressBar
     def percentage_with_precision
       @bar.percentage_completed_with_precision
     end
+
+    def elapsed_time
+      @elapsed_time
+    end
+
     def increment
       @bar.increment
       # @previous_time = Time.now
