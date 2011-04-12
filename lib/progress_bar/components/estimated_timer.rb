@@ -39,7 +39,7 @@ module ProgressBar
           (seconds_per_each * (@total - @current)).floor
         end
 
-        def divide_seconds
+        def divide_seconds(seconds)
           hours, seconds = seconds.divmod(3600)
           minutes, seconds = seconds.divmod(60)
 
