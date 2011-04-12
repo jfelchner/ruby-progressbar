@@ -15,6 +15,7 @@ GEM
     rspec-expectations (2.5.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.5.0)
+    timecop (0.3.5)
 
 PLATFORMS
   ruby
@@ -23,3 +24,4 @@ DEPENDENCIES
   bundler (~> 1.0.10)
   rspec (~> 2.5.0)
   ruby-progressbar!
+  timecop (~> 0.3.5)

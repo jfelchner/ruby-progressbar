@@ -36,5 +36,6 @@ THEDOCTOR
 
   s.add_development_dependency('bundler',   '~> 1.0.10')
   s.add_development_dependency('rspec',     '~> 2.5.0')
+  s.add_development_dependency('timecop',   '~> 0.3.5')
 end
 
