@@ -178,13 +178,13 @@ describe ProgressBar::Base do
       it "displays the elapsed time since #start was called when passed the %a flag" do
         @progressbar = ProgressBar::Base.new
 
-        @progressbar.to_s('%a').should match /^Time: [\d-]{2}:[\d-]{2}:[\d-]{2}\z/
+        @progressbar.to_s('%a').should match /^Time: [\d-?]{2}:[\d-?]{2}:[\d-?]{2}\z/
       end
 
       it "displays the estimated time until finished when passed the %e flag" do
         @progressbar = ProgressBar::Base.new
 
-        @progressbar.to_s('%e').should match /^ ETA: [\d-]{2}:[\d-]{2}:[\d-]{2}\z/
+        @progressbar.to_s('%e').should match /^ ETA: [\d-?]{2}:[\d-?]{2}:[\d-?]{2}\z/
       end
     end
   end

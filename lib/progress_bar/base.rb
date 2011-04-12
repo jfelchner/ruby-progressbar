@@ -27,7 +27,7 @@ module ProgressBar
 
       @title           = Components::Title.new(title_options_from(options))
       @bar             = Components::Bar.new(bar_options_from(options))
-      @estimated_time  = Components::EstimatedTimer.new
+      @estimated_time  = Components::EstimatedTimer.new(:total => @bar.total)
       @elapsed_time    = Components::Timer.new
     end
 
