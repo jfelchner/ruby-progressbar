@@ -51,7 +51,7 @@ module ProgressBar
       end
 
       def percentage_completed_with_precision
-        (current.to_f * 100.0 / total * 100.0).floor / 100.0
+        format('%5.2f', (current.to_f * 100.0 / total * 100.0).floor / 100.0)
       end
 
       def to_s(length)

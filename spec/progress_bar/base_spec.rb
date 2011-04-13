@@ -172,10 +172,10 @@ describe ProgressBar::Base do
         @progressbar.to_s('%p').should match /^16\z/
       end
 
-      it "displays the percentage complete when passed the '%p' format flag" do
+      it "displays the percentage complete when passed the '%P' format flag" do
         @progressbar = ProgressBar::Base.new(:beginning_position => 33, :total => 200)
 
-        @progressbar.to_s('%P').should match /^16.5\z/
+        @progressbar.to_s('%P').should match /^16.50\z/
       end
 
       it "displays only up to 2 decimal places when using the %P flag" do
