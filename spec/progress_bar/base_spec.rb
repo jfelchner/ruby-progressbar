@@ -184,10 +184,29 @@ describe ProgressBar::Base do
         @progressbar.to_s('%P').should match /^66.66\z/
       end
 
-      it "displays the elapsed time since #start was called when passed the %a flag" do
-        @progressbar = ProgressBar::Base.new
+      context "when called before #start" do
+        it "displays unknown time elapsed when using the %a flag" do
+          @progressbar = ProgressBar::Base.new
+          @progressbar.to_s('%a').should match /^Time: --:--:--\z/
+        end
+      end
 
-        @progressbar.to_s('%a').should match /^Time: [\d-?]{2}:[\d-?]{2}:[\d-?]{2}\z/
+      context "when called after #start" do
+        it "displays the time elapsed when using the %a flag" do
+          Timecop.travel(-3723) do
+            @progressbar = ProgressBar::Base.new
+            @progressbar.start
+          end
+
+          @progressbar.to_s('%a').should match /^Time: 01:02:03\z/
+        end
+      end
+
+      context "when called before #start" do
+        it "displays unknown time until finished when passed the %e flag" do
+          @progressbar = ProgressBar::Base.new
+          @progressbar.to_s('%e').should match /^ ETA: \?\?:\?\?:\?\?\z/
+        end
       end
 
       context "when called after #start" do

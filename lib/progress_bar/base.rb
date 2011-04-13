@@ -42,7 +42,7 @@ module ProgressBar
       @estimated_time.current = options[:at] || @estimated_time.current
 
       @estimated_time.start
-      # @elapsed_time.start
+      @elapsed_time.start
 
       update
     end
