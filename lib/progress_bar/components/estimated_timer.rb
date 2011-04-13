@@ -4,8 +4,8 @@ module ProgressBar
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       #TODO These could be private right now.
-      # attr_reader               :total
-      # attr_reader               :current
+      attr_reader               :total
+      attr_reader               :current
 
       def initialize(options = {})
         @current = options[:current] || 0

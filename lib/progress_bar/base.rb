@@ -89,7 +89,8 @@ module ProgressBar
 
     def increment
       @bar.increment
-      # @previous_time = Time.now
+      # @estimated_time.increment
+
       update
     end
 

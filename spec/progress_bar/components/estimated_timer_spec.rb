@@ -2,10 +2,21 @@ require 'spec_helper'
 
 describe ProgressBar::Components::EstimatedTimer do
   describe "#to_s" do
-    context "when no progress has been made" do
-      it "displays an unknown time remaining" do
+    context "when the timer has been started but no progress has been made" do
+      before do
         @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100)
+        @estimated_time.start
+      end
+
+      it "displays an unknown time remaining" do
         @estimated_time.to_s.should eql " ETA: ??:??:??"
+      end
+
+      context "and it is incremented" do
+        it "should not display unknown time remaining" do
+          @estimated_time.increment
+          @estimated_time.to_s.should_not eql " ETA: ??:??:??"
+        end
       end
     end
 
