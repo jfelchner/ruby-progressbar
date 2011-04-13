@@ -1,14 +1,3 @@
-#
-# Ruby/ProgressBar - a text progress bar library
-#
-# Copyright (C) 2001-2005 Satoru Takabayashi <satoru@namazu.org>
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms
-# of Ruby's license.
-#
-
 module ProgressBar
   class Base
     include ProgressBar::OptionsParser
