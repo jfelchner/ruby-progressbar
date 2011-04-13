@@ -190,10 +190,16 @@ describe ProgressBar::Base do
         @progressbar.to_s('%a').should match /^Time: [\d-?]{2}:[\d-?]{2}:[\d-?]{2}\z/
       end
 
-      it "displays the estimated time until finished when passed the %e flag" do
-        @progressbar = ProgressBar::Base.new
+      context "when called after #start" do
+        it "displays the estimated time remaining when using the %e flag" do
+          Timecop.travel(-3723) do
+            @progressbar = ProgressBar::Base.new(:beginning_position => 49, :output_stream => @output_stream)
+            @progressbar.start
+          end
 
-        @progressbar.to_s('%e').should match /^ ETA: [\d-?]{2}:[\d-?]{2}:[\d-?]{2}\z/
+          @progressbar.increment
+          @progressbar.to_s('%e').should match /^ ETA: 01:02:03\z/
+        end
       end
 
       context "when it could take 100 hours or longer to finish" do

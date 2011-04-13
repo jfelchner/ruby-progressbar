@@ -39,7 +39,7 @@ module ProgressBar
       clear
 
       @bar.current            = options[:at] || @bar.current
-      # @estimated_time.current = options[:at] || @estimated_time.current
+      @estimated_time.current = options[:at] || @estimated_time.current
 
       @estimated_time.start
       # @elapsed_time.start
@@ -98,7 +98,7 @@ module ProgressBar
 
     def increment
       @bar.increment
-      # @estimated_time.increment
+      @estimated_time.increment
 
       update
     end

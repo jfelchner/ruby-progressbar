@@ -20,12 +20,11 @@ module ProgressBar
         @current += 1 unless current == total
       end
 
-      #TODO needs tested
-      # def current=(new_current)
-        # raise "You can't set the item's current value to be greater than the total." if new_current > total
+      def current=(new_current)
+        raise "You can't set the item's current value to be greater than the total." if new_current > total
 
-        # @current = new_current
-      # end
+        @current = new_current
+      end
 
       def out_of_bounds_time_format=(format)
         if VALID_OOB_TIME_FORMATS.include? format
