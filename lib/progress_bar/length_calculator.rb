@@ -14,7 +14,7 @@ module ProgressBar
       end
 
       def length_changed?
-        @current_length == calculate_length
+        @current_length != calculate_length
       end
 
       def calculate_length
