@@ -102,6 +102,10 @@ module ProgressBar
       format(format_string)
     end
 
+    def inspect
+      "#<ProgressBar:#{@bar.current}/#{@bar.total}>"
+    end
+
     private
       attr_reader         :out
 
