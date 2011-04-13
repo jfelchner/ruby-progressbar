@@ -9,23 +9,7 @@ describe ProgressBar::Format::Molecule do
     end
 
     it "sets the method name when initialized" do
-      @molecule.method_name.should eql :estimated_time
-    end
-
-    context "when initialized for an item with method arguments" do
-      before { @molecule = ProgressBar::Format::Molecule.new('e') }
-
-      it "sets the method arguments when initialized" do
-        @molecule.method_arguments.should be_kind_of Array
-      end
-    end
-
-    context "when initialized for an item without method arguments" do
-      before { @molecule = ProgressBar::Format::Molecule.new('b') }
-
-      it "sets the method arguments to nil" do
-        @molecule.method_arguments.should be_nil
-      end
+      @molecule.method_name.should eql :estimated_time_with_unknown_oob
     end
   end
 

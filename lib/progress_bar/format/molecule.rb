@@ -9,11 +9,10 @@ module ProgressBar
         :p => [:percentage_complete_as_integer,     :percentage],
         :P => [:percentage_complete_as_float,       :percentage_with_precision],
         :a => [:elapsed_time,                       :elapsed_time],
-        :e => [:estimated_time_with_unknown,        :estimated_time,              [{:format => :unknown}]],
-        :E => [:estimated_time_with_greater_than,   :estimated_time,              [{:format => :friendly}]],
-        :f => [:force_estimated_time,               :estimated_time,              [{:format => nil}]],
-        :b => [:bar,                                :bar]
-        # :force_estimated_time             => "%f",
+        :e => [:estimated_time_with_unknown,        :estimated_time_with_unknown_oob],
+        :E => [:estimated_time_with_greater_than,   :estimated_time_with_friendly_oob],
+        :f => [:force_estimated_time,               :estimated_time],
+        :b => [:bar,                                :bar],
         # :bar_with_percentage              => "%B",
         # :reversed_bar                     => "%r",
         # :reversed_bar_with_percentage     => "%R"

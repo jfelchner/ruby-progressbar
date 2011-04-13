@@ -72,8 +72,18 @@ module ProgressBar
       @elapsed_time
     end
 
-    def estimated_time(options = {})
-      @estimated_time.out_of_bounds_time_format = options[:format]
+    def estimated_time
+      @estimated_time.out_of_bounds_time_format = nil
+      @estimated_time
+    end
+
+    def estimated_time_with_unknown_oob
+      @estimated_time.out_of_bounds_time_format = :unknown
+      @estimated_time
+    end
+
+    def estimated_time_with_friendly_oob
+      @estimated_time.out_of_bounds_time_format = :friendly
       @estimated_time
     end
 
