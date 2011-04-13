@@ -186,7 +186,6 @@ describe ProgressBar::Base do
 
       context "when called before #start" do
         it "displays unknown time elapsed when using the %a flag" do
-          @progressbar = ProgressBar::Base.new
           @progressbar.to_s('%a').should match /^Time: --:--:--\z/
         end
       end
@@ -194,7 +193,6 @@ describe ProgressBar::Base do
       context "when called after #start" do
         it "displays the time elapsed when using the %a flag" do
           Timecop.travel(-3723) do
-            @progressbar = ProgressBar::Base.new
             @progressbar.start
           end
 
