@@ -10,7 +10,7 @@ module ProgressBar
       end
 
       def length
-        @current_length || calculate_length
+        @current_length || reset_length
       end
 
       def length_changed?

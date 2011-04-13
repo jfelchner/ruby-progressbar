@@ -66,7 +66,7 @@ module ProgressBar
       attr_reader         :out
 
       def clear_string
-        "\r#{" " * length}\r"
+        "#{" " * length}\r"
       end
 
       def update
@@ -82,10 +82,6 @@ module ProgressBar
       end
 
       # def reset
-      # end
-
-      # def inc(step = 1)
-        # set(@current + step)
       # end
 
       # def set(progress)
