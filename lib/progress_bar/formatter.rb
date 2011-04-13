@@ -10,7 +10,13 @@ module ProgressBar
       processed_string = @format_string.dup
 
       @format.non_bar_molecules.each do |molecule|
-        processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name).to_s)
+        value = if molecule.method_arguments
+                  self.send(molecule.method_name, *molecule.method_arguments)
+                else
+                  self.send(molecule.method_name)
+                end
+
+        processed_string.gsub!("%#{molecule.key}", value.to_s)
       end
 
       remaining_molecule_match_data = processed_string.match(/%[^%]/)

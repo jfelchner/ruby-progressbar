@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'stringio'
+require 'timecop'
 
 describe ProgressBar::Base do
   before do
@@ -185,6 +186,27 @@ describe ProgressBar::Base do
         @progressbar = ProgressBar::Base.new
 
         @progressbar.to_s('%e').should match /^ ETA: [\d-?]{2}:[\d-?]{2}:[\d-?]{2}\z/
+      end
+
+      context "when it could take 100 hours or longer to finish" do
+        before do
+          Timecop.travel(-120000) do
+            @progressbar = ProgressBar::Base.new(:beginning_position => 25, :total => 100, :output_stream => @output_stream)
+            @progressbar.start
+          end
+        end
+
+        it "displays '> 4 Days' until finished when passed the %E flag" do
+          @progressbar.to_s('%E').should match /^ ETA: > 4 Days\z/
+        end
+
+        it "displays '??:??:??' until finished when passed the %e flag" do
+          @progressbar.to_s('%e').should match /^ ETA: \?\?:\?\?:\?\?\z/
+        end
+
+        it "displays the exact estimated time until finished when passed the %f flag" do
+          @progressbar.to_s('%f').should match /^ ETA: 100:00:00\z/
+        end
       end
     end
   end

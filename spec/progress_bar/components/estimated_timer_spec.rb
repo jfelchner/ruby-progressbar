@@ -58,7 +58,7 @@ describe ProgressBar::Components::EstimatedTimer do
     context "when set to an invalid format" do
       it "raises an exception" do
         @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100)
-        lambda{ @estimated_time.out_of_bounds_time_format = :foo }.should raise_error("Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly]")
+        lambda{ @estimated_time.out_of_bounds_time_format = :foo }.should raise_error("Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]")
       end
     end
   end

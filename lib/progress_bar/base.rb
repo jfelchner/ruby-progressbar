@@ -27,7 +27,7 @@ module ProgressBar
 
       @title           = Components::Title.new(title_options_from(options))
       @bar             = Components::Bar.new(bar_options_from(options))
-      @estimated_time  = Components::EstimatedTimer.new(:total => @bar.total)
+      @estimated_time  = Components::EstimatedTimer.new(:current => @bar.current, :total => @bar.total)
       @elapsed_time    = Components::Timer.new
     end
 
@@ -38,8 +38,10 @@ module ProgressBar
     def start(options = {})
       clear
 
-      @bar.current = options[:at] || @bar.current
-      # @estimated_time.start
+      @bar.current            = options[:at] || @bar.current
+      # @estimated_time.current = options[:at] || @estimated_time.current
+
+      @estimated_time.start
       # @elapsed_time.start
 
       update
@@ -70,7 +72,8 @@ module ProgressBar
       @elapsed_time
     end
 
-    def estimated_time
+    def estimated_time(options = {})
+      @estimated_time.out_of_bounds_time_format = options[:format]
       @estimated_time
     end
 
