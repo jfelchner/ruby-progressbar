@@ -87,6 +87,15 @@ module ProgressBar
       @estimated_time
     end
 
+    def bar(length)
+      @bar.to_s(length)
+    end
+
+    def reversed_bar(length)
+      @bar.reverse unless @bar.reversed?
+      @bar.to_s(length)
+    end
+
     def increment
       @bar.increment
       # @estimated_time.increment
@@ -106,10 +115,6 @@ module ProgressBar
 
     private
       attr_reader         :out
-
-      def bar(length)
-        @bar.to_s(length)
-      end
 
       def clear_string
         "\r#{" " * length}\r"

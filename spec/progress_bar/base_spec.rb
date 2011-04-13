@@ -144,6 +144,14 @@ describe ProgressBar::Base do
         @progressbar.to_s('%b').should match /^#{" " * 80}\z/
       end
 
+      it "displays the reversed bar when passed the '%r' format flag" do
+        @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :length => 100, :beginning_position => 0)
+
+        @progressbar.to_s('%r').should match /^#{" " * 100}\z/
+        @progressbar.increment
+        @progressbar.to_s('%r').should match /^#{" " * 99}o\z/
+      end
+
       it "displays the current capacity when passed the '%c' format flag" do
         @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :beginning_position => 0)
 

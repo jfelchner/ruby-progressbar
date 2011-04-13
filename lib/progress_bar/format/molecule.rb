@@ -18,7 +18,7 @@ module ProgressBar
         # :reversed_bar_with_percentage     => "%R"
       }
 
-      BAR_MOLECULES     = %w{b}
+      BAR_MOLECULES     = %w{b r}
 
       attr_reader   :key
       attr_reader   :method_name
