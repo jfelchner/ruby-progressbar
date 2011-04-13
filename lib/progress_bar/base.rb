@@ -159,50 +159,9 @@ module ProgressBar
         # @current == @total
       # end
 
-      # def percentage
-        # progress_as_percentage(@current)
-      # end
-
-      # def inspect
-        # "#<ProgressBar:#{@current}/#{@total}>"
-      # end
-
       # private
-      # def text
-        # arguments = @format_arguments.map do |method|
-          # method = sprintf("fmt_%s", method)
-          # send(method)
-        # end
-
-        # sprintf(@format, *arguments) + eol
-        # "PROGRESS BAR!!#{eol}"
-      # end
-
       # def eol
         # if finished? then "\n" else "\r" end
-      # end
-
-      # def percentage_changed?
-        # Use "!=" instead of ">" to support negative changes
-        # current_percentage != previous_percentage
-      # end
-
-      # def time_elapsed?
-        # Time.now - @previous_time >= 1
-      # end
-
-      # alias :current_percentage, :percentage
-
-      # def previous_percentage
-        # progress_as_percentage(@previous)
-      # end
-
-      # def progress_as_percentage(progress)
-        # (progress * 100 / @total).to_i
-      # end
-
-      # def progress_range
-        # 0..@total
       # end
   end
 end
