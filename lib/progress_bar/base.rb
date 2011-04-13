@@ -19,11 +19,11 @@ module ProgressBar
     DEFAULT_FORMAT_STRING     = '%t: |%b|'
 
     def initialize(options = {})
-      @out             = options[:output_stream]          || DEFAULT_OUTPUT_STREAM
+      @out             = options[:output_stream]         || DEFAULT_OUTPUT_STREAM
 
-      @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH']  || options[:length]
+      @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH'] || options[:length]
 
-      @format_string   = options[:format]                 || DEFAULT_FORMAT_STRING
+      @format_string   = options[:format]                || DEFAULT_FORMAT_STRING
 
       @title           = Components::Title.new(title_options_from(options))
       @bar             = Components::Bar.new(bar_options_from(options))
