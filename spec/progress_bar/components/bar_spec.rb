@@ -50,11 +50,21 @@ describe ProgressBar::Components::Bar do
   context "when just begun" do
     before { @progressbar = ProgressBar::Components::Bar.new(:beginning_position => 0, :total => 50) }
 
+    context "and the bar has been reversed" do
+      before { @progressbar.reverse }
+
+      it "displays the bar with no indication of progress" do
+        @progressbar.to_s(100).should eql "                                                                                                    "
+      end
+    end
+
     describe "#percentage_completed" do
       it "calculates the amount" do
         @progressbar.percentage_completed.should eql 0
       end
+    end
 
+    describe "#to_s" do
       it "displays the bar with no indication of progress" do
         @progressbar.to_s(100).should eql "                                                                                                    "
       end
@@ -74,6 +84,16 @@ describe ProgressBar::Components::Bar do
       describe "#percentage_completed" do
         it "calculates the amount completed" do
           @progressbar.percentage_completed.should eql 2
+        end
+      end
+
+      context "and the bar has been reversed" do
+        before { @progressbar.reverse }
+
+        describe "#to_s" do
+          it "displays the bar with an indication of progress" do
+            @progressbar.to_s(100).should eql "                                                                                                  oo"
+          end
         end
       end
 
@@ -126,6 +146,16 @@ describe ProgressBar::Components::Bar do
 
       describe "#to_s" do
         it "displays the bar as 100% complete" do
+          @progressbar.to_s(100).should eql "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+        end
+      end
+    end
+
+    context "and the bar has been reversed" do
+      before { @progressbar.reverse }
+
+      describe "#to_s" do
+        it "displays the bar with an indication of progress" do
           @progressbar.to_s(100).should eql "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
         end
       end

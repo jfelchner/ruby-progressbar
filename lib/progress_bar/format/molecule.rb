@@ -13,8 +13,8 @@ module ProgressBar
         :E => [:estimated_time_with_greater_than,   :estimated_time_with_friendly_oob],
         :f => [:force_estimated_time,               :estimated_time],
         :b => [:bar,                                :bar],
+        :r => [:reversed_bar,                       :reversed_bar],
         # :bar_with_percentage              => "%B",
-        # :reversed_bar                     => "%r",
         # :reversed_bar_with_percentage     => "%R"
       }
 

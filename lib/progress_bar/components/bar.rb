@@ -15,6 +15,7 @@ module ProgressBar
       def initialize(options = {})
         @total           = options[:total]              || DEFAULT_TOTAL
         @current         = options[:beginning_position] || DEFAULT_BEGINNING_POSITION
+        @reversed        = false
 
         raise "You can't set the bar's current value to be greater than the total." if current > total
 
@@ -32,6 +33,14 @@ module ProgressBar
         @current = new_current
       end
 
+      def reverse
+        @reversed = !@reversed
+      end
+
+      def reversed?
+        @reversed
+      end
+
       def percentage_completed
         # current / total * 100
         #
@@ -47,7 +56,7 @@ module ProgressBar
 
       def to_s(length)
         @length = length
-        "#{complete_string}#{empty_string}"
+        reversed? ? "#{empty_string}#{complete_string}" : "#{complete_string}#{empty_string}"
       end
 
       private
