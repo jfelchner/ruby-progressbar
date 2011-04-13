@@ -41,50 +41,6 @@ module ProgressBar
       increment
     end
 
-    def current
-      @bar.current
-    end
-
-    def total
-      @bar.total
-    end
-
-    def percentage
-      @bar.percentage_completed
-    end
-
-    def percentage_with_precision
-      @bar.percentage_completed_with_precision
-    end
-
-    def elapsed_time
-      @elapsed_time
-    end
-
-    def estimated_time
-      @estimated_time.out_of_bounds_time_format = nil
-      @estimated_time
-    end
-
-    def estimated_time_with_unknown_oob
-      @estimated_time.out_of_bounds_time_format = :unknown
-      @estimated_time
-    end
-
-    def estimated_time_with_friendly_oob
-      @estimated_time.out_of_bounds_time_format = :friendly
-      @estimated_time
-    end
-
-    def bar(length)
-      @bar.to_s(length)
-    end
-
-    def reversed_bar(length)
-      @bar.reverse unless @bar.reversed?
-      @bar.to_s(length)
-    end
-
     def increment
       @bar.increment
       @estimated_time.increment
