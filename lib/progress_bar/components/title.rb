@@ -1,7 +1,7 @@
 module ProgressBar
   module Components
     class Title
-      OPTIONS                   = [:title, :title_length]
+      OPTIONS                   = [:title]
 
       DEFAULT_TITLE             = 'Progress'
 
@@ -9,7 +9,7 @@ module ProgressBar
 
       def initialize(options = {})
         @text                   = options[:title]         || DEFAULT_TITLE
-        @length_override        = options[:title_length]
+        # @length_override        = options[:title_length]
       end
 
       def to_s

@@ -6,7 +6,6 @@ module ProgressBar
       end
 
       def bar_options_from(options)
-        options[:length] = bar_length
         options.select {|k,v| Components::Bar::OPTIONS.include? k}
       end
   end

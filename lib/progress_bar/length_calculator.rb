@@ -1,14 +1,6 @@
 module ProgressBar
   module LengthCalculator
     private
-      def bar_length
-        length - title_length
-      end
-
-      def title_length
-        @title.to_s.length
-      end
-
       def length
         @current_length || reset_length
       end
