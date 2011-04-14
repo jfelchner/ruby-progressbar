@@ -62,6 +62,21 @@ describe ProgressBar::Base do
     end
   end
 
+  context "when a bar is about to be completed" do
+    before do
+      @progressbar = ProgressBar::Base.new(:beginning_position => 99, :total => 100, :output_stream => @output_stream, :length => 80)
+      @progressbar.start
+    end
+
+    context "and it's incremented" do
+      before { @progressbar.increment }
+
+      it "registers as being 'finished'" do
+        @progressbar.should be_finished
+      end
+    end
+  end
+
   describe "#clear" do
     it "clears the current terminal line and/or bar text" do
       @progressbar.clear

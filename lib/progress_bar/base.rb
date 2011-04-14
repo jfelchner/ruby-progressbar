@@ -36,6 +36,10 @@ module ProgressBar
       update
     end
 
+    def finished?
+      @bar.current == @bar.total
+    end
+
     def inc
       puts "#inc is deprecated.  Please use #increment"
       increment
