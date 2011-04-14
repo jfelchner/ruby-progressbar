@@ -217,7 +217,7 @@ describe ProgressBar::Base do
         @progressbar.to_s('%c').should match /^1\z/
       end
 
-      it "displays the current capacity when passed the '%c' format flag" do
+      it "displays the total capacity when passed the '%C' format flag" do
         @progressbar = ProgressBar::Base.new(:total => 100)
 
         @progressbar.to_s('%C').should match /^100\z/

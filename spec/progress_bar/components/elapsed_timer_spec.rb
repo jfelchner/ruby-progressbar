@@ -41,15 +41,5 @@ describe ProgressBar::Components::ElapsedTimer do
         @timer.to_s.should eql 'Time: 04:28:13'
       end
     end
-
-    context "when it was started 4 hours, 28 minutes and 13 seconds ago" do
-      it "displays 'Time: 04:28:13'" do
-        Timecop.travel(-16093) do
-          @timer.start
-        end
-
-        @timer.to_s.should eql 'Time: 04:28:13'
-      end
-    end
   end
 end
