@@ -87,8 +87,12 @@ describe ProgressBar::Base do
             @output_stream.read.should match /Progress: \|#{"o" * 68}\|\n/
           end
 
-          it "sets the estimated time to 00:00:00" do
+          it "calculates the estimated time to 00:00:00" do
             @progressbar.to_s('%e').should eql ' ETA: 00:00:00'
+          end
+
+          it "calculates the elapsed time to 00:02:00" do
+            @progressbar.to_s('%a').should eql 'Time: 00:02:00'
           end
         end
       end

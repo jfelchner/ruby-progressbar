@@ -80,13 +80,13 @@ module ProgressBar
         "#{" " * length}\r"
       end
 
-      # def stop_timers
+      def stop_timers
         # @estimated_time.stop
-        # @elapsed_time.stop
-      # end
+        @elapsed_time.stop
+      end
 
       def update
-        # stop_timers if finished?
+        stop_timers if finished?
 
         if length_changed?
           clear
