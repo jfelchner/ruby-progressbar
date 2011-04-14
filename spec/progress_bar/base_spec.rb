@@ -74,6 +74,11 @@ describe ProgressBar::Base do
       it "registers as being 'finished'" do
         @progressbar.should be_finished
       end
+
+      it "prints a new line" do
+        @output_stream.rewind
+        @output_stream.read[-1].should eql "\n"
+      end
     end
   end
 

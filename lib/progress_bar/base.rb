@@ -81,8 +81,12 @@ module ProgressBar
           reset_length
         end
 
-        @out.print self.to_s + "\r"
+        @out.print self.to_s + eol
         @out.flush
+      end
+
+      def eol
+        finished? ? "\n" : "\r"
       end
 
       # def reset
@@ -120,8 +124,5 @@ module ProgressBar
       # end
 
       # private
-      # def eol
-        # if finished? then "\n" else "\r" end
-      # end
   end
 end
