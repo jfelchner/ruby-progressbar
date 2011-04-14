@@ -14,7 +14,7 @@ describe ProgressBar::Base do
 
       describe "#title" do
         it "returns the default title" do
-          @progressbar.title.to_s.should eql ProgressBar::Components::Title::DEFAULT_TITLE
+          @progressbar.send(:title).to_s.should eql ProgressBar::Components::Title::DEFAULT_TITLE
         end
       end
 
@@ -44,7 +44,7 @@ describe ProgressBar::Base do
 
       describe "#title" do
         it "returns the overridden title" do
-          @progressbar.title.to_s.should eql "We All Float"
+          @progressbar.send(:title).to_s.should eql "We All Float"
         end
       end
 
