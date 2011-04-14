@@ -2,26 +2,12 @@ module ProgressBar
   module Components
     class EstimatedTimer
       include Timer
+      include Progressable
 
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
-      #TODO These could be private right now.
-      attr_reader               :total
-      attr_reader               :current
-
       def initialize(options = {})
-        @current = options[:current] || 0
-        @total   = options[:total]   || raise("You have to pass the total capacity to find an estimate.")
-      end
-
-      def increment
-        @current += 1 unless current == total
-      end
-
-      def current=(new_current)
-        raise "You can't set the item's current value to be greater than the total." if new_current > total
-
-        @current = new_current
+        initialize_progress(options)
       end
 
       def out_of_bounds_time_format=(format)

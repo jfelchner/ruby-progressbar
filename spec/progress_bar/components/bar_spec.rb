@@ -171,7 +171,7 @@ describe ProgressBar::Components::Bar do
   context "when attempting to set the bar's current value to be greater than the total" do
     describe "#new" do
       it "raises an error" do
-        lambda{ ProgressBar::Components::Bar.new(:beginning_position => 11, :total => 10) }.should raise_error "You can't set the bar's current value to be greater than the total."
+        lambda{ ProgressBar::Components::Bar.new(:beginning_position => 11, :total => 10) }.should raise_error "You can't set the item's current value to be greater than the total."
       end
     end
   end

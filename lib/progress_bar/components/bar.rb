@@ -1,36 +1,19 @@
 module ProgressBar
   module Components
     class Bar
+      include Progressable
+
       OPTIONS                    = [:total, :progress_mark, :beginning_position]
 
-      DEFAULT_TOTAL              = 100
-      DEFAULT_BEGINNING_POSITION = 0
       DEFAULT_PROGRESS_MARK      = 'o'
 
-      #TODO These could be private right now.
-      attr_reader               :total
-      attr_reader               :current
       attr_reader               :progress_mark
 
       def initialize(options = {})
-        @total           = options[:total]              || DEFAULT_TOTAL
-        @current         = options[:beginning_position] || DEFAULT_BEGINNING_POSITION
+        initialize_progress(options)
+
         @reversed        = false
-
-        raise "You can't set the bar's current value to be greater than the total." if current > total
-
         @progress_mark   = options[:progress_mark]      || DEFAULT_PROGRESS_MARK
-      end
-
-      def increment
-        @current += 1 unless current == total
-      end
-
-      #TODO needs tested
-      def current=(new_current)
-        raise "You can't set the bar's current value to be greater than the total." if new_current > total
-
-        @current = new_current
       end
 
       def reverse
@@ -39,19 +22,6 @@ module ProgressBar
 
       def reversed?
         @reversed
-      end
-
-      def percentage_completed
-        # current / total * 100
-        #
-        # Doing this way so we can avoid converting each
-        # number to a float and then back to an integer.
-        #
-        current * 100 / total
-      end
-
-      def percentage_completed_with_precision
-        format('%5.2f', (current.to_f * 100.0 / total * 100.0).floor / 100.0)
       end
 
       def to_s(length)
