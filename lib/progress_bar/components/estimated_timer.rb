@@ -1,6 +1,8 @@
 module ProgressBar
   module Components
     class EstimatedTimer
+      include Timer
+
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       #TODO These could be private right now.
@@ -10,10 +12,6 @@ module ProgressBar
       def initialize(options = {})
         @current = options[:current] || 0
         @total   = options[:total]   || raise("You have to pass the total capacity to find an estimate.")
-      end
-
-      def start
-        @started_at = Time.now
       end
 
       def increment
@@ -47,27 +45,16 @@ module ProgressBar
           if hours > 99 && @out_of_bounds_time_format
             out_of_bounds_time
           else
-            sprintf "%02d:%02d:%02d", hours, minutes, seconds
+            sprintf TIME_FORMAT, hours, minutes, seconds
           end
         end
 
-        def elapsed_seconds
-          Time.now - @started_at
-        end
-
         def seconds_per_each
-          elapsed_seconds / @current
+          elapsed_seconds.to_f / @current
         end
 
         def estimated_seconds_remaining
           (seconds_per_each * (@total - @current)).floor
-        end
-
-        def divide_seconds(seconds)
-          hours, seconds = seconds.divmod(3600)
-          minutes, seconds = seconds.divmod(60)
-
-          [hours, minutes, seconds]
         end
 
         def out_of_bounds_time

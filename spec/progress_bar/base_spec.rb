@@ -235,7 +235,7 @@ describe ProgressBar::Base do
           end
 
           @progressbar.increment
-          @progressbar.to_s('%e').should match /^ ETA: 01:02:03\z/
+          @progressbar.to_s('%e').should match /^ ETA: 01:02:02\z/
         end
       end
 

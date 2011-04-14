@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'timecop'
 
-describe ProgressBar::Components::Timer do
-  before { @timer = ProgressBar::Components::Timer.new }
+describe ProgressBar::Components::ElapsedTimer do
+  before { @timer = ProgressBar::Components::ElapsedTimer.new }
 
   describe "#to_s" do
     context "when the timer hasn't been started" do

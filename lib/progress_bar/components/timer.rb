@@ -1,16 +1,14 @@
 module ProgressBar
   module Components
-    class Timer
+    module Timer
+      TIME_FORMAT = "%02d:%02d:%02d"
+
       def start
-        @started_at = Time.now
+        @started_at = stopped? ? Time.now - (@stopped_at - @started_at) : Time.now
       end
 
       def stop
         @stopped_at = Time.now
-      end
-
-      def to_s
-        "Time: #{elapsed_time}"
       end
 
       def started?
@@ -22,14 +20,24 @@ module ProgressBar
       end
 
       private
+        def elapsed_seconds
+          ((@stopped_at || Time.now) - @started_at).floor
+        end
+
         def elapsed_time
           return "--:--:--" unless started?
 
-          seconds = ((@stopped_at || Time.now) - @started_at).floor
-          hours, seconds = seconds.divmod(3600)
+          hours, seconds = elapsed_seconds.divmod(3600)
           minutes, seconds = seconds.divmod(60)
 
           sprintf "%02d:%02d:%02d", hours, minutes, seconds
+        end
+
+        def divide_seconds(seconds)
+          hours, seconds = seconds.divmod(3600)
+          minutes, seconds = seconds.divmod(60)
+
+          [hours, minutes, seconds]
         end
     end
   end
