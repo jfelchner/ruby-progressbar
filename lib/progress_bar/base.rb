@@ -36,6 +36,12 @@ module ProgressBar
       update
     end
 
+    # def finish
+      # @bar.finish
+      # @estimated_time.finish
+      # @elapsed_time.finish
+    # end
+
     def finished?
       @bar.current == @bar.total
     end
@@ -46,8 +52,13 @@ module ProgressBar
     end
 
     def increment
-      @bar.increment
-      @estimated_time.increment
+      # if finished?
+        # @estimated_time.stop
+        # @elapsed_time.stop
+      # else
+        @bar.increment
+        @estimated_time.increment
+      # end
 
       update
     end
@@ -102,11 +113,6 @@ module ProgressBar
         # update
       # end
 
-      # def finish
-        # @current = @total
-        # update
-      # end
-
       # def halt
         # stop
       # end
@@ -118,11 +124,5 @@ module ProgressBar
       # def pause
         # update
       # end
-
-      # def finished?
-        # @current == @total
-      # end
-
-      # private
   end
 end
