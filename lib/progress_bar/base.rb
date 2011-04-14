@@ -104,16 +104,6 @@ module ProgressBar
       # def reset
       # end
 
-      # def set(progress)
-        # unless progress_range.include? progress
-          # raise "#{progress} is an invalid number.  It must be between 0 and #{@total}."
-        # end
-
-        # @previous = @current
-        # @current = progress
-        # update
-      # end
-
       # def halt
         # stop
       # end
