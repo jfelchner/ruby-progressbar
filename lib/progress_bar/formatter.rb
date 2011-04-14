@@ -28,6 +28,10 @@ module ProgressBar
       end
 
       # Format Methods
+      def title
+        @title
+      end
+
       def current
         @bar.current
       end
