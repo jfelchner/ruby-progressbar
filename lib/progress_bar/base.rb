@@ -18,6 +18,8 @@ module ProgressBar
       @bar             = Components::Bar.new(bar_options_from(options))
       @estimated_time  = Components::EstimatedTimer.new(:beginning_position => @bar.current, :total => @bar.total)
       @elapsed_time    = Components::ElapsedTimer.new
+
+      # start           unless options[:manual_start]
     end
 
     def clear
