@@ -26,6 +26,10 @@ module ProgressBar
         @total = new_total
       end
 
+      def finish
+        @current = @total
+      end
+
       def percentage_completed
         # current / total * 100
         #

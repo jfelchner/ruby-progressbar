@@ -60,6 +60,39 @@ describe ProgressBar::Base do
         end
       end
     end
+
+    context "if the bar was started 4 minutes ago" do
+      before do
+        Timecop.travel(-240) do
+          @progressbar.start
+        end
+      end
+
+      context "and within 2 minutes it was halfway done" do
+        before do
+          Timecop.travel(-120) do
+            50.times { @progressbar.increment }
+          end
+        end
+
+        describe "#finish" do
+          before do
+            Timecop.travel(-120) do
+              @progressbar.finish
+            end
+          end
+
+          it "completes the bar" do
+            @output_stream.rewind
+            @output_stream.read.should match /Progress: \|#{"o" * 68}\|\n/
+          end
+
+          it "sets the estimated time to 00:00:00" do
+            @progressbar.to_s('%e').should eql ' ETA: 00:00:00'
+          end
+        end
+      end
+    end
   end
 
   context "when a bar is about to be completed" do
