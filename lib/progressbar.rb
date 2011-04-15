@@ -128,7 +128,7 @@ class ProgressBar
       data = [0, 0, 0, 0].pack("SSSS")
       if @out.ioctl(tiocgwinsz, data) >= 0 then
         rows, cols, xpixels, ypixels = data.unpack("SSSS")
-        if cols >= 0 then cols else default_width end
+        if cols > 0 then cols else default_width end
       else
         default_width
       end
