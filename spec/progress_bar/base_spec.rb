@@ -27,6 +27,7 @@ describe ProgressBar::Base do
       describe "#length" do
         it "returns the width of the terminal if it's a Unix environment" do
           @progressbar.stub(:terminal_width).and_return(99)
+          @progressbar.send(:reset_length) # This should be changed to use #any_instance
           @progressbar.send(:length).should eql 99
         end
       end
@@ -34,6 +35,7 @@ describe ProgressBar::Base do
       describe "#length" do
         it "returns 80 if it's not a Unix environment" do
           @progressbar.stub(:unix?).and_return(false)
+          @progressbar.send(:reset_length) # This should be changed to use #any_instance
           @progressbar.send(:length).should eql 80
         end
       end
@@ -164,7 +166,7 @@ describe ProgressBar::Base do
       @progressbar.clear
 
       @output_stream.rewind
-      @output_stream.read.should eql @progressbar.send(:clear_string)
+      @output_stream.read.should match /^#{@progressbar.send(:clear_string)}/
     end
   end
 
@@ -281,11 +283,12 @@ describe ProgressBar::Base do
         @progressbar.to_s('%P').should match /^66.66\z/
       end
 
-      context "when called before #start" do
-        it "displays unknown time elapsed when using the %a flag" do
-          @progressbar.to_s('%a').should match /^Time: --:--:--\z/
-        end
-      end
+      # Autostarting for now.  This will be applicable later.
+      # context "when called before #start" do
+        # it "displays unknown time elapsed when using the %a flag" do
+          # @progressbar.to_s('%a').should match /^Time: --:--:--\z/
+        # end
+      # end
 
       context "when called after #start" do
         before do

@@ -19,7 +19,8 @@ module ProgressBar
       @estimated_time  = Components::EstimatedTimer.new(:beginning_position => @bar.current, :total => @bar.total)
       @elapsed_time    = Components::ElapsedTimer.new
 
-      # start           unless options[:manual_start]
+      #TODO Manual Start Option start           unless options[:manual_start]
+      start
     end
 
     def clear
@@ -53,8 +54,6 @@ module ProgressBar
     end
 
     def increment
-      # start unless started?
-
       @bar.increment
       @estimated_time.increment
 
@@ -106,7 +105,7 @@ module ProgressBar
       end
 
       def stop_timers
-        # @estimated_time.stop
+        @estimated_time.stop
         @elapsed_time.stop
       end
 
