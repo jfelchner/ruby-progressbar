@@ -119,6 +119,26 @@ describe ProgressBar::Base do
     end
   end
 
+  context "when a bar is started" do
+    before do
+      @progressbar = ProgressBar::Base.new(:beginning_position => 0, :total => 100, :output_stream => @output_stream, :length => 80)
+      @progressbar.start
+    end
+
+    context "and it's incremented any number of times" do
+      before { 10.times { @progressbar.increment } }
+
+      describe "#reset" do
+        before { @progressbar.reset }
+
+        it "resets the bar back to the starting value" do
+          @output_stream.rewind
+          @output_stream.read.should match /\rProgress: \|#{" " * 68}\|\r\z/
+        end
+      end
+    end
+  end
+
   describe "#clear" do
     it "clears the current terminal line and/or bar text" do
       @progressbar.clear

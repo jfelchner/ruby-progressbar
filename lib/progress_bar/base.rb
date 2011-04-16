@@ -61,6 +61,13 @@ module ProgressBar
       update
     end
 
+    def reset
+      @bar.reset
+      @estimated_time.reset
+
+      update
+    end
+
     def to_s(format_string = nil)
       format_string ||= @format_string
 
@@ -98,9 +105,6 @@ module ProgressBar
       def eol
         finished? ? "\n" : "\r"
       end
-
-      # def reset
-      # end
 
       # def halt
         # stop

@@ -16,6 +16,10 @@ module ProgressBar
         @current += 1 unless current == total
       end
 
+      def reset
+        @current = 0
+      end
+
       def current=(new_current)
         validate_current(new_current)
         @current = new_current
