@@ -305,14 +305,23 @@ describe ProgressBar::Base do
       end
 
       context "when called after #start" do
-        it "displays the estimated time remaining when using the %e flag" do
+        before do
           Timecop.travel(-3723) do
             @progressbar = ProgressBar::Base.new(:beginning_position => 0, :output_stream => @output_stream)
             @progressbar.start
-            @progressbar.current = 49
+            @progressbar.current = 50
           end
+        end
 
-          @progressbar.increment
+        context "and the bar is reset" do
+          before { @progressbar.reset }
+
+          it "displays '??:??:??' until finished when passed the %e flag" do
+            @progressbar.to_s('%e').should match /^ ETA: \?\?:\?\?:\?\?\z/
+          end
+        end
+
+        it "displays the estimated time remaining when using the %e flag" do
           @progressbar.to_s('%e').should match /^ ETA: 01:02:02\z/
         end
       end
