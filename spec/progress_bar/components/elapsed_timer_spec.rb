@@ -32,8 +32,24 @@ describe ProgressBar::Components::ElapsedTimer do
           end
         end
 
+        context "and #reset is called" do
+          before { @timer.reset }
+
+          it "displays 'Time: --:--:--'" do
+            @timer.to_s.should eql "Time: --:--:--"
+          end
+        end
+
         it "displays 'Time: 04:27:41'" do
           @timer.to_s.should eql 'Time: 04:27:41'
+        end
+      end
+
+      context "and #reset is called" do
+        before { @timer.reset }
+
+        it "displays 'Time: --:--:--'" do
+          @timer.to_s.should eql "Time: --:--:--"
         end
       end
 

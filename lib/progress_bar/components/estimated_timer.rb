@@ -15,6 +15,11 @@ module ProgressBar
         as(Progressable).start(options)
       end
 
+      def reset
+        as(Timer).reset
+        as(Progressable).reset
+      end
+
       def out_of_bounds_time_format=(format)
         if VALID_OOB_TIME_FORMATS.include? format
           @out_of_bounds_time_format = format

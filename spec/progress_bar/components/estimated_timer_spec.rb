@@ -29,14 +29,24 @@ describe ProgressBar::Components::EstimatedTimer do
 
     context "when half the progress has been made" do
       context "and it took 3:42:12 to do it" do
-        it "displays 3:42:12 remaining" do
+        before do
           @estimated_time = ProgressBar::Components::EstimatedTimer.new(:beginning_position => 0, :total => 100)
 
           Timecop.travel(-13332) do
             @estimated_time.start
+            @estimated_time.current = 50
           end
+        end
 
-          @estimated_time.current = 50
+        context "when #reset is called" do
+          before { @estimated_time.reset }
+
+          it "displays unknown time remaining" do
+            @estimated_time.to_s.should eql " ETA: ??:??:??"
+          end
+        end
+
+        it "displays 3:42:12 remaining" do
           @estimated_time.to_s.should eql " ETA: 03:42:12"
         end
       end

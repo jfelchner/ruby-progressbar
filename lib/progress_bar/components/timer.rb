@@ -19,6 +19,11 @@ module ProgressBar
         !!@stopped_at
       end
 
+      def reset
+        @started_at = nil
+        @stopped_at = nil
+      end
+
       private
         def elapsed_seconds
           ((@stopped_at || Time.now) - @started_at).floor
