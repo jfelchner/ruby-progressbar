@@ -10,6 +10,11 @@ module ProgressBar
         initialize_progress(options)
       end
 
+      def start(options = {})
+        as(Timer).start
+        as(Progressable).start(options)
+      end
+
       def out_of_bounds_time_format=(format)
         if VALID_OOB_TIME_FORMATS.include? format
           @out_of_bounds_time_format = format
@@ -24,7 +29,7 @@ module ProgressBar
 
       private
         def estimated_time
-          return "??:??:??" if @current == 0
+          return "??:??:??" if progress_made.zero?
 
           hours, minutes, seconds = divide_seconds(estimated_seconds_remaining)
 
@@ -36,7 +41,7 @@ module ProgressBar
         end
 
         def seconds_per_each
-          elapsed_seconds.to_f / @current
+          elapsed_seconds.to_f / progress_made
         end
 
         def estimated_seconds_remaining
@@ -49,6 +54,28 @@ module ProgressBar
             '??:??:??'
           when :friendly
             '> 4 Days'
+          end
+        end
+
+        def as(ancestor, &blk)
+          @__as ||= {}
+          unless r = @__as[ancestor]
+            r = (@__as[ancestor] = As.new(self, ancestor))
+          end
+          r.instance_eval(&blk) if block_given?
+          r
+        end
+
+        class As
+          private *instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ }
+
+          def initialize(subject, ancestor)
+            @subject = subject
+            @ancestor = ancestor
+          end
+
+          def method_missing(sym, *args, &blk)
+            @ancestor.instance_method(sym).bind(@subject).call(*args,&blk)
           end
         end
     end

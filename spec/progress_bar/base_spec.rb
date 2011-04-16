@@ -307,8 +307,9 @@ describe ProgressBar::Base do
       context "when called after #start" do
         it "displays the estimated time remaining when using the %e flag" do
           Timecop.travel(-3723) do
-            @progressbar = ProgressBar::Base.new(:beginning_position => 49, :output_stream => @output_stream)
+            @progressbar = ProgressBar::Base.new(:beginning_position => 0, :output_stream => @output_stream)
             @progressbar.start
+            @progressbar.current = 49
           end
 
           @progressbar.increment
@@ -319,8 +320,9 @@ describe ProgressBar::Base do
       context "when it could take 100 hours or longer to finish" do
         before do
           Timecop.travel(-120000) do
-            @progressbar = ProgressBar::Base.new(:beginning_position => 25, :total => 100, :output_stream => @output_stream)
+            @progressbar = ProgressBar::Base.new(:beginning_position => 0, :total => 100, :output_stream => @output_stream)
             @progressbar.start
+            @progressbar.current = 25
           end
         end
 

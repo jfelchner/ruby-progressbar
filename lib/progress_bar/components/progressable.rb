@@ -10,8 +10,16 @@ module ProgressBar
       def initialize_progress(options)
         self.total   = options[:total]              || DEFAULT_TOTAL
         self.current = options[:beginning_position] || DEFAULT_BEGINNING_POSITION
+      end
+
+      def start(options = {})
+        self.current = options[:at] || self.current
 
         @starting_position = self.current
+      end
+
+      def started?
+        !!@starting_position
       end
 
       def increment
@@ -56,6 +64,10 @@ module ProgressBar
 
         def validate_current(new_current)
           (total.nil? || new_current <= total) || raise("You can't set the item's current value to be greater than the total.")
+        end
+
+        def progress_made
+          started? ? @current - @starting_position : 0
         end
     end
   end
