@@ -288,11 +288,21 @@ describe ProgressBar::Base do
       end
 
       context "when called after #start" do
-        it "displays the time elapsed when using the %a flag" do
+        before do
           Timecop.travel(-3723) do
             @progressbar.start
           end
+        end
 
+        context "and the bar is reset" do
+          before { @progressbar.reset }
+
+          it "displays '??:??:??' until finished when passed the %e flag" do
+            @progressbar.to_s('%a').should match /^Time: --:--:--\z/
+          end
+        end
+
+        it "displays the time elapsed when using the %a flag" do
           @progressbar.to_s('%a').should match /^Time: 01:02:03\z/
         end
       end
