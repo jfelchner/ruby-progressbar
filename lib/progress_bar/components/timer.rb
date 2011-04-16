@@ -11,6 +11,14 @@ module ProgressBar
         @stopped_at = Time.now
       end
 
+      def pause
+        stop
+      end
+
+      def resume
+        start
+      end
+
       def started?
         !!@started_at
       end

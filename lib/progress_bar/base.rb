@@ -74,6 +74,20 @@ module ProgressBar
       update
     end
 
+    def pause
+      @estimated_time.pause
+      @elapsed_time.pause
+
+      update
+    end
+
+    def resume
+      @estimated_time.resume
+      @elapsed_time.resume
+
+      update
+    end
+
     def to_s(format_string = nil)
       format_string ||= @format_string
 
@@ -117,10 +131,6 @@ module ProgressBar
       # end
 
       # def stop
-        # update
-      # end
-
-      # def pause
         # update
       # end
   end
