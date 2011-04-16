@@ -63,7 +63,7 @@ module ProgressBar
 
     def reset
       @bar.reset
-      @estimated_time.reset
+      # @estimated_time.reset
 
       update
     end
