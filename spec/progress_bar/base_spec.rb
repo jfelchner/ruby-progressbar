@@ -138,6 +138,15 @@ describe ProgressBar::Base do
           @output_stream.read.should match /\rProgress: \|#{" " * 68}\|\r\z/
         end
       end
+
+      describe "#stop" do
+        before { @progressbar.stop }
+
+        it "forcibly halts the bar wherever it is and cancels it" do
+          @output_stream.rewind
+          @output_stream.read.should match /\rProgress: \|oooooo#{" " * 62}\|\n\z/
+        end
+      end
     end
   end
 

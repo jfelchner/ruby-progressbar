@@ -80,6 +80,17 @@ module ProgressBar
       update
     end
 
+    def stop
+      @estimated_time.stop
+      @elapsed_time.stop
+
+      update
+    end
+
+    def stopped?
+      @estimated_time.stopped? && elapsed_time.stopped?
+    end
+
     def resume
       @estimated_time.resume
       @elapsed_time.resume
@@ -122,15 +133,7 @@ module ProgressBar
       end
 
       def eol
-        finished? ? "\n" : "\r"
+        finished? || stopped? ? "\n" : "\r"
       end
-
-      # def halt
-        # stop
-      # end
-
-      # def stop
-        # update
-      # end
   end
 end
