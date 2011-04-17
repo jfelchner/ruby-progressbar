@@ -71,22 +71,19 @@ module ProgressBar
 
     def reset
       @bar.reset
-      @estimated_time.reset
-      @elapsed_time.reset
+      with_timers(:reset)
 
       update
     end
 
     def pause
-      @estimated_time.pause
-      @elapsed_time.pause
+      with_timers(:pause)
 
       update
     end
 
     def stop
-      @estimated_time.stop
-      @elapsed_time.stop
+      with_timers(:stop)
 
       update
     end
@@ -96,8 +93,7 @@ module ProgressBar
     end
 
     def resume
-      @estimated_time.resume
-      @elapsed_time.resume
+      with_timers(:resume)
 
       update
     end
@@ -119,13 +115,13 @@ module ProgressBar
         "#{" " * length}\r"
       end
 
-      def stop_timers
-        @estimated_time.stop
-        @elapsed_time.stop
+      def with_timers(action)
+        @estimated_time.send(action)
+        @elapsed_time.send(action)
       end
 
       def update
-        stop_timers if finished?
+        with_timers(:stop) if finished?
 
         if length_changed?
           clear
