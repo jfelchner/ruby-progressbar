@@ -1,91 +1,114 @@
-# Ruby/ProgressBar: A Text Progress Bar Library for Ruby
+Ruby/ProgressBar: A Text Progress Bar Library for Ruby
+================================
 
-Ruby/ProgressBar is a text progress bar library for Ruby.
-It can indicate progress with percentage, a progress bar,
-and estimated remaining time.
+Ruby/ProgressBar is a text progress bar library for Ruby.  It can indicate progress with percentage, a progress bar, and estimated remaining time.
 
-## Examples
+Installation
+--------------------------------
 
-    % irb --simple-prompt -r progressbar
-    >> pbar = ProgressBar.new("test", 100)
-    => (ProgressBar: 0/100)
-    >> 100.times {sleep(0.1); pbar.inc}; pbar.finish
-    test:          100% |oooooooooooooooooooooooooooooooooooooooo| Time: 00:00:10
-    => nil
+    gem install ruby-progressbar
 
-    >> pbar = ProgressBar.new("test", 100)
-    => (ProgressBar: 0/100)
-    >> (1..100).each{|x| sleep(0.1); pbar.set(x)}; pbar.finish
-    test:           67% |oooooooooooooooooooooooooo              | ETA:  00:00:03
+Usage
+--------------------------------
 
-## API
+    require 'progressbar'
 
-- `ProgressBar#new(title, total, out = STDERR)`
+or
 
-  Display the initial progress bar and return a
-  ProgressBar object.  _title_ specifies the title,
-  and _total_ specifies the total cost of processing.
-  Optional parameter _out_ specifies the output IO.
+    irb -r progressbar
 
-  The display of the progress bar is updated when one or
-  more percent is proceeded or one or more seconds are
-  elapsed from the previous display.
+Creation
+--------------------------------
 
-- `ProgressBar#inc(step = 1)`
+It's simple to get started:
 
-  Increase the internal counter by _step_ and update
-  the display of the progress bar. Display the estimated
-  remaining time on the right side of the bar. The counter
-  does not go beyond the _total_.
+    ProgressBar::Base.new
 
-- `ProgressBar#set(count)`
+Creates a basic progress bar beginning at 0, a total capacity of 100 and starts it.
 
-  Set the internal counter to _count_ and update the
-  display of the progress bar. Display the estimated
-  remaining time on the right side of the bar.  Raise if
-  _count_ is a negative number or a number more than
-  the _total_.
+    Progress: |                                                                       |
 
-- `ProgressBar#finish`
+### Options
 
-  Stop the progress bar and update the display of progress
-  bar. Display the elapsed time on the right side of the bar.
-  The progress bar always stops at 100% by the method.
+If you would like to customize your prompt, you can pass options when you call `#new`.
 
-- `ProgressBar#halt`
+    ProgressBar::Base.new(:title => "Items", :starting_at => 20, :total => 200)
 
-  Stop the progress bar and update the display of progress
-  bar. Display the elapsed time on the right side of the bar.
-  The progress bar stops at the current percentage by the method.
+    Items: |ooooooo                                                                |
 
-- `ProgressBar#format=`
+The following are the list of options you can use:
 
-  Set the format for displaying a progress bar.
-  Default: `"%-14s %3d%% %s %s"`.
+- `:title` - _(Defaults to 'Progress')_ - The title of the progress bar.
+- `:total` - _(Defaults to 100)_ The number of the items that will be completed in order for the bar to be considered "finished"
+- `:starting_at` - _(Defaults to 0)_ The number of items that should be considered completed when the bar first starts.  This is also the default number that the bar will be set to if `#reset` is called.
+- `:progress_mark` - _(Defaults to 'o')_ The mark which indicates the amount of progress that has been made.
+- `:format` - _(Defaults to '%t: |%b|')_ The format string which determines how the bar is displayed.  See `Formatting` below.
+- `:length` - _(Defaults to full width if possible, otherwise 80)_ The preferred width of the entire progress bar including any format options.
+- `:output_stream` - _(Defaults to STDERR)_ All output will be sent to this object.  Can be any object which responds to `.print`.
 
-- `ProgressBar#format_arguments=`
+Formatting
+--------------------------------
 
-  Set the methods for displaying a progress bar.
-  Default: `[:title, :percentage, :bar, :stat]`.
+The format of the progress bar is extremely easy to customize.  When you create the progress bar and pass the `:format` option, that string will be used to determine what the bar looks like.
 
-- `ProgressBar#file_transfer_mode`
+The flags you can use in the format string are as follows:
 
-  Use `:stat_for_file_transfer` instead of `:stat` to display
-  transfered bytes and transfer rate.
+- %t: Title
+- %a: Elapsed (Absolute) Time
+- %e: Estimated Time (Will Fall Back To 'ETA: ??:??:??' When It Exceeds 99:59:59)
+- %E: Estimated Time (Will Fall Back To 'ETA: > 4 Days' When It Exceeds 99:59:59)
+- %f: Force Estimated Time Even When Inaccurate
+- %p: Percentage Complete represented as a whole number (ie: 82%)
+- %P: Percentage Complete represented as a decimal number (ie: 82.33%)
+- %c: Number of Items Currently Completed
+- %C: Total Number of Items to be Completed
+- %b: Progress Bar
+- %r: Reversed Progress Bar (Accumulates From The Right)
 
+All values have an absolute length with the exception of the bar flags (ie %b, %r) which will occupy any leftover space.
+More than one bar flag can be used (although I'm not sure why you would :).  If so, the remaining space will be divided up equally among them.
 
-ReverseProgressBar class is also available.  The
-functionality is identical to ProgressBar but the direction
-of the progress bar is just opposite.
+Control
+--------------------------------
 
-## Limitations
+### Advancing
 
-Since the progress is calculated by the proportion to the
-total cost of processing, Ruby/ProgressBar cannot be used if
-the total cost of processing is unknown in advance.
-Moreover, the estimation of remaining time cannot be
-accurately performed if the progress does not flow uniformly.
+- `#increment`: Will advance the bar's progress by 1 unit.  This is the main way of progressing the bar.
+- `#current=`: Will allow you to jump the progress bar directly to whatever value you would like.  Note: This will almost always mess up your estimated time if you're using it.
 
----
+### Stopping
 
-[Satoru Takabayashi](http://namazu.org/~satoru/)
+The bar can be stopped in three ways:
+
+- `#finish`: Will stop the bar by completing it immediately.  The current position will be advanced to the total.
+- `#stop`: Will stop the bar by immediately cancelling it.  The current position will remain where it is.
+- `#pause`: Will stop the bar similar to `#stop` but will allow it to be restarted where it previously left off by calling `#resume`.
+- `#reset`: Will stop the bar by resetting all information.  The current position of the bar will be reset to where it began when it was created.
+
+### Finishing
+
+- See `#finish` above.
+
+_Note: The bar will be finished automatically if the current value ever becomes equal to the total._
+
+Issues
+------
+
+If you have problems, please create a [Github issue](https://github.com/nex3/ruby-progressbar/issues).
+
+Credits
+-------
+
+![thekompanee](http://www.thekompanee.com/public_files/kompanee-github-readme-logo.png)
+
+ruby-progressbar is maintained by [The Kompanee, Ltd.](http://www.thekompanee.com)
+
+The names and logos for The Kompanee are trademarks of The Kompanee, Ltd.
+
+License
+-------
+
+ruby-progressbar 1.0 is Copyright &copy; 2011 The Kompanee. It is free software, and may be redistributed under the terms specified in the LICENSE file.
+ruby-progressbar 0.0.9 is Copyright &copy; 2008 [Satoru Takabayashi](http://namazu.org/~satoru/)
+
+A special thanks to Satoru Takabayashi for inspiring the rewrite.
