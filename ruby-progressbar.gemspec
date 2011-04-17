@@ -24,7 +24,7 @@ and estimated remaining time.
 THEDOCTOR
 
   s.rdoc_options          = ["--charset = UTF-8"]
-  s.extra_rdoc_files      = %w[README.md RUBY_LICENSE GPL_LICENSE]
+  s.extra_rdoc_files      = %w[README.md LICENSE]
 
   #= Manifest =#
   # s.default_executable    = 'nothing'
