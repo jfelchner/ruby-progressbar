@@ -71,11 +71,11 @@ The following are the list of options you can use:
 ### Changing Progress
 
 * `#increment`: Will advance the bar's progress by 1 unit.  This is the main way of progressing the bar.
-* `#current=`: Will allow you to jump the progress bar directly to whatever value you would like.  Note: This will almost always mess up your estimated time if you're using it.
+* `#current=`: Will allow you to jump the progress bar directly to whatever value you would like. _Note: This will almost always mess up your estimated time if you're using it._
 
 ### Stopping
 
-The bar can be stopped in three ways:
+The bar can be stopped in four ways:
 
 * `#finish`: Will stop the bar by completing it immediately.  The current position will be advanced to the total.
 * `#stop`: Will stop the bar by immediately cancelling it.  The current position will remain where it is.
@@ -84,7 +84,7 @@ The bar can be stopped in three ways:
 
 ### Finishing
 
-- See `#finish` above.
+* See `#finish` above.
 
 _Note: The bar will be finished automatically if the current value ever becomes equal to the total._
 
@@ -156,9 +156,9 @@ The names and logos for The Kompanee are trademarks of The Kompanee, Ltd.
 Thanks
 --------------------------------
 
-Thanks to @nex3 for giving us contributor access to the initial repo.
+Thanks to [@nex3](https://github.com/nex3) for giving us contributor access to the initial repo.
 
-And a special thanks to Satoru Takabayashi who was the original author of the `progressbar` gem and who inspired us to do this rewrite.
+And a special thanks to [Satoru Takabayashi](http://namazu.org/~satoru/) who was the original author of the `progressbar` gem and who inspired us to do this rewrite.
 
 License
 --------------------------------
