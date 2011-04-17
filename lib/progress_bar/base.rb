@@ -19,7 +19,6 @@ module ProgressBar
       @estimated_time  = Components::EstimatedTimer.new(:starting_at => @bar.current, :total => @bar.total)
       @elapsed_time    = Components::ElapsedTimer.new
 
-      #TODO Manual Start Option start           unless options[:manual_start]
       start
     end
 
@@ -49,7 +48,7 @@ module ProgressBar
     end
 
     def inc
-      puts "#inc is deprecated.  Please use #increment"
+      puts "DEPRECATION WARNING: #inc will be removed on or after October 30th, 2011.  Please use #increment"
       increment
     end
 
@@ -58,6 +57,11 @@ module ProgressBar
       @estimated_time.increment
 
       update
+    end
+
+    def set(new_value)
+      puts "DEPRECATION WARNING: #set will be removed on or after October 30th, 2011.  Please use #current="
+      current = new_value
     end
 
     def current=(new_current)
