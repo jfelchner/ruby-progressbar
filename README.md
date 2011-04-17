@@ -1,7 +1,11 @@
 Ruby/ProgressBar: A Text Progress Bar Library for Ruby
 ================================
 
-Ruby/ProgressBar is a text progress bar library for Ruby.  It can indicate progress with percentage, a progress bar, and estimated remaining time.
+The **ultimate** text progress bar library for Ruby!  It'll **SMASH YOU OVER THE HEAD** with a **PURE RUSH** of progress bar excitement!
+
+Don't miss out on what all the kids are talking about!  If you want everyone to know that your gem or app can survive _in the cage_ then YOU WANT **RUBY-PROGRESSBAR**!
+
+![The Cage](http://www.thekompanee.com/public_files/the-cage.png)
 
 Installation
 --------------------------------
@@ -56,27 +60,27 @@ Which will output:
 
 The following are the list of options you can use:
 
-- `:title` - _(Defaults to 'Progress')_ - The title of the progress bar.
-- `:total` - _(Defaults to 100)_ The number of the items that will be completed in order for the bar to be considered "finished"
-- `:starting_at` - _(Defaults to 0)_ The number of items that should be considered completed when the bar first starts.  This is also the default number that the bar will be set to if `#reset` is called.
-- `:progress_mark` - _(Defaults to 'o')_ The mark which indicates the amount of progress that has been made.
-- `:format` - _(Defaults to '%t: |%b|')_ The format string which determines how the bar is displayed.  See `Formatting` below.
-- `:length` - _(Defaults to full width if possible, otherwise 80)_ The preferred width of the entire progress bar including any format options.
-- `:output_stream` - _(Defaults to STDERR)_ All output will be sent to this object.  Can be any object which responds to `.print`.
+* `:title` - _(Defaults to 'Progress')_ - The title of the progress bar.
+* `:total` - _(Defaults to 100)_ The number of the items that will be completed in order for the bar to be considered "finished"
+* `:starting_at` - _(Defaults to 0)_ The number of items that should be considered completed when the bar first starts.  This is also the default number that the bar will be set to if `#reset` is called.
+* `:progress_mark` - _(Defaults to 'o')_ The mark which indicates the amount of progress that has been made.
+* `:format` - _(Defaults to '%t: |%b|')_ The format string which determines how the bar is displayed.  See `Formatting` below.
+* `:length` - _(Defaults to full width if possible, otherwise 80)_ The preferred width of the entire progress bar including any format options.
+* `:output_stream` - _(Defaults to STDERR)_ All output will be sent to this object.  Can be any object which responds to `.print`.
 
-### Advancing
+### Changing Progress
 
-- `#increment`: Will advance the bar's progress by 1 unit.  This is the main way of progressing the bar.
-- `#current=`: Will allow you to jump the progress bar directly to whatever value you would like.  Note: This will almost always mess up your estimated time if you're using it.
+* `#increment`: Will advance the bar's progress by 1 unit.  This is the main way of progressing the bar.
+* `#current=`: Will allow you to jump the progress bar directly to whatever value you would like.  Note: This will almost always mess up your estimated time if you're using it.
 
 ### Stopping
 
 The bar can be stopped in three ways:
 
-- `#finish`: Will stop the bar by completing it immediately.  The current position will be advanced to the total.
-- `#stop`: Will stop the bar by immediately cancelling it.  The current position will remain where it is.
-- `#pause`: Will stop the bar similar to `#stop` but will allow it to be restarted where it previously left off by calling `#resume`. (Elapsed Time and Estimated Time will continue to be calculated correctly.)
-- `#reset`: Will stop the bar by resetting all information.  The current position of the bar will be reset to where it began when it was created.
+* `#finish`: Will stop the bar by completing it immediately.  The current position will be advanced to the total.
+* `#stop`: Will stop the bar by immediately cancelling it.  The current position will remain where it is.
+* `#pause`: Will stop the bar similar to `#stop` but will allow it to be restarted where it previously left off by calling `#resume`. (Elapsed Time and Estimated Time will continue to be calculated correctly.)
+* `#reset`: Will stop the bar by resetting all information.  The current position of the bar will be reset to where it began when it was created.
 
 ### Finishing
 
@@ -86,7 +90,7 @@ _Note: The bar will be finished automatically if the current value ever becomes 
 
 ### Refreshing
 
-- If you need to have the bar be redisplayed to give your users more of a "real-time" feel, you can call `#refresh` which will not affect the current position but will update the elapsed and estimated timers.
+* If you need to have the bar be redisplayed to give your users more of a "real-time" feel, you can call `#refresh` which will not affect the current position but will update the elapsed and estimated timers.
 
 Formatting
 --------------------------------
@@ -95,18 +99,18 @@ The format of the progress bar is extremely easy to customize.  When you create 
 
 The flags you can use in the format string are as follows:
 
-- `%t`: Title
-- `%a`: Elapsed (Absolute) Time
-- `%e`: Estimated Time (Will Fall Back To 'ETA: ??:??:??' When It Exceeds 99:59:59)
-- `%E`: Estimated Time (Will Fall Back To 'ETA: > 4 Days' When It Exceeds 99:59:59)
-- `%f`: Force Estimated Time Even When Inaccurate
-- `%p`: Percentage Complete represented as a whole number (ie: 82%)
-- `%P`: Percentage Complete represented as a decimal number (ie: 82.33%)
-- `%c`: Number of Items Currently Completed
-- `%C`: Total Number of Items to be Completed
-- `%b`: Progress Bar
-- `%r`: Reversed Progress Bar (Accumulates From The Right)
-- `%%`: A Literal Percent Sign "%"
+* `%t`: Title
+* `%a`: Elapsed (Absolute) Time
+* `%e`: Estimated Time (Will Fall Back To 'ETA: ??:??:??' When It Exceeds 99:59:59)
+* `%E`: Estimated Time (Will Fall Back To 'ETA: > 4 Days' When It Exceeds 99:59:59)
+* `%f`: Force Estimated Time Even When Inaccurate
+* `%p`: Percentage Complete represented as a whole number (ie: 82%)
+* `%P`: Percentage Complete represented as a decimal number (ie: 82.33%)
+* `%c`: Number of Items Currently Completed
+* `%C`: Total Number of Items to be Completed
+* `%b`: Progress Bar
+* `%r`: Reversed Progress Bar (Accumulates From The Right)
+* `%%`: A Literal Percent Sign "%"
 
 All values have an absolute length with the exception of the bar flags (ie %b, %r) which will occupy any leftover space.
 More than one bar flag can be used (although I'm not sure why you would :).  If so, the remaining space will be divided up equally among them.
