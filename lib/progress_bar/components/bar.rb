@@ -3,7 +3,7 @@ module ProgressBar
     class Bar
       include Progressable
 
-      OPTIONS                    = [:total, :progress_mark, :beginning_position]
+      OPTIONS                    = [:total, :progress_mark, :starting_at]
 
       DEFAULT_PROGRESS_MARK      = 'o'
 

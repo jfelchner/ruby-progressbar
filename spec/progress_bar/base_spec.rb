@@ -42,7 +42,7 @@ describe ProgressBar::Base do
     end
 
     context "and options are passed" do
-      before { @progressbar = ProgressBar::Base.new(:title => "We All Float", :total => 12, :output_stream => STDOUT, :progress_mark => "x", :length => 88, :beginning_position => 5) }
+      before { @progressbar = ProgressBar::Base.new(:title => "We All Float", :total => 12, :output_stream => STDOUT, :progress_mark => "x", :length => 88, :starting_at => 5) }
 
       describe "#title" do
         it "returns the overridden title" do
@@ -103,7 +103,7 @@ describe ProgressBar::Base do
 
   context "when a bar is about to be completed" do
     before do
-      @progressbar = ProgressBar::Base.new(:beginning_position => 99, :total => 100, :output_stream => @output_stream, :length => 80)
+      @progressbar = ProgressBar::Base.new(:starting_at => 99, :total => 100, :output_stream => @output_stream, :length => 80)
       @progressbar.start
     end
 
@@ -123,7 +123,7 @@ describe ProgressBar::Base do
 
   context "when a bar is started" do
     before do
-      @progressbar = ProgressBar::Base.new(:beginning_position => 0, :total => 100, :output_stream => @output_stream, :length => 80)
+      @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output_stream => @output_stream, :length => 80)
       @progressbar.start
     end
 
@@ -152,7 +152,7 @@ describe ProgressBar::Base do
 
   context "when a bar is started from 10/100" do
     before do
-      @progressbar = ProgressBar::Base.new(:beginning_position => 10, :total => 100, :output_stream => @output_stream, :length => 112)
+      @progressbar = ProgressBar::Base.new(:starting_at => 10, :total => 100, :output_stream => @output_stream, :length => 112)
       @progressbar.start
     end
 
@@ -203,7 +203,7 @@ describe ProgressBar::Base do
   end
 
   context "when the bar hasn't been completed" do
-    before { @progressbar = ProgressBar::Base.new(:length => 112, :beginning_position => 0, :total => 50, :output_stream => @output_stream) }
+    before { @progressbar = ProgressBar::Base.new(:length => 112, :starting_at => 0, :total => 50, :output_stream => @output_stream) }
 
     describe "#increment" do
       before { @progressbar.increment }
@@ -253,7 +253,7 @@ describe ProgressBar::Base do
       end
 
       it "displays the reversed bar when passed the '%r' format flag" do
-        @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :length => 100, :beginning_position => 0)
+        @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :length => 100, :starting_at => 0)
 
         @progressbar.to_s('%r').should match /^#{" " * 100}\z/
         @progressbar.increment
@@ -261,7 +261,7 @@ describe ProgressBar::Base do
       end
 
       it "displays the current capacity when passed the '%c' format flag" do
-        @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :beginning_position => 0)
+        @progressbar = ProgressBar::Base.new(:output_stream => @output_stream, :starting_at => 0)
 
         @progressbar.to_s('%c').should match /^0\z/
         @progressbar.increment
@@ -275,19 +275,19 @@ describe ProgressBar::Base do
       end
 
       it "displays the percentage complete when passed the '%p' format flag" do
-        @progressbar = ProgressBar::Base.new(:beginning_position => 33, :total => 200)
+        @progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
 
         @progressbar.to_s('%p').should match /^16\z/
       end
 
       it "displays the percentage complete when passed the '%P' format flag" do
-        @progressbar = ProgressBar::Base.new(:beginning_position => 33, :total => 200)
+        @progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
 
         @progressbar.to_s('%P').should match /^16.50\z/
       end
 
       it "displays only up to 2 decimal places when using the %P flag" do
-        @progressbar = ProgressBar::Base.new(:beginning_position => 66, :total => 99)
+        @progressbar = ProgressBar::Base.new(:starting_at => 66, :total => 99)
 
         @progressbar.to_s('%P').should match /^66.66\z/
       end
@@ -329,7 +329,7 @@ describe ProgressBar::Base do
       context "when called after #start" do
         before do
           Timecop.travel(-3723) do
-            @progressbar = ProgressBar::Base.new(:beginning_position => 0, :output_stream => @output_stream)
+            @progressbar = ProgressBar::Base.new(:starting_at => 0, :output_stream => @output_stream)
             @progressbar.start
             @progressbar.current = 50
           end
@@ -351,7 +351,7 @@ describe ProgressBar::Base do
       context "when it could take 100 hours or longer to finish" do
         before do
           Timecop.travel(-120000) do
-            @progressbar = ProgressBar::Base.new(:beginning_position => 0, :total => 100, :output_stream => @output_stream)
+            @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output_stream => @output_stream)
             @progressbar.start
             @progressbar.current = 25
           end
