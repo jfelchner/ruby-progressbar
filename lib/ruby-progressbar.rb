@@ -4,3 +4,6 @@ require File.join(File.dirname(__FILE__), "progress_bar", "formatter")
 require File.join(File.dirname(__FILE__), "progress_bar", "components")
 require File.join(File.dirname(__FILE__), "progress_bar", "format")
 require File.join(File.dirname(__FILE__), "progress_bar", "base")
+
+class BasicProgressBar < ProgressBar::Base
+end
