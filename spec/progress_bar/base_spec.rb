@@ -258,6 +258,8 @@ describe ProgressBar::Base do
         @progressbar.to_s('%r').should match /^#{" " * 100}\z/
         @progressbar.increment
         @progressbar.to_s('%r').should match /^#{" " * 99}o\z/
+        @progressbar.decrement
+        @progressbar.to_s('%r').should match /^#{" " * 100}\z/
       end
 
       it "displays the current capacity when passed the '%c' format flag" do
@@ -266,6 +268,8 @@ describe ProgressBar::Base do
         @progressbar.to_s('%c').should match /^0\z/
         @progressbar.increment
         @progressbar.to_s('%c').should match /^1\z/
+        @progressbar.decrement
+        @progressbar.to_s('%c').should match /^0\z/
       end
 
       it "displays the total capacity when passed the '%C' format flag" do

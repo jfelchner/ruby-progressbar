@@ -38,6 +38,14 @@ describe ProgressBar::Components::EstimatedTimer do
           end
         end
 
+        context "when #decrement is called" do
+          before { @estimated_time.decrement }
+
+          it "displays 3:51:16 remaining" do
+            @estimated_time.to_s.should eql " ETA: 03:51:16"
+          end
+        end
+
         context "when #reset is called" do
           before { @estimated_time.reset }
 

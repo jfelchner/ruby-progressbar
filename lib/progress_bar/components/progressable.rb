@@ -26,6 +26,10 @@ module ProgressBar
         @current += 1 unless current == total
       end
 
+      def decrement
+        @current -= 1 unless current == 0
+      end
+
       def reset
         @current = @starting_position
       end

@@ -54,6 +54,13 @@ module ProgressBar
       increment
     end
 
+    def decrement
+      @bar.decrement
+      @estimated_time.decrement
+
+      update
+    end
+
     def increment
       @bar.increment
       @estimated_time.increment

@@ -146,7 +146,22 @@ describe ProgressBar::Components::Bar do
 
       describe "#to_s" do
         it "displays the bar as 100% complete" do
-          @progressbar.to_s(100).should eql "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+          @progressbar.to_s(100).should eql 'o' * 100
+        end
+      end
+    end
+
+    context "and the bar is decremented" do
+      before { @progressbar.decrement }
+
+      it "removes some progress from the bar" do
+        @progressbar.current.should eql 49
+        @progressbar.percentage_completed.should eql 98
+      end
+
+      describe "#to_s" do
+        it "displays the bar as 98% complete" do
+          @progressbar.to_s(100).should eql "#{'o' * 98}  "
         end
       end
     end
