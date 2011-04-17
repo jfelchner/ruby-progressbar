@@ -14,13 +14,17 @@ First:
 
     gem install ruby-progressbar
 
-Then:
+Then in your script:
 
-    require 'progressbar'
+    require 'ruby-progressbar'
 
-or
+or in your Gemfile
 
-    irb -r progressbar
+    gem 'ruby-progressbar'
+
+or from IRB
+
+    irb -r 'ruby-progressbar'
 
 Basic Usage
 --------------------------------
@@ -29,7 +33,7 @@ Basic Usage
 
 It's simple to get started:
 
-    ProgressBar::Base.new
+    BasicProgressBar.new
 
 Creates a basic progress bar beginning at 0, a total capacity of 100 and tells it to start.
 
@@ -37,7 +41,7 @@ Creates a basic progress bar beginning at 0, a total capacity of 100 and tells i
 
 ### Marking Progress
 
-Every call to `#increment` will advance the bar by 1 so:
+Every call to `#increment` will advance the bar by 1. Therefore:
 
     50.times { progressbar.increment }
 
@@ -52,16 +56,16 @@ Advanced Usage
 
 If you would like to customize your prompt, you can pass options when you call `#new`.
 
-    ProgressBar::Base.new(:title => "Items", :starting_at => 20, :total => 200)
+    BasicProgressBar.new(:title => "Items", :starting_at => 20, :total => 200)
 
-Which will output:
+Will output:
 
     Items: |ooooooo                                                                |
 
 The following are the list of options you can use:
 
 * `:title` - _(Defaults to 'Progress')_ - The title of the progress bar.
-* `:total` - _(Defaults to 100)_ The number of the items that will be completed in order for the bar to be considered "finished"
+* `:total` - _(Defaults to 100)_ The total number of the items that can be completed.
 * `:starting_at` - _(Defaults to 0)_ The number of items that should be considered completed when the bar first starts.  This is also the default number that the bar will be set to if `#reset` is called.
 * `:progress_mark` - _(Defaults to 'o')_ The mark which indicates the amount of progress that has been made.
 * `:format` - _(Defaults to '%t: |%b|')_ The format string which determines how the bar is displayed.  See `Formatting` below.
@@ -71,6 +75,7 @@ The following are the list of options you can use:
 ### Changing Progress
 
 * `#increment`: Will advance the bar's progress by 1 unit.  This is the main way of progressing the bar.
+* `#decrement`: Will retract the bar's progress by 1 unit.
 * `#current=`: Will allow you to jump the progress bar directly to whatever value you would like. _Note: This will almost always mess up your estimated time if you're using it._
 
 ### Stopping
@@ -119,7 +124,7 @@ More than one bar flag can be used (although I'm not sure why you would :).  If 
 
 If you would like a bar with the elapsed time on the left and the percentage complete followed by the title on the right, you'd do this:
 
-    ProgressBar::Base.new(:format => '%a %b %p %t')
+    BasicProgressBar.new(:format => '%a %b %p %t')
 
 Which will output something like this:
 
@@ -127,7 +132,7 @@ Which will output something like this:
 
 Hard to see where the bar is?  Just add your own end caps, whatever you'd like.  Like so:
 
-    ProgressBar::Base.new(:format => '%a <%b> %p %t')
+    BasicProgressBar.new(:format => '%a <%b> %p %t')
 
 Becomes:
 
@@ -157,6 +162,7 @@ Thanks
 --------------------------------
 
 Thanks to [@nex3](https://github.com/nex3) for giving us contributor access to the initial repo.
+Thanks to Hiroyuki Iwatsuki for giving us access to the gem on Rubygems to allow us to push our new versions.
 
 And a special thanks to [Satoru Takabayashi](http://namazu.org/~satoru/) who was the original author of the `progressbar` gem and who inspired us to do this rewrite.
 
