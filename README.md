@@ -76,7 +76,7 @@ The following are the list of options you can use:
 
 * `#increment`: Will advance the bar's progress by 1 unit.  This is the main way of progressing the bar.
 * `#decrement`: Will retract the bar's progress by 1 unit.
-* `#current=`: Will allow you to jump the progress bar directly to whatever value you would like. _Note: This will almost always mess up your estimated time if you're using it._
+* `#progress=`: Will allow you to jump the amount of progress directly to whatever value you would like. _Note: This will almost always mess up your estimated time if you're using it._
 
 ### Stopping
 

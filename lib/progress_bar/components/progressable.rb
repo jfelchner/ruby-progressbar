@@ -5,17 +5,17 @@ module ProgressBar
       DEFAULT_BEGINNING_POSITION = 0
 
       attr_reader               :total
-      attr_reader               :current
+      attr_reader               :progress
 
       def initialize_progress(options)
-        self.total   = options[:total]             || DEFAULT_TOTAL
-        self.current = options[:starting_at]       || DEFAULT_BEGINNING_POSITION
+        self.total    = options[:total]             || DEFAULT_TOTAL
+        self.progress = options[:starting_at]       || DEFAULT_BEGINNING_POSITION
       end
 
       def start(options = {})
-        self.current = options[:at] || self.current
+        self.progress = options[:at] || self.progress
 
-        @starting_position = self.current
+        @starting_position = self.progress
       end
 
       def started?
@@ -23,20 +23,20 @@ module ProgressBar
       end
 
       def increment
-        @current += 1 unless current == total
+        @progress += 1 unless progress == total
       end
 
       def decrement
-        @current -= 1 unless current == 0
+        @progress -= 1 unless progress == 0
       end
 
       def reset
-        @current = @starting_position
+        @progress = @starting_position
       end
 
-      def current=(new_current)
-        validate_current(new_current)
-        @current = new_current
+      def progress=(new_progress)
+        validate_progress(new_progress)
+        @progress = new_progress
       end
 
       def total=(new_total)
@@ -45,33 +45,33 @@ module ProgressBar
       end
 
       def finish
-        @current = @total
+        @progress = @total
       end
 
       def percentage_completed
-        # current / total * 100
+        # progress / total * 100
         #
         # Doing this way so we can avoid converting each
         # number to a float and then back to an integer.
         #
-        current * 100 / total
+        progress * 100 / total
       end
 
       def percentage_completed_with_precision
-        format('%5.2f', (current.to_f * 100.0 / total * 100.0).floor / 100.0)
+        format('%5.2f', (progress.to_f * 100.0 / total * 100.0).floor / 100.0)
       end
 
       private
         def validate_total(new_total)
-          (current.nil? || new_total >= current) || raise("You can't set the item's total value to be less than the current progress.")
+          (progress.nil? || new_total >= progress) || raise("You can't set the item's total value to be less than the current progress.")
         end
 
-        def validate_current(new_current)
-          (total.nil? || new_current <= total) || raise("You can't set the item's current value to be greater than the total.")
+        def validate_progress(new_progress)
+          (total.nil? || new_progress <= total) || raise("You can't set the item's current value to be greater than the total.")
         end
 
         def progress_made
-          started? ? @current - @starting_position : 0
+          started? ? @progress - @starting_position : 0
         end
     end
   end

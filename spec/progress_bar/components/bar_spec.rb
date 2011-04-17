@@ -17,9 +17,9 @@ describe ProgressBar::Components::Bar do
         end
       end
 
-      describe "#current" do
+      describe "#progress" do
         it "returns the default beginning position" do
-          @progressbar.current.should eql ProgressBar::Components::Bar::DEFAULT_BEGINNING_POSITION
+          @progressbar.progress.should eql ProgressBar::Components::Bar::DEFAULT_BEGINNING_POSITION
         end
       end
     end
@@ -39,9 +39,9 @@ describe ProgressBar::Components::Bar do
         end
       end
 
-      describe "#current" do
+      describe "#progress" do
         it "returns the overridden beginning position" do
-          @progressbar.current.should eql 5
+          @progressbar.progress.should eql 5
         end
       end
     end
@@ -77,8 +77,8 @@ describe ProgressBar::Components::Bar do
     context "and the bar is incremented" do
       before { @progressbar.increment }
 
-      it "adds to the current amount" do
-        @progressbar.current.should eql 1
+      it "adds to the progress amount" do
+        @progressbar.progress.should eql 1
       end
 
       describe "#percentage_completed" do
@@ -140,7 +140,7 @@ describe ProgressBar::Components::Bar do
       before { @progressbar.increment }
 
       it "doesn't increment past the total" do
-        @progressbar.current.should eql 50
+        @progressbar.progress.should eql 50
         @progressbar.percentage_completed.should eql 100
       end
 
@@ -155,7 +155,7 @@ describe ProgressBar::Components::Bar do
       before { @progressbar.decrement }
 
       it "removes some progress from the bar" do
-        @progressbar.current.should eql 49
+        @progressbar.progress.should eql 49
         @progressbar.percentage_completed.should eql 98
       end
 

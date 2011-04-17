@@ -50,7 +50,7 @@ module ProgressBar
         end
 
         def estimated_seconds_remaining
-          (seconds_per_each * (@total - @current)).floor
+          (seconds_per_each * (@total - @progress)).floor
         end
 
         def out_of_bounds_time

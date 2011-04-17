@@ -4,7 +4,7 @@ module ProgressBar
       MOLECULES = {
         :t => [:left_justified_title,               :title],
         :T => [:right_justified_title,              :title],
-        :c => [:current_capacity,                   :current],
+        :c => [:current_progress,                   :progress],
         :C => [:total_capacity,                     :total],
         :p => [:percentage_complete_as_integer,     :percentage],
         :P => [:percentage_complete_as_float,       :percentage_with_precision],

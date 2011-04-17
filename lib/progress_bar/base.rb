@@ -18,7 +18,7 @@ module ProgressBar
 
       @title           = Components::Title.new(title_options_from(options))
       @bar             = Components::Bar.new(bar_options_from(options))
-      @estimated_time  = Components::EstimatedTimer.new(:starting_at => @bar.current, :total => @bar.total)
+      @estimated_time  = Components::EstimatedTimer.new(:starting_at => @bar.progress, :total => @bar.total)
       @elapsed_time    = Components::ElapsedTimer.new
 
       start
@@ -46,7 +46,7 @@ module ProgressBar
     end
 
     def finished?
-      @bar.current == @bar.total
+      @bar.progress == @bar.total
     end
 
     def inc
@@ -69,13 +69,13 @@ module ProgressBar
     end
 
     def set(new_value)
-      puts "DEPRECATION WARNING: #set will be removed on or after October 30th, 2011.  Please use #current="
-      current = new_value
+      puts "DEPRECATION WARNING: #set will be removed on or after October 30th, 2011.  Please use #progress="
+      progress = new_value
     end
 
-    def current=(new_current)
-      @bar.current            = new_current
-      @estimated_time.current = new_current
+    def progress=(new_progress)
+      @bar.progress            = new_progress
+      @estimated_time.progress = new_progress
     end
 
     def reset
@@ -119,7 +119,7 @@ module ProgressBar
     end
 
     def inspect
-      "#<ProgressBar:#{@bar.current}/#{@bar.total}>"
+      "#<ProgressBar:#{@bar.progress}/#{@bar.total}>"
     end
 
     private

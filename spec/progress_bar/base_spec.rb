@@ -216,29 +216,6 @@ describe ProgressBar::Base do
   end
 
   context "when a new bar is created with a specific format" do
-    # %t: Left-Justified Title
-    # %T: Right-Justified Title
-    # %a: Elapsed (Absolute) Time
-    # %e: Estimated Time (Will Fall Back To 'ETA: ??:??:??' When It Exceeds 99:59:59)
-    # %E: Estimated Time (Will Fall Back To 'ETA: > 4 Days' When It Exceeds 99:59:59)
-    # %f: Force Estimated Time Even When Inaccurate
-    # %p: Percentage Complete (Integer)
-    # %P: Percentage Complete (Float)
-    # %c: Current Capacity
-    # %C: Total Capacity
-    # %b: Bar (Without End Caps)
-    # %B: Bar (Without End Caps And With Integrated Percentage)
-    # %r: Reversed Bar (Without End Caps) (Accumulates From The Right)
-    # %R: Reversed Bar (Without End Caps And With Integrated Percentage)
-
-    # All values have an absolute length with the exception of %t, %T, %b, %B, %i, %r, %R and %I.
-    # The Titles will default to only being as long as their text.
-    # The Bars will all occupy any space left over.  The minimum for the bars without end caps is 1.
-    # The minimum for the Bars with end caps is 3.
-
-    # To specify a specific length for the title, use the "*\d" notation.
-
-    # Add '@' after any Estimated Time flag to make it show the Elapsed Time when finished
     context "#to_s" do
       it "displays the title when passed the '%t' format flag" do
         @progressbar.to_s('%t').should match /^Progress\z/
@@ -335,7 +312,7 @@ describe ProgressBar::Base do
           Timecop.travel(-3723) do
             @progressbar = ProgressBar::Base.new(:starting_at => 0, :output_stream => @output_stream)
             @progressbar.start
-            @progressbar.current = 50
+            @progressbar.progress = 50
           end
         end
 
@@ -357,7 +334,7 @@ describe ProgressBar::Base do
           Timecop.travel(-120000) do
             @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output_stream => @output_stream)
             @progressbar.start
-            @progressbar.current = 25
+            @progressbar.progress = 25
           end
         end
 

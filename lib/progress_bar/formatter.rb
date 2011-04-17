@@ -32,8 +32,8 @@ module ProgressBar
         @title
       end
 
-      def current
-        @bar.current
+      def progress
+        @bar.progress
       end
 
       def total
