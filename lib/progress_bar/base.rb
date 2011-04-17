@@ -7,7 +7,9 @@ module ProgressBar
     DEFAULT_OUTPUT_STREAM     = STDERR
     DEFAULT_FORMAT_STRING     = '%t: |%b|'
 
-    def initialize(options = {})
+    def initialize(*args)
+      options          = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
+
       @out             = options[:output_stream]         || DEFAULT_OUTPUT_STREAM
 
       @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH'] || options[:length]
@@ -82,6 +84,11 @@ module ProgressBar
       update
     end
 
+    def halt
+      puts "DEPRECATION WARNING: #halt will be removed on or after October 30th, 2011.  Please use #stop"
+      stop
+    end
+
     def stop
       with_timers(:stop)
 
@@ -89,7 +96,7 @@ module ProgressBar
     end
 
     def stopped?
-      @estimated_time.stopped? && elapsed_time.stopped?
+      @estimated_time.stopped? && @elapsed_time.stopped?
     end
 
     def resume
@@ -110,6 +117,21 @@ module ProgressBar
 
     private
       attr_reader         :out
+
+      # This will be removed on or after October 30th, 2011 and is only here to provide backward
+      # compatibility with the previous versions of ruby-progressbar.
+      def backwards_compatible_args_to_options_conversion(args)
+        options = {}
+
+        if args.size > 1
+          puts "DEPRECATION WARNING: Creating Progress Bars in this way has been deprecated and will be removed on or after October 30th, 2011.  Please update your code to use the new initializer syntax found here: https://github.com/thekompanee/ruby-progressbar."
+          options[:title]         = args[0]
+          options[:total]         = args[1]
+          options[:output_stream] = args[2]
+        else
+          options = args[0]
+        end
+      end
 
       def clear_string
         "#{" " * length}\r"
