@@ -70,7 +70,7 @@ The following are the list of options you can use:
 * `:progress_mark` - _(Defaults to 'o')_ The mark which indicates the amount of progress that has been made.
 * `:format` - _(Defaults to '%t: |%b|')_ The format string which determines how the bar is displayed.  See `Formatting` below.
 * `:length` - _(Defaults to full width if possible, otherwise 80)_ The preferred width of the entire progress bar including any format options.
-* `:output_stream` - _(Defaults to STDERR)_ All output will be sent to this object.  Can be any object which responds to `.print`.
+* `:output` - _(Defaults to STDOUT)_ All output will be sent to this object.  Can be any object which responds to `.print`.
 
 ### Changing Progress
 

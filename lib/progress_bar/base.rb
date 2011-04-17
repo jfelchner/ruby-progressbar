@@ -4,7 +4,7 @@ module ProgressBar
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
 
-    DEFAULT_OUTPUT_STREAM     = STDERR
+    DEFAULT_OUTPUT_STREAM     = STDOUT
     DEFAULT_FORMAT_STRING     = '%t: |%b|'
 
     def initialize(*args)
