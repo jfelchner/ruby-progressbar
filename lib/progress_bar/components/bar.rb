@@ -12,21 +12,21 @@ module ProgressBar
       def initialize(options = {})
         initialize_progress(options)
 
-        @reversed        = false
+        @mirrored        = false
         @progress_mark   = options[:progress_mark]      || DEFAULT_PROGRESS_MARK
       end
 
-      def reverse
-        @reversed = !@reversed
+      def mirror
+        @mirrored = !@mirrored
       end
 
-      def reversed?
-        @reversed
+      def mirrored?
+        @mirrored
       end
 
       def to_s(length)
         @length = length
-        reversed? ? "#{empty_string}#{complete_string}" : "#{complete_string}#{empty_string}"
+        mirrored? ? "#{empty_string}#{complete_string}" : "#{complete_string}#{empty_string}"
       end
 
       private

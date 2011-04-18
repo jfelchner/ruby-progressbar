@@ -50,8 +50,8 @@ describe ProgressBar::Components::Bar do
   context "when just begun" do
     before { @progressbar = ProgressBar::Components::Bar.new(:starting_at => 0, :total => 50) }
 
-    context "and the bar has been reversed" do
-      before { @progressbar.reverse }
+    context "and the bar has been mirrored" do
+      before { @progressbar.mirror }
 
       it "displays the bar with no indication of progress" do
         @progressbar.to_s(100).should eql "                                                                                                    "
@@ -87,8 +87,8 @@ describe ProgressBar::Components::Bar do
         end
       end
 
-      context "and the bar has been reversed" do
-        before { @progressbar.reverse }
+      context "and the bar has been mirrored" do
+        before { @progressbar.mirror }
 
         describe "#to_s" do
           it "displays the bar with an indication of progress" do
@@ -166,8 +166,8 @@ describe ProgressBar::Components::Bar do
       end
     end
 
-    context "and the bar has been reversed" do
-      before { @progressbar.reverse }
+    context "and the bar has been mirrored" do
+      before { @progressbar.mirror }
 
       describe "#to_s" do
         it "displays the bar with an indication of progress" do

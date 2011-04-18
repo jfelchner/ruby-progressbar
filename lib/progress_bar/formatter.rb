@@ -71,8 +71,8 @@ module ProgressBar
         @bar.to_s(length)
       end
 
-      def reversed_bar(length)
-        @bar.reverse unless @bar.reversed?
+      def mirrored_bar(length)
+        @bar.mirror unless @bar.mirrored?
         @bar.to_s(length)
       end
   end

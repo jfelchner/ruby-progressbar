@@ -114,7 +114,7 @@ The flags you can use in the format string are as follows:
 * `%c`: Number of Items Currently Completed
 * `%C`: Total Number of Items to be Completed
 * `%b`: Progress Bar
-* `%r`: Reversed Progress Bar (Accumulates From The Right)
+* `%m`: Mirrored Progress Bar (Accumulates From The Right)
 * `%%`: A Literal Percent Sign "%"
 
 All values have an absolute length with the exception of the bar flags (ie %b, %r) which will occupy any leftover space.

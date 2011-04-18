@@ -13,12 +13,12 @@ module ProgressBar
         :E => [:estimated_time_with_greater_than,   :estimated_time_with_friendly_oob],
         :f => [:force_estimated_time,               :estimated_time],
         :b => [:bar,                                :bar],
-        :r => [:reversed_bar,                       :reversed_bar],
+        :m => [:mirrored_bar,                       :mirrored_bar],
         # :bar_with_percentage              => "%B",
-        # :reversed_bar_with_percentage     => "%R"
+        # :mirrored_bar_with_percentage     => "%R"
       }
 
-      BAR_MOLECULES     = %w{b r}
+      BAR_MOLECULES     = %w{b m}
 
       attr_reader   :key
       attr_reader   :method_name
