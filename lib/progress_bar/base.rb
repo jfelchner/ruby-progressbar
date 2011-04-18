@@ -6,6 +6,7 @@ module ProgressBar
 
     DEFAULT_OUTPUT_STREAM     = STDOUT
     DEFAULT_FORMAT_STRING     = '%t: |%b|'
+    DEFAULT_TITLE             = "Progress"
 
     def initialize(*args)
       options          = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
@@ -16,7 +17,7 @@ module ProgressBar
 
       @format_string   = options[:format]                || DEFAULT_FORMAT_STRING
 
-      @title           = Components::Title.new(title_options_from(options))
+      @title           = options[:title]                 || DEFAULT_TITLE
       @bar             = Components::Bar.new(bar_options_from(options))
       @estimated_time  = Components::EstimatedTimer.new(:starting_at => @bar.progress, :total => @bar.total)
       @elapsed_time    = Components::ElapsedTimer.new

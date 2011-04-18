@@ -14,7 +14,7 @@ describe ProgressBar::Base do
 
       describe "#title" do
         it "returns the default title" do
-          @progressbar.send(:title).to_s.should eql ProgressBar::Components::Title::DEFAULT_TITLE
+          @progressbar.send(:title).to_s.should eql ProgressBar::Base::DEFAULT_TITLE
         end
       end
 
