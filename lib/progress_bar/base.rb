@@ -1,6 +1,5 @@
 module ProgressBar
   class Base
-    include ProgressBar::OptionsParser
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
 
@@ -18,8 +17,8 @@ module ProgressBar
       @format_string   = options[:format]                || DEFAULT_FORMAT_STRING
 
       @title           = options[:title]                 || DEFAULT_TITLE
-      @bar             = Components::Bar.new(bar_options_from(options))
-      @estimated_time  = Components::EstimatedTimer.new(:total => @bar.total)
+      @bar             = Components::Bar.new(options)
+      @estimated_time  = Components::EstimatedTimer.new(options)
       @elapsed_time    = Components::ElapsedTimer.new
 
       start :at => options[:starting_at]
