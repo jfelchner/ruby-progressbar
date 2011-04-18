@@ -10,7 +10,7 @@ module ProgressBar
     def initialize(*args)
       options          = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
 
-      @out             = options[:output]                || DEFAULT_OUTPUT_STREAM
+      self.output      = options[:output]                || DEFAULT_OUTPUT_STREAM
 
       @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH'] || options[:length]
 
@@ -25,22 +25,20 @@ module ProgressBar
     end
 
     def clear
-      @out.print clear_string
+      output.print clear_string
     end
 
     def start(options = {})
       clear
 
-      @bar.start(options)
-      @estimated_time.start(options)
+      with_progressables(:start, options)
       @elapsed_time.start
 
       update
     end
 
     def finish
-      @bar.finish
-      @estimated_time.finish
+      with_progressables(:finish)
 
       update
     end
@@ -55,15 +53,13 @@ module ProgressBar
     end
 
     def decrement
-      @bar.decrement
-      @estimated_time.decrement
+      with_progressables(:decrement)
 
       update
     end
 
     def increment
-      @bar.increment
-      @estimated_time.increment
+      with_progressables(:increment)
 
       update
     end
@@ -74,8 +70,7 @@ module ProgressBar
     end
 
     def progress=(new_progress)
-      @bar.progress            = new_progress
-      @estimated_time.progress = new_progress
+      with_progressables(:progress=, new_progress)
     end
 
     def reset
@@ -123,7 +118,7 @@ module ProgressBar
     end
 
     private
-      attr_reader         :out
+      attr_accessor   :output
 
       # This will be removed on or after October 30th, 2011 and is only here to provide backward
       # compatibility with the previous versions of ruby-progressbar.
@@ -144,9 +139,24 @@ module ProgressBar
         "#{" " * length}\r"
       end
 
-      def with_timers(action)
-        @estimated_time.send(action)
-        @elapsed_time.send(action)
+      def with_progressables(action, *args)
+        if args.empty?
+          @bar.send(action)
+          @estimated_time.send(action)
+        else
+          @bar.send(action, *args)
+          @estimated_time.send(action, *args)
+        end
+      end
+
+      def with_timers(action, *args)
+        if args.empty?
+          @estimated_time.send(action)
+          @elapsed_time.send(action)
+        else
+          @estimated_time.send(action, *args)
+          @elapsed_time.send(action, *args)
+        end
       end
 
       def update
@@ -157,8 +167,8 @@ module ProgressBar
           reset_length
         end
 
-        @out.print self.to_s + eol
-        @out.flush
+        output.print self.to_s + eol
+        output.flush
       end
 
       def eol

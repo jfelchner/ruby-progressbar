@@ -18,9 +18,9 @@ describe ProgressBar::Base do
         end
       end
 
-      describe "#out" do
+      describe "#output" do
         it "returns the default output stream" do
-          @progressbar.send(:out).should eql ProgressBar::Base::DEFAULT_OUTPUT_STREAM
+          @progressbar.send(:output).should eql ProgressBar::Base::DEFAULT_OUTPUT_STREAM
         end
       end
 
@@ -50,9 +50,9 @@ describe ProgressBar::Base do
         end
       end
 
-      describe "#out" do
+      describe "#output" do
         it "returns the overridden output stream" do
-          @progressbar.send(:out).should eql STDOUT
+          @progressbar.send(:output).should eql STDOUT
         end
       end
 
