@@ -5,33 +5,34 @@ module ProgressBar
 
       DEFAULT_PROGRESS_MARK      = 'o'
 
-      attr_reader               :progress_mark
+      attr_accessor :mirrored
+      attr_accessor :progress_mark
 
       def initialize(options = {})
         initialize_progress(options)
 
-        @mirrored        = false
-        @progress_mark   = options[:progress_mark]      || DEFAULT_PROGRESS_MARK
+        self.mirrored        = false
+        self.progress_mark   = options[:progress_mark]      || DEFAULT_PROGRESS_MARK
       end
 
       def mirror
-        @mirrored = !@mirrored
+        self.mirrored = !mirrored
       end
 
       def mirrored?
-        @mirrored
+        mirrored
       end
 
       def to_s(length)
-        @length = length
+        self.length = length
         mirrored? ? "#{empty_string}#{complete_string}" : "#{complete_string}#{empty_string}"
       end
 
       private
-        attr_reader :length
+        attr_accessor :length
 
         def complete_string
-          @progress_mark * completed_length
+          progress_mark * completed_length
         end
 
         def completed_length
