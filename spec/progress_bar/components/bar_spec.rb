@@ -17,15 +17,37 @@ describe ProgressBar::Components::Bar do
         end
       end
 
-      describe "#progress" do
-        it "returns the default beginning position" do
-          @progressbar.progress.should eql ProgressBar::Components::Bar::DEFAULT_BEGINNING_POSITION
+      context "and the bar has not been started" do
+        describe "#progress" do
+          it "returns nil" do
+            @progressbar.progress.should be_nil
+          end
+        end
+      end
+
+      context "and the bar has been started with no starting value given" do
+        before { @progressbar.start }
+
+        describe "#progress" do
+          it "returns the default starting value" do
+            @progressbar.progress.should eql ProgressBar::Components::Progressable::DEFAULT_BEGINNING_POSITION
+          end
+        end
+      end
+
+      context "and the bar has been started with a starting value" do
+        before { @progressbar.start :at => 10 }
+
+        describe "#progress" do
+          it "returns the given starting value" do
+            @progressbar.progress.should eql 10
+          end
         end
       end
     end
 
     context "and options are passed" do
-      before { @progressbar = ProgressBar::Components::Bar.new(:total => 12, :progress_mark => "x", :starting_at => 5) }
+      before { @progressbar = ProgressBar::Components::Bar.new(:total => 12, :progress_mark => "x") }
 
       describe "#total" do
         it "returns the overridden total" do
@@ -38,17 +60,14 @@ describe ProgressBar::Components::Bar do
           @progressbar.progress_mark.should eql "x"
         end
       end
-
-      describe "#progress" do
-        it "returns the overridden beginning position" do
-          @progressbar.progress.should eql 5
-        end
-      end
     end
   end
 
   context "when just begun" do
-    before { @progressbar = ProgressBar::Components::Bar.new(:starting_at => 0, :total => 50) }
+    before do
+      @progressbar = ProgressBar::Components::Bar.new(:total => 50)
+      @progressbar.start
+    end
 
     context "and the bar has been mirrored" do
       before { @progressbar.mirror }
@@ -72,7 +91,10 @@ describe ProgressBar::Components::Bar do
   end
 
   context "when nothing has been completed" do
-    before { @progressbar = ProgressBar::Components::Bar.new(:starting_at => 0, :total => 50) }
+    before do
+      @progressbar = ProgressBar::Components::Bar.new(:total => 50)
+      @progressbar.start
+    end
 
     context "and the bar is incremented" do
       before { @progressbar.increment }
@@ -118,7 +140,10 @@ describe ProgressBar::Components::Bar do
   end
 
   context "when a fraction of a percentage has been completed" do
-    before { @progressbar = ProgressBar::Components::Bar.new(:starting_at => 1, :total => 200) }
+    before do
+      @progressbar = ProgressBar::Components::Bar.new(:total => 200)
+      @progressbar.start :at => 1
+    end
 
     describe "#percentage_completed" do
       it "always rounds down" do
@@ -134,7 +159,10 @@ describe ProgressBar::Components::Bar do
   end
 
   context "when completed" do
-    before { @progressbar = ProgressBar::Components::Bar.new(:starting_at => 50, :total => 50) }
+    before do
+      @progressbar = ProgressBar::Components::Bar.new(:total => 50)
+      @progressbar.start :at => 50
+    end
 
     context "and the bar is incremented" do
       before { @progressbar.increment }
@@ -186,7 +214,8 @@ describe ProgressBar::Components::Bar do
   context "when attempting to set the bar's current value to be greater than the total" do
     describe "#new" do
       it "raises an error" do
-        lambda{ ProgressBar::Components::Bar.new(:starting_at => 11, :total => 10) }.should raise_error "You can't set the item's current value to be greater than the total."
+        @progressbar = ProgressBar::Components::Bar.new(:total => 10)
+        lambda { @progressbar.start :at => 11 }.should raise_error "You can't set the item's current value to be greater than the total."
       end
     end
   end

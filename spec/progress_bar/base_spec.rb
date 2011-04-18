@@ -104,7 +104,6 @@ describe ProgressBar::Base do
   context "when a bar is about to be completed" do
     before do
       @progressbar = ProgressBar::Base.new(:starting_at => 99, :total => 100, :output => @output, :length => 80)
-      @progressbar.start
     end
 
     context "and it's incremented" do
@@ -124,7 +123,6 @@ describe ProgressBar::Base do
   context "when a bar is started" do
     before do
       @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :length => 80)
-      @progressbar.start
     end
 
     context "and it's incremented any number of times" do
@@ -153,7 +151,6 @@ describe ProgressBar::Base do
   context "when a bar is started from 10/100" do
     before do
       @progressbar = ProgressBar::Base.new(:starting_at => 10, :total => 100, :output => @output, :length => 112)
-      @progressbar.start
     end
 
     context "and it's incremented any number of times" do
