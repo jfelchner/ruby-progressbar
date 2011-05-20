@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version = "0.0.10"
 
   s.author = "Satoru Takabayashi"
-  s.date = "2009-02-16"
+  s.date = Date.today.to_s
   s.description = "Ruby/ProgressBar is a text progress bar library for Ruby."
   s.email = "satoru@namazu.org"
   s.files = %w[GPL_LICENSE RUBY_LICENSE README.md lib/progressbar.rb test.rb]
