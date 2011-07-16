@@ -21,7 +21,7 @@ class ProgressBar
     @current = 0
     @previous = 0
     @finished_p = false
-    @start_time = Time.now
+    @start_time = time_now
     @previous_time = @start_time
     @title_width = 14
     @format = "%-#{@title_width}s %3d%% %s %s"
@@ -76,7 +76,7 @@ class ProgressBar
   end
 
   def transfer_rate
-    bytes_per_second = @current.to_f / (Time.now - @start_time)
+    bytes_per_second = @current.to_f / (time_now - @start_time)
     sprintf("%s/s", convert_bytes(bytes_per_second))
   end
 
@@ -97,14 +97,14 @@ class ProgressBar
     if @current == 0
       "ETA:  --:--:--"
     else
-      elapsed = Time.now - @start_time
+      elapsed = time_now - @start_time
       eta = elapsed * @total / @current - elapsed;
       sprintf("ETA:  %s", format_time(eta))
     end
   end
 
   def elapsed
-    elapsed = Time.now - @start_time
+    elapsed = time_now - @start_time
     sprintf("Time: %s", format_time(elapsed))
   end
   
@@ -155,7 +155,7 @@ class ProgressBar
       @terminal_width += width - line.length + 1
       show
     end
-    @previous_time = Time.now
+    @previous_time = time_now
   end
 
   def show_if_needed
@@ -169,8 +169,20 @@ class ProgressBar
 
     # Use "!=" instead of ">" to support negative changes
     if cur_percentage != prev_percentage || 
-        Time.now - @previous_time >= 1 || @finished_p
+        time_now - @previous_time >= 1 || @finished_p
       show
+    end
+  end
+
+  def time_now
+    # Ignore Timecop time mocking
+    if Time.respond_to?(:now_without_mock_time)
+      Time.now_without_mock_time
+    # Ignore Delorean time mocking
+    elsif Time.respond_to?(:now_without_delorean)
+      Time.now_without_delorean
+    else
+      Time.now
     end
   end
 
@@ -234,4 +246,3 @@ class ReversedProgressBar < ProgressBar
     100 - super
   end
 end
-
