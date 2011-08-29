@@ -4,6 +4,10 @@ require 'lib/progressbar'
 class ProgressBarTest < Test::Unit::TestCase
   SleepUnit = 0.01
 
+  def teardown
+    Time.clear_stubs
+  end
+
   def do_make_progress_bar (title, total)
     ProgressBar.new(title, total)
   end
@@ -106,6 +110,34 @@ class ProgressBarTest < Test::Unit::TestCase
     }
     pbar.finish
   end
+
+  def test_timecop
+    offset = 3905
+    total = 10000
+    pbar = do_make_progress_bar("test(timecop)", total)
+    Time.stub(:now_without_mock_time, lambda { Time.now_without_stubbing })
+    Time.stub(:now, lambda { Time.now_without_stubbing - offset })
+    0.step(500, 1) {|x|
+      Time.stub(:now, lambda { Time.now_without_stubbing + offset }) if x == 250
+      sleep(SleepUnit)
+      pbar.set(x)
+    }
+    pbar.halt
+  end
+
+  def test_delorean
+    offset = 3905
+    total = 10000
+    pbar = do_make_progress_bar("test(delorean)", total)
+    Time.stub(:now_without_delorean, lambda { Time.now_without_stubbing })
+    Time.stub(:now, lambda { Time.now_without_stubbing - offset })
+    0.step(500, 1) {|x|
+      Time.stub(:now, lambda { Time.now_without_stubbing + offset }) if x == 250
+      sleep(SleepUnit)
+      pbar.set(x)
+    }
+    pbar.halt
+  end
 end
 
 class ReversedProgressBarTest < ProgressBarTest
@@ -114,3 +146,47 @@ class ReversedProgressBarTest < ProgressBarTest
   end
 end
 
+module Stubbing
+  def stub(method_name, value=nil)
+    stubs[method_name.to_sym] = value
+  end
+
+  def clear_stubs
+    stubs.clear
+  end
+
+  def respond_to?(method_name, include_private=false)
+    has_stub?(method_name) || super
+  end
+
+  def method_missing(method_name, *args, &blk)
+    has_stub?(method_name) ? invoke_stub(method_name) : super
+  end
+
+  private
+
+  def stubs
+    @stubs ||= {}
+  end
+
+  def has_stub?(method_name)
+    stubs.keys.include? method_name.to_sym
+  end
+
+  def invoke_stub(method_name)
+    stub = stubs[method_name]
+    stub.respond_to?(:call) ? stub.call : stub
+  end
+end
+
+class Time
+  extend Stubbing
+
+  class << self
+    alias_method :now_without_stubbing, :now
+
+    def now
+      has_stub?(:now) ? invoke_stub(:now) : now_without_stubbing
+    end
+  end
+end
