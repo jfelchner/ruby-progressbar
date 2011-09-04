@@ -8,6 +8,10 @@
 # You can redistribute it and/or modify it under the terms
 # of Ruby's license.
 #
+begin
+  require 'terminfo'
+rescue LoadError => ignore
+end
 
 class ProgressBar
   VERSION = "0.0.10"
@@ -122,7 +126,7 @@ class ProgressBar
 
   def get_width
     # FIXME: I don't know how portable it is.
-    default_width = 80
+    default_width = defined?(TermInfo) ? TermInfo.screen_width : 80
     begin
       tiocgwinsz = 0x5413
       data = [0, 0, 0, 0].pack("SSSS")
