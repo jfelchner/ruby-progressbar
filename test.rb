@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'lib/progressbar'
+require File.expand_path('../lib/progressbar', __FILE__)
 
 class ProgressBarTest < Test::Unit::TestCase
   SleepUnit = 0.01
@@ -137,6 +137,20 @@ class ProgressBarTest < Test::Unit::TestCase
       pbar.set(x)
     }
     pbar.halt
+  end
+
+  class StubbedTtyProgressBar < ProgressBar
+    def tty?; false; end
+  end
+
+  def test_non_tty
+    total = 1024 * 1024
+    pbar = StubbedTtyProgressBar.new("non-tty compatible", total)
+    0.step(total, 2**14) {|x|
+      pbar.set(x)
+      sleep(SleepUnit)
+    }
+    pbar.finish
   end
 end
 
