@@ -37,7 +37,6 @@ class ProgressBar
 
   private
   def fmt_bar
-    bar_width = do_percentage * @terminal_width / 100
     sprintf("|%s%s|", 
             @bar_mark * bar_width, 
             " " *  (@terminal_width - bar_width))
@@ -61,6 +60,10 @@ class ProgressBar
 
   def fmt_title
     @title[0,(@title_width - 1)] + ":"
+  end
+
+  def bar_width
+    do_percentage * @terminal_width / 100
   end
 
   def convert_bytes (bytes)
@@ -138,6 +141,12 @@ class ProgressBar
   end
 
   def show
+    tty? ? show_tty : show_no_tty
+    @previous_time = time_now
+  end
+
+  # Print output to a tty device.
+  def show_tty
     arguments = @format_arguments.map {|method| 
       method = sprintf("fmt_%s", method)
       send(method)
@@ -155,7 +164,25 @@ class ProgressBar
       @terminal_width += width - line.length + 1
       show
     end
-    @previous_time = time_now
+  end
+
+  # Print output to a non-terminal device, such as a log file.
+  # The terminal width is set to 80 columns.
+  def show_no_tty
+    @out.print("| " + elapsed + eol) and return if finished?
+
+    # Draw title the first time
+    if @last_bar_width.nil?
+      @last_bar_width = 0
+      @terminal_width = @terminal_width - fmt_title.size - elapsed.size - 4
+      @out.print(fmt_title + " |")
+    else
+      bar_width_change = bar_width - @last_bar_width
+      if bar_width_change > 0
+        @out.print(@bar_mark * bar_width_change)
+        @last_bar_width = bar_width
+      end
+    end
   end
 
   def show_if_needed
@@ -186,8 +213,13 @@ class ProgressBar
     end
   end
 
+  def tty?
+    @out.tty?
+  end
+
   public
   def clear
+    return unless tty?
     @out.print "\r"
     @out.print(" " * (get_width - 1))
     @out.print "\r"

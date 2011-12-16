@@ -138,6 +138,20 @@ class ProgressBarTest < Test::Unit::TestCase
     }
     pbar.halt
   end
+
+  class StubbedTtyProgressBar < ProgressBar
+    def tty?; false; end
+  end
+
+  def test_non_tty
+    total = 1024 * 1024
+    pbar = StubbedTtyProgressBar.new("non-tty compatible", total)
+    0.step(total, 2**14) {|x|
+      pbar.set(x)
+      sleep(SleepUnit)
+    }
+    pbar.finish
+  end
 end
 
 class ReversedProgressBarTest < ProgressBarTest
