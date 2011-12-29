@@ -147,19 +147,24 @@ class ProgressBar
 
   # Print output to a tty device.
   def show_tty
-    arguments = @format_arguments.map {|method| 
+    arguments = @format_arguments.map {|method|
       method = sprintf("fmt_%s", method)
       send(method)
     }
     line = sprintf(@format, *arguments)
 
     width = get_width
-    if line.length == width - 1 
-      @out.print(line + eol)
-      @out.flush
+    if line.length == width - 1
+      @out.write "\r"
+      @out.write(line)
     elsif line.length >= width
       @terminal_width = [@terminal_width - (line.length - width + 1), 0].max
-      if @terminal_width == 0 then @out.print(line + eol) else show end
+      if @terminal_width == 0
+        @out.write "\r"
+        @out.write(line)
+      else
+        show
+      end
     else # line.length < width - 1
       @terminal_width += width - line.length + 1
       show
