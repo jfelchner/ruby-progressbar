@@ -139,6 +139,32 @@ class ProgressBarTest < Test::Unit::TestCase
     pbar.halt
   end
 
+  def test_vary
+    total = 5000
+    pbar = do_make_progress_bar("test(vary)", total)
+    0.step(500, 1) {|x|
+      pbar.set(x)
+      sleep(SleepUnit)
+    }
+    500.step(2000, 3) {|x|
+      pbar.set(x)
+      sleep(SleepUnit)
+    }
+    500.times {
+      pbar.set(2000)
+      sleep(SleepUnit)
+    }
+    2000.step(1500, -1) {|x|
+      pbar.set(x)
+      sleep(SleepUnit)
+    }
+    1500.step(5000, 5) {|x|
+      pbar.set(x)
+      sleep(SleepUnit)
+    }
+    pbar.halt
+  end
+
   class StubbedTtyProgressBar < ProgressBar
     def tty?; false; end
   end
