@@ -27,6 +27,7 @@ class ProgressBar
     @title_width = 14
     @format = "%-#{@title_width}s %3d%% %s %s"
     @format_arguments = [:title, :percentage, :bar, :stat]
+    @smoothing = 0.9
     clear
     show
   end
@@ -34,6 +35,7 @@ class ProgressBar
   attr_reader   :current
   attr_reader   :total
   attr_accessor :start_time
+  attr_accessor :smoothing
   attr_writer   :bar_mark
 
   private
@@ -98,6 +100,20 @@ class ProgressBar
 
   # ETA stands for Estimated Time of Arrival.
   def eta
+    @smoothing.nil? ? eta_traditional : eta_smoothed
+  end
+
+  def eta_traditional
+    if @current == 0
+      "ETA:  --:--:--"
+    else
+      elapsed = time_now - @start_time
+      eta = elapsed * @total / @current - elapsed;
+      sprintf("ETA:  %s", format_time(eta))
+    end
+  end
+
+  def eta_smoothed
     if @current <= @previous
       "ETA:  --:--:--"
     else
