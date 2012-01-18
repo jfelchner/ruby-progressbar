@@ -23,6 +23,7 @@ class ProgressBar
     @finished_p = false
     @start_time = time_now
     @previous_time = @start_time
+    @prev_val_change_time = @start_time
     @format_arguments = [:title, :percentage, :bar, :stat]
     clear
     show
@@ -104,12 +105,19 @@ class ProgressBar
 
   # ETA stands for Estimated Time of Arrival.
   def eta
-    if @current == 0
+    if @current <= @previous
       "ETA:  --:--:--"
     else
-      elapsed = time_now - @start_time
-      eta = elapsed * @total / @current - elapsed;
-      sprintf("ETA:  %s", format_time(eta))
+      time_per_unit = (time_now - @prev_val_change_time) /
+                      (@current - @previous)
+      @running_average ||= time_per_unit
+      @running_average = @running_average * 0.9 + time_per_unit * 0.1
+      if @running_average <= 0
+        "ETA:  --:--:--"
+      else
+        eta = (@total - @current) * time_per_unit
+        sprintf("ETA:  %s", format_time(eta))
+      end
     end
   end
 
@@ -264,6 +272,7 @@ class ProgressBar
     @current = @total if @current > @total
     show_if_needed
     @previous = @current
+    @prev_val_change_time = time_now
   end
 
   def set (count)
@@ -273,6 +282,7 @@ class ProgressBar
     @current = count
     show_if_needed
     @previous = @current
+    @prev_val_change_time = time_now
   end
 
   def inspect
