@@ -23,8 +23,6 @@ class ProgressBar
     @finished_p = false
     @start_time = time_now
     @previous_time = @start_time
-    @title_width = 14
-    @format = "%-#{@title_width}s %3d%% %s %s"
     @format_arguments = [:title, :percentage, :bar, :stat]
     clear
     show
@@ -34,11 +32,20 @@ class ProgressBar
   attr_reader   :total
   attr_accessor :start_time
   attr_writer   :bar_mark
+  attr_writer   :title_width
+
+  def title_width
+    @title_width ||= 14
+  end
+
+  def format
+    @format || "%-#{title_width}s %3d%% %s %s"
+  end
 
   private
   def fmt_bar
-    sprintf("|%s%s|", 
-            @bar_mark * bar_width, 
+    sprintf("|%s%s|",
+            @bar_mark * bar_width,
             " " *  (@terminal_width - bar_width))
   end
 
@@ -51,15 +58,15 @@ class ProgressBar
   end
 
   def fmt_stat_for_file_transfer
-    if @finished_p then 
+    if @finished_p then
       sprintf("%s %s %s", bytes, transfer_rate, elapsed)
-    else 
+    else
       sprintf("%s %s %s", bytes, transfer_rate, eta)
     end
   end
 
   def fmt_title
-    @title[0,(@title_width - 1)] + ":"
+    @title[0,(title_width - 1)] + ":"
   end
 
   def bar_width
@@ -110,7 +117,7 @@ class ProgressBar
     elapsed = time_now - @start_time
     sprintf("Time: %s", format_time(elapsed))
   end
-  
+
   def eol
     if @finished_p then "\n" else "\r" end
   end
@@ -147,14 +154,14 @@ class ProgressBar
 
   # Print output to a tty device.
   def show_tty
-    arguments = @format_arguments.map {|method| 
+    arguments = @format_arguments.map {|method|
       method = sprintf("fmt_%s", method)
       send(method)
     }
-    line = sprintf(@format, *arguments)
+    line = sprintf(format, *arguments)
 
     width = get_width
-    if line.length == width - 1 
+    if line.length == width - 1
       @out.print(line + eol)
       @out.flush
     elsif line.length >= width
@@ -195,7 +202,7 @@ class ProgressBar
     end
 
     # Use "!=" instead of ">" to support negative changes
-    if cur_percentage != prev_percentage || 
+    if cur_percentage != prev_percentage ||
         time_now - @previous_time >= 1 || @finished_p
       show
     end
