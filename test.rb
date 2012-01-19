@@ -111,6 +111,21 @@ class ProgressBarTest < Test::Unit::TestCase
     pbar.finish
   end
 
+  def test_custom_bar
+    custom_bar_class = Class.new(ProgressBar) do
+      def title_width
+        20
+      end
+    end
+    pbar = custom_bar_class.new('test(custom)', 100)
+    total = 100
+    total.times {
+      sleep(SleepUnit)
+      pbar.inc
+    }
+    pbar.finish
+  end
+
   def test_timecop
     offset = 3905
     total = 10000
