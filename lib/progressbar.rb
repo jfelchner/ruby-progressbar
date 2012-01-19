@@ -23,8 +23,6 @@ class ProgressBar
     @finished_p = false
     @start_time = time_now
     @previous_time = @start_time
-    @title_width = 14
-    @format = "%-#{@title_width}s %3d%% %s %s"
     @format_arguments = [:title, :percentage, :bar, :stat]
     clear
     show
@@ -34,6 +32,15 @@ class ProgressBar
   attr_reader   :total
   attr_accessor :start_time
   attr_writer   :bar_mark
+  attr_writer   :title_width
+
+  def title_width
+    @title_width ||= 14
+  end
+
+  def format
+    @format || "%-#{title_width}s %3d%% %s %s"
+  end
 
   private
   def fmt_bar
@@ -59,7 +66,7 @@ class ProgressBar
   end
 
   def fmt_title
-    @title[0,(@title_width - 1)] + ":"
+    @title[0,(title_width - 1)] + ":"
   end
 
   def bar_width
@@ -151,7 +158,7 @@ class ProgressBar
       method = sprintf("fmt_%s", method)
       send(method)
     }
-    line = sprintf(@format, *arguments)
+    line = sprintf(format, *arguments)
 
     width = get_width
     if line.length == width - 1
