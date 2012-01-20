@@ -147,23 +147,34 @@ class ProgressBar
 
   # Print output to a tty device.
   def show_tty
-    arguments = @format_arguments.map {|method| 
-      method = sprintf("fmt_%s", method)
-      send(method)
-    }
-    line = sprintf(@format, *arguments)
 
-    width = get_width
-    if line.length == width - 1 
-      @out.print(line + eol)
-      @out.flush
-    elsif line.length >= width
-      @terminal_width = [@terminal_width - (line.length - width + 1), 0].max
-      if @terminal_width == 0 then @out.print(line + eol) else show end
-    else # line.length < width - 1
-      @terminal_width += width - line.length + 1
-      show
+    # This used to have a recursive implementation, but it was found in some
+    # circumstances to cause an infinite loop.  So this is a plain-vanilla loop.
+    line = ''
+    10.times do
+      arguments = @format_arguments.map {|method|
+        method = sprintf("fmt_%s", method)
+        send(method)
+      }
+      line = sprintf(@format, *arguments)
+
+      width = get_width
+      if line.length == width - 1
+        break
+
+      elsif line.length >= width
+        @terminal_width = [@terminal_width - (line.length - width + 1), 0].max
+        if @terminal_width == 0 then break else next end
+
+      else # line.length < width - 1
+        @terminal_width += width - line.length + 1
+        next  # just in case we add more code below this line
+
+      end
     end
+
+    @out.print(line + eol)
+    @out.flush
   end
 
   # Print output to a non-terminal device, such as a log file.
