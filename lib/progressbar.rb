@@ -23,9 +23,11 @@ class ProgressBar
     @finished_p = false
     @start_time = time_now
     @previous_time = @start_time
-    @prev_val_change_time = @start_time
     @format_arguments = [:title, :percentage, :bar, :stat]
+    # Naming this factor "smoothing" is a misnomer because higher values
+    # make things LESS smooth.
     @smoothing = 0.9
+    @running_average = 0
     clear
     show
   end
@@ -111,34 +113,9 @@ class ProgressBar
 
   # ETA stands for Estimated Time of Arrival.
   def eta
-    @smoothing.nil? ? eta_traditional : eta_smoothed
-  end
-
-  def eta_traditional
-    if @current == 0
-      "ETA:  --:--:--"
-    else
-      elapsed = time_now - @start_time
-      eta = elapsed * @total / @current - elapsed;
-      sprintf("ETA:  %s", format_time(eta))
-    end
-  end
-
-  def eta_smoothed
-    if @current <= @previous
-      "ETA:  --:--:--"
-    else
-      time_per_unit = (time_now - @prev_val_change_time) /
-                      (@current - @previous)
-      @running_average ||= time_per_unit
-      @running_average = @running_average * 0.9 + time_per_unit * 0.1
-      if @running_average <= 0
-        "ETA:  --:--:--"
-      else
-        eta = (@total - @current) * time_per_unit
-        sprintf("ETA:  %s", format_time(eta))
-      end
-    end
+    elapsed = time_now - @start_time
+    eta = elapsed * @total / @running_average - elapsed;
+    sprintf("ETA:  %s", format_time(eta))
   end
 
   def elapsed
@@ -261,7 +238,7 @@ class ProgressBar
   end
 
   def finish
-    @current = @total
+    @current = @previous = @running_average = @total
     @finished_p = true
     show
   end
@@ -288,21 +265,22 @@ class ProgressBar
   end
 
   def inc (step = 1)
-    @current += step
-    @current = @total if @current > @total
-    show_if_needed
-    @previous = @current
-    @prev_val_change_time = time_now
+    set(@current + step)
   end
 
   def set (count)
-    if count < 0 || count > @total
-      raise "invalid count: #{count} (total: #{@total})"
-    end
-    @current = count
+    # Constrain input to 0 <= count <= 100
+    @current = [ [count, @total].min, 0 ].max
+
+    # Update the exponentially-smoothed average
+    @running_average = @previous * @smoothing +
+                       @running_average * (1.0 - @smoothing)
+
+    # If this makes the percentage change by a tick or more, show it
     show_if_needed
+    
+    # Update for the next iteration
     @previous = @current
-    @prev_val_change_time = time_now
   end
 
   def inspect
