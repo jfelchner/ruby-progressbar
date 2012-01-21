@@ -98,11 +98,15 @@ class ProgressBar
   end
 
   def format_time (t)
-    t = t.to_i
-    sec = t % 60
-    min  = (t / 60) % 60
-    hour = t / 3600
-    sprintf("%02d:%02d:%02d", hour, min, sec);
+    if t < 0 or t.infinite? or t.nan?   # "not a number"
+      '--:--:--'
+    else
+      t = t.to_i
+      sec = t % 60
+      min  = (t / 60) % 60
+      hour = t / 3600
+      sprintf("%02d:%02d:%02d", hour, min, sec);
+    end
   end
 
   # ETA stands for Estimated Time of Arrival.
