@@ -9,7 +9,7 @@ module ProgressBar
       attr_accessor :progress_mark
 
       def initialize(options = {})
-        initialize_progress(options)
+        super
 
         self.mirrored        = false
         self.progress_mark   = options[:progress_mark] || DEFAULT_PROGRESS_MARK

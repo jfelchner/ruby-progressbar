@@ -7,7 +7,7 @@ module ProgressBar
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       def initialize(options = {})
-        initialize_progress(options)
+        super
       end
 
       def start(options = {})

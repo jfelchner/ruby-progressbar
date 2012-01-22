@@ -7,7 +7,7 @@ module ProgressBar
       attr_reader               :total
       attr_reader               :progress
 
-      def initialize_progress(options)
+      def initialize(options)
         self.total    = options[:total] || DEFAULT_TOTAL
       end
 
