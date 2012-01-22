@@ -1,8 +1,8 @@
-require File.join(File.dirname(__FILE__), "progress_bar", "length_calculator")
-require File.join(File.dirname(__FILE__), "progress_bar", "formatter")
-require File.join(File.dirname(__FILE__), "progress_bar", "components")
-require File.join(File.dirname(__FILE__), "progress_bar", "format")
-require File.join(File.dirname(__FILE__), "progress_bar", "base")
+require 'progress_bar/length_calculator'
+require 'progress_bar/formatter'
+require 'progress_bar/components'
+require 'progress_bar/format'
+require 'progress_bar/base'
 
 class BasicProgressBar < ProgressBar::Base
 end
