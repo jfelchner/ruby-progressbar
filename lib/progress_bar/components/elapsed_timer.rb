@@ -7,14 +7,14 @@ module ProgressBar
         "Time: #{elapsed_time}"
       end
 
-      private
-        def elapsed_time
-          return "--:--:--" unless started?
+    private
+      def elapsed_time
+        return "--:--:--" unless started?
 
-          hours, minutes, seconds = divide_seconds(elapsed_seconds)
+        hours, minutes, seconds = divide_seconds(elapsed_seconds)
 
-          sprintf TIME_FORMAT, hours, minutes, seconds
-        end
+        sprintf TIME_FORMAT, hours, minutes, seconds
+      end
     end
   end
 end

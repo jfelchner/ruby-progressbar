@@ -32,57 +32,57 @@ module ProgressBar
         " ETA: #{estimated_time}"
       end
 
-      private
-        def estimated_time
-          return "??:??:??" if progress_made.zero?
+    private
+      def estimated_time
+        return "??:??:??" if progress_made.zero?
 
-          hours, minutes, seconds = divide_seconds(estimated_seconds_remaining)
+        hours, minutes, seconds = divide_seconds(estimated_seconds_remaining)
 
-          if hours > 99 && @out_of_bounds_time_format
-            out_of_bounds_time
-          else
-            sprintf TIME_FORMAT, hours, minutes, seconds
-          end
+        if hours > 99 && @out_of_bounds_time_format
+          out_of_bounds_time
+        else
+          sprintf TIME_FORMAT, hours, minutes, seconds
+        end
+      end
+
+      def seconds_per_each
+        elapsed_seconds.to_f / progress_made
+      end
+
+      def estimated_seconds_remaining
+        (seconds_per_each * (@total - @progress)).floor
+      end
+
+      def out_of_bounds_time
+        case @out_of_bounds_time_format
+        when :unknown
+          '??:??:??'
+        when :friendly
+          '> 4 Days'
+        end
+      end
+
+      def as(ancestor, &blk)
+        @__as ||= {}
+        unless r = @__as[ancestor]
+          r = (@__as[ancestor] = As.new(self, ancestor))
+        end
+        r.instance_eval(&blk) if block_given?
+        r
+      end
+
+      class As
+        private *instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ }
+
+        def initialize(subject, ancestor)
+          @subject = subject
+          @ancestor = ancestor
         end
 
-        def seconds_per_each
-          elapsed_seconds.to_f / progress_made
+        def method_missing(sym, *args, &blk)
+          @ancestor.instance_method(sym).bind(@subject).call(*args,&blk)
         end
-
-        def estimated_seconds_remaining
-          (seconds_per_each * (@total - @progress)).floor
-        end
-
-        def out_of_bounds_time
-          case @out_of_bounds_time_format
-          when :unknown
-            '??:??:??'
-          when :friendly
-            '> 4 Days'
-          end
-        end
-
-        def as(ancestor, &blk)
-          @__as ||= {}
-          unless r = @__as[ancestor]
-            r = (@__as[ancestor] = As.new(self, ancestor))
-          end
-          r.instance_eval(&blk) if block_given?
-          r
-        end
-
-        class As
-          private *instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ }
-
-          def initialize(subject, ancestor)
-            @subject = subject
-            @ancestor = ancestor
-          end
-
-          def method_missing(sym, *args, &blk)
-            @ancestor.instance_method(sym).bind(@subject).call(*args,&blk)
-          end
-        end
+      end
     end
   end
 end

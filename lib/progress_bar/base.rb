@@ -117,62 +117,62 @@ module ProgressBar
       "#<ProgressBar:#{@bar.progress}/#{@bar.total}>"
     end
 
-    private
-      attr_accessor   :output
+  private
+    attr_accessor   :output
 
-      # This will be removed on or after October 30th, 2011 and is only here to provide backward
-      # compatibility with the previous versions of ruby-progressbar.
-      def backwards_compatible_args_to_options_conversion(args)
-        options = {}
+    # This will be removed on or after October 30th, 2011 and is only here to provide backward
+    # compatibility with the previous versions of ruby-progressbar.
+    def backwards_compatible_args_to_options_conversion(args)
+      options = {}
 
-        if args.size > 1
-          puts 'DEPRECATION WARNING: Creating Progress Bars in this way has been deprecated and will be removed on or after October 30th, 2012.  Please update your code to use the new initializer syntax found here: https://github.com/jfelchner/ruby-progressbar.'
-          options[:title]  = args[0]
-          options[:total]  = args[1]
-          options[:output] = args[2]
-        else
-          options = args[0]
-        end
+      if args.size > 1
+        puts 'DEPRECATION WARNING: Creating Progress Bars in this way has been deprecated and will be removed on or after October 30th, 2012.  Please update your code to use the new initializer syntax found here: https://github.com/jfelchner/ruby-progressbar.'
+        options[:title]  = args[0]
+        options[:total]  = args[1]
+        options[:output] = args[2]
+      else
+        options = args[0]
+      end
+    end
+
+    def clear_string
+      "#{" " * length}\r"
+    end
+
+    def with_progressables(action, *args)
+      if args.empty?
+        @bar.send(action)
+        @estimated_time.send(action)
+      else
+        @bar.send(action, *args)
+        @estimated_time.send(action, *args)
+      end
+    end
+
+    def with_timers(action, *args)
+      if args.empty?
+        @estimated_time.send(action)
+        @elapsed_time.send(action)
+      else
+        @estimated_time.send(action, *args)
+        @elapsed_time.send(action, *args)
+      end
+    end
+
+    def update
+      with_timers(:stop) if finished?
+
+      if length_changed?
+        clear
+        reset_length
       end
 
-      def clear_string
-        "#{" " * length}\r"
-      end
+      output.print self.to_s + eol
+      output.flush
+    end
 
-      def with_progressables(action, *args)
-        if args.empty?
-          @bar.send(action)
-          @estimated_time.send(action)
-        else
-          @bar.send(action, *args)
-          @estimated_time.send(action, *args)
-        end
-      end
-
-      def with_timers(action, *args)
-        if args.empty?
-          @estimated_time.send(action)
-          @elapsed_time.send(action)
-        else
-          @estimated_time.send(action, *args)
-          @elapsed_time.send(action, *args)
-        end
-      end
-
-      def update
-        with_timers(:stop) if finished?
-
-        if length_changed?
-          clear
-          reset_length
-        end
-
-        output.print self.to_s + eol
-        output.flush
-      end
-
-      def eol
-        finished? || stopped? ? "\n" : "\r"
-      end
+    def eol
+      finished? || stopped? ? "\n" : "\r"
+    end
   end
 end

@@ -32,26 +32,26 @@ module ProgressBar
         @stopped_at = nil
       end
 
-      private
-        def elapsed_seconds
-          ((@stopped_at || Time.now) - @started_at).floor
-        end
+    private
+      def elapsed_seconds
+        ((@stopped_at || Time.now) - @started_at).floor
+      end
 
-        def elapsed_time
-          return "--:--:--" unless started?
+      def elapsed_time
+        return "--:--:--" unless started?
 
-          hours, seconds = elapsed_seconds.divmod(3600)
-          minutes, seconds = seconds.divmod(60)
+        hours, seconds = elapsed_seconds.divmod(3600)
+        minutes, seconds = seconds.divmod(60)
 
-          sprintf "%02d:%02d:%02d", hours, minutes, seconds
-        end
+        sprintf "%02d:%02d:%02d", hours, minutes, seconds
+      end
 
-        def divide_seconds(seconds)
-          hours, seconds = seconds.divmod(3600)
-          minutes, seconds = seconds.divmod(60)
+      def divide_seconds(seconds)
+        hours, seconds = seconds.divmod(3600)
+        minutes, seconds = seconds.divmod(60)
 
-          [hours, minutes, seconds]
-        end
+        [hours, minutes, seconds]
+      end
     end
   end
 end

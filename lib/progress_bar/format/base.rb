@@ -15,16 +15,16 @@ module ProgressBar
         molecules.select { |molecule| molecule.bar_molecule? }
       end
 
-      private
-        def parse(format_string)
-          molecules        = []
+    private
+      def parse(format_string)
+        molecules        = []
 
-          format_string.scan(/%([^%])/) do |match|
-            molecules << Molecule.new(match[0])
-          end
-
-          molecules
+        format_string.scan(/%([^%])/) do |match|
+          molecules << Molecule.new(match[0])
         end
+
+        molecules
+      end
     end
   end
 end

@@ -60,18 +60,18 @@ module ProgressBar
         format('%5.2f', (progress.to_f * 100.0 / total * 100.0).floor / 100.0)
       end
 
-      private
-        def validate_total(new_total)
-          (progress.nil? || new_total >= progress) || raise("You can't set the item's total value to be less than the current progress.")
-        end
+    private
+      def validate_total(new_total)
+        (progress.nil? || new_total >= progress) || raise("You can't set the item's total value to be less than the current progress.")
+      end
 
-        def validate_progress(new_progress)
-          (total.nil? || new_progress <= total) || raise("You can't set the item's current value to be greater than the total.")
-        end
+      def validate_progress(new_progress)
+        (total.nil? || new_progress <= total) || raise("You can't set the item's current value to be greater than the total.")
+      end
 
-        def progress_made
-          started? ? @progress - @starting_position : 0
-        end
+      def progress_made
+        started? ? @progress - @starting_position : 0
+      end
     end
   end
 end

@@ -28,20 +28,20 @@ module ProgressBar
         mirrored? ? "#{empty_string}#{complete_string}" : "#{complete_string}#{empty_string}"
       end
 
-      private
-        attr_accessor :length
+    private
+      attr_accessor :length
 
-        def complete_string
-          progress_mark * completed_length
-        end
+      def complete_string
+        progress_mark * completed_length
+      end
 
-        def completed_length
-          length * percentage_completed / 100
-        end
+      def completed_length
+        length * percentage_completed / 100
+      end
 
-        def empty_string
-          " " * (length - completed_length)
-        end
+      def empty_string
+        " " * (length - completed_length)
+      end
     end
   end
 end
