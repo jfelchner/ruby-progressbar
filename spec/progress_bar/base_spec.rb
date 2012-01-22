@@ -128,6 +128,15 @@ describe ProgressBar::Base do
     context 'and it is incremented any number of times' do
       before { 10.times { @progressbar.increment } }
 
+      describe '#progress_mark=' do
+        it 'changes the mark used to represent progress and updates the output' do
+          @progressbar.progress_mark = 'x'
+
+          @output.rewind
+          @output.read.should match /\rProgress: \|xxxxxx#{' ' * 62}\|\r\z/
+        end
+      end
+
       describe '#reset' do
         before { @progressbar.reset }
 

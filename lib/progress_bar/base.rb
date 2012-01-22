@@ -107,6 +107,12 @@ module ProgressBar
       update
     end
 
+    def progress_mark=(mark)
+      @bar.progress_mark = mark
+
+      update
+    end
+
     def to_s(format_string = nil)
       format_string ||= @format_string
 
