@@ -53,7 +53,7 @@ module ProgressBar
       @elapsed_time
     end
 
-    def estimated_time
+    def estimated_time_with_no_oob
       @estimated_time.out_of_bounds_time_format = nil
       @estimated_time
     end

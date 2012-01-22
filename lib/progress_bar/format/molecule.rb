@@ -11,7 +11,7 @@ module ProgressBar
         :a => [:elapsed_time,                       :elapsed_time],
         :e => [:estimated_time_with_unknown,        :estimated_time_with_unknown_oob],
         :E => [:estimated_time_with_greater_than,   :estimated_time_with_friendly_oob],
-        :f => [:force_estimated_time,               :estimated_time],
+        :f => [:force_estimated_time,               :estimated_time_with_no_oob],
         :b => [:bar,                                :bar],
         :m => [:mirrored_bar,                       :mirrored_bar],
         # :bar_with_percentage              => '%B',
