@@ -1,219 +1,219 @@
 require 'spec_helper'
 
 describe ProgressBar::Components::Bar do
-  context "when a new bar is created" do
-    context "and no parameters are passed" do
+  context 'when a new bar is created' do
+    context 'and no parameters are passed' do
       before { @progressbar = ProgressBar::Components::Bar.new }
 
-      describe "#total" do
-        it "returns the default total" do
+      describe '#total' do
+        it 'returns the default total' do
           @progressbar.total.should eql ProgressBar::Components::Bar::DEFAULT_TOTAL
         end
       end
 
-      describe "#progress_mark" do
-        it "returns the default mark" do
+      describe '#progress_mark' do
+        it 'returns the default mark' do
           @progressbar.progress_mark.should eql ProgressBar::Components::Bar::DEFAULT_PROGRESS_MARK
         end
       end
 
-      context "and the bar has not been started" do
-        describe "#progress" do
-          it "returns nil" do
+      context 'and the bar has not been started' do
+        describe '#progress' do
+          it 'returns nil' do
             @progressbar.progress.should be_nil
           end
         end
       end
 
-      context "and the bar has been started with no starting value given" do
+      context 'and the bar has been started with no starting value given' do
         before { @progressbar.start }
 
-        describe "#progress" do
-          it "returns the default starting value" do
+        describe '#progress' do
+          it 'returns the default starting value' do
             @progressbar.progress.should eql ProgressBar::Components::Progressable::DEFAULT_BEGINNING_POSITION
           end
         end
       end
 
-      context "and the bar has been started with a starting value" do
+      context 'and the bar has been started with a starting value' do
         before { @progressbar.start :at => 10 }
 
-        describe "#progress" do
-          it "returns the given starting value" do
+        describe '#progress' do
+          it 'returns the given starting value' do
             @progressbar.progress.should eql 10
           end
         end
       end
     end
 
-    context "and options are passed" do
-      before { @progressbar = ProgressBar::Components::Bar.new(:total => 12, :progress_mark => "x") }
+    context 'and options are passed' do
+      before { @progressbar = ProgressBar::Components::Bar.new(:total => 12, :progress_mark => 'x') }
 
-      describe "#total" do
-        it "returns the overridden total" do
+      describe '#total' do
+        it 'returns the overridden total' do
           @progressbar.total.should eql 12
         end
       end
 
-      describe "#progress_mark" do
-        it "returns the overridden mark" do
-          @progressbar.progress_mark.should eql "x"
+      describe '#progress_mark' do
+        it 'returns the overridden mark' do
+          @progressbar.progress_mark.should eql 'x'
         end
       end
     end
   end
 
-  context "when just begun" do
+  context 'when just begun' do
     before do
       @progressbar = ProgressBar::Components::Bar.new(:total => 50)
       @progressbar.start
     end
 
-    context "and the bar has been mirrored" do
+    context 'and the bar has been mirrored' do
       before { @progressbar.mirror }
 
-      it "displays the bar with no indication of progress" do
-        @progressbar.to_s(100).should eql "                                                                                                    "
+      it 'displays the bar with no indication of progress' do
+        @progressbar.to_s(100).should eql '                                                                                                    '
       end
     end
 
-    describe "#percentage_completed" do
-      it "calculates the amount" do
+    describe '#percentage_completed' do
+      it 'calculates the amount' do
         @progressbar.percentage_completed.should eql 0
       end
     end
 
-    describe "#to_s" do
-      it "displays the bar with no indication of progress" do
-        @progressbar.to_s(100).should eql "                                                                                                    "
+    describe '#to_s' do
+      it 'displays the bar with no indication of progress' do
+        @progressbar.to_s(100).should eql '                                                                                                    '
       end
     end
   end
 
-  context "when nothing has been completed" do
+  context 'when nothing has been completed' do
     before do
       @progressbar = ProgressBar::Components::Bar.new(:total => 50)
       @progressbar.start
     end
 
-    context "and the bar is incremented" do
+    context 'and the bar is incremented' do
       before { @progressbar.increment }
 
-      it "adds to the progress amount" do
+      it 'adds to the progress amount' do
         @progressbar.progress.should eql 1
       end
 
-      describe "#percentage_completed" do
-        it "calculates the amount completed" do
+      describe '#percentage_completed' do
+        it 'calculates the amount completed' do
           @progressbar.percentage_completed.should eql 2
         end
       end
 
-      context "and the bar has been mirrored" do
+      context 'and the bar has been mirrored' do
         before { @progressbar.mirror }
 
-        describe "#to_s" do
-          it "displays the bar with an indication of progress" do
-            @progressbar.to_s(100).should eql "                                                                                                  oo"
+        describe '#to_s' do
+          it 'displays the bar with an indication of progress' do
+            @progressbar.to_s(100).should eql '                                                                                                  oo'
           end
         end
       end
 
-      describe "#to_s" do
-        it "displays the bar with an indication of progress" do
-          @progressbar.to_s(100).should eql "oo                                                                                                  "
+      describe '#to_s' do
+        it 'displays the bar with an indication of progress' do
+          @progressbar.to_s(100).should eql 'oo                                                                                                  '
         end
       end
     end
 
-    describe "#percentage_completed" do
-      it "is zero" do
+    describe '#percentage_completed' do
+      it 'is zero' do
         @progressbar.percentage_completed.should eql 0
       end
     end
 
-    describe "#to_s" do
-      it "displays the bar with no indication of progress" do
-        @progressbar.to_s(100).should eql "                                                                                                    "
+    describe '#to_s' do
+      it 'displays the bar with no indication of progress' do
+        @progressbar.to_s(100).should eql '                                                                                                    '
       end
     end
   end
 
-  context "when a fraction of a percentage has been completed" do
+  context 'when a fraction of a percentage has been completed' do
     before do
       @progressbar = ProgressBar::Components::Bar.new(:total => 200)
       @progressbar.start :at => 1
     end
 
-    describe "#percentage_completed" do
-      it "always rounds down" do
+    describe '#percentage_completed' do
+      it 'always rounds down' do
         @progressbar.percentage_completed.should eql 0
       end
     end
 
-    describe "#to_s" do
-      it "displays the bar with no indication of progress" do
-        @progressbar.to_s(100).should eql "                                                                                                    "
+    describe '#to_s' do
+      it 'displays the bar with no indication of progress' do
+        @progressbar.to_s(100).should eql '                                                                                                    '
       end
     end
   end
 
-  context "when completed" do
+  context 'when completed' do
     before do
       @progressbar = ProgressBar::Components::Bar.new(:total => 50)
       @progressbar.start :at => 50
     end
 
-    context "and the bar is incremented" do
+    context 'and the bar is incremented' do
       before { @progressbar.increment }
 
-      it "doesn't increment past the total" do
+      it 'does not increment past the total' do
         @progressbar.progress.should eql 50
         @progressbar.percentage_completed.should eql 100
       end
 
-      describe "#to_s" do
-        it "displays the bar as 100% complete" do
+      describe '#to_s' do
+        it 'displays the bar as 100% complete' do
           @progressbar.to_s(100).should eql 'o' * 100
         end
       end
     end
 
-    context "and the bar is decremented" do
+    context 'and the bar is decremented' do
       before { @progressbar.decrement }
 
-      it "removes some progress from the bar" do
+      it 'removes some progress from the bar' do
         @progressbar.progress.should eql 49
         @progressbar.percentage_completed.should eql 98
       end
 
-      describe "#to_s" do
-        it "displays the bar as 98% complete" do
+      describe '#to_s' do
+        it 'displays the bar as 98% complete' do
           @progressbar.to_s(100).should eql "#{'o' * 98}  "
         end
       end
     end
 
-    context "and the bar has been mirrored" do
+    context 'and the bar has been mirrored' do
       before { @progressbar.mirror }
 
-      describe "#to_s" do
-        it "displays the bar with an indication of progress" do
-          @progressbar.to_s(100).should eql "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+      describe '#to_s' do
+        it 'displays the bar with an indication of progress' do
+          @progressbar.to_s(100).should eql 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'
         end
       end
     end
 
-    describe "#to_s" do
-      it "displays the bar as 100% complete" do
-        @progressbar.to_s(100).should eql "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+    describe '#to_s' do
+      it 'displays the bar as 100% complete' do
+        @progressbar.to_s(100).should eql 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'
       end
     end
   end
 
   context "when attempting to set the bar's current value to be greater than the total" do
-    describe "#new" do
-      it "raises an error" do
+    describe '#new' do
+      it 'raises an error' do
         @progressbar = ProgressBar::Components::Bar.new(:total => 10)
         lambda { @progressbar.start :at => 11 }.should raise_error "You can't set the item's current value to be greater than the total."
       end

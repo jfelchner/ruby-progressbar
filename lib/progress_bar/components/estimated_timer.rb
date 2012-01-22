@@ -21,11 +21,9 @@ module ProgressBar
       end
 
       def out_of_bounds_time_format=(format)
-        if VALID_OOB_TIME_FORMATS.include? format
-          @out_of_bounds_time_format = format
-        else
-          raise "Invalid Out Of Bounds time format.  Valid formats are #{VALID_OOB_TIME_FORMATS.inspect}"
-        end
+        raise "Invalid Out Of Bounds time format.  Valid formats are #{VALID_OOB_TIME_FORMATS.inspect}" unless VALID_OOB_TIME_FORMATS.include? format
+
+        @out_of_bounds_time_format = format
       end
 
       def to_s
@@ -34,7 +32,7 @@ module ProgressBar
 
     private
       def estimated_time
-        return "??:??:??" if progress_made.zero?
+        return '??:??:??' if progress_made.zero?
 
         hours, minutes, seconds = divide_seconds(estimated_seconds_remaining)
 

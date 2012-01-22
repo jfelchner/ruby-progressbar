@@ -9,7 +9,7 @@ module ProgressBar
 
     private
       def elapsed_time
-        return "--:--:--" unless started?
+        return '--:--:--' unless started?
 
         hours, minutes, seconds = divide_seconds(elapsed_seconds)
 

@@ -1,7 +1,7 @@
 module ProgressBar
   module Components
     module Timer
-      TIME_FORMAT = "%02d:%02d:%02d"
+      TIME_FORMAT = '%02d:%02d:%02d'
 
       def start
         @started_at = stopped? ? Time.now - (@stopped_at - @started_at) : Time.now
@@ -38,12 +38,12 @@ module ProgressBar
       end
 
       def elapsed_time
-        return "--:--:--" unless started?
+        return '--:--:--' unless started?
 
         hours, seconds = elapsed_seconds.divmod(3600)
         minutes, seconds = seconds.divmod(60)
 
-        sprintf "%02d:%02d:%02d", hours, minutes, seconds
+        sprintf '%02d:%02d:%02d', hours, minutes, seconds
       end
 
       def divide_seconds(seconds)

@@ -14,8 +14,8 @@ module ProgressBar
         :f => [:force_estimated_time,               :estimated_time],
         :b => [:bar,                                :bar],
         :m => [:mirrored_bar,                       :mirrored_bar],
-        # :bar_with_percentage              => "%B",
-        # :mirrored_bar_with_percentage     => "%R"
+        # :bar_with_percentage              => '%B',
+        # :mirrored_bar_with_percentage     => '%R'
       }
 
       BAR_MOLECULES     = %w{b m}

@@ -40,7 +40,7 @@ module ProgressBar
       end
 
       def empty_string
-        " " * (length - completed_length)
+        ' ' * (length - completed_length)
       end
     end
   end
