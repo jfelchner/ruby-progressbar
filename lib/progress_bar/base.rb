@@ -101,6 +101,8 @@ module ProgressBar
       @estimated_time.stopped? && @elapsed_time.stopped?
     end
 
+    alias :paused? :stopped?
+
     def resume
       with_timers(:resume)
 
