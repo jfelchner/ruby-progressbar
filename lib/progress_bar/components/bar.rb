@@ -3,7 +3,7 @@ module ProgressBar
     class Bar
       include Progressable
 
-      DEFAULT_PROGRESS_MARK      = 'o'
+      DEFAULT_PROGRESS_MARK = 'o'
 
       attr_accessor :mirrored
       attr_accessor :progress_mark
