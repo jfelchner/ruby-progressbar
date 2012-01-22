@@ -12,7 +12,7 @@ module ProgressBar
         initialize_progress(options)
 
         self.mirrored        = false
-        self.progress_mark   = options[:progress_mark]      || DEFAULT_PROGRESS_MARK
+        self.progress_mark   = options[:progress_mark] || DEFAULT_PROGRESS_MARK
       end
 
       def mirror

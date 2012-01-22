@@ -2,7 +2,8 @@ module ProgressBar
   module Formatter
     def format(format_string)
       @format_string = format_string
-      @format = ProgressBar::Format::Base.new(format_string)
+      @format        = ProgressBar::Format::Base.new(format_string)
+
       process
     end
 
