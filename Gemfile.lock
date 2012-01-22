@@ -36,7 +36,7 @@ DEPENDENCIES
   bundler (~> 1.0)
   guard (~> 1.0)
   guard-rspec (~> 0.6)
-  rspec (~> 2.5)
+  rspec (~> 2.8)
   ruby-progressbar!
   simplecov (~> 0.5)
   timecop (~> 0.3.5)
