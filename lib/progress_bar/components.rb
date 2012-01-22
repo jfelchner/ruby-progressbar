@@ -1,5 +1,5 @@
-require File.join(File.dirname(__FILE__), "components", "timer")
-require File.join(File.dirname(__FILE__), "components", "progressable")
-require File.join(File.dirname(__FILE__), "components", "bar")
-require File.join(File.dirname(__FILE__), "components", "estimated_timer")
-require File.join(File.dirname(__FILE__), "components", "elapsed_timer")
+require 'progress_bar/components/timer'
+require 'progress_bar/components/progressable'
+require 'progress_bar/components/bar'
+require 'progress_bar/components/estimated_timer'
+require 'progress_bar/components/elapsed_timer'
