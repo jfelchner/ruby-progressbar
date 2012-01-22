@@ -55,17 +55,17 @@ module ProgressBar
 
     def estimated_time_with_no_oob
       @estimated_time.out_of_bounds_time_format = nil
-      @estimated_time
+      estimated_time
     end
 
     def estimated_time_with_unknown_oob
       @estimated_time.out_of_bounds_time_format = :unknown
-      @estimated_time
+      estimated_time
     end
 
     def estimated_time_with_friendly_oob
       @estimated_time.out_of_bounds_time_format = :friendly
-      @estimated_time
+      estimated_time
     end
 
     def bar(length)
@@ -75,6 +75,11 @@ module ProgressBar
     def mirrored_bar(length)
       @bar.mirror unless @bar.mirrored?
       @bar.to_s(length)
+    end
+
+  private
+    def estimated_time
+      finished? ? @elapsed_time : @estimated_time
     end
   end
 end
