@@ -1,2 +1,2 @@
-require File.join(File.dirname(__FILE__), "format", "molecule")
-require File.join(File.dirname(__FILE__), "format", "base")
+require 'progress_bar/format/molecule'
+require 'progress_bar/format/base'
