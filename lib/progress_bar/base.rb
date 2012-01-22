@@ -5,7 +5,7 @@ module ProgressBar
 
     DEFAULT_OUTPUT_STREAM     = STDOUT
     DEFAULT_FORMAT_STRING     = '%t: |%b|'
-    DEFAULT_TITLE             = "Progress"
+    DEFAULT_TITLE             = 'Progress'
 
     def initialize(*args)
       options          = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
@@ -48,7 +48,7 @@ module ProgressBar
     end
 
     def inc
-      puts "DEPRECATION WARNING: #inc will be removed on or after October 30th, 2011.  Please use #increment"
+      puts 'DEPRECATION WARNING: #inc will be removed on or after October 30th, 2012.  Please use #increment'
       increment
     end
 
@@ -65,7 +65,7 @@ module ProgressBar
     end
 
     def set(new_value)
-      puts "DEPRECATION WARNING: #set will be removed on or after October 30th, 2011.  Please use #progress="
+      puts 'DEPRECATION WARNING: #set will be removed on or after October 30th, 2012.  Please use #progress='
       progress = new_value
     end
 
@@ -87,7 +87,7 @@ module ProgressBar
     end
 
     def halt
-      puts "DEPRECATION WARNING: #halt will be removed on or after October 30th, 2011.  Please use #stop"
+      puts 'DEPRECATION WARNING: #halt will be removed on or after October 30th, 2012.  Please use #stop'
       stop
     end
 
@@ -126,7 +126,7 @@ module ProgressBar
         options = {}
 
         if args.size > 1
-          puts "DEPRECATION WARNING: Creating Progress Bars in this way has been deprecated and will be removed on or after October 30th, 2011.  Please update your code to use the new initializer syntax found here: https://github.com/thekompanee/ruby-progressbar."
+          puts 'DEPRECATION WARNING: Creating Progress Bars in this way has been deprecated and will be removed on or after October 30th, 2012.  Please update your code to use the new initializer syntax found here: https://github.com/jfelchner/ruby-progressbar.'
           options[:title]  = args[0]
           options[:total]  = args[1]
           options[:output] = args[2]
