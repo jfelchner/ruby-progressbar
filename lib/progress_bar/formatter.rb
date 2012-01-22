@@ -72,6 +72,10 @@ module ProgressBar
       @bar.to_s(length)
     end
 
+    def bar_with_percentage(length)
+      @bar.to_s(length, :format => :integrated_percentage)
+    end
+
     def mirrored_bar(length)
       @bar.mirror unless @bar.mirrored?
       @bar.to_s(length)

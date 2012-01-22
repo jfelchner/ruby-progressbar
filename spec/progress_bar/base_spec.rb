@@ -235,6 +235,18 @@ describe ProgressBar::Base do
         @progressbar.to_s('%b').should match /^#{' ' * 80}\z/
       end
 
+      it 'displays the bar when passed the "%B" format flag' do
+        @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :starting_at => 0)
+
+        @progressbar.to_s('%B').should match /^ 0#{' ' * 98}\z/
+        10.times { @progressbar.increment }
+        @progressbar.to_s('%B').should match /^ooo 10 ooo#{' ' * 90}\z/
+        @progressbar.decrement
+        @progressbar.to_s('%B').should match /^ooo 9 ooo#{' ' * 91}\z/
+        91.times { @progressbar.increment }
+        @progressbar.to_s('%B').should match /^#{'o' * 47} 100 #{'o' * 48}\z/
+      end
+
       it 'displays the mirrored bar when passed the "%r" format flag' do
         @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :starting_at => 0)
 
