@@ -27,7 +27,7 @@ class ProgressBar
     clear
     show
   end
-  attr_reader   :title
+  attr_accessor   :title
   attr_reader   :current
   attr_reader   :total
   attr_accessor :start_time
@@ -259,7 +259,8 @@ class ProgressBar
     show
   end
 
-  def inc (step = 1)
+  def inc (step = 1, new_title = nil)
+    @title = new_title.to_s if new_title
     @current += step
     @current = @total if @current > @total
     show_if_needed
