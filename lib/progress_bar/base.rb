@@ -115,6 +115,13 @@ module ProgressBar
       update
     end
 
+    def title=(title)
+      @title = title
+
+      update
+    end
+
+
     def to_s(format_string = nil)
       format_string ||= @format_string
 

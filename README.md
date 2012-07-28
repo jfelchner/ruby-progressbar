@@ -154,6 +154,7 @@ Additionally, if you don't have access to the code calling the progressbar itsel
 The following items can be set at any time.  Changes cause an immediate bar refresh so no other action is needed:
 
 * `#progress_mark=`: Sets the string used to represent progress along the bar
+* `#title=`: Sets the string used to represent the items the bar is tracking (or I guess whatever else you want it to be)
 
 Road Map
 --------------------------------

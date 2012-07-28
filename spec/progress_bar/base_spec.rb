@@ -137,6 +137,15 @@ describe ProgressBar::Base do
         end
       end
 
+      describe '#title=' do
+        it 'changes the title used to represent the items being progressed and updates the output' do
+          @progressbar.title = 'Items'
+
+          @output.rewind
+          @output.read.should match /\rItems: \|ooooooo#{' ' * 64}\|\r\z/
+        end
+      end
+
       describe '#reset' do
         before { @progressbar.reset }
 
