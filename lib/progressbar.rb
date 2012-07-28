@@ -50,6 +50,12 @@ class ProgressBar
   # whatsoever (the classic behavior). Default value is 0.9.
   attr_accessor :smoothing
 
+  # Exponential smoothing helps keep jitter out of the time-remaining estimate.
+  # The value may be anything from 0.0 to 1.0. Contrary to intuition, LOWER
+  # values make the average smoother, and 1.0 is equivalent to no smoothing
+  # whatsoever (the classic behavior). Default value is 0.9.
+  attr_accessor :smoothing
+
   private
   def fmt_bar
     sprintf("|%s%s|",
