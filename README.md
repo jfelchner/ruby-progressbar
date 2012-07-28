@@ -149,6 +149,12 @@ By default, the progressbar will try to be as smart as possible about how wide i
 
 Additionally, if you don't have access to the code calling the progressbar itself (say if you're using a gem like Fuubar), you can set the `RUBY_PROGRESS_BAR_LENGTH` environment variable and it will always override any other setting.
 
+### Realtime Customization
+
+The following items can be set at any time.  Changes cause an immediate bar refresh so no other action is needed:
+
+* `#progress_mark=`: Sets the string used to represent progress along the bar
+
 Road Map
 --------------------------------
 We're planning on adding a bunch of really nice features to this gem over the next few weeks.  We want to keep the simple usage simple but allow for powerful features if they're needed.  Our 1.0 release is the first step in that direction.
