@@ -141,6 +141,14 @@ Becomes:
 
 Notice that the absolute length doesn't get any longer, the bar just shrinks to fill the remaining space.
 
+### Overriding the Length
+
+By default, the progressbar will try to be as smart as possible about how wide it can be.  Under most Unix systems, it should be as wide as the terminal will allow while still fitting on one line.  If you wish to override this behavior, you can pass in the `:length` option when creating the bar like so:
+
+    BasicProgressBar.new(:length => 40)
+
+Additionally, if you don't have access to the code calling the progressbar itself (say if you're using a gem like Fuubar), you can set the `RUBY_PROGRESS_BAR_LENGTH` environment variable and it will always override any other setting.
+
 Road Map
 --------------------------------
 We're planning on adding a bunch of really nice features to this gem over the next few weeks.  We want to keep the simple usage simple but allow for powerful features if they're needed.  Our 1.0 release is the first step in that direction.
