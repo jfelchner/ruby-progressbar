@@ -24,6 +24,8 @@ class ProgressBar
     @start_time = time_now
     @previous_time = @start_time
     @format_arguments = [:title, :percentage, :bar, :stat]
+    @smoothing = 0.9
+    @running_average = 0
     clear
     show
   end
@@ -41,6 +43,12 @@ class ProgressBar
   def format
     @format || "%-#{title_width}s %3d%% %s %s"
   end
+
+  # Exponential smoothing helps keep jitter out of the time-remaining estimate.
+  # The value may be anything from 0.0 to 1.0. Contrary to intuition, LOWER
+  # values make the average smoother, and 1.0 is equivalent to no smoothing
+  # whatsoever (the classic behavior). Default value is 0.9.
+  attr_accessor :smoothing
 
   private
   def fmt_bar
@@ -95,22 +103,22 @@ class ProgressBar
   end
 
   def format_time (t)
-    t = t.to_i
-    sec = t % 60
-    min  = (t / 60) % 60
-    hour = t / 3600
-    sprintf("%02d:%02d:%02d", hour, min, sec);
+    if t < 0 or t.infinite? or t.nan?   # "not a number"
+      '--:--:--'
+    else
+      t = t.to_i
+      sec = t % 60
+      min  = (t / 60) % 60
+      hour = t / 3600
+      sprintf("%02d:%02d:%02d", hour, min, sec);
+    end
   end
 
   # ETA stands for Estimated Time of Arrival.
   def eta
-    if @current == 0
-      "ETA:  --:--:--"
-    else
-      elapsed = time_now - @start_time
-      eta = elapsed * @total / @current - elapsed;
-      sprintf("ETA:  %s", format_time(eta))
-    end
+    elapsed = time_now - @start_time
+    eta = elapsed * @total / @running_average - elapsed;
+    sprintf("ETA:  %s", format_time(eta))
   end
 
   def elapsed
@@ -233,7 +241,7 @@ class ProgressBar
   end
 
   def finish
-    @current = @total
+    @current = @previous = @running_average = @total
     @finished_p = true
     show
   end
@@ -260,18 +268,21 @@ class ProgressBar
   end
 
   def inc (step = 1)
-    @current += step
-    @current = @total if @current > @total
-    show_if_needed
-    @previous = @current
+    set(@current + step)
   end
 
   def set (count)
-    if count < 0 || count > @total
-      raise "invalid count: #{count} (total: #{@total})"
-    end
-    @current = count
+    # Constrain input to 0 <= count <= 100
+    @current = [ [count, @total].min, 0 ].max
+
+    # Update the exponentially-smoothed average
+    @running_average = @previous * @smoothing +
+                       @running_average * (1.0 - @smoothing)
+
+    # If this makes the percentage change by a tick or more, show it
     show_if_needed
+    
+    # Update for the next iteration
     @previous = @current
   end
 
