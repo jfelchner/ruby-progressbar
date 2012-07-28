@@ -18,6 +18,7 @@ module ProgressBar
 
       @title           = options[:title]                 || DEFAULT_TITLE
       @bar             = Components::Bar.new(options)
+
       @estimated_time  = Components::EstimatedTimer.new(options)
       @elapsed_time    = Components::ElapsedTimer.new
 

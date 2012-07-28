@@ -22,15 +22,15 @@ module ProgressBar
       end
 
       def increment
-        @progress += 1 unless progress == total
+        self.progress += 1 unless progress == total
       end
 
       def decrement
-        @progress -= 1 unless progress == 0
+        self.progress -= 1 unless progress == 0
       end
 
       def reset
-        @progress = @starting_position
+        self.progress = @starting_position
       end
 
       def progress=(new_progress)
@@ -44,7 +44,7 @@ module ProgressBar
       end
 
       def finish
-        @progress = @total
+        self.progress = @total
       end
 
       def percentage_completed
@@ -53,7 +53,7 @@ module ProgressBar
         # Doing this way so we can avoid converting each
         # number to a float and then back to an integer.
         #
-        progress * 100 / total
+        self.progress * 100 / total
       end
 
       def percentage_completed_with_precision
@@ -70,7 +70,7 @@ module ProgressBar
       end
 
       def progress_made
-        started? ? @progress - @starting_position : 0
+        started? ? self.progress - @starting_position : 0
       end
     end
   end
