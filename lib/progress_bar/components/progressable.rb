@@ -6,6 +6,7 @@ module ProgressBar
 
       attr_reader               :total
       attr_reader               :progress
+      attr_accessor             :starting_position
 
       def initialize(options)
         self.total    = options[:total] || DEFAULT_TOTAL
@@ -15,11 +16,11 @@ module ProgressBar
 
       def start(options = {})
         self.progress          = \
-        @starting_position = options[:at] || self.progress
+        self.starting_position = options[:at] || self.progress
       end
 
       def started?
-        !!@starting_position
+        !!self.starting_position
       end
 
       def increment
@@ -31,7 +32,7 @@ module ProgressBar
       end
 
       def reset
-        start :at => @starting_position
+        start :at => self.starting_position
       end
 
       def progress=(new_progress)
@@ -71,7 +72,7 @@ module ProgressBar
       end
 
       def progress_made
-        started? ? self.progress - @starting_position : 0
+        started? ? self.progress - self.starting_position : 0
       end
     end
   end
