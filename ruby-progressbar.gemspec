@@ -11,16 +11,16 @@ Gem::Specification.new do |s|
   s.version               = ProgressBar::VERSION
   s.platform              = Gem::Platform::RUBY
 
-  s.authors               = ["Satoru Takabayashi", "thekompanee", "jfelchner"]
+  s.authors               = ["thekompanee", "jfelchner"]
   s.email                 = 'support@thekompanee.com'
   s.date                  = Date.today
-  s.homepage              = 'http://github.com/nex3/ruby-progressbar'
+  s.homepage              = 'https://github.com/jfelchner/ruby-progressbar'
 
-  s.summary               = 'Ruby/ProgressBar is a text progress bar library for Ruby.'
+  s.summary               = 'Ruby/ProgressBar is a flexible text progress bar library for Ruby.'
   s.description           = <<-THEDOCTOR
-Ruby/ProgressBar is a text progress bar library for Ruby.
-It can indicate progress with percentage, a progress bar,
-and estimated remaining time.
+Ruby/ProgressBar is an extremely flexible text progress bar library for Ruby.
+The output can be customized with a flexible formatting system including:
+percentage, bars of various formats, elapsed time and estimated time remaining.
 THEDOCTOR
 
   s.rdoc_options          = ["--charset = UTF-8"]
