@@ -1,4 +1,4 @@
-module ProgressBar
+class ProgressBar
   module Components
     module Progressable
       DEFAULT_TOTAL              = 100

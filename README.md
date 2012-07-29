@@ -33,7 +33,7 @@ Basic Usage
 
 It's simple to get started:
 
-    BasicProgressBar.new
+    ProgressBar.create
 
 Creates a basic progress bar beginning at 0, a total capacity of 100 and tells it to start.
 
@@ -54,9 +54,9 @@ Advanced Usage
 
 ### Options
 
-If you would like to customize your prompt, you can pass options when you call `#new`.
+If you would like to customize your prompt, you can pass options when you call `.create`.
 
-    BasicProgressBar.new(:title => "Items", :starting_at => 20, :total => 200)
+    ProgressBar.create(:title => "Items", :starting_at => 20, :total => 200)
 
 Will output:
 
@@ -126,7 +126,7 @@ More than one bar flag can be used (although I'm not sure why you would :).  If 
 
 If you would like a bar with the elapsed time on the left and the percentage complete followed by the title on the right, you'd do this:
 
-    BasicProgressBar.new(:format => '%a %b %p %t')
+    ProgressBar.create(:format => '%a %b %p %t')
 
 Which will output something like this:
 
@@ -134,7 +134,7 @@ Which will output something like this:
 
 Hard to see where the bar is?  Just add your own end caps, whatever you'd like.  Like so:
 
-    BasicProgressBar.new(:format => '%a <%b> %p %t')
+    ProgressBar.create(:format => '%a <%b> %p %t')
 
 Becomes:
 
@@ -146,7 +146,7 @@ Notice that the absolute length doesn't get any longer, the bar just shrinks to 
 
 By default, the progressbar will try to be as smart as possible about how wide it can be.  Under most Unix systems, it should be as wide as the terminal will allow while still fitting on one line.  If you wish to override this behavior, you can pass in the `:length` option when creating the bar like so:
 
-    BasicProgressBar.new(:length => 40)
+    ProgressBar.create(:length => 40)
 
 Additionally, if you don't have access to the code calling the progressbar itself (say if you're using a gem like Fuubar), you can set the `RUBY_PROGRESS_BAR_LENGTH` environment variable and it will always override any other setting.
 
@@ -165,7 +165,7 @@ __RUBY PROGRESS BAR TO THE RESCUE!__
 
 Thanks to [@L2G](https://github.com/L2G) and 'the maths' you can pass the `:smoothing` option when creating a new bar and it will use an exponentially smoothed average rather than a linear one.  A value of `0.0` means no smoothing and is equivalent to the classic behavior.  A value of `1.0` is the maximum amount of smoothing.  Any values between those two are valid. `0.1` is the default.
 
-    BasicProgressBar.new(:smoothing => 0.6)
+    ProgressBar.create(:smoothing => 0.6)
 
 Road Map
 --------------------------------

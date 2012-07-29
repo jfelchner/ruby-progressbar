@@ -1,7 +1,8 @@
-module ProgressBar
+class ProgressBar
   class Base
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
+    include ProgressBar::Depreciable
 
     DEFAULT_OUTPUT_STREAM     = STDOUT
     DEFAULT_FORMAT_STRING     = '%t: |%b|'
@@ -48,11 +49,6 @@ module ProgressBar
       @bar.progress == @bar.total
     end
 
-    def inc
-      puts 'DEPRECATION WARNING: #inc will be removed on or after October 30th, 2013.  Please use #increment'
-      increment
-    end
-
     def decrement
       with_progressables(:decrement)
 
@@ -63,11 +59,6 @@ module ProgressBar
       with_progressables(:increment)
 
       update
-    end
-
-    def set(new_value)
-      puts 'DEPRECATION WARNING: #set will be removed on or after October 30th, 2013.  Please use #progress='
-      progress = new_value
     end
 
     def progress
@@ -93,11 +84,6 @@ module ProgressBar
       with_timers(:pause)
 
       update
-    end
-
-    def halt
-      puts 'DEPRECATION WARNING: #halt will be removed on or after October 30th, 2013.  Please use #stop'
-      stop
     end
 
     def stop
@@ -142,21 +128,6 @@ module ProgressBar
 
   private
     attr_accessor   :output
-
-    # This will be removed on or after October 30th, 2013 and is only here to provide backward
-    # compatibility with the previous versions of ruby-progressbar.
-    def backwards_compatible_args_to_options_conversion(args)
-      options = {}
-
-      if args.size > 1
-        puts 'DEPRECATION WARNING: Creating Progress Bars in this way has been deprecated and will be removed on or after October 30th, 2013.  Please update your code to use the new initializer syntax found here: https://github.com/jfelchner/ruby-progressbar.'
-        options[:title]  = args[0]
-        options[:total]  = args[1]
-        options[:output] = args[2]
-      else
-        options = args[0]
-      end
-    end
 
     def clear_string
       "#{" " * length}\r"
