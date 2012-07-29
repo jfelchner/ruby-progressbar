@@ -17,4 +17,14 @@ describe ProgressBar::Components::Progressable do
       subject.running_average.should eql 0
     end
   end
+
+  describe '#smoothing' do
+    it 'can be passed in as an option to the initializer' do
+      ProgressableClass.new(:smoothing => 0.3).smoothing.should eql 0.3
+    end
+
+    it 'does not have to be passed in as an option to the initializer' do
+      ProgressableClass.new.smoothing.should eql 1.0
+    end
+  end
 end

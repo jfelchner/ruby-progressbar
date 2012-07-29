@@ -3,14 +3,17 @@ module ProgressBar
     module Progressable
       DEFAULT_TOTAL              = 100
       DEFAULT_BEGINNING_POSITION = 0
+      DEFAULT_SMOOTHING          = 1.0
 
       attr_reader               :total
       attr_reader               :progress
       attr_accessor             :starting_position
       attr_accessor             :running_average
+      attr_accessor             :smoothing
 
       def initialize(options = {})
         self.total           = options[:total]     || DEFAULT_TOTAL
+        self.smoothing       = options[:smoothing] || DEFAULT_SMOOTHING
 
         start :at => DEFAULT_BEGINNING_POSITION
       end
