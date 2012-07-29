@@ -46,7 +46,7 @@ module ProgressBar
       end
 
       def finish
-        self.progress = @total
+        self.progress = self.total
       end
 
       def percentage_completed

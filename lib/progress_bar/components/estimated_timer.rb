@@ -48,7 +48,7 @@ module ProgressBar
       end
 
       def estimated_seconds_remaining
-        (seconds_per_each * (@total - self.progress)).floor
+        (seconds_per_each * (self.total - self.progress)).floor
       end
 
       def out_of_bounds_time
