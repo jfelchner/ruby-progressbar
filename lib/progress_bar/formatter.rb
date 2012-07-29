@@ -95,7 +95,6 @@ class ProgressBar
       @bar.to_s(length)
     end
 
-  private
     def estimated_time
       finished? ? @elapsed_time : @estimated_time
     end
