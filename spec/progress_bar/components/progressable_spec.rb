@@ -14,7 +14,7 @@ describe ProgressBar::Components::Progressable do
       subject.running_average.should be_zero
 
       subject.start :at => 40
-      subject.running_average.should eql 40.0
+      subject.running_average.should eql 36.0
     end
   end
 
@@ -24,7 +24,7 @@ describe ProgressBar::Components::Progressable do
     end
 
     it 'does not have to be passed in as an option to the initializer' do
-      ProgressableClass.new.smoothing.should eql 1.0
+      ProgressableClass.new.smoothing.should eql 0.9
     end
   end
 end

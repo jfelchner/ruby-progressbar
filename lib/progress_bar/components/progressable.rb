@@ -3,7 +3,7 @@ module ProgressBar
     module Progressable
       DEFAULT_TOTAL              = 100
       DEFAULT_BEGINNING_POSITION = 0
-      DEFAULT_SMOOTHING          = 1.0
+      DEFAULT_SMOOTHING          = 0.9
 
       attr_reader               :total
       attr_reader               :progress

@@ -337,7 +337,7 @@ describe ProgressBar::Base do
       context 'when called after #start' do
         before do
           Timecop.travel(-3723) do
-            @progressbar = ProgressBar::Base.new(:starting_at => 0, :output => @output)
+            @progressbar = ProgressBar::Base.new(:starting_at => 0, :output => @output, :smoothing => 1.0)
             @progressbar.start
             @progressbar.progress = 50
           end
@@ -359,7 +359,7 @@ describe ProgressBar::Base do
       context 'when it could take 100 hours or longer to finish' do
         before do
           Timecop.travel(-120000) do
-            @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output)
+            @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :smoothing => 1.0)
             @progressbar.start
             @progressbar.progress = 25
           end
