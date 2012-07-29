@@ -43,11 +43,22 @@ class ProgressBar
 
   private
 
-    def method_deprecation_message(old_item, new_item)
-      unless instance_variable_get(:"@#{old_item}_deprecation_warning")
-        instance_variable_set(:"@#{old_item}_deprecation_warning", true)
+    def method_deprecation_message(old_item, new_item = '')
+      message_has_not_been_shown?(old_item) do
+        replacement_message = new_item.empty? ? 'There will be no replacement.' : "Please use ##{new_item} instead."
+        puts "DEPRECATION WARNING: ##{old_item} will be removed on or after #{DEPRECATION_DATE}. #{replacement_message}"
+      end
+    end
 
-        puts "DEPRECATION WARNING: ##{old_item} will be removed on or after #{DEPRECATION_DATE}.  Please use ##{new_item} instead."
+    def safe_string(item)
+      item.gsub('=', '_setter')
+    end
+
+    def message_has_not_been_shown?(item)
+      unless instance_variable_get(:"@#{safe_string item}_deprecation_warning")
+        instance_variable_set(:"@#{safe_string item}_deprecation_warning", true)
+
+        yield
       end
     end
   end
