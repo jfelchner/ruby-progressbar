@@ -1,5 +1,11 @@
 class ProgressBar
   module LengthCalculator
+    def initialize(options)
+      @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH'] || options[:length]
+
+      super()
+    end
+
   private
     def length
       @current_length || reset_length

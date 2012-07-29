@@ -5,21 +5,15 @@ class ProgressBar
     include ProgressBar::Depreciable
 
     DEFAULT_OUTPUT_STREAM     = STDOUT
-    DEFAULT_FORMAT_STRING     = '%t: |%b|'
-    DEFAULT_TITLE             = 'Progress'
 
     def initialize(*args)
       options          = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
 
       self.output      = options[:output]                || DEFAULT_OUTPUT_STREAM
 
-      @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH'] || options[:length]
+      super(options)
 
-      @format_string   = options[:format]                || DEFAULT_FORMAT_STRING
-
-      @title           = options[:title]                 || DEFAULT_TITLE
       @bar             = Components::Bar.new(options)
-
       @estimated_time  = Components::EstimatedTimer.new(options)
       @elapsed_time    = Components::ElapsedTimer.new
 
