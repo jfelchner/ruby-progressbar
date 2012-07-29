@@ -1,4 +1,4 @@
-module ProgressBar
+class ProgressBar
   class RunningAverageCalculator
     def self.calculate(current_average, new_value_to_average, smoothing_factor)
       new_value_to_average * (1.0 - smoothing_factor) + current_average * smoothing_factor

@@ -1,4 +1,4 @@
-module ProgressBar
+class ProgressBar
   module Format
     class Base
       attr_reader :molecules

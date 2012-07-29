@@ -1,4 +1,4 @@
-module ProgressBar
+class ProgressBar
   module LengthCalculator
   private
     def length

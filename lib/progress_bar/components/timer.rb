@@ -1,4 +1,4 @@
-module ProgressBar
+class ProgressBar
   module Components
     module Timer
       TIME_FORMAT = '%02d:%02d:%02d'

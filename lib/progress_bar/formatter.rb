@@ -1,4 +1,4 @@
-module ProgressBar
+class ProgressBar
   module Formatter
     def format(format_string)
       @format_string = format_string

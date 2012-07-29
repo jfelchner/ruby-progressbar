@@ -1,4 +1,4 @@
-module ProgressBar
+class ProgressBar
   class Base
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter

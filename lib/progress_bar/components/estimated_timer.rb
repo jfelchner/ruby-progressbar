@@ -1,4 +1,4 @@
-module ProgressBar
+class ProgressBar
   module Components
     class EstimatedTimer
       include Timer
