@@ -115,7 +115,7 @@ describe ProgressBar::Base do
 
       it 'prints a new line' do
         @output.rewind
-        @output.read[-1].should eql "\n"
+        @output.read.end_with?("\n").should be_true
       end
     end
   end
