@@ -37,7 +37,7 @@ describe ProgressBar::Components::EstimatedTimer do
 
             Timecop.travel(-13332) do
               @estimated_time.start
-              @estimated_time.progress = 50
+              50.times { @estimated_time.increment }
             end
           end
 
@@ -68,7 +68,7 @@ describe ProgressBar::Components::EstimatedTimer do
 
             Timecop.travel(-120000) do
               @estimated_time.start
-              @estimated_time.progress = 25
+              25.times { @estimated_time.increment }
             end
           end
 
