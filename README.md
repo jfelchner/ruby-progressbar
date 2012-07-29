@@ -106,8 +106,8 @@ The flags you can use in the format string are as follows:
 
 * `%t`: Title
 * `%a`: Elapsed (Absolute) Time
-* `%e`: Estimated Time (Will Fall Back To 'ETA: ??:??:??' When It Exceeds 99:59:59)
-* `%E`: Estimated Time (Will Fall Back To 'ETA: > 4 Days' When It Exceeds 99:59:59)
+* `%e`: Estimated Time (Will Fall Back To 'ETA: ??:??:??' When It Exceeds 99:00:00)
+* `%E`: Estimated Time (Will Fall Back To 'ETA: > 4 Days' When It Exceeds 99:00:00)
 * `%f`: Force Estimated Time Even When Inaccurate
 * `%p`: Percentage Complete represented as a whole number (ie: 82%)
 * `%P`: Percentage Complete represented as a decimal number (ie: 82.33%)
