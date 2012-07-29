@@ -71,6 +71,7 @@ The following are the list of options you can use:
 * `:format` - _(Defaults to '%t: |%b|')_ The format string which determines how the bar is displayed.  See `Formatting` below.
 * `:length` - _(Defaults to full width if possible, otherwise 80)_ The preferred width of the entire progress bar including any format options.
 * `:output` - _(Defaults to STDOUT)_ All output will be sent to this object.  Can be any object which responds to `.print`.
+* `:smoothing` - _(Defaults to 0.1)_ See `Making Your Estimated Time Remaining Value Behave` below.
 
 ### Changing Progress
 
@@ -155,6 +156,16 @@ The following items can be set at any time.  Changes cause an immediate bar refr
 
 * `#progress_mark=`: Sets the string used to represent progress along the bar
 * `#title=`: Sets the string used to represent the items the bar is tracking (or I guess whatever else you want it to be)
+
+### Making Your Estimated Time Remaining Value Behave
+
+Sometimes when you're tracking progress, you could have some items which take significantly longer than others.  When this is the case, the ETA gauge can vary wildly from increment to increment.
+
+__RUBY PROGRESS BAR TO THE RESCUE!__
+
+Thanks to [@L2G](https://github.com/L2G) and 'the maths' you can pass the `:smoothing` option when creating a new bar and it will use an exponentially smoothed average rather than a linear one.  A value of `0.0` means no smoothing and is equivalent to the classic behavior.  A value of `1.0` is the maximum amount of smoothing.  Any values between those two are valid. `0.1` is the default.
+
+    BasicProgressBar.new(:smoothing => 0.6)
 
 Road Map
 --------------------------------
