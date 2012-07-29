@@ -6,7 +6,7 @@ class ProgressBar
       options = {}
 
       if args.size > 1
-        puts 'DEPRECATION WARNING: Creating Progress Bars in this way has been deprecated and will be removed on or after June 30th, 2013.  Please update your code to use the new initializer syntax found here: https://github.com/jfelchner/ruby-progressbar.'
+        puts "DEPRECATION WARNING: Creating progress bars using ProgressBar.new(title, total, output_io) has been deprecated and will be removed on or after #{DEPRECATION_DATE}.  Please use ProgressBar.create(:title => title, :total => total, :output => output_io) instead. The full list of options can be found here: https://github.com/jfelchner/ruby-progressbar."
         options[:title]  = args[0]
         options[:total]  = args[1]
         options[:output] = args[2]

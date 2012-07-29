@@ -8,7 +8,7 @@ require 'progress_bar/base'
 
 class ProgressBar
   def self.new(*args)
-    puts 'DEPRECATION WARNING: Calling ProgressBar.new is deprecated and will be removed on or after June 30th 2013.  Please use ProgressBar.create instead.'
+    puts "DEPRECATION WARNING: Calling `ProgressBar.new` is deprecated and will be removed on or after #{ProgressBar::Depreciable::DEPRECATION_DATE}.  Please use `ProgressBar.create` instead."
 
     create *args
   end
