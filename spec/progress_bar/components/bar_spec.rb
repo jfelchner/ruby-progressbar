@@ -19,8 +19,8 @@ describe ProgressBar::Components::Bar do
 
       context 'and the bar has not been started' do
         describe '#progress' do
-          it 'returns nil' do
-            @progressbar.progress.should be_nil
+          it 'returns the default beginning position' do
+            @progressbar.progress.should be_zero
           end
         end
       end

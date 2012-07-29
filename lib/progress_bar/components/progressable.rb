@@ -9,12 +9,13 @@ module ProgressBar
 
       def initialize(options)
         self.total    = options[:total] || DEFAULT_TOTAL
+
+        start :at => DEFAULT_BEGINNING_POSITION
       end
 
       def start(options = {})
-        self.progress = options[:at] || DEFAULT_BEGINNING_POSITION
-
-        @starting_position = self.progress
+        self.progress          = \
+        @starting_position = options[:at] || self.progress
       end
 
       def started?
@@ -30,7 +31,7 @@ module ProgressBar
       end
 
       def reset
-        self.progress = @starting_position
+        start :at => @starting_position
       end
 
       def progress=(new_progress)
