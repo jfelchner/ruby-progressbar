@@ -44,7 +44,7 @@ describe ProgressBar::Components::EstimatedTimer do
           context 'when #decrement is called' do
             before { @estimated_time.decrement }
 
-            it 'displays 3:51:16 remaining' do
+            it 'displays the correct time remaining' do
               @estimated_time.to_s.should eql ' ETA: 03:51:16'
             end
           end
@@ -57,7 +57,7 @@ describe ProgressBar::Components::EstimatedTimer do
             end
           end
 
-          it 'displays 3:42:12 remaining' do
+          it 'displays the correct time remaining' do
             @estimated_time.to_s.should eql ' ETA: 03:42:12'
           end
         end
