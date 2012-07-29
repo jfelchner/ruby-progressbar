@@ -45,6 +45,8 @@ module ProgressBar
         validate_progress(new_progress)
 
         @progress = new_progress
+
+        update_running_average
       end
 
       def total=(new_total)
@@ -80,6 +82,10 @@ module ProgressBar
 
       def progress_made
         started? ? self.progress - self.starting_position : 0
+      end
+
+      def update_running_average
+        self.running_average = RunningAverageCalculator.calculate(self.running_average, self.progress, self.smoothing)
       end
     end
   end

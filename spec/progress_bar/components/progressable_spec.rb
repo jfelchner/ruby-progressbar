@@ -14,7 +14,7 @@ describe ProgressBar::Components::Progressable do
       subject.running_average.should be_zero
 
       subject.start :at => 40
-      subject.running_average.should eql 0
+      subject.running_average.should eql 40.0
     end
   end
 
