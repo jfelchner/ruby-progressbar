@@ -9,7 +9,7 @@ module ProgressBar
       attr_accessor             :starting_position
 
       def initialize(options = {})
-        self.total    = options[:total] || DEFAULT_TOTAL
+        self.total           = options[:total]     || DEFAULT_TOTAL
 
         start :at => DEFAULT_BEGINNING_POSITION
       end
@@ -37,6 +37,7 @@ module ProgressBar
 
       def progress=(new_progress)
         validate_progress(new_progress)
+
         @progress = new_progress
       end
 
