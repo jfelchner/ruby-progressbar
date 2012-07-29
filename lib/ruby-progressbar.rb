@@ -5,5 +5,14 @@ require 'progress_bar/components'
 require 'progress_bar/format'
 require 'progress_bar/base'
 
-class BasicProgressBar < ProgressBar::Base
+class ProgressBar
+  def self.new(*args)
+    puts 'DEPRECATION WARNING: Calling ProgressBar.new is deprecated and will be removed on or after October 30th 2013.  Please use ProgressBar.create instead.'
+
+    create *args
+  end
+
+  def self.create(*args)
+    ProgressBar::Base.new *args
+  end
 end
