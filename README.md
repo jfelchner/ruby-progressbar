@@ -1,6 +1,8 @@
 Ruby/ProgressBar: A Text Progress Bar Library for Ruby
 ================================
 
+[![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.png?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar)
+
 The **ultimate** text progress bar library for Ruby!  It'll **SMASH YOU OVER THE HEAD** with a **PURE RUSH** of progress bar excitement!
 
 Don't miss out on what all the kids are talking about!  If you want everyone to know that your gem or app can survive _in the cage_ then YOU WANT **RUBY-PROGRESSBAR**!
