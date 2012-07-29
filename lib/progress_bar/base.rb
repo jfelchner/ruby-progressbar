@@ -2,6 +2,7 @@ class ProgressBar
   class Base
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
+    include ProgressBar::Depreciable
 
     DEFAULT_OUTPUT_STREAM     = STDOUT
     DEFAULT_FORMAT_STRING     = '%t: |%b|'
@@ -48,11 +49,6 @@ class ProgressBar
       @bar.progress == @bar.total
     end
 
-    def inc
-      puts 'DEPRECATION WARNING: #inc will be removed on or after June 30th, 2013.  Please use #increment'
-      increment
-    end
-
     def decrement
       with_progressables(:decrement)
 
@@ -63,11 +59,6 @@ class ProgressBar
       with_progressables(:increment)
 
       update
-    end
-
-    def set(new_value)
-      puts 'DEPRECATION WARNING: #set will be removed on or after June 30th, 2013.  Please use #progress='
-      progress = new_value
     end
 
     def progress
@@ -95,11 +86,6 @@ class ProgressBar
       update
     end
 
-    def halt
-      puts 'DEPRECATION WARNING: #halt will be removed on or after June 30th, 2013.  Please use #stop'
-      stop
-    end
-
     def stop
       with_timers(:stop)
 
@@ -122,12 +108,6 @@ class ProgressBar
       @bar.progress_mark = mark
 
       update
-    end
-
-    def bar_mark=(mark)
-      puts 'DEPRECATION WARNING: Updating the mark in this way has been deprecated and will be removed on or after June 30th, 2013.  Please use #progress_mark instead.'
-
-      progress_mark = mark
     end
 
     def title=(title)
