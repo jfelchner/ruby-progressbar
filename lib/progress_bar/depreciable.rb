@@ -1,5 +1,7 @@
 class ProgressBar
   module Depreciable
+    DEPRECATION_DATE = "June 30th, 2013"
+
     def backwards_compatible_args_to_options_conversion(args)
       options = {}
 
@@ -16,27 +18,33 @@ class ProgressBar
     end
 
     def inc
-      puts 'DEPRECATION WARNING: #inc will be removed on or after June 30th, 2013.  Please use #increment'
+      method_deprecation_message 'inc', 'increment'
 
       increment
     end
 
     def set(new_value)
-      puts 'DEPRECATION WARNING: #set will be removed on or after June 30th, 2013.  Please use #progress='
+      method_deprecation_message 'set', 'progress='
 
       progress = new_value
     end
 
     def halt
-      puts 'DEPRECATION WARNING: #halt will be removed on or after June 30th, 2013.  Please use #stop'
+      method_deprecation_message 'halt', 'stop'
 
       stop
     end
 
     def bar_mark=(mark)
-      puts 'DEPRECATION WARNING: Updating the mark in this way has been deprecated and will be removed on or after June 30th, 2013.  Please use #progress_mark instead.'
+      method_deprecation_message 'bar_mark', 'progress_mark='
 
       progress_mark = mark
+    end
+
+  private
+
+    def method_deprecation_message(old_item, new_item)
+      puts "DEPRECATION WARNING: ##{old_item} will be removed on or after #{DEPRECATION_DATE}.  Please use ##{new_item} instead."
     end
   end
 end
