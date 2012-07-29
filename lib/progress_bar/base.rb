@@ -97,7 +97,7 @@ class ProgressBar
     end
 
     def title=(title)
-      @title = title
+      super
 
       update
     end

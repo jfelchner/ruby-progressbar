@@ -17,6 +17,10 @@ class ProgressBar
       process
     end
 
+    def title=(title)
+      @title = title
+    end
+
     def progress
       @bar.progress
     end
