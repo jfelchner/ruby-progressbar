@@ -44,7 +44,11 @@ class ProgressBar
   private
 
     def method_deprecation_message(old_item, new_item)
-      puts "DEPRECATION WARNING: ##{old_item} will be removed on or after #{DEPRECATION_DATE}.  Please use ##{new_item} instead."
+      unless instance_variable_get(:"@#{old_item}_deprecation_warning")
+        instance_variable_set(:"@#{old_item}_deprecation_warning", true)
+
+        puts "DEPRECATION WARNING: ##{old_item} will be removed on or after #{DEPRECATION_DATE}.  Please use ##{new_item} instead."
+      end
     end
   end
 end
