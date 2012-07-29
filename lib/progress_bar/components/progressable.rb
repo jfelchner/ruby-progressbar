@@ -8,7 +8,7 @@ module ProgressBar
       attr_reader               :progress
       attr_accessor             :starting_position
 
-      def initialize(options)
+      def initialize(options = {})
         self.total    = options[:total] || DEFAULT_TOTAL
 
         start :at => DEFAULT_BEGINNING_POSITION
