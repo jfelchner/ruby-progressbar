@@ -55,16 +55,8 @@ class ProgressBar
       update
     end
 
-    def progress
-      @bar.progress
-    end
-
     def progress=(new_progress)
       with_progressables(:progress=, new_progress)
-    end
-
-    def total
-      @bar.total
     end
 
     def reset

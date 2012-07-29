@@ -17,6 +17,14 @@ class ProgressBar
       process
     end
 
+    def progress
+      @bar.progress
+    end
+
+    def total
+      @bar.total
+    end
+
   private
     def process
       processed_string = @format_string.dup
@@ -41,14 +49,6 @@ class ProgressBar
     # Format Methods
     def title
       @title
-    end
-
-    def progress
-      @bar.progress
-    end
-
-    def total
-      @bar.total
     end
 
     def percentage
