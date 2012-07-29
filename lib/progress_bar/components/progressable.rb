@@ -7,6 +7,7 @@ module ProgressBar
       attr_reader               :total
       attr_reader               :progress
       attr_accessor             :starting_position
+      attr_accessor             :running_average
 
       def initialize(options = {})
         self.total           = options[:total]     || DEFAULT_TOTAL
@@ -15,6 +16,8 @@ module ProgressBar
       end
 
       def start(options = {})
+        self.running_average   = 0
+
         self.progress          = \
         self.starting_position = options[:at] || self.progress
       end
