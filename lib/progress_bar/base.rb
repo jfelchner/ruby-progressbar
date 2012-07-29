@@ -70,8 +70,16 @@ module ProgressBar
       progress = new_value
     end
 
+    def progress
+      @bar.progress
+    end
+
     def progress=(new_progress)
       with_progressables(:progress=, new_progress)
+    end
+
+    def total
+      @bar.total
     end
 
     def reset
@@ -122,7 +130,6 @@ module ProgressBar
       update
     end
 
-
     def to_s(format_string = nil)
       format_string ||= @format_string
 
@@ -130,7 +137,7 @@ module ProgressBar
     end
 
     def inspect
-      "#<ProgressBar:#{@bar.progress}/#{@bar.total}>"
+      "#<ProgressBar:#{progress}/#{total}>"
     end
 
   private
