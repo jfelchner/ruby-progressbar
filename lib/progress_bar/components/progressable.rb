@@ -3,18 +3,24 @@ module ProgressBar
     module Progressable
       DEFAULT_TOTAL              = 100
       DEFAULT_BEGINNING_POSITION = 0
+      DEFAULT_SMOOTHING          = 0.1
 
       attr_reader               :total
       attr_reader               :progress
       attr_accessor             :starting_position
+      attr_accessor             :running_average
+      attr_accessor             :smoothing
 
       def initialize(options = {})
         self.total           = options[:total]     || DEFAULT_TOTAL
+        self.smoothing       = options[:smoothing] || DEFAULT_SMOOTHING
 
         start :at => DEFAULT_BEGINNING_POSITION
       end
 
       def start(options = {})
+        self.running_average   = 0
+
         self.progress          = \
         self.starting_position = options[:at] || self.progress
       end
@@ -39,6 +45,8 @@ module ProgressBar
         validate_progress(new_progress)
 
         @progress = new_progress
+
+        update_running_average
       end
 
       def total=(new_total)
@@ -74,6 +82,10 @@ module ProgressBar
 
       def progress_made
         started? ? self.progress - self.starting_position : 0
+      end
+
+      def update_running_average
+        self.running_average = RunningAverageCalculator.calculate(self.running_average, self.progress, self.smoothing)
       end
     end
   end
