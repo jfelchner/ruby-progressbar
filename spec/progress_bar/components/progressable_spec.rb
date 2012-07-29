@@ -24,7 +24,7 @@ describe ProgressBar::Components::Progressable do
     end
 
     it 'does not have to be passed in as an option to the initializer' do
-      ProgressableClass.new.smoothing.should eql 0.9
+      ProgressableClass.new.smoothing.should eql 0.1
     end
   end
 end
