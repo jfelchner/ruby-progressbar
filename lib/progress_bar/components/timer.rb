@@ -43,7 +43,7 @@ module ProgressBar
         hours, seconds = elapsed_seconds.divmod(3600)
         minutes, seconds = seconds.divmod(60)
 
-        sprintf '%02d:%02d:%02d', hours, minutes, seconds
+        sprintf TIME_FORMAT, hours, minutes, seconds
       end
 
       def divide_seconds(seconds)
