@@ -36,7 +36,7 @@ class ProgressBar
     end
 
     def bar_mark=(mark)
-      method_deprecation_message 'bar_mark', 'progress_mark='
+      method_deprecation_message 'bar_mark=', 'progress_mark='
 
       progress_mark = mark
     end
