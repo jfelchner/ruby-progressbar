@@ -162,6 +162,8 @@ class ProgressBar
       else
         options = args[0]
       end
+
+      options
     end
 
     def clear_string
