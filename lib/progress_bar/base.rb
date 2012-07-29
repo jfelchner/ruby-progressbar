@@ -124,6 +124,12 @@ class ProgressBar
       update
     end
 
+    def bar_mark=(mark)
+      puts 'DEPRECATION WARNING: Updating the mark in this way has been deprecated and will be removed on or after June 30th, 2013.  Please use #progress_mark instead.'
+
+      progress_mark = mark
+    end
+
     def title=(title)
       @title = title
 
