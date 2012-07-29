@@ -31,68 +31,68 @@ describe ProgressBar::Components::EstimatedTimer do
       context 'and smoothing is turned off' do
         let(:smoothing) { 0.0 }
 
-      context 'and it took 3:42:12 to do it' do
-        before do
-          @estimated_time = ProgressBar::Components::EstimatedTimer.new(:starting_at => 0, :total => 100, :smoothing => smoothing)
+        context 'and it took 3:42:12 to do it' do
+          before do
+            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:starting_at => 0, :total => 100, :smoothing => smoothing)
 
-          Timecop.travel(-13332) do
-            @estimated_time.start
-            @estimated_time.progress = 50
+            Timecop.travel(-13332) do
+              @estimated_time.start
+              @estimated_time.progress = 50
+            end
+          end
+
+          context 'when #decrement is called' do
+            before { @estimated_time.decrement }
+
+            it 'displays 3:51:16 remaining' do
+              @estimated_time.to_s.should eql ' ETA: 03:51:16'
+            end
+          end
+
+          context 'when #reset is called' do
+            before { @estimated_time.reset }
+
+            it 'displays unknown time remaining' do
+              @estimated_time.to_s.should eql ' ETA: ??:??:??'
+            end
+          end
+
+          it 'displays 3:42:12 remaining' do
+            @estimated_time.to_s.should eql ' ETA: 03:42:12'
           end
         end
 
-        context 'when #decrement is called' do
-          before { @estimated_time.decrement }
+        context 'when it is estimated to take longer than 99:59:59' do
+          before do
+            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:starting_at => 0, :total => 100, :smoothing => smoothing)
 
-          it 'displays 3:51:16 remaining' do
-            @estimated_time.to_s.should eql ' ETA: 03:51:16'
+            Timecop.travel(-120000) do
+              @estimated_time.start
+              @estimated_time.progress = 25
+            end
+          end
+
+          context 'and the out of bounds time format has been set to "friendly"' do
+            before { @estimated_time.out_of_bounds_time_format = :friendly }
+
+            it 'displays "> 4 Days" remaining' do
+              @estimated_time.to_s.should eql ' ETA: > 4 Days'
+            end
+          end
+
+          context 'and the out of bounds time format has been set to "unknown"' do
+            before { @estimated_time.out_of_bounds_time_format = :unknown }
+
+            it 'displays "??:??:??" remaining' do
+              @estimated_time.to_s.should eql ' ETA: ??:??:??'
+            end
+          end
+
+          it 'displays the correct time remaining' do
+            @estimated_time.to_s.should eql ' ETA: 100:00:00'
           end
         end
-
-        context 'when #reset is called' do
-          before { @estimated_time.reset }
-
-          it 'displays unknown time remaining' do
-            @estimated_time.to_s.should eql ' ETA: ??:??:??'
-          end
-        end
-
-        it 'displays 3:42:12 remaining' do
-          @estimated_time.to_s.should eql ' ETA: 03:42:12'
-        end
       end
-
-    context 'when it is estimated to take longer than 99:59:59' do
-      before do
-          @estimated_time = ProgressBar::Components::EstimatedTimer.new(:starting_at => 0, :total => 100, :smoothing => smoothing)
-
-          Timecop.travel(-120000) do
-            @estimated_time.start
-            @estimated_time.progress = 25
-          end
-      end
-
-      context 'and the out of bounds time format has been set to "friendly"' do
-        before { @estimated_time.out_of_bounds_time_format = :friendly }
-
-        it 'displays "> 4 Days" remaining' do
-          @estimated_time.to_s.should eql ' ETA: > 4 Days'
-        end
-      end
-
-      context 'and the out of bounds time format has been set to "unknown"' do
-        before { @estimated_time.out_of_bounds_time_format = :unknown }
-
-        it 'displays "??:??:??" remaining' do
-          @estimated_time.to_s.should eql ' ETA: ??:??:??'
-        end
-      end
-
-      it 'displays the correct time remaining' do
-        @estimated_time.to_s.should eql ' ETA: 100:00:00'
-      end
-    end
-    end
     end
   end
 
