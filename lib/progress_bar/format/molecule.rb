@@ -26,7 +26,7 @@ class ProgressBar
 
       def initialize(letter)
         @key                                          = letter
-        @description, @method_name, @method_arguments = MOLECULES[@key.to_sym]
+        @description, @method_name, @method_arguments = MOLECULES.fetch(@key.to_sym)
       end
 
       def bar_molecule?
