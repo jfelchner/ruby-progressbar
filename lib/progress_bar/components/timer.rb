@@ -1,3 +1,5 @@
+require 'progress_bar/time'
+
 class ProgressBar
   module Components
     module Timer
@@ -34,7 +36,7 @@ class ProgressBar
 
     private
       def now
-        Time.now
+        ProgressBar::Time.now
       end
 
       def elapsed_seconds
