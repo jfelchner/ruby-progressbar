@@ -58,4 +58,22 @@ describe ProgressBar::Components::ElapsedTimer do
       end
     end
   end
+
+  describe '#stopped?' do
+    context 'when the timer is started' do
+      before { @timer.start }
+
+      context 'and then it is stopped' do
+        before { @timer.stop }
+
+        context 'and then it is restarted' do
+          before { @timer.start }
+
+          it 'is false' do
+            @timer.should_not be_stopped
+          end
+        end
+      end
+    end
+  end
 end

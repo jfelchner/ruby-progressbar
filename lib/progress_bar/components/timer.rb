@@ -7,6 +7,7 @@ class ProgressBar
 
       def start
         @started_at = stopped? ? now - (@stopped_at - @started_at) : now
+        @stopped_at = nil
       end
 
       def stop
