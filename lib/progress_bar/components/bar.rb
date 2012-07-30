@@ -3,7 +3,7 @@ class ProgressBar
     class Bar
       include Progressable
 
-      DEFAULT_PROGRESS_MARK = 'o'
+      DEFAULT_PROGRESS_MARK = '='
 
       attr_accessor :progress_mark
       attr_accessor :length

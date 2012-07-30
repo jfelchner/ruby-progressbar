@@ -63,7 +63,7 @@ Every call to `#increment` will advance the bar by `1`. Therefore:
 
 Would output an advancing line which would end up here:
 
-    Progress: |ooooooooooooooooooooooooooooooooooo                                    |
+    Progress: |===================================                                    |
 
 Advanced Usage
 --------------------------------
@@ -76,14 +76,14 @@ If you would like to customize your prompt, you can pass options when you call `
 
 Will output:
 
-    Items: |ooooooo                                                                |
+    Items: |=======                                                                |
 
 The following are the list of options you can use:
 
 * `:title` - _(Defaults to `Progress`)_ - The title of the progress bar.
 * `:total` - _(Defaults to `100`)_ The total number of the items that can be completed.
 * `:starting_at` - _(Defaults to `0`)_ The number of items that should be considered completed when the bar first starts.  This is also the default number that the bar will be set to if `#reset` is called.
-* `:progress_mark` - _(Defaults to `o`)_ The mark which indicates the amount of progress that has been made.
+* `:progress_mark` - _(Defaults to `=`)_ The mark which indicates the amount of progress that has been made.
 * `:format` - _(Defaults to `%t: |%B|`)_ The format string which determines how the bar is displayed.  See [**Formatting**](#formatting) below.
 * `:length` - _(Defaults to full width if possible, otherwise `80`)_ The preferred width of the entire progress bar including any format options.
 * `:output` - _(Defaults to `STDOUT`)_ All output will be sent to this object.  Can be any object which responds to `.print`.
@@ -132,9 +132,9 @@ The flags you can use in the format string are as follows:
 * `%P`: Percentage complete represented as a decimal number (eg: `82.33`)
 * `%c`: Number of items currently completed
 * `%C`: Total number of items to be completed
-* `%B`: The full progress bar including 'incomplete' space (eg: `oooooooooo    `)
-* `%b`: Progress bar only (eg: `oooooooooo`)
-* `%w`: Bar With Integrated Percentage (eg: `oooo 75 oooo`)
+* `%B`: The full progress bar including 'incomplete' space (eg: `==========    `)
+* `%b`: Progress bar only (eg: `==========`)
+* `%w`: Bar With Integrated Percentage (eg: `==== 75 ====`)
 * `%i`: Display the incomplete space of the bar (this string will only contain whitespace eg: `    `)
 * `%%`: A literal percent sign `%`
 
@@ -166,7 +166,7 @@ Want to put an end cap on your bar? Nothing special, just use the bar flag `%b` 
 
 Becomes:
 
-    Time: --:--:-- |oooo>>                                        | 10% Progress
+    Time: --:--:-- |====>>                                        | 10% Progress
 
 Notice that the absolute length doesn't get any longer, the bar just shrinks to fill the remaining space.
 

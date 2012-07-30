@@ -86,7 +86,7 @@ describe ProgressBar::Base do
 
           it 'completes the bar' do
             @output.rewind
-            @output.read.should match /Progress: \|#{'o' * 68}\|\n/
+            @output.read.should match /Progress: \|#{'=' * 68}\|\n/
           end
 
           it 'shows the elapsed time instead of the estimated time since the bar is completed' do
@@ -142,7 +142,7 @@ describe ProgressBar::Base do
           @progressbar.title = 'Items'
 
           @output.rewind
-          @output.read.should match /\rItems: \|ooooooo#{' ' * 64}\|\r\z/
+          @output.read.should match /\rItems: \|=======#{' ' * 64}\|\r\z/
         end
       end
 
@@ -160,7 +160,7 @@ describe ProgressBar::Base do
 
         it 'forcibly halts the bar wherever it is and cancels it' do
           @output.rewind
-          @output.read.should match /\rProgress: \|oooooo#{' ' * 62}\|\n\z/
+          @output.read.should match /\rProgress: \|======#{' ' * 62}\|\n\z/
         end
       end
     end
@@ -179,7 +179,7 @@ describe ProgressBar::Base do
 
         it 'resets the bar back to the starting value' do
           @output.rewind
-          @output.read.should match /\rProgress: \|oooooooooo#{' ' * 90}\|\r\z/
+          @output.read.should match /\rProgress: \|==========#{' ' * 90}\|\r\z/
         end
       end
     end
@@ -213,7 +213,7 @@ describe ProgressBar::Base do
       @progressbar.start(:at => 20)
 
       @output.rewind
-      @output.read.should match /Progress: \|ooooooooooooo                                                       \|\r\z/
+      @output.read.should match /Progress: \|=============                                                       \|\r\z/
     end
   end
 
@@ -225,7 +225,7 @@ describe ProgressBar::Base do
 
       it 'displays the bar with the correct formatting' do
         @output.rewind
-        @output.read.should match /Progress: \|oo                                                                                                  \|\r\z/
+        @output.read.should match /Progress: \|==                                                                                                  \|\r\z/
       end
     end
   end
@@ -262,17 +262,17 @@ describe ProgressBar::Base do
 
       it 'displays the bar when passed the "%B" format flag (including empty space)' do
         @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
-        @progressbar.to_s('%B').should match /^#{'o' * 20}#{' ' * 80}\z/
+        @progressbar.to_s('%B').should match /^#{'=' * 20}#{' ' * 80}\z/
       end
 
       it 'displays the bar when passed the combined "%b%i" format flags' do
         @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
-        @progressbar.to_s('%b%i').should match /^#{'o' * 20}#{' ' * 80}\z/
+        @progressbar.to_s('%b%i').should match /^#{'=' * 20}#{' ' * 80}\z/
       end
 
       it 'displays the bar when passed the "%b" format flag (excluding empty space)' do
         @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
-        @progressbar.to_s('%b').should match /^#{'o' * 20}\z/
+        @progressbar.to_s('%b').should match /^#{'=' * 20}\z/
       end
 
       it 'displays the incomplete space when passed the "%i" format flag' do
@@ -285,11 +285,11 @@ describe ProgressBar::Base do
 
         @progressbar.to_s('%w').should match /^ 0 \z/
         10.times { @progressbar.increment }
-        @progressbar.to_s('%w').should match /^ooo 10 ooo\z/
+        @progressbar.to_s('%w').should match /^=== 10 ===\z/
         @progressbar.decrement
-        @progressbar.to_s('%w').should match /^ooo 9 ooo\z/
+        @progressbar.to_s('%w').should match /^=== 9 ===\z/
         91.times { @progressbar.increment }
-        @progressbar.to_s('%w').should match /^#{'o' * 47} 100 #{'o' * 48}\z/
+        @progressbar.to_s('%w').should match /^#{'=' * 47} 100 #{'=' * 48}\z/
       end
 
       it 'displays the current capacity when passed the "%c" format flag' do
