@@ -84,7 +84,7 @@ class ProgressBar
       estimated_time
     end
 
-    def bar(length)
+    def complete_bar(length)
       @bar.to_s(length)
     end
 

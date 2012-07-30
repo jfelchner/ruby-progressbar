@@ -12,7 +12,7 @@ class ProgressBar
         :e => [:estimated_time_with_unknown,        :estimated_time_with_unknown_oob],
         :E => [:estimated_time_with_greater_than,   :estimated_time_with_friendly_oob],
         :f => [:force_estimated_time,               :estimated_time_with_no_oob],
-        :B => [:bar,                                :bar],
+        :B => [:complete_bar,                       :complete_bar],
         :w => [:bar_with_percentage,                :bar_with_percentage],
         :m => [:mirrored_bar,                       :mirrored_bar]
         # :mirrored_bar_with_percentage     => '%R'
