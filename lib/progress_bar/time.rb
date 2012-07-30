@@ -8,7 +8,15 @@ class ProgressBar
 
   private
     def self.unmocked_time_method
-      @@time.respond_to?(:now_without_mock_time) ? :now_without_mock_time : :now
+      time_mocking_library_mapping.values.find { |method| @@time.respond_to? method }
+    end
+
+    def self.time_mocking_library_mapping
+      {
+        :timecop  => :now_without_mock_time,
+        :delorean => :now_without_delorean,
+        :actual   => :now
+      }
     end
   end
 end
