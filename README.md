@@ -144,7 +144,7 @@ More than one bar flag can be used (although I'm not sure why you would :).  If 
 
 If you would like a bar with the elapsed time on the left and the percentage complete followed by the title on the right, you'd do this:
 
-    ProgressBar.create(:format => '%a %b %p %t')
+    ProgressBar.create(:format => '%a %b %p%% %t')
 
 Which will output something like this:
 
@@ -152,7 +152,7 @@ Which will output something like this:
 
 Hard to see where the bar is?  Just add your own end caps, whatever you'd like.  Like so:
 
-    ProgressBar.create(:format => '%a <%b> %p %t')
+    ProgressBar.create(:format => '%a <%b> %p%% %t')
 
 Becomes:
 
