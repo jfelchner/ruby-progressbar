@@ -231,6 +231,26 @@ describe ProgressBar::Base do
   end
 
   context 'when a new bar is created with a specific format' do
+    context '#format' do
+      before { @progressbar = ProgressBar::Base.new(:format => '%b %p%%') }
+
+      context 'if called with no arguments' do
+        before { @progressbar.format }
+
+        it 'resets the format back to the default' do
+          @progressbar.to_s.should match /^Progress: \|\s+\|\z/
+        end
+      end
+
+      context 'if called with a specific format string' do
+        before { @progressbar.format '%t' }
+
+        it 'sets it as the new format for the bar' do
+          @progressbar.to_s.should match /^Progress\z/
+        end
+      end
+    end
+
     context '#to_s' do
       it 'displays the title when passed the "%t" format flag' do
         @progressbar.to_s('%t').should match /^Progress\z/

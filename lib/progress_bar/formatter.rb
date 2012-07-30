@@ -10,7 +10,7 @@ class ProgressBar
       super(options)
     end
 
-    def format(format_string)
+    def format(format_string = DEFAULT_FORMAT_STRING)
       @format_string = format_string
       @format        = ProgressBar::Format::Base.new(format_string)
 
