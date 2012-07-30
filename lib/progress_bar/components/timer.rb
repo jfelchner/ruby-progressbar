@@ -1,14 +1,16 @@
+require 'progress_bar/time'
+
 class ProgressBar
   module Components
     module Timer
       TIME_FORMAT = '%02d:%02d:%02d'
 
       def start
-        @started_at = stopped? ? Time.now - (@stopped_at - @started_at) : Time.now
+        @started_at = stopped? ? now - (@stopped_at - @started_at) : now
       end
 
       def stop
-        @stopped_at = Time.now
+        @stopped_at = now
       end
 
       def pause
@@ -33,8 +35,12 @@ class ProgressBar
       end
 
     private
+      def now
+        ProgressBar::Time.now
+      end
+
       def elapsed_seconds
-        ((@stopped_at || Time.now) - @started_at).floor
+        ((@stopped_at || now) - @started_at).floor
       end
 
       def elapsed_time

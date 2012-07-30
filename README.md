@@ -169,6 +169,13 @@ Thanks to [@L2G](https://github.com/L2G) and 'the maths' you can pass the `:smoo
 
     ProgressBar.create(:smoothing => 0.6)
 
+### Time Mocking Support
+
+If you're using a time mocking library while displaying your progress bar, it wouldn't do if it used the idea of `now` from your mocking library.  Instead you would always want it to use the un-mocked `now` of real life.  Fortunately, if you use one of our supported Ruby time mocking libraries, your elapsed and estimated times will appear correctly no matter when your 'now' is.  Currently supported are:
+
+  * [Timecop](https://github.com/jtrupiano/timecop)
+  * [Delorean](https://github.com/bebanjo/delorean)
+
 Road Map
 --------------------------------
 We're planning on adding a bunch of really nice features to this gem over the next few weeks.  We want to keep the simple usage simple but allow for powerful features if they're needed.  Our 1.0 release is the first step in that direction.
