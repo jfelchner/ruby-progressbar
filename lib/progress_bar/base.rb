@@ -27,16 +27,14 @@ class ProgressBar
     def start(options = {})
       clear
 
-      with_progressables(:start, options)
-      @elapsed_time.start
-
-      update
+      with_update do
+        with_progressables(:start, options)
+        @elapsed_time.start
+      end
     end
 
     def finish
-      with_progressables(:finish)
-
-      update
+      with_update { with_progressables(:finish) }
     end
 
     def finished?
@@ -44,38 +42,30 @@ class ProgressBar
     end
 
     def decrement
-      with_progressables(:decrement)
-
-      update
+      with_update { with_progressables(:decrement) }
     end
 
     def increment
-      with_progressables(:increment)
-
-      update
+      with_update { with_progressables(:increment) }
     end
 
     def progress=(new_progress)
-      with_progressables(:progress=, new_progress)
+      with_update { with_progressables(:progress=, new_progress) }
     end
 
     def reset
-      @bar.reset
-      with_timers(:reset)
-
-      update
+      with_update do
+        @bar.reset
+        with_timers(:reset)
+      end
     end
 
     def pause
-      with_timers(:pause)
-
-      update
+      with_update { with_timers(:pause) }
     end
 
     def stop
-      with_timers(:stop)
-
-      update
+      with_update { with_timers(:stop) }
     end
 
     def stopped?
@@ -85,21 +75,15 @@ class ProgressBar
     alias :paused? :stopped?
 
     def resume
-      with_timers(:resume)
-
-      update
+      with_update { with_timers(:resume) }
     end
 
     def progress_mark=(mark)
-      @bar.progress_mark = mark
-
-      update
+      with_update { @bar.progress_mark = mark }
     end
 
     def title=(title)
-      super
-
-      update
+      with_update { super }
     end
 
     def to_s(format_string = nil)
@@ -137,6 +121,11 @@ class ProgressBar
         @estimated_time.send(action, *args)
         @elapsed_time.send(action, *args)
       end
+    end
+
+    def with_update
+      yield
+      update
     end
 
     def update
