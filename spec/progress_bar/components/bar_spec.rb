@@ -66,6 +66,7 @@ describe ProgressBar::Components::Bar do
   context 'when just begun' do
     before do
       @progressbar = ProgressBar::Components::Bar.new(:total => 50)
+      @progressbar.length = 100
       @progressbar.start
     end
 
@@ -73,7 +74,7 @@ describe ProgressBar::Components::Bar do
       before { @progressbar.mirror }
 
       it 'displays the bar with no indication of progress' do
-        @progressbar.to_s(100).should eql '                                                                                                    '
+        @progressbar.to_s.should eql '                                                                                                    '
       end
     end
 
@@ -85,7 +86,7 @@ describe ProgressBar::Components::Bar do
 
     describe '#to_s' do
       it 'displays the bar with no indication of progress' do
-        @progressbar.to_s(100).should eql '                                                                                                    '
+        @progressbar.to_s.should eql '                                                                                                    '
       end
     end
   end
@@ -93,6 +94,7 @@ describe ProgressBar::Components::Bar do
   context 'when nothing has been completed' do
     before do
       @progressbar = ProgressBar::Components::Bar.new(:total => 50)
+      @progressbar.length = 100
       @progressbar.start
     end
 
@@ -114,14 +116,14 @@ describe ProgressBar::Components::Bar do
 
         describe '#to_s' do
           it 'displays the bar with an indication of progress' do
-            @progressbar.to_s(100).should eql '                                                                                                  oo'
+            @progressbar.to_s.should eql '                                                                                                  oo'
           end
         end
       end
 
       describe '#to_s' do
         it 'displays the bar with an indication of progress' do
-          @progressbar.to_s(100).should eql 'oo                                                                                                  '
+          @progressbar.to_s.should eql 'oo                                                                                                  '
         end
       end
     end
@@ -134,7 +136,7 @@ describe ProgressBar::Components::Bar do
 
     describe '#to_s' do
       it 'displays the bar with no indication of progress' do
-        @progressbar.to_s(100).should eql '                                                                                                    '
+        @progressbar.to_s.should eql '                                                                                                    '
       end
     end
   end
@@ -142,6 +144,7 @@ describe ProgressBar::Components::Bar do
   context 'when a fraction of a percentage has been completed' do
     before do
       @progressbar = ProgressBar::Components::Bar.new(:total => 200)
+      @progressbar.length = 100
       @progressbar.start :at => 1
     end
 
@@ -153,7 +156,7 @@ describe ProgressBar::Components::Bar do
 
     describe '#to_s' do
       it 'displays the bar with no indication of progress' do
-        @progressbar.to_s(100).should eql '                                                                                                    '
+        @progressbar.to_s.should eql '                                                                                                    '
       end
     end
   end
@@ -161,6 +164,7 @@ describe ProgressBar::Components::Bar do
   context 'when completed' do
     before do
       @progressbar = ProgressBar::Components::Bar.new(:total => 50)
+      @progressbar.length = 100
       @progressbar.start :at => 50
     end
 
@@ -174,7 +178,7 @@ describe ProgressBar::Components::Bar do
 
       describe '#to_s' do
         it 'displays the bar as 100% complete' do
-          @progressbar.to_s(100).should eql 'o' * 100
+          @progressbar.to_s.should eql 'o' * 100
         end
       end
     end
@@ -189,7 +193,7 @@ describe ProgressBar::Components::Bar do
 
       describe '#to_s' do
         it 'displays the bar as 98% complete' do
-          @progressbar.to_s(100).should eql "#{'o' * 98}  "
+          @progressbar.to_s.should eql "#{'o' * 98}  "
         end
       end
     end
@@ -199,14 +203,14 @@ describe ProgressBar::Components::Bar do
 
       describe '#to_s' do
         it 'displays the bar with an indication of progress' do
-          @progressbar.to_s(100).should eql 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'
+          @progressbar.to_s.should eql 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'
         end
       end
     end
 
     describe '#to_s' do
       it 'displays the bar as 100% complete' do
-        @progressbar.to_s(100).should eql 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'
+        @progressbar.to_s.should eql 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'
       end
     end
   end

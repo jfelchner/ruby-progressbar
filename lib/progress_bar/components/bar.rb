@@ -7,6 +7,7 @@ class ProgressBar
 
       attr_accessor :mirrored
       attr_accessor :progress_mark
+      attr_accessor :length
 
       def initialize(options = {})
         super
@@ -23,8 +24,7 @@ class ProgressBar
         mirrored
       end
 
-      def to_s(length, options = {:format => :standard})
-        self.length      = length
+      def to_s(options = {:format => :standard})
         completed_string = send(:"#{options[:format]}_complete_string")
         empty_string     = ' ' * (length - completed_string.length)
 
@@ -32,8 +32,6 @@ class ProgressBar
       end
 
     private
-      attr_accessor :length
-
       def standard_complete_string
         progress_mark * completed_length
       end

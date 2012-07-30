@@ -85,16 +85,19 @@ class ProgressBar
     end
 
     def complete_bar(length)
-      @bar.to_s(length)
+      @bar.length = length
+      @bar.to_s
     end
 
     def bar_with_percentage(length)
-      @bar.to_s(length, :format => :integrated_percentage)
+      @bar.length = length
+      @bar.to_s(:format => :integrated_percentage)
     end
 
     def mirrored_bar(length)
       @bar.mirror unless @bar.mirrored?
-      @bar.to_s(length)
+      @bar.length = length
+      @bar.to_s
     end
 
     def estimated_time
