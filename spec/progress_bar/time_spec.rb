@@ -1,13 +1,15 @@
 require 'spec_helper'
 
+class UnmockedTime
+  def self.now; end
+end
+
 describe ProgressBar::Time do
   describe '#now' do
-    it 'is the current time' do
-      now = Time.utc(2011, 1, 1, 12, 0 ,0)
+    it 'calls #now on the passed in class' do
+      UnmockedTime.should_receive(:now).once
 
-      Timecop.freeze(now) do
-        ProgressBar::Time.now.should eql now
-      end
+      ProgressBar::Time.now(UnmockedTime)
     end
   end
 end
