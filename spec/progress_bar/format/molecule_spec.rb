@@ -15,7 +15,7 @@ describe ProgressBar::Format::Molecule do
 
   describe '#bar_molecule?' do
     it "is true if the molecule's key is a representation of the progress bar graphic" do
-      molecule = ProgressBar::Format::Molecule.new('b')
+      molecule = ProgressBar::Format::Molecule.new('B')
       molecule.should be_bar_molecule
     end
   end
