@@ -132,10 +132,10 @@ The flags you can use in the format string are as follows:
 * `%P`: Percentage complete represented as a decimal number (eg: `82.33`)
 * `%c`: Number of items currently completed
 * `%C`: Total number of items to be completed
-* `%B`: The full progress bar including 'incomplete' space (eg: `oooooooooo&nbsp;&nbsp;&nbsp;&nbsp;`)
+* `%B`: The full progress bar including 'incomplete' space (eg: `oooooooooo    `)
 * `%b`: Progress bar only (eg: `oooooooooo`)
 * `%w`: Bar With Integrated Percentage (eg: `oooo 75 oooo`)
-* `%i`: Display the incomplete space of the bar (this string will only contain whitespace eg: `&nbsp;&nbsp;&nbsp;&nbsp;`)
+* `%i`: Display the incomplete space of the bar (this string will only contain whitespace eg: `    `)
 * `%%`: A literal percent sign `%`
 
 All values have an absolute length with the exception of the bar flags (eg `%B`, `%r`, etc) which will occupy any leftover space.
