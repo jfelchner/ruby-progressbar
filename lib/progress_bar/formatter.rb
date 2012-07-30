@@ -41,6 +41,8 @@ class ProgressBar
       remaining_molecules           = remaining_molecule_match_data.size
       placeholder_length            = remaining_molecules * 2
 
+      processed_string.gsub! '%%', '%'
+
       leftover_bar_length           = length - processed_string.length + placeholder_length
 
       @format.bar_molecules.each do |molecule|
