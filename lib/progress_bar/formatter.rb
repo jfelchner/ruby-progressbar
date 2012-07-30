@@ -104,12 +104,6 @@ class ProgressBar
       @bar.integrated_percentage_complete_string
     end
 
-    def mirrored_bar(length)
-      @bar.mirror unless @bar.mirrored?
-      @bar.length = length
-      @bar.to_s
-    end
-
     def estimated_time
       finished? ? @elapsed_time : @estimated_time
     end

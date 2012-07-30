@@ -70,14 +70,6 @@ describe ProgressBar::Components::Bar do
       @progressbar.start
     end
 
-    context 'and the bar has been mirrored' do
-      before { @progressbar.mirror }
-
-      it 'displays the bar with no indication of progress' do
-        @progressbar.to_s.should eql '                                                                                                    '
-      end
-    end
-
     describe '#percentage_completed' do
       it 'calculates the amount' do
         @progressbar.percentage_completed.should eql 0
@@ -108,16 +100,6 @@ describe ProgressBar::Components::Bar do
       describe '#percentage_completed' do
         it 'calculates the amount completed' do
           @progressbar.percentage_completed.should eql 2
-        end
-      end
-
-      context 'and the bar has been mirrored' do
-        before { @progressbar.mirror }
-
-        describe '#to_s' do
-          it 'displays the bar with an indication of progress' do
-            @progressbar.to_s.should eql '                                                                                                  oo'
-          end
         end
       end
 
@@ -194,16 +176,6 @@ describe ProgressBar::Components::Bar do
       describe '#to_s' do
         it 'displays the bar as 98% complete' do
           @progressbar.to_s.should eql "#{'o' * 98}  "
-        end
-      end
-    end
-
-    context 'and the bar has been mirrored' do
-      before { @progressbar.mirror }
-
-      describe '#to_s' do
-        it 'displays the bar with an indication of progress' do
-          @progressbar.to_s.should eql 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'
         end
       end
     end

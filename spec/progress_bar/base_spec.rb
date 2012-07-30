@@ -287,16 +287,6 @@ describe ProgressBar::Base do
         @progressbar.to_s('%w').should match /^#{'o' * 47} 100 #{'o' * 48}\z/
       end
 
-      it 'displays the mirrored bar when passed the "%r" format flag' do
-        @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :starting_at => 0)
-
-        @progressbar.to_s('%m').should match /^#{' ' * 100}\z/
-        @progressbar.increment
-        @progressbar.to_s('%m').should match /^#{' ' * 99}o\z/
-        @progressbar.decrement
-        @progressbar.to_s('%m').should match /^#{' ' * 100}\z/
-      end
-
       it 'displays the current capacity when passed the "%c" format flag' do
         @progressbar = ProgressBar::Base.new(:output => @output, :starting_at => 0)
 
