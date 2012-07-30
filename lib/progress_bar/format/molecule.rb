@@ -15,11 +15,12 @@ class ProgressBar
         :B => [:complete_bar,                       :complete_bar],
         :b => [:bar,                                :bar],
         :w => [:bar_with_percentage,                :bar_with_percentage],
+        :i => [:incomplete_space,                   :incomplete_space],
         :m => [:mirrored_bar,                       :mirrored_bar]
         # :mirrored_bar_with_percentage     => '%R'
       }
 
-      BAR_MOLECULES     = %w{w B b m}
+      BAR_MOLECULES     = %w{w B b m i}
 
       attr_reader   :key
       attr_reader   :method_name

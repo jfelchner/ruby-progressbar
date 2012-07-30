@@ -135,6 +135,7 @@ The flags you can use in the format string are as follows:
 * `%B`: The full progress bar including 'incomplete' space (eg: `oooooooooo&nbsp;&nbsp;&nbsp;&nbsp;`)
 * `%b`: Progress bar only (eg: `oooooooooo`)
 * `%w`: Bar With Integrated Percentage (eg: `oooo 75 oooo`)
+* `%i`: Display the incomplete space of the bar (this string will only contain whitespace eg: `&nbsp;&nbsp;&nbsp;&nbsp;`)
 * `%m`: Mirrored progress bar (accumulates from the right)
 * `%%`: A literal percent sign `%`
 

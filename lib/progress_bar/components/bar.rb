@@ -39,13 +39,13 @@ class ProgressBar
         progress_mark * completed_length
       end
 
+      def empty_string
+        ' ' * (length - completed_length)
+      end
+
     private
       def completed_length
         length * percentage_completed / 100
-      end
-
-      def empty_string
-        ' ' * (length - completed_length)
       end
     end
   end
