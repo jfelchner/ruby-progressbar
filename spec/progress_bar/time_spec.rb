@@ -23,13 +23,13 @@ describe ProgressBar::Time do
     end
 
     context 'when Time is not being mocked' do
-    subject { ProgressBar::Time.now ::UnmockedTime }
+      subject { ProgressBar::Time.now ::UnmockedTime }
 
-    it 'will return the actual time' do
-      ::UnmockedTime.should_receive(:now).once
+      it 'will return the actual time' do
+        ::UnmockedTime.should_receive(:now).once
 
-      subject
-    end
+        subject
+      end
     end
   end
 end
