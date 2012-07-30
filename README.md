@@ -209,6 +209,20 @@ ruby-progressbar is maintained by [The Kompanee, Ltd.](http://www.thekompanee.co
 
 The names and logos for The Kompanee are trademarks of The Kompanee, Ltd.
 
+Contributors
+--------------------------------
+* [Lawrence Leonard "Larry" Gilbert](https://github.com/L2G)
+* [Aleksei Gusev](https://github.com/hron)
+* [Yves Senn](https://github.com/senny)
+* [Nathan Weizenbaum](https://github.com/nex3)
+* [Oleg Dashevskii](https://github.com/be9)
+* [Chris Griego](https://github.com/cgriego)
+* [Tim Harper](https://github.com/timcharper)
+* [Chalo Fernandez](https://github.com/chalofa)
+* [Laust Rud Jacobsen](https://github.com/rud)
+* [Ryan Wood](https://github.com/ryanwood)
+* [Jim Benton](https://github.com/jim)
+
 Thanks
 --------------------------------
 
