@@ -160,6 +160,14 @@ Becomes:
 
     Time: --:--:-- <                                               > 0% Progress
 
+Want to put an end cap on your bar? Nothing special, just use the bar flag `%b` combined with the incomplete space flag `%i` like so:
+
+    ProgressBar.create(:format => '%a |%b>>%i| %p%% %t', :starting_at => 10)
+
+Becomes:
+
+    Time: --:--:-- |oooo>>                                        | 10% Progress
+
 Notice that the absolute length doesn't get any longer, the bar just shrinks to fill the remaining space.
 
 ### Overriding the Length

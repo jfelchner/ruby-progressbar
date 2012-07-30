@@ -19,8 +19,8 @@ class ProgressBar
       def parse(format_string)
         molecules        = []
 
-        format_string.scan(/%([^%])/) do |match|
-          molecules << Molecule.new(match[0])
+        format_string.scan(/%[a-zA-Z]/) do |match|
+          molecules << Molecule.new(match[1])
         end
 
         molecules
