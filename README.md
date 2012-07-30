@@ -128,8 +128,8 @@ The flags you can use in the format string are as follows:
 * `%e`: Estimated time (will fall back to `ETA: ??:??:??` when it exceeds `99:00:00`)
 * `%E`: Estimated time (will fall back to `ETA: > 4 Days` when it exceeds `99:00:00`)
 * `%f`: Force estimated time to be displayed even if it exceeds `99:00:00`
-* `%p`: Percentage complete represented as a whole number (eg: `82%`)
-* `%P`: Percentage complete represented as a decimal number (eg: `82.33%`)
+* `%p`: Percentage complete represented as a whole number (eg: `82`)
+* `%P`: Percentage complete represented as a decimal number (eg: `82.33`)
 * `%c`: Number of items currently completed
 * `%C`: Total number of items to be completed
 * `%b`: Progress bar itself
