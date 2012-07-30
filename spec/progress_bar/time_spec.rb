@@ -6,10 +6,12 @@ end
 
 describe ProgressBar::Time do
   describe '#now' do
-    it 'calls #now on the passed in class' do
-      UnmockedTime.should_receive(:now).once
+    subject { ProgressBar::Time.now ::UnmockedTime }
 
-      ProgressBar::Time.now(UnmockedTime)
+    it 'will return the actual time' do
+      ::UnmockedTime.should_receive(:now).once
+
+      subject
     end
   end
 end
