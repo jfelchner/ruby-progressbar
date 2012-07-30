@@ -4,26 +4,25 @@ class ProgressBar
     include ProgressBar::Formatter
     include ProgressBar::Depreciable
 
-    DEFAULT_OUTPUT_STREAM     = STDOUT
+    DEFAULT_OUTPUT_STREAM = STDOUT
 
     def initialize(*args)
-      options          = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
+      options             = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
 
-      self.output      = options[:output]                || DEFAULT_OUTPUT_STREAM
+      self.output         = options[:output]                || DEFAULT_OUTPUT_STREAM
 
       super(options)
 
-      @bar             = Components::Bar.new(options)
-      @estimated_time  = Components::EstimatedTimer.new(options)
-      @elapsed_time    = Components::ElapsedTimer.new
+      @bar                = Components::Bar.new(options)
+      @estimated_time     = Components::EstimatedTimer.new(options)
+      @elapsed_time       = Components::ElapsedTimer.new
 
       start :at => options[:starting_at]
     end
 
-    def clear
-      output.print clear_string
-    end
-
+    ###
+    # Starting The Bar
+    #
     def start(options = {})
       clear
 
@@ -33,14 +32,9 @@ class ProgressBar
       end
     end
 
-    def finish
-      with_update { with_progressables(:finish) }
-    end
-
-    def finished?
-      @bar.progress == @bar.total
-    end
-
+    ###
+    # Updating The Bar's Progress
+    #
     def decrement
       with_update { with_progressables(:decrement) }
     end
@@ -53,11 +47,11 @@ class ProgressBar
       with_update { with_progressables(:progress=, new_progress) }
     end
 
-    def reset
-      with_update do
-        @bar.reset
-        with_timers(:reset)
-      end
+    ###
+    # Stopping The Bar
+    #
+    def finish
+      with_update { with_progressables(:finish) }
     end
 
     def pause
@@ -68,22 +62,47 @@ class ProgressBar
       with_update { with_timers(:stop) }
     end
 
+    def resume
+      with_update { with_timers(:resume) }
+    end
+
+    def reset
+      with_update do
+        @bar.reset
+        with_timers(:reset)
+      end
+    end
+
     def stopped?
       @estimated_time.stopped? && @elapsed_time.stopped?
     end
 
     alias :paused? :stopped?
 
-    def resume
-      with_update { with_timers(:resume) }
+    def finished?
+      @bar.progress == @bar.total
     end
 
+    ###
+    # UI Updates
+    #
     def progress_mark=(mark)
       with_update { @bar.progress_mark = mark }
     end
 
     def title=(title)
       with_update { super }
+    end
+
+    ###
+    # Output
+    #
+    def clear
+      output.print clear_string
+    end
+
+    def refresh
+      update
     end
 
     def to_s(format_string = nil)
