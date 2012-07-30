@@ -1,6 +1,6 @@
 class ProgressBar
   module Formatter
-    DEFAULT_FORMAT_STRING = '%t: |%b|'
+    DEFAULT_FORMAT_STRING = '%t: |%B|'
     DEFAULT_TITLE         = 'Progress'
 
     def initialize(options)

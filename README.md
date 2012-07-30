@@ -84,7 +84,7 @@ The following are the list of options you can use:
 * `:total` - _(Defaults to `100`)_ The total number of the items that can be completed.
 * `:starting_at` - _(Defaults to `0`)_ The number of items that should be considered completed when the bar first starts.  This is also the default number that the bar will be set to if `#reset` is called.
 * `:progress_mark` - _(Defaults to `o`)_ The mark which indicates the amount of progress that has been made.
-* `:format` - _(Defaults to `%t: |%b|`)_ The format string which determines how the bar is displayed.  See [**Formatting**](#formatting) below.
+* `:format` - _(Defaults to `%t: |%B|`)_ The format string which determines how the bar is displayed.  See [**Formatting**](#formatting) below.
 * `:length` - _(Defaults to full width if possible, otherwise `80`)_ The preferred width of the entire progress bar including any format options.
 * `:output` - _(Defaults to `STDOUT`)_ All output will be sent to this object.  Can be any object which responds to `.print`.
 * `:smoothing` - _(Defaults to `0.1`)_ See [**Smoothing Out Estimated Time Jitters**](#smoothing-out-estimated-time-jitters) below.
@@ -132,19 +132,19 @@ The flags you can use in the format string are as follows:
 * `%P`: Percentage complete represented as a decimal number (eg: `82.33`)
 * `%c`: Number of items currently completed
 * `%C`: Total number of items to be completed
-* `%b`: Progress bar itself
-* `%B`: Bar With Integrated Percentage (eg: `|oooo 75 oooo    |`)
+* `%B`: Progress bar itself
+* `%b`: Bar With Integrated Percentage (eg: `|oooo 75 oooo    |`)
 * `%m`: Mirrored progress bar (accumulates from the right)
 * `%%`: A literal percent sign `%`
 
-All values have an absolute length with the exception of the bar flags (eg `%b`, `%r`) which will occupy any leftover space.
+All values have an absolute length with the exception of the bar flags (eg `%B`, `%r`, etc) which will occupy any leftover space.
 More than one bar flag can be used (although I'm not sure why you would :).  If so, the remaining space will be divided up equally among them.
 
 ### Example
 
 If you would like a bar with the elapsed time on the left and the percentage complete followed by the title on the right, you'd do this:
 
-    ProgressBar.create(:format => '%a %b %p%% %t')
+    ProgressBar.create(:format => '%a %B %p%% %t')
 
 Which will output something like this:
 
@@ -152,7 +152,7 @@ Which will output something like this:
 
 Hard to see where the bar is?  Just add your own end caps, whatever you'd like.  Like so:
 
-    ProgressBar.create(:format => '%a <%b> %p%% %t')
+    ProgressBar.create(:format => '%a <%B> %p%% %t')
 
 Becomes:
 
