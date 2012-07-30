@@ -9,6 +9,14 @@ Don't miss out on what all the kids are talking about!  If you want everyone to 
 
 ![The Cage](http://www.thekompanee.com/public_files/the-cage.png)
 
+Supported Rubies
+--------------------------------
+* MRI Ruby 1.8.7
+* MRI Ruby 1.9.2
+* MRI Ruby 1.9.3
+* JRuby (in 1.8 compat mode)
+* JRuby (in 1.9 compat mode)
+
 Installation
 --------------------------------
 
