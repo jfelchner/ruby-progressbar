@@ -178,6 +178,10 @@ The following items can be set at any time.  Changes cause an immediate bar refr
 * `#title=`: Sets the string used to represent the items the bar is tracking (or I guess whatever else you want it to be).
 * `#format(format_string)`: If you need to adjust the format that the bar uses when rendering itself, just pass in a string in the same format as describe [above](#formatting).
 
+## In The Weeds
+
+This is some stuff that makes ruby-progressbar extra awesome, but for the most part it "Just Works" and you won't have to even know it's there, but if you're curious like us, here it is.
+
 ### Times... They Are A Changin'
 
 #### Smoothing Out Estimated Time Jitters
