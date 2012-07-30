@@ -35,11 +35,11 @@ class ProgressBar
         " #{percentage_completed} ".to_s.center(completed_length, progress_mark)
       end
 
-    private
       def standard_complete_string
         progress_mark * completed_length
       end
 
+    private
       def completed_length
         length * percentage_completed / 100
       end

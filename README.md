@@ -132,7 +132,8 @@ The flags you can use in the format string are as follows:
 * `%P`: Percentage complete represented as a decimal number (eg: `82.33`)
 * `%c`: Number of items currently completed
 * `%C`: Total number of items to be completed
-* `%B`: Progress bar itself
+* `%B`: The full progress bar including 'incomplete' space (eg: `oooooooooo&nbsp;&nbsp;&nbsp;&nbsp;`)
+* `%b`: Progress bar only (eg: `oooooooooo`)
 * `%w`: Bar With Integrated Percentage (eg: `oooo 75 oooo`)
 * `%m`: Mirrored progress bar (accumulates from the right)
 * `%%`: A literal percent sign `%`
