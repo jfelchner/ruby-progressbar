@@ -1,8 +1,6 @@
 Ruby/ProgressBar: A Text Progress Bar Library for Ruby
 ================================
 
-[![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.png?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar)
-
 The **ultimate** text progress bar library for Ruby!  It'll **SMASH YOU OVER THE HEAD** with a **PURE RUSH** of progress bar excitement!
 
 Don't miss out on what all the kids are talking about!  If you want everyone to know that your gem or app can survive _in the cage_ then YOU WANT **RUBY-PROGRESSBAR**!
@@ -16,6 +14,14 @@ Supported Rubies
 * MRI Ruby 1.9.3
 * JRuby (in 1.8 compat mode)
 * JRuby (in 1.9 compat mode)
+
+It's Better Than The Other 186,312 Progress Bar Libraries Because...
+--------------------------------
+* Full test suite [![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.png?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar)
+* Used by tons of other open source projects (which means we find out about bugs quickly)
+* It's pretty [freakin' sweet](https://www.youtube.com/watch?v=On3IoVhf_GM)
+* We have a road map of new features to make it even better
+* And most importantly... our awesome [contributors](#contributors)
 
 Installation
 --------------------------------
