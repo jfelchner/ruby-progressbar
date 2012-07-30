@@ -267,11 +267,11 @@ describe ProgressBar::Base do
       it 'displays the bar when passed the "%w" format flag' do
         @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :starting_at => 0)
 
-        @progressbar.to_s('%w').should match /^ 0#{' ' * 98}\z/
+        @progressbar.to_s('%w').should match /^ 0 \z/
         10.times { @progressbar.increment }
-        @progressbar.to_s('%w').should match /^ooo 10 ooo#{' ' * 90}\z/
+        @progressbar.to_s('%w').should match /^ooo 10 ooo\z/
         @progressbar.decrement
-        @progressbar.to_s('%w').should match /^ooo 9 ooo#{' ' * 91}\z/
+        @progressbar.to_s('%w').should match /^ooo 9 ooo\z/
         91.times { @progressbar.increment }
         @progressbar.to_s('%w').should match /^#{'o' * 47} 100 #{'o' * 48}\z/
       end

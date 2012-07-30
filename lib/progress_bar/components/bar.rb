@@ -31,13 +31,13 @@ class ProgressBar
         mirrored? ? "#{empty_string}#{completed_string}" : "#{completed_string}#{empty_string}"
       end
 
+      def integrated_percentage_complete_string
+        " #{percentage_completed} ".to_s.center(completed_length, progress_mark)
+      end
+
     private
       def standard_complete_string
         progress_mark * completed_length
-      end
-
-      def integrated_percentage_complete_string
-        " #{percentage_completed} ".to_s.center(completed_length, progress_mark)
       end
 
       def completed_length

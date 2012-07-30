@@ -91,7 +91,7 @@ class ProgressBar
 
     def bar_with_percentage(length)
       @bar.length = length
-      @bar.to_s(:format => :integrated_percentage)
+      @bar.integrated_percentage_complete_string
     end
 
     def mirrored_bar(length)
