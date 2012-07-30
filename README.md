@@ -138,9 +138,8 @@ The flags you can use in the format string are as follows:
 * `%i`: Display the incomplete space of the bar (this string will only contain whitespace eg: `    `)
 * `%%`: A literal percent sign `%`
 
-All values have an absolute length with the exception of the bar flags (eg `%B`, `%r`, etc) which will occupy any leftover space.
-You can use as many bar flags as you'd like, but if you do weird things, weird things will happen; so be wary.  If so, the remaining
-space will be divided up equally among them.
+All values have an absolute length with the exception of the bar flags (eg `%B`, `%b`, etc) which will occupy any leftover space.
+You can use as many bar flags as you'd like, but if you do weird things, weird things will happen; so be wary.
 
 ### Example
 
