@@ -232,7 +232,7 @@ describe ProgressBar::Base do
 
   context 'when a new bar is created with a specific format' do
     context '#format' do
-      before { @progressbar = ProgressBar::Base.new(:format => '%b %p%%') }
+      before { @progressbar = ProgressBar::Base.new(:format => '%B %p%%') }
 
       context 'if called with no arguments' do
         before { @progressbar.format }
@@ -260,30 +260,36 @@ describe ProgressBar::Base do
         @progressbar.to_s('%T').should match /^Progress\z/
       end
 
-      it 'displays the bar when passed the "%b" format flag' do
-        @progressbar.to_s('%b').should match /^#{' ' * 80}\z/
+      it 'displays the bar when passed the "%B" format flag (including empty space)' do
+        @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
+        @progressbar.to_s('%B').should match /^#{'o' * 20}#{' ' * 80}\z/
       end
 
-      it 'displays the bar when passed the "%B" format flag' do
+      it 'displays the bar when passed the combined "%b%i" format flags' do
+        @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
+        @progressbar.to_s('%b%i').should match /^#{'o' * 20}#{' ' * 80}\z/
+      end
+
+      it 'displays the bar when passed the "%b" format flag (excluding empty space)' do
+        @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
+        @progressbar.to_s('%b').should match /^#{'o' * 20}\z/
+      end
+
+      it 'displays the incomplete space when passed the "%i" format flag' do
+        @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
+        @progressbar.to_s('%i').should match /^#{' ' * 80}\z/
+      end
+
+      it 'displays the bar when passed the "%w" format flag' do
         @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :starting_at => 0)
 
-        @progressbar.to_s('%B').should match /^ 0#{' ' * 98}\z/
+        @progressbar.to_s('%w').should match /^ 0 \z/
         10.times { @progressbar.increment }
-        @progressbar.to_s('%B').should match /^ooo 10 ooo#{' ' * 90}\z/
+        @progressbar.to_s('%w').should match /^ooo 10 ooo\z/
         @progressbar.decrement
-        @progressbar.to_s('%B').should match /^ooo 9 ooo#{' ' * 91}\z/
+        @progressbar.to_s('%w').should match /^ooo 9 ooo\z/
         91.times { @progressbar.increment }
-        @progressbar.to_s('%B').should match /^#{'o' * 47} 100 #{'o' * 48}\z/
-      end
-
-      it 'displays the mirrored bar when passed the "%r" format flag' do
-        @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :starting_at => 0)
-
-        @progressbar.to_s('%m').should match /^#{' ' * 100}\z/
-        @progressbar.increment
-        @progressbar.to_s('%m').should match /^#{' ' * 99}o\z/
-        @progressbar.decrement
-        @progressbar.to_s('%m').should match /^#{' ' * 100}\z/
+        @progressbar.to_s('%w').should match /^#{'o' * 47} 100 #{'o' * 48}\z/
       end
 
       it 'displays the current capacity when passed the "%c" format flag' do
