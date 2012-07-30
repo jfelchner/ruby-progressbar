@@ -139,7 +139,8 @@ The flags you can use in the format string are as follows:
 * `%%`: A literal percent sign `%`
 
 All values have an absolute length with the exception of the bar flags (eg `%B`, `%r`, etc) which will occupy any leftover space.
-More than one bar flag can be used (although I'm not sure why you would :).  If so, the remaining space will be divided up equally among them.
+You can use as many bar flags as you'd like, but if you do weird things, weird things will happen; so be wary.  If so, the remaining
+space will be divided up equally among them.
 
 ### Example
 

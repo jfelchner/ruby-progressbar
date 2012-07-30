@@ -265,6 +265,11 @@ describe ProgressBar::Base do
         @progressbar.to_s('%B').should match /^#{'o' * 20}#{' ' * 80}\z/
       end
 
+      it 'displays the bar when passed the combined "%b%i" format flags' do
+        @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
+        @progressbar.to_s('%b%i').should match /^#{'o' * 20}#{' ' * 80}\z/
+      end
+
       it 'displays the bar when passed the "%b" format flag (excluding empty space)' do
         @progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
         @progressbar.to_s('%b').should match /^#{'o' * 20}\z/

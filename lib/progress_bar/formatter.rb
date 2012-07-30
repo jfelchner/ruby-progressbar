@@ -31,25 +31,23 @@ class ProgressBar
 
   private
     def process
-      processed_string = @format_string.dup
+      @format_string.dup.tap do |processed_string|
+        @format.non_bar_molecules.each do |molecule|
+          processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name).to_s)
+        end
 
-      @format.non_bar_molecules.each do |molecule|
-        processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name).to_s)
+        remaining_molecule_match_data = processed_string.scan(/%[^%]/) || []
+        remaining_molecules           = remaining_molecule_match_data.size
+        placeholder_length            = remaining_molecules * 2
+
+        processed_string.gsub! '%%', '%'
+
+        leftover_bar_length           = length - processed_string.length + placeholder_length
+
+        @format.bar_molecules.each do |molecule|
+          processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name, leftover_bar_length).to_s)
+        end
       end
-
-      remaining_molecule_match_data = processed_string.match(/%[^%]/) || []
-      remaining_molecules           = remaining_molecule_match_data.size
-      placeholder_length            = remaining_molecules * 2
-
-      processed_string.gsub! '%%', '%'
-
-      leftover_bar_length           = length - processed_string.length + placeholder_length
-
-      @format.bar_molecules.each do |molecule|
-        processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name, leftover_bar_length / remaining_molecules).to_s)
-      end
-
-      processed_string
     end
 
     # Format Methods
