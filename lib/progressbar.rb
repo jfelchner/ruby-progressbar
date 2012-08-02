@@ -78,7 +78,7 @@ class ProgressBar
   end
 
   def bar_width
-    do_percentage * @terminal_width / 100
+    (do_percentage * @terminal_width / 100).to_i
   end
 
   def convert_bytes (bytes)
@@ -175,7 +175,7 @@ class ProgressBar
       @terminal_width = [@terminal_width - (line.length - width + 1), 0].max
       if @terminal_width == 0 then @out.write(line + eol) else show end
     else # line.length < width - 1
-      @terminal_width += width - line.length + 1
+      @terminal_width += width - line.length - 1
       show
     end
   end
