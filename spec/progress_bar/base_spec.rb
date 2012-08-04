@@ -283,13 +283,27 @@ describe ProgressBar::Base do
       it 'displays the bar when passed the "%w" format flag' do
         @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :starting_at => 0)
 
-        @progressbar.to_s('%w').should match /^ 0 \z/
-        10.times { @progressbar.increment }
+        @progressbar.to_s('%w').should match /^\z/
+        4.times { @progressbar.increment }
+        @progressbar.to_s('%w').should match /^====\z/
+        @progressbar.increment
+        @progressbar.to_s('%w').should match /^= 5 =\z/
+        5.times { @progressbar.increment }
         @progressbar.to_s('%w').should match /^=== 10 ===\z/
         @progressbar.decrement
         @progressbar.to_s('%w').should match /^=== 9 ===\z/
         91.times { @progressbar.increment }
         @progressbar.to_s('%w').should match /^#{'=' * 47} 100 #{'=' * 48}\z/
+      end
+
+      it 'calculates the remaining negative space properly with an integrated percentage bar of 0 percent' do
+        @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :total => 200, :starting_at => 0)
+
+        @progressbar.to_s('%w%i').should match /^\s{100}\z/
+        9.times { @progressbar.increment }
+        @progressbar.to_s('%w%i').should match /^====\s{96}\z/
+        @progressbar.increment
+        @progressbar.to_s('%w%i').should match /^= 5 =\s{95}\z/
       end
 
       it 'displays the current capacity when passed the "%c" format flag' do
