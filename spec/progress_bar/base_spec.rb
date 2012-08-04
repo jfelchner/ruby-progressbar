@@ -346,6 +346,12 @@ describe ProgressBar::Base do
         @progressbar.to_s('%%').should match /^%\z/
       end
 
+      it 'displays a literal percent sign when using the "%%" flag' do
+        @progressbar = ProgressBar::Base.new(:starting_at => 66, :total => 99)
+
+        @progressbar.to_s('%%').should match /^%\z/
+      end
+
       # Autostarting for now.  This will be applicable later.
       # context "when called before #start" do
         # it "displays unknown time elapsed when using the %a flag" do
