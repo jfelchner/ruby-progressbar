@@ -61,6 +61,15 @@ class ProgressBar
     do_percentage
   end
 
+  def fmt_precise_percentage
+    return 100.0 if @total.zero?
+    (@current.to_f  * 100.0 / @total.to_f).round(2)
+  end
+
+  def fmt_count
+    "#{@current}/#{@total}"
+  end
+
   def fmt_stat
     if @finished_p then elapsed else eta end
   end
