@@ -1,0 +1,5 @@
+require 'progress_bar/components/timer'
+require 'progress_bar/components/progressable'
+require 'progress_bar/components/bar'
+require 'progress_bar/components/estimated_timer'
+require 'progress_bar/components/elapsed_timer'
