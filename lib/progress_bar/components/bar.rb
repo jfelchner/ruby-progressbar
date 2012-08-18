@@ -22,6 +22,8 @@ class ProgressBar
       end
 
       def integrated_percentage_complete_string
+        return standard_complete_string if completed_length < 5
+
         " #{percentage_completed} ".to_s.center(completed_length, progress_mark)
       end
 
