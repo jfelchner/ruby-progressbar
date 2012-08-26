@@ -20,7 +20,7 @@ class ProgressBar
         molecules        = []
 
         format_string.scan(/%[a-zA-Z]/) do |match|
-          molecules << Molecule.new(match[1])
+          molecules << Molecule.new(match[1,1])
         end
 
         molecules
