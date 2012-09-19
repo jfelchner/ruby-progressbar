@@ -15,8 +15,7 @@ class ProgressBar
           processed_string.gsub!("%#{molecule.key}", environment.send(molecule.method_name).to_s)
         end
 
-        remaining_molecule_match_data = processed_string.scan(/%[a-zA-Z]/) || []
-        remaining_molecules           = remaining_molecule_match_data.size
+        remaining_molecules           = bar_molecules.size
         placeholder_length            = remaining_molecules * 2
 
         processed_string.gsub! '%%', '%'
