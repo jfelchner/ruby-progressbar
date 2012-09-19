@@ -8,11 +8,11 @@ class ProgressBar
       end
 
       def non_bar_molecules
-        molecules.select { |molecule| !molecule.bar_molecule? }
+        @non_bar_molecules ||= molecules.select { |molecule| !molecule.bar_molecule? }
       end
 
       def bar_molecules
-        molecules.select { |molecule| molecule.bar_molecule? }
+        @bar_molecules     ||= molecules.select { |molecule| molecule.bar_molecule? }
       end
 
     private
