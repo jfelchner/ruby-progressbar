@@ -29,7 +29,8 @@ class ProgressBar
 
   private
     def process
-      @format_string.dup.tap do |processed_string|
+      processed_string = @format_string.dup
+
         @format.non_bar_molecules.each do |molecule|
           processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name).to_s)
         end
@@ -45,7 +46,8 @@ class ProgressBar
         @format.bar_molecules.each do |molecule|
           processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name, leftover_bar_length).to_s)
         end
-      end
+
+      processed_string
     end
 
     def format_string=(format_string)
