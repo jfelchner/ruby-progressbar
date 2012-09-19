@@ -8,14 +8,6 @@ class ProgressBar
         @molecules = parse(format_string)
       end
 
-      def non_bar_molecules
-        @non_bar_molecules ||= molecules.select { |molecule| !molecule.bar_molecule? }
-      end
-
-      def bar_molecules
-        @bar_molecules     ||= molecules.select { |molecule| molecule.bar_molecule? }
-      end
-
       def process(environment)
         processed_string = @format_string.dup
 
@@ -39,6 +31,14 @@ class ProgressBar
     end
 
     private
+      def non_bar_molecules
+        @non_bar_molecules ||= molecules.select { |molecule| !molecule.bar_molecule? }
+      end
+
+      def bar_molecules
+        @bar_molecules     ||= molecules.select { |molecule| molecule.bar_molecule? }
+      end
+
       def parse(format_string)
         molecules        = []
 
