@@ -49,8 +49,10 @@ class ProgressBar
     end
 
     def format_string=(format_string)
-      @format_string = format_string
-      @format        = ProgressBar::Format::Base.new(format_string)
+      if @format_string != format_string
+        @format_string = format_string
+        @format        = ProgressBar::Format::Base.new(format_string)
+      end
     end
 
     # Format Methods
