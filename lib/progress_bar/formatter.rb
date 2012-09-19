@@ -4,15 +4,15 @@ class ProgressBar
     DEFAULT_TITLE         = 'Progress'
 
     def initialize(options)
-      @title         = options[:title]  || DEFAULT_TITLE
       self.format_string = options[:format] || DEFAULT_FORMAT_STRING
+      @title             = options[:title]  || DEFAULT_TITLE
 
       super(options)
     end
 
     def format(new_format_string = DEFAULT_FORMAT_STRING)
       self.format_string = new_format_string
-      process
+      @format.process(self)
     end
 
     def title=(title)
@@ -28,28 +28,6 @@ class ProgressBar
     end
 
   private
-    def process
-      processed_string = @format_string.dup
-
-        @format.non_bar_molecules.each do |molecule|
-          processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name).to_s)
-        end
-
-        remaining_molecule_match_data = processed_string.scan(/%[a-zA-Z]/) || []
-        remaining_molecules           = remaining_molecule_match_data.size
-        placeholder_length            = remaining_molecules * 2
-
-        processed_string.gsub! '%%', '%'
-
-        leftover_bar_length           = length - processed_string.length + placeholder_length
-
-        @format.bar_molecules.each do |molecule|
-          processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name, leftover_bar_length).to_s)
-        end
-
-      processed_string
-    end
-
     def format_string=(format_string)
       if @format_string != format_string
         @format_string = format_string
