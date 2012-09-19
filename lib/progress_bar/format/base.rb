@@ -4,18 +4,40 @@ class ProgressBar
       attr_reader :molecules
 
       def initialize(format_string)
-        @molecules = parse(format_string)
+        @format_string = format_string
+        @molecules     = parse(format_string)
       end
 
-      def non_bar_molecules
-        molecules.select { |molecule| !molecule.bar_molecule? }
-      end
+      def process(environment)
+        processed_string = @format_string.dup
 
-      def bar_molecules
-        molecules.select { |molecule| molecule.bar_molecule? }
+        non_bar_molecules.each do |molecule|
+          processed_string.gsub!("%#{molecule.key}", environment.send(molecule.method_name).to_s)
+        end
+
+        remaining_molecules = bar_molecules.size
+        placeholder_length  = remaining_molecules * 2
+
+        processed_string.gsub! '%%', '%'
+
+        leftover_bar_length = environment.send(:length) - processed_string.length + placeholder_length
+
+        bar_molecules.each do |molecule|
+          processed_string.gsub!("%#{molecule.key}", environment.send(molecule.method_name, leftover_bar_length).to_s)
+        end
+
+        processed_string
       end
 
     private
+      def non_bar_molecules
+        @non_bar_molecules ||= molecules.select { |molecule| !molecule.bar_molecule? }
+      end
+
+      def bar_molecules
+        @bar_molecules     ||= molecules.select { |molecule| molecule.bar_molecule? }
+      end
+
       def parse(format_string)
         molecules        = []
 

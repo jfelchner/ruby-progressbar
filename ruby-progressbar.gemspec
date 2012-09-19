@@ -38,6 +38,7 @@ THEDOCTOR
   s.add_development_dependency('rspec',       '~> 2.8')
   s.add_development_dependency('timecop',     '~> 0.3.5')
   s.add_development_dependency('simplecov',   '~> 0.5')
+  s.add_development_dependency('ruby-prof',   '~> 0.11.2')
   s.add_development_dependency('guard',       '~> 1.0')
   s.add_development_dependency('guard-rspec', '~> 0.6')
 end
