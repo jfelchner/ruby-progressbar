@@ -5,7 +5,7 @@ class ProgressBar
 
       def initialize(format_string)
         @format_string = format_string
-        @molecules = parse(format_string)
+        @molecules     = parse(format_string)
       end
 
       def process(environment)
@@ -15,19 +15,19 @@ class ProgressBar
           processed_string.gsub!("%#{molecule.key}", environment.send(molecule.method_name).to_s)
         end
 
-        remaining_molecules           = bar_molecules.size
-        placeholder_length            = remaining_molecules * 2
+        remaining_molecules = bar_molecules.size
+        placeholder_length  = remaining_molecules * 2
 
         processed_string.gsub! '%%', '%'
 
-        leftover_bar_length           = environment.send(:length) - processed_string.length + placeholder_length
+        leftover_bar_length = environment.send(:length) - processed_string.length + placeholder_length
 
         bar_molecules.each do |molecule|
           processed_string.gsub!("%#{molecule.key}", environment.send(molecule.method_name, leftover_bar_length).to_s)
         end
 
-      processed_string
-    end
+        processed_string
+      end
 
     private
       def non_bar_molecules
