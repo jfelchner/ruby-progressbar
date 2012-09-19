@@ -4,16 +4,14 @@ class ProgressBar
     DEFAULT_TITLE         = 'Progress'
 
     def initialize(options)
-      @format_string = options[:format] || DEFAULT_FORMAT_STRING
       @title         = options[:title]  || DEFAULT_TITLE
+      self.format_string = options[:format] || DEFAULT_FORMAT_STRING
 
       super(options)
     end
 
-    def format(format_string = DEFAULT_FORMAT_STRING)
-      @format_string = format_string
-      @format        = ProgressBar::Format::Base.new(format_string)
-
+    def format(new_format_string = DEFAULT_FORMAT_STRING)
+      self.format_string = new_format_string
       process
     end
 
@@ -48,6 +46,11 @@ class ProgressBar
           processed_string.gsub!("%#{molecule.key}", self.send(molecule.method_name, leftover_bar_length).to_s)
         end
       end
+    end
+
+    def format_string=(format_string)
+      @format_string = format_string
+      @format        = ProgressBar::Format::Base.new(format_string)
     end
 
     # Format Methods
