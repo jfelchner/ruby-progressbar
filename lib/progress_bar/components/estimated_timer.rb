@@ -44,9 +44,9 @@ class ProgressBar
       end
 
       def average_seconds_per_each
-        return 0 if self.running_average.zero?
+        return 0 if progress_made <= 0
 
-        elapsed_seconds.to_f / self.running_average
+        elapsed_seconds.to_f / progress_made
       end
 
       def estimated_seconds_remaining

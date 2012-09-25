@@ -19,9 +19,8 @@ class ProgressBar
       end
 
       def start(options = {})
-        self.running_average   = 0
-
         self.progress          = \
+        self.running_average   = \
         self.starting_position = options[:at] || self.progress
       end
 
@@ -81,7 +80,7 @@ class ProgressBar
       end
 
       def progress_made
-        started? ? self.progress - self.starting_position : 0
+        started? ? self.running_average - self.starting_position : 0
       end
 
       def update_running_average
