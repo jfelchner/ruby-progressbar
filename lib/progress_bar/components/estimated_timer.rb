@@ -30,6 +30,11 @@ class ProgressBar
         " ETA: #{estimated_time}"
       end
 
+      def progress_rate
+        rate = progress_made / elapsed_seconds.to_f if progress_made > 0
+        rate && !rate.infinite? ? format('%5.1f/s', rate) : "  ???/s"
+      end
+
     private
       def estimated_time
         return '??:??:??' if progress_made.zero?
@@ -44,13 +49,13 @@ class ProgressBar
       end
 
       def average_seconds_per_each
-        return 0 if self.running_average.zero?
+        return 0 if progress_made <= 0
 
-        elapsed_seconds.to_f / self.running_average
+        elapsed_seconds.to_f / progress_made
       end
 
       def estimated_seconds_remaining
-        ((average_seconds_per_each * self.total) - elapsed_seconds.to_f).floor
+        ((average_seconds_per_each * (self.total - self.progress)) - elapsed_seconds.to_f).floor
       end
 
       def out_of_bounds_time
