@@ -6,6 +6,7 @@ class ProgressBar
         :T => [:right_justified_title,              :title],
         :c => [:current_progress,                   :progress],
         :C => [:total_capacity,                     :total],
+        :r => [:progression_rate,                   :progress_rate],
         :p => [:percentage_complete_as_integer,     :percentage],
         :P => [:percentage_complete_as_float,       :percentage_with_precision],
         :a => [:elapsed_time,                       :elapsed_time],

@@ -59,6 +59,10 @@ class ProgressBar
       @bar.percentage_completed
     end
 
+    def progress_rate
+      @estimated_time.progress_rate
+    end
+
     def percentage_with_precision
       @bar.percentage_completed_with_precision
     end
