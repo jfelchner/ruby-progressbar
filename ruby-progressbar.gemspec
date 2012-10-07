@@ -34,11 +34,11 @@ THEDOCTOR
   s.require_paths         = ["lib"]
   #= Manifest =#
 
-  s.add_development_dependency('bundler',     '~> 1.0')
-  s.add_development_dependency('rspec',       '~> 2.8')
-  s.add_development_dependency('timecop',     '~> 0.3.5')
+  s.add_development_dependency('bundler',     '~> 1.2')
+  s.add_development_dependency('rspec',       '~> 2.11')
+  s.add_development_dependency('timecop',     '~> 0.5')
   s.add_development_dependency('simplecov',   '~> 0.5')
-  s.add_development_dependency('guard',       '~> 1.0')
-  s.add_development_dependency('guard-rspec', '~> 0.6')
+  s.add_development_dependency('guard',       '~> 1.4')
+  s.add_development_dependency('guard-rspec', '~> 2.1')
+  s.add_development_dependency('rb-fsevent',  '~> 0.9')
 end
-
