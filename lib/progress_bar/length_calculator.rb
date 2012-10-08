@@ -35,7 +35,6 @@ class ProgressBar
     end
 
     begin
-      # Added in 1.9.3.
       require 'io/console'
 
       def dynamic_width
