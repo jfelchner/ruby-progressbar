@@ -31,6 +31,7 @@ describe ProgressBar::Components::Progressable do
   describe '#percentage_completed' do
     it 'returns the default total if total is zero' do
       subject.total = 0
+
       subject.percentage_completed.should eql 100
     end
   end
