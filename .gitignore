@@ -1,5 +1,12 @@
-pkg/*
 *.gem
+*.rbc
 .bundle
-source/Gemfile.temp
+.config
+.yardoc
+Gemfile.lock
+_yardoc
 coverage
+lib/bundler/man
+pkg
+spec/reports
+tmp
