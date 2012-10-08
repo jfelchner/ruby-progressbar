@@ -59,7 +59,8 @@ class ProgressBar
       end
 
       def percentage_completed
-        return DEFAULT_TOTAL if total === 0
+        return 100 if total == 0
+
         # progress / total * 100
         #
         # Doing this way so we can avoid converting each
