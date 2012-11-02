@@ -41,6 +41,17 @@ describe ProgressBar::Base do
       end
     end
 
+    context 'and the RUBY_PROGRESS_BAR_LENGTH environment variable exists' do
+      before { ENV['RUBY_PROGRESS_BAR_LENGTH'] = '44' ; @progressbar = ProgressBar::Base.new }
+      after { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
+
+      describe '#length' do
+        it 'returns the length of the environment variable as an integer' do
+          @progressbar.send(:length).should == 44
+        end
+      end
+    end
+
     context 'and options are passed' do
       before { @progressbar = ProgressBar::Base.new(:title => 'We All Float', :total => 12, :output => STDOUT, :progress_mark => 'x', :length => 88, :starting_at => 5) }
 
