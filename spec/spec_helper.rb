@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'mathn'
 SimpleCov.start
 
 require 'rspec'
