@@ -1,6 +1,7 @@
 require 'simplecov'
 SimpleCov.start
 
+require 'mathn'
 require 'rspec'
 
 Dir[File.join(File.dirname(__FILE__), '..', 'lib', 'ruby-progressbar.rb')].each {|f| require f}
