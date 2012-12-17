@@ -25,29 +25,39 @@ describe ProgressBar::Base do
       end
 
       describe '#length' do
-        it 'returns the width of the terminal if it is a Unix environment' do
-          @progressbar.stub(:terminal_width).and_return(99)
-          @progressbar.send(:reset_length) # This should be changed to use #any_instance
-          @progressbar.send(:length).should eql 99
+        context 'when the RUBY_PROGRESS_BAR_LENGTH environment variable exists' do
+          before  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = '44' }
+          after   { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
+
+          it 'returns the length of the environment variable as an integer' do
+            @progressbar = ProgressBar::Base.new
+            @progressbar.send(:length).should eql 44
+          end
         end
-      end
 
-      describe '#length' do
-        it 'returns 80 if it is not a Unix environment' do
-          @progressbar.stub(:unix?).and_return(false)
-          @progressbar.send(:reset_length) # This should be changed to use #any_instance
-          @progressbar.send(:length).should eql 80
-        end
-      end
-    end
+        context 'when the RUBY_PROGRESS_BAR_LENGTH environment variable does not exist' do
+          before  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
 
-    context 'and the RUBY_PROGRESS_BAR_LENGTH environment variable exists' do
-      before { ENV['RUBY_PROGRESS_BAR_LENGTH'] = '44' ; @progressbar = ProgressBar::Base.new }
-      after { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
+          context 'but the length option was passed in' do
+            it 'returns the length specified in the option' do
+              @progressbar = ProgressBar::Base.new(:length => 88)
+              @progressbar.send(:length).should eql 88
+            end
+          end
 
-      describe '#length' do
-        it 'returns the length of the environment variable as an integer' do
-          @progressbar.send(:length).should == 44
+          context 'and no length option was passed in' do
+            it 'returns the width of the terminal if it is a Unix environment' do
+              @progressbar.stub(:terminal_width).and_return(99)
+              @progressbar.send(:reset_length)
+              @progressbar.send(:length).should eql 99
+            end
+
+            it 'returns 80 if it is not a Unix environment' do
+              @progressbar.stub(:unix?).and_return(false)
+              @progressbar.send(:reset_length)
+              @progressbar.send(:length).should eql 80
+            end
+          end
         end
       end
     end
