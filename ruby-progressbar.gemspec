@@ -23,7 +23,7 @@ The output can be customized with a flexible formatting system including:
 percentage, bars of various formats, elapsed time and estimated time remaining.
 THEDOCTOR
 
-  s.rdoc_options          = ["--charset = UTF-8"]
+  s.rdoc_options          = ['--charset', 'UTF-8']
   s.extra_rdoc_files      = %w[README.md LICENSE]
 
   #= Manifest =#
