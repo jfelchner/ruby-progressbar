@@ -1,5 +1,7 @@
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start if RUBY_VERSION != "1.9.3" # simplecov + ruby 1.9.3 ends up with segmentation fault
+
+require 'mathn'
 
 require 'rspec'
 
