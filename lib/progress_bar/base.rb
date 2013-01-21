@@ -106,12 +106,10 @@ class ProgressBar
     end
 
     def to_s(format_string = nil)
-      format_string ||= if ! @format_string_after_elapsed.nil? &&
-                           ! @after_elapsed.nil? &&
-                             @elapsed_time.awhile?(@after_elapsed)
-        @format_string_after_elapsed
+      if @elapsed_time.awhile?(@after_elapsed)
+        format_string ||= @format_string_after_elapsed
       else
-        @format_string
+        format_string ||= @format_string
       end
 
       format(format_string)

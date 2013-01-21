@@ -8,6 +8,7 @@ class ProgressBar
       end
 
       def awhile?(after_elapsed)
+        return false if elapsed_seconds.nil? || after_elapsed.nil?
         elapsed_seconds >= after_elapsed
       end
 
