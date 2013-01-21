@@ -1,11 +1,14 @@
 class ProgressBar
   module Formatter
-    DEFAULT_FORMAT_STRING = '%t: |%B|'
-    DEFAULT_TITLE         = 'Progress'
+    DEFAULT_FORMAT_STRING               = '%t: |%B|'
+    DEFAULT_FORMAT_STRING_AFTER_ELAPSED = '%t: |%B| %e'
+    DEFAULT_TITLE                       = 'Progress'
 
     def initialize(options)
-      self.format_string = options[:format] || DEFAULT_FORMAT_STRING
-      @title             = options[:title]  || DEFAULT_TITLE
+      self.format_string               = options[:format] || DEFAULT_FORMAT_STRING
+      @title                           = options[:title]  || DEFAULT_TITLE
+      @format_string_after_elapsed     = options[:after_elapsed_format] || DEFAULT_FORMAT_STRING_AFTER_ELAPSED
+      @after_elapsed                   = options[:after_elapsed]
 
       super(options)
     end
@@ -36,9 +39,7 @@ class ProgressBar
     end
 
     # Format Methods
-    def title
-      @title
-    end
+    attr_reader :elapsed_time, :title
 
     def percentage
       @bar.percentage_completed
@@ -46,10 +47,6 @@ class ProgressBar
 
     def percentage_with_precision
       @bar.percentage_completed_with_precision
-    end
-
-    def elapsed_time
-      @elapsed_time
     end
 
     def estimated_time_with_no_oob

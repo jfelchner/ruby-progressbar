@@ -63,6 +63,129 @@ describe ProgressBar::Base do
       end
     end
 
+    context 'and options are passed including :after_elapsed' do
+      before { @progressbar = ProgressBar::Base.new(:title => 'They All Float', :total => 10, :output => @output, :after_elapsed => 10) }
+
+      context 'if the bar was just started' do
+        before do
+          @progressbar.start
+        end
+
+        describe '#output' do
+          before do
+            @progressbar.increment
+          end
+
+          it 'should show the normal format' do
+            @output.rewind
+            @output.read.should match /They All Float/
+          end
+
+          it 'should not show the after_elapsed format' do
+            @output.rewind
+            @output.read.should_not match /ETA:/
+          end
+        end
+      end
+
+      context 'if the bar was started 10 minutes ago' do
+        before do
+          Timecop.travel(-600) do
+            @progressbar.start
+            5.times { @progressbar.increment }
+          end
+          @progressbar.increment 
+        end
+
+        describe '#output' do
+          it 'should show the after_elapsed format' do
+            @output.rewind
+            @output.read.should match /ETA:/
+          end
+        end
+
+        context 'and if the bar finishes' do
+          before do
+            @progressbar.finish
+          end
+
+          describe '#output' do
+            it 'should show the regular format' do
+              @output.rewind
+              @output.read.should match /They All Float/
+            end
+
+            it 'should not show the after_elapsed format' do
+              @output.rewind
+              @output.read.should_not match /ETA: [0-9:]+$/
+            end
+          end
+        end
+      end
+    end
+
+    context 'and options are passed including :after_elapsed and :after_elapsed_format' do
+      before { @progressbar = ProgressBar::Base.new(:title => 'They All Float', :total => 10, :output => @output, :after_elapsed => 10, :after_elapsed_format => 'CUSTOM') }
+      
+      context 'if the bar was just started' do
+        before do
+          @progressbar.start
+        end
+
+        describe '#output' do
+          before do
+            @progressbar.increment
+          end
+
+          it 'should show the normal format' do
+            @output.rewind
+            @output.read.should match /They All Float/
+          end
+
+          it 'should not contain :after_elapsed_format' do
+            @output.rewind
+            @output.read.should_not match /CUSTOM/
+          end
+        end
+      end
+
+      context 'if the bar was started 10 minutes ago' do
+        before do
+          Timecop.travel(-600) do
+            @progressbar.start
+            5.times { @progressbar.increment }
+          end
+          @progressbar.increment 
+        end
+
+        describe '#output' do
+          it 'should show the after_elapsed format' do
+            @output.rewind
+            @output.read.should match /CUSTOM/
+          end
+        end
+
+        context 'and if the bar finishes' do
+          before do
+            @progressbar.finish
+          end
+
+          describe '#output' do
+            it 'should show the regular format' do
+              @output.rewind
+              @output.read.should match /They All Float/
+            end
+
+            it 'should not show the after_elapsed format' do
+              @output.rewind
+              @output.read.should_not match /ETA: [0-9:]+$/
+            end
+          end
+        end
+      end
+    end
+
+
     context 'if the bar was started 4 minutes ago' do
       before do
         Timecop.travel(-240) do
