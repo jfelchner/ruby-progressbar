@@ -5,7 +5,7 @@ class ProgressBar
     DEFAULT_AFTER_ELAPSED               = 4.0 
 
     def initialize(options)
-      self.format_string               = options[:format] || DEFAULT_FORMAT_STRING
+      self.format_string = @format_string_initial = options[:format] || DEFAULT_FORMAT_STRING
       @title                           = options[:title]  || DEFAULT_TITLE
       @format_string_after_elapsed     = options[:after_elapsed_format] || (@format_string + ' %e')
       @after_elapsed                   = options[:after_elapsed] || DEFAULT_AFTER_ELAPSED
@@ -15,6 +15,7 @@ class ProgressBar
 
     def format(new_format_string = DEFAULT_FORMAT_STRING)
       self.format_string = new_format_string
+      @format ||= generate_format!
       @format.process(self)
     end
 
@@ -31,11 +32,17 @@ class ProgressBar
     end
 
   private
+    def generate_format!
+      ProgressBar::Format::Base.new(@format_string)
+    end
+
+    def invalidate_format!
+      @format = nil 
+    end
+
     def format_string=(format_string)
-      if @format_string != format_string
-        @format_string = format_string
-        @format        = ProgressBar::Format::Base.new(format_string)
-      end
+      invalidate_format! if @format_string != format_string
+      @format_string = format_string
     end
 
     # Format Methods

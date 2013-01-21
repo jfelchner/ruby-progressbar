@@ -41,6 +41,7 @@ class ProgressBar
       end
 
       def elapsed_seconds
+        return unless started?
         ((@stopped_at || now) - @started_at).floor
       end
 
