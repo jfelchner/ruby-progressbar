@@ -105,10 +105,18 @@ class ProgressBar
       update
     end
 
-    def to_s(format_string = nil)
-      format_string ||= @format_string
+    def choose_format(format_string)
+      format_string ||= if finished?
+        @format_string_initial
+      elsif @elapsed_time.awhile?(@after_elapsed)
+        @format_string_after_elapsed
+      else
+        @format_string
+      end
+    end
 
-      format(format_string)
+    def to_s(format_string = nil)
+      format(choose_format(format_string))
     end
 
     def inspect

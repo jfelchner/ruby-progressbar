@@ -7,6 +7,11 @@ class ProgressBar
         "Time: #{elapsed_time}"
       end
 
+      def awhile?(after_elapsed)
+        return false if elapsed_seconds.nil? || after_elapsed.nil?
+        elapsed_seconds >= after_elapsed
+      end
+
     private
       def elapsed_time
         return '--:--:--' unless started?
