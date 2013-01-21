@@ -2,12 +2,13 @@ class ProgressBar
   module Formatter
     DEFAULT_FORMAT_STRING               = '%t: |%B|'
     DEFAULT_TITLE                       = 'Progress'
+    DEFAULT_AFTER_ELAPSED               = 4.0 
 
     def initialize(options)
       self.format_string               = options[:format] || DEFAULT_FORMAT_STRING
       @title                           = options[:title]  || DEFAULT_TITLE
-      @format_string_after_elapsed     = options[:after_elapsed_format] || (self.format_string + ' %e')
-      @after_elapsed                   = options[:after_elapsed]
+      @format_string_after_elapsed     = options[:after_elapsed_format] || (@format_string + ' %e')
+      @after_elapsed                   = options[:after_elapsed] || DEFAULT_AFTER_ELAPSED
 
       super(options)
     end
