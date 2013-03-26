@@ -16,7 +16,7 @@ class ProgressBar
       @bar                = Components::Bar.new(options)
       @estimated_time     = Components::EstimatedTimer.new(options)
       @elapsed_time       = Components::ElapsedTimer.new
-      @throttle           = Components::Throttle.new options[:throttle_period]
+      @throttle           = Components::Throttle.new(options)
 
       start :at => options[:starting_at]
     end
