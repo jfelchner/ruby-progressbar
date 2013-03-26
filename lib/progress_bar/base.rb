@@ -16,6 +16,7 @@ class ProgressBar
       @bar                = Components::Bar.new(options)
       @estimated_time     = Components::EstimatedTimer.new(options)
       @elapsed_time       = Components::ElapsedTimer.new
+      @throttle           = Components::Throttle.new options[:throttle_period]
 
       start :at => options[:starting_at]
     end
@@ -150,6 +151,7 @@ class ProgressBar
     def update
       with_timers(:stop) if finished?
 
+      @throttle.choke( finished? ) do
       if length_changed?
         clear
         reset_length
@@ -157,6 +159,7 @@ class ProgressBar
 
       output.print self.to_s + eol
       output.flush
+      end
     end
 
     def eol
