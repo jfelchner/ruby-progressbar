@@ -210,6 +210,14 @@ When mocking time, the concept of when `now` is becomes distorted.  You can imag
   * [Timecop](https://github.com/jtrupiano/timecop)
   * [Delorean](https://github.com/bebanjo/delorean)
 
+### Throttling
+
+When reporting progress of large amounts of very fast operations, whose duration is comparable to the output time of a progress bar, it becomes desirable to throttle output to the console and only perform it once in a set period. ProgressBar supports throttling if given `:throttle_period` option:
+
+    ProgressBar.create(:throttle_period => 0.1)
+
+The above progress bar will output at most 10 times a second.
+
 Road Map
 --------------------------------
 We're planning on adding a bunch of really nice features to this gem over the next few weeks.  We want to keep the simple usage simple but allow for powerful features if they're needed.  Our `1.0` release is the first step in that direction.
