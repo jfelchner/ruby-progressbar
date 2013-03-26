@@ -3,8 +3,8 @@ class ProgressBar
     class Throttle
       include Timer
 
-      def initialize period
-        @period = period
+      def initialize options = {}
+        @period = options.delete :throttle_period
       end
 
       def choke force=false, &block
