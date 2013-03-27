@@ -22,9 +22,15 @@ describe 'ruby-debug-base' do
       end
     end
 
-    COUNT = 100
-    bar = ProgressBar.create(:title => 'ruby-debug-base', :total => COUNT)
-    COUNT.times { bar.increment }
+    begin
+      COUNT = 100
+      bar = ProgressBar.create(:title => 'ruby-debug-base', :total => COUNT)
+      COUNT.times { bar.increment }
+    ensure
+      module Kernel
+        remove_method :start
+      end
+    end
   end
 
 end
