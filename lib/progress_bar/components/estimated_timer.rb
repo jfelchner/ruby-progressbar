@@ -79,6 +79,10 @@ class ProgressBar
           @ancestor = ancestor
         end
 
+        def start(*args, &blk)
+          @ancestor.instance_method(:start).bind(@subject).call(*args,&blk)
+        end
+
         def method_missing(sym, *args, &blk)
           @ancestor.instance_method(sym).bind(@subject).call(*args,&blk)
         end
