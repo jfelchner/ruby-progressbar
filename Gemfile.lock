@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-progressbar (1.0.2)
+    ruby-progressbar (1.0.3)
 
 GEM
   remote: http://rubygems.org/
@@ -34,6 +34,7 @@ GEM
     timecop (0.5.2)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
