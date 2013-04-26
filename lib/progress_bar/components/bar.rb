@@ -16,9 +16,7 @@ class ProgressBar
 
       def to_s(options = {:format => :standard})
         completed_string = send(:"#{options[:format]}_complete_string")
-        empty_string     = ' ' * (length - completed_string.length)
-
-        "#{completed_string}#{empty_string}"
+        completed_string.ljust(length, ' ')
       end
 
       def integrated_percentage_complete_string
