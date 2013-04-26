@@ -3,9 +3,22 @@ require 'stringio'
 require 'timecop'
 
 describe ProgressBar::Base do
+
   before do
     @output = StringIO.new('', 'w+')
     @progressbar = ProgressBar::Base.new(:output => @output, :length => 80)
+  end
+
+  describe 'terminal width dropping below title length' do
+    it 'should not crash' do
+      @progressbar = ProgressBar::Base.new(:output => @output)
+      @progressbar.stub(:terminal_width).and_return(100)
+      @progressbar.title = 'a'*95
+      @progressbar.stub(:terminal_width).and_return(60)
+      expect {
+        @progressbar.title = 'a'*95
+      }.to_not raise_error
+    end
   end
 
   context 'when a new bar is created' do
