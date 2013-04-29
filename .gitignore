@@ -10,3 +10,4 @@ lib/bundler/man
 pkg
 spec/reports
 tmp
+tags
