@@ -27,12 +27,10 @@ THEDOCTOR
   s.extra_rdoc_files      = %w[README.md LICENSE]
 
   #= Manifest =#
-  # s.default_executable    = 'nothing'
-  s.executables           = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.files                 = `git ls-files`.split("\n")
-  s.test_files            = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files                 = `git ls-files`.split($/)
+  s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.test_files            = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths         = ["lib"]
-  #= Manifest =#
 
   s.add_development_dependency('rspec',       '~> 2.11')
   s.add_development_dependency('timecop',     '~> 0.5')
