@@ -11,6 +11,7 @@ GEM
       rspec (~> 2.0)
       rspec-instafail (~> 0.2.0)
       ruby-progressbar (~> 1.0.0)
+    json (1.7.7)
     multi_json (1.7.3)
     rake (10.0.4)
     rspec (2.13.0)
@@ -36,6 +37,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  json (~> 1.7.7)
   rake
   rspec (~> 2.13)
   rspectacular (~> 0.13)
