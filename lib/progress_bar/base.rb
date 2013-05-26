@@ -152,13 +152,13 @@ class ProgressBar
       with_timers(:stop) if finished?
 
       @throttle.choke( finished? ) do
-      if length_changed?
-        clear
-        reset_length
-      end
+        if length_changed?
+          clear
+          reset_length
+        end
 
-      output.print self.to_s + eol
-      output.flush
+        output.print self.to_s + eol
+        output.flush
       end
     end
 
