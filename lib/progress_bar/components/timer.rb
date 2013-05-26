@@ -40,8 +40,12 @@ class ProgressBar
         ProgressBar::Time.now
       end
 
+      def elapsed_seconds
+        ((@stopped_at || now) - @started_at)
+      end
+
       def elapsed_whole_seconds
-        ((@stopped_at || now) - @started_at).floor
+        elapsed_seconds.floor
       end
 
       def elapsed_time
