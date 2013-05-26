@@ -242,6 +242,8 @@ When reporting progress of large amounts of very fast operations, whose duration
 
 The above progress bar will output at most 10 times a second.
 
+The default throttling rate if none is specified is 100 times per second (or 0.01)
+
 Road Map
 --------------------------------
 We're planning on adding a bunch of really nice features to this gem over the next few weeks.  We want to keep the simple usage simple but allow for powerful features if they're needed.  Our `1.0` release is the first step in that direction.
