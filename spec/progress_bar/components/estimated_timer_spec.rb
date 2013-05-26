@@ -186,6 +186,8 @@ describe ProgressBar::Components::EstimatedTimer do
     #    # ./lib/progress_bar/components/progressable.rb:33:in `increment'
     #
     it 'properly delegates' do
+      @output = StringIO.new('', 'w+')
+
       module Kernel
         def start(options={}, &block)
           puts "Kernel.start has been called"
@@ -196,7 +198,7 @@ describe ProgressBar::Components::EstimatedTimer do
       begin
         COUNT = 100
 
-        bar = ProgressBar.create(:title => 'ruby-debug-base', :total => COUNT)
+        bar = ProgressBar.create(:output => @output, :title => 'ruby-debug-base', :total => COUNT)
 
         COUNT.times { bar.increment }
       ensure
