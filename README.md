@@ -236,9 +236,9 @@ When mocking time, the concept of when `now` is becomes distorted.  You can imag
 
 ### Throttling
 
-When reporting progress of large amounts of very fast operations, whose duration is comparable to the output time of a progress bar, it becomes desirable to throttle output to the console and only perform it once in a set period. ProgressBar supports throttling if given `:throttle_period` option:
+When reporting progress of large amounts of very fast operations, whose duration is comparable to the output time of a progress bar, it becomes desirable to throttle output to the console and only perform it once in a set period. ProgressBar supports throttling if given `:throttle_rate` option:
 
-    ProgressBar.create(:throttle_period => 0.1)
+    ProgressBar.create(:throttle_rate => 0.1)
 
 The above progress bar will output at most 10 times a second.
 

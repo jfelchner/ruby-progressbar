@@ -4,7 +4,7 @@ class ProgressBar
       include Timer
 
       def initialize(options = {})
-        @period = options.delete(:throttle_period) { 0.01 }
+        @period = options.delete(:throttle_rate) { 0.01 }
       end
 
       def choke(force = false, &block)
