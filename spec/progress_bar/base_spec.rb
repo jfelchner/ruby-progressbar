@@ -4,7 +4,7 @@ require 'stringio'
 describe ProgressBar::Base do
   before do
     @output = StringIO.new('', 'w+')
-    @progressbar = ProgressBar::Base.new(:output => @output, :length => 80)
+    @progressbar = ProgressBar::Base.new(:output => @output, :length => 80, :throttle_rate => 0.0)
   end
 
   describe 'terminal width dropping below title length' do
@@ -154,7 +154,7 @@ describe ProgressBar::Base do
 
   context 'when a bar is started' do
     before do
-      @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :length => 80)
+      @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :length => 80, :throttle_rate  => 0.0)
     end
 
     context 'and it is incremented any number of times' do
@@ -250,7 +250,7 @@ describe ProgressBar::Base do
   end
 
   context 'when the bar has not been completed' do
-    before { @progressbar = ProgressBar::Base.new(:length => 112, :starting_at => 0, :total => 50, :output => @output) }
+    before { @progressbar = ProgressBar::Base.new(:length => 112, :starting_at => 0, :total => 50, :output => @output, :throttle_rate => 0.0) }
 
     describe '#increment' do
       before { @progressbar.increment }
