@@ -8,17 +8,11 @@ class ProgressBar
       end
 
       def choke(force = false, &block)
-        if !started? || @period.nil? || force || elapsed >= @period
+        if !started? || @period.nil? || force || elapsed_seconds >= @period
           yield
 
           start
         end
-      end
-
-      private
-
-      def elapsed
-        now - @started_at
       end
     end
   end
