@@ -46,11 +46,11 @@ class ProgressBar
       def average_seconds_per_each
         return 0 if self.running_average.zero?
 
-        elapsed_seconds.to_f / self.running_average
+        elapsed_whole_seconds.to_f / self.running_average
       end
 
       def estimated_seconds_remaining
-        ((average_seconds_per_each * self.total) - elapsed_seconds.to_f).floor
+        ((average_seconds_per_each * self.total) - elapsed_whole_seconds.to_f).floor
       end
 
       def out_of_bounds_time
