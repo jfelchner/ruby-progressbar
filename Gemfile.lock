@@ -12,6 +12,7 @@ GEM
       rspec-instafail (~> 0.2.0)
       ruby-progressbar (~> 1.0.0)
     json (1.7.7)
+    json (1.7.7-java)
     multi_json (1.7.3)
     rake (10.0.4)
     rspec (2.13.0)
@@ -27,8 +28,8 @@ GEM
       fuubar (~> 1.0)
       rspec (~> 2.12)
     ruby-prof (0.13.0)
-    simplecov (0.7.1)
-      multi_json (~> 1.0)
+    simplecov (0.8.0.pre)
+      multi_json
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
     timecop (0.6.1)
@@ -44,5 +45,5 @@ DEPENDENCIES
   rspectacular (~> 0.13)
   ruby-prof (~> 0.13.0)
   ruby-progressbar!
-  simplecov (~> 0.7)
+  simplecov (~> 0.8pre)
   timecop (~> 0.6)
