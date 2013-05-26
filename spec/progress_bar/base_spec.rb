@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'stringio'
-require 'timecop'
 
 describe ProgressBar::Base do
   before do
