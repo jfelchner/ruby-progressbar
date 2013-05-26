@@ -30,7 +30,7 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
-    timecop (0.5.2)
+    timecop (0.6.1)
 
 PLATFORMS
   ruby
@@ -42,4 +42,4 @@ DEPENDENCIES
   ruby-prof (~> 0.11.2)
   ruby-progressbar!
   simplecov (~> 0.7)
-  timecop (~> 0.5)
+  timecop (~> 0.6)
