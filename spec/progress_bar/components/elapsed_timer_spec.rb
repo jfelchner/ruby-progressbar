@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'timecop'
 
 describe ProgressBar::Components::ElapsedTimer do
   before { @timer = ProgressBar::Components::ElapsedTimer.new }
