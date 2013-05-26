@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.authors               = ["thekompanee", "jfelchner"]
   s.email                 = 'support@thekompanee.com'
-  s.date                  = Date.today
+  s.date                  = Time.now
   s.homepage              = 'https://github.com/jfelchner/ruby-progressbar'
 
   s.summary               = 'Ruby/ProgressBar is a flexible text progress bar library for Ruby.'
