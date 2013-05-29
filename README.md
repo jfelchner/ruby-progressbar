@@ -28,19 +28,27 @@ Installation
 
 First:
 
-    gem install ruby-progressbar
+```ruby
+gem install ruby-progressbar
+```
 
 Then in your script:
 
-    require 'ruby-progressbar'
+```ruby
+require 'ruby-progressbar'
+```
 
 or in your Gemfile
 
-    gem 'ruby-progressbar'
+```ruby
+gem 'ruby-progressbar'
+```
 
 or from IRB
 
-    irb -r 'ruby-progressbar'
+```ruby
+irb -r 'ruby-progressbar'
+```
 
 Basic Usage
 --------------------------------
@@ -49,7 +57,9 @@ Basic Usage
 
 It's simple to get started:
 
-    ProgressBar.create
+```ruby
+ProgressBar.create
+```
 
 Creates a basic progress bar beginning at `0`, a total capacity of `100` and tells it to start.
 
@@ -59,7 +69,9 @@ Creates a basic progress bar beginning at `0`, a total capacity of `100` and tel
 
 Every call to `#increment` will advance the bar by `1`. Therefore:
 
-    50.times { progressbar.increment }
+```ruby
+50.times { progressbar.increment }
+```
 
 Would output an advancing line which would end up here:
 
@@ -72,7 +84,9 @@ Advanced Usage
 
 If you would like to customize your prompt, you can pass options when you call `.create`.
 
-    ProgressBar.create(:title => "Items", :starting_at => 20, :total => 200)
+```ruby
+ProgressBar.create(:title => "Items", :starting_at => 20, :total => 200)
+```
 
 Will output:
 
@@ -145,7 +159,9 @@ You can use as many bar flags as you'd like, but if you do weird things, weird t
 
 If you would like a bar with the elapsed time on the left and the percentage complete followed by the title on the right, you'd do this:
 
-    ProgressBar.create(:format => '%a %B %p%% %t')
+```ruby
+ProgressBar.create(:format => '%a %B %p%% %t')
+```
 
 Which will output something like this:
 
@@ -153,7 +169,9 @@ Which will output something like this:
 
 Hard to see where the bar is?  Just add your own end caps, whatever you'd like.  Like so:
 
-    ProgressBar.create(:format => '%a <%B> %p%% %t')
+```ruby
+ProgressBar.create(:format => '%a <%B> %p%% %t')
+```
 
 Becomes:
 
@@ -161,7 +179,9 @@ Becomes:
 
 Want to put an end cap on your bar? Nothing special, just use the bar flag `%b` combined with the incomplete space flag `%i` like so:
 
-    ProgressBar.create(:format => '%a |%b>>%i| %p%% %t', :starting_at => 10)
+```ruby
+ProgressBar.create(:format => '%a |%b>>%i| %p%% %t', :starting_at => 10)
+```
 
 Becomes:
 
@@ -173,7 +193,9 @@ Notice that the absolute length doesn't get any longer, the bar just shrinks to 
 
 By default, the progressbar will try to be as smart as possible about how wide it can be.  Under most Unix systems, it should be as wide as the terminal will allow while still fitting on one line.  If you wish to override this behavior, you can pass in the `:length` option when creating the bar like so:
 
-    ProgressBar.create(:length => 40)
+```ruby
+ProgressBar.create(:length => 40)
+```
 
 Additionally, if you don't have access to the code calling the progressbar itself (say if you're using a gem like Fuubar), you can set the `RUBY_PROGRESS_BAR_LENGTH` environment variable and it will always override any other setting.
 
@@ -201,7 +223,9 @@ __RUBY PROGRESS BAR TO THE RESCUE!__
 
 Thanks to [@L2G](https://github.com/L2G) and 'the maths' you can pass the `:smoothing` option when creating a new bar and it will use an exponentially smoothed average rather than a linear one.  A value of `0.0` means no smoothing and is equivalent to the classic behavior.  A value of `1.0` is the maximum amount of smoothing.  Any values between those two are valid. `0.1` is the default.
 
-    ProgressBar.create(:smoothing => 0.6)
+```ruby
+ProgressBar.create(:smoothing => 0.6)
+```
 
 #### Time Mocking Support
 
@@ -209,6 +233,16 @@ When mocking time, the concept of when `now` is becomes distorted.  You can imag
 
   * [Timecop](https://github.com/jtrupiano/timecop)
   * [Delorean](https://github.com/bebanjo/delorean)
+
+### Throttling
+
+When reporting progress of large amounts of very fast operations, whose duration is comparable to the output time of a progress bar, it becomes desirable to throttle output to the console and only perform it once in a set period. ProgressBar supports throttling if given `:throttle_rate` option:
+
+    ProgressBar.create(:throttle_rate => 0.1)
+
+The above progress bar will output at most 10 times a second.
+
+The default throttling rate if none is specified is 100 times per second (or 0.01)
 
 Road Map
 --------------------------------

@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.authors               = ["thekompanee", "jfelchner"]
   s.email                 = 'support@thekompanee.com'
-  s.date                  = Date.today
+  s.date                  = Time.now
   s.homepage              = 'https://github.com/jfelchner/ruby-progressbar'
 
   s.summary               = 'Ruby/ProgressBar is a flexible text progress bar library for Ruby.'
@@ -23,21 +23,17 @@ The output can be customized with a flexible formatting system including:
 percentage, bars of various formats, elapsed time and estimated time remaining.
 THEDOCTOR
 
-  s.rdoc_options          = ["--charset = UTF-8"]
+  s.rdoc_options          = ['--charset', 'UTF-8']
   s.extra_rdoc_files      = %w[README.md LICENSE]
 
   #= Manifest =#
-  # s.default_executable    = 'nothing'
-  s.executables           = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.files                 = `git ls-files`.split("\n")
-  s.test_files            = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files                 = `git ls-files`.split($/)
+  s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.test_files            = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths         = ["lib"]
-  #= Manifest =#
 
-  s.add_development_dependency('rspec',       '~> 2.11')
-  s.add_development_dependency('timecop',     '~> 0.5')
-  s.add_development_dependency('simplecov',   '~> 0.5')
-  s.add_development_dependency('guard',       '~> 1.4')
-  s.add_development_dependency('guard-rspec', '~> 2.1')
-  s.add_development_dependency('rb-fsevent',  '~> 0.9')
+  s.add_development_dependency('rspec',         '~> 2.13')
+  s.add_development_dependency('rspectacular',  '~> 0.13')
+  s.add_development_dependency('timecop',       '~> 0.6')
+  s.add_development_dependency('simplecov',     '~> 0.8pre')
 end

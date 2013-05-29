@@ -1,11 +1,22 @@
 require 'spec_helper'
 require 'stringio'
-require 'timecop'
 
 describe ProgressBar::Base do
   before do
     @output = StringIO.new('', 'w+')
-    @progressbar = ProgressBar::Base.new(:output => @output, :length => 80)
+    @progressbar = ProgressBar::Base.new(:output => @output, :length => 80, :throttle_rate => 0.0)
+  end
+
+  describe 'terminal width dropping below title length' do
+    it 'should not crash' do
+      @progressbar = ProgressBar::Base.new(:output => @output)
+      @progressbar.stub(:terminal_width).and_return(100)
+      @progressbar.title = 'a'*95
+      @progressbar.stub(:terminal_width).and_return(60)
+      expect {
+        @progressbar.title = 'a'*95
+      }.to_not raise_error
+    end
   end
 
   context 'when a new bar is created' do
@@ -25,18 +36,39 @@ describe ProgressBar::Base do
       end
 
       describe '#length' do
-        it 'returns the width of the terminal if it is a Unix environment' do
-          @progressbar.stub(:terminal_width).and_return(99)
-          @progressbar.send(:reset_length) # This should be changed to use #any_instance
-          @progressbar.send(:length).should eql 99
-        end
-      end
+        context 'when the RUBY_PROGRESS_BAR_LENGTH environment variable exists' do
+          before  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = '44' }
+          after   { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
 
-      describe '#length' do
-        it 'returns 80 if it is not a Unix environment' do
-          @progressbar.stub(:unix?).and_return(false)
-          @progressbar.send(:reset_length) # This should be changed to use #any_instance
-          @progressbar.send(:length).should eql 80
+          it 'returns the length of the environment variable as an integer' do
+            @progressbar = ProgressBar::Base.new
+            @progressbar.send(:length).should eql 44
+          end
+        end
+
+        context 'when the RUBY_PROGRESS_BAR_LENGTH environment variable does not exist' do
+          before  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
+
+          context 'but the length option was passed in' do
+            it 'returns the length specified in the option' do
+              @progressbar = ProgressBar::Base.new(:length => 88)
+              @progressbar.send(:length).should eql 88
+            end
+          end
+
+          context 'and no length option was passed in' do
+            it 'returns the width of the terminal if it is a Unix environment' do
+              @progressbar.stub(:terminal_width).and_return(99)
+              @progressbar.send(:reset_length)
+              @progressbar.send(:length).should eql 99
+            end
+
+            it 'returns 80 if it is not a Unix environment' do
+              @progressbar.stub(:unix?).and_return(false)
+              @progressbar.send(:reset_length)
+              @progressbar.send(:length).should eql 80
+            end
+          end
         end
       end
     end
@@ -122,7 +154,7 @@ describe ProgressBar::Base do
 
   context 'when a bar is started' do
     before do
-      @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :length => 80)
+      @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :length => 80, :throttle_rate  => 0.0)
     end
 
     context 'and it is incremented any number of times' do
@@ -218,7 +250,7 @@ describe ProgressBar::Base do
   end
 
   context 'when the bar has not been completed' do
-    before { @progressbar = ProgressBar::Base.new(:length => 112, :starting_at => 0, :total => 50, :output => @output) }
+    before { @progressbar = ProgressBar::Base.new(:length => 112, :starting_at => 0, :total => 50, :output => @output, :throttle_rate => 0.0) }
 
     describe '#increment' do
       before { @progressbar.increment }
