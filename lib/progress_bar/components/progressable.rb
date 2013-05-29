@@ -66,7 +66,7 @@ class ProgressBar
         # Doing this way so we can avoid converting each
         # number to a float and then back to an integer.
         #
-        self.progress * 100 / total
+        (self.progress * 100 / total).to_i
       end
 
       def percentage_completed_with_precision
