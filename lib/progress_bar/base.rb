@@ -7,16 +7,16 @@ class ProgressBar
     DEFAULT_OUTPUT_STREAM = STDOUT
 
     def initialize(*args)
-      options             = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
+      options           = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
 
-      self.output         = options[:output]                || DEFAULT_OUTPUT_STREAM
+      self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
 
       super(options)
 
-      @bar                = Components::Bar.new(options)
-      @estimated_time     = Components::EstimatedTimer.new(options)
-      @elapsed_time       = Components::ElapsedTimer.new
-      @throttle           = Components::Throttle.new(options)
+      @bar              = Components::Bar.new(options)
+      @estimated_time   = Components::EstimatedTimer.new(options)
+      @elapsed_time     = Components::ElapsedTimer.new
+      @throttle         = Components::Throttle.new(options)
 
       start :at => options[:starting_at]
     end
