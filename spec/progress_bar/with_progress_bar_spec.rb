@@ -48,6 +48,17 @@ describe 'with_progress_bar' do
       progress_bar.total.should eq 3
     end
 
+    it "derives total from length if size returns nil" do
+      progress_bar.should be_nil
+      class << collection
+        def size
+        end
+      end
+      collection.should_receive(:length).and_call_original
+      collection.with_progress_bar(:output => output)
+      progress_bar.total.should eq 3
+    end
+
     it "derives total from count" do
       progress_bar.should be_nil
       class << collection

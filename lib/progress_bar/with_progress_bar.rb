@@ -5,14 +5,16 @@ class ProgressBar
     def with_progress_bar(options = {}, &block)
       respond_to?(:each) or raise TypeError, 'object needs to implement the each method'
       unless options.key?(:total)
-        total_method = [
+        total_methods = [
           :progress_bar_total, # Define your own total method that is preferredly used
           :size,
           :length,
           :count,
-        ].find { |m| respond_to?(m) }
-        if total_method
-          options[:total] = __send__ total_method
+        ]
+        total_methods.each do |total_method|
+          if respond_to?(total_method) and total = __send__(total_method)
+            options[:total] = total
+          end
         end
       end
       Thread.current[:__progress_bar__] = ProgressBar.create options
