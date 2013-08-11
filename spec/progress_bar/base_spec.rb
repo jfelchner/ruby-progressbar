@@ -5,17 +5,62 @@ describe ProgressBar::Base do
   before do
     @output = StringIO.new('', 'w+')
     @progressbar = ProgressBar::Base.new(:output => @output, :length => 80, :throttle_rate => 0.0)
+    @output.rewind
   end
 
-  describe 'terminal width dropping below title length' do
-    it 'should not crash' do
-      @progressbar = ProgressBar::Base.new(:output => @output)
-      @progressbar.stub(:terminal_width).and_return(100)
-      @progressbar.title = 'a'*95
-      @progressbar.stub(:terminal_width).and_return(60)
-      expect {
-        @progressbar.title = 'a'*95
-      }.to_not raise_error
+  context 'when the terminal width is shorter than the string being output' do
+    it 'can properly handle outputting the bar when the length changes on the fly to less than the minimum width' do
+      IO.stub_chain(:console, :winsize).and_return [1, 30]
+      @progressbar = ProgressBar::Base.new(:output => @output, :title => 'a' * 25, :format => '%t%B', :throttle_rate => 0.0)
+
+      @progressbar.start
+
+      IO.stub_chain(:console, :winsize).and_return [1, 20]
+      @progressbar.increment
+
+      @output.rewind
+      @output.read.should match /\raaaaaaaaaaaaaaaaaaaaaaaaa     \r\s+\raaaaaaaaaaaaaaaaaaaaaaaaa\r\z/
+    end
+
+    context 'and the bar length is calculated' do
+      it 'returns the proper string' do
+        IO.stub_chain(:console, :winsize).and_return [1, 20]
+        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 21), :starting_at => 5, :total => 10)
+
+        @progressbar.to_s('%t%w').should eql '*********************'
+      end
+    end
+
+    context 'and the incomplete bar length is calculated' do
+      it 'returns the proper string' do
+        IO.stub_chain(:console, :winsize).and_return [1, 20]
+        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 21))
+
+        @progressbar.to_s('%t%i').should eql '*********************'
+      end
+
+      it 'returns the proper string' do
+        IO.stub_chain(:console, :winsize).and_return [1, 20]
+        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 21), :starting_at => 5, :total => 10)
+
+        @progressbar.to_s('%t%i').should eql '*********************'
+      end
+    end
+
+    context 'and the full bar length is calculated (but lacks the space to output the entire bar)' do
+      it 'returns the proper string' do
+        IO.stub_chain(:console, :winsize).and_return [1, 20]
+        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 19), :starting_at => 5, :total => 10)
+
+        @progressbar.to_s('%t%B').should eql '******************* '
+      end
+
+      it 'returns the proper string' do
+        IO.stub_chain(:console, :winsize).and_return [1, 20]
+        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 19), :starting_at => 5, :total => 10)
+
+        @progressbar.to_s('%t%w%i').should eql '******************* '
+      end
     end
   end
 
