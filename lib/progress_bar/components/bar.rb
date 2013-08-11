@@ -35,7 +35,7 @@ class ProgressBar
 
     private
       def completed_length
-        length * percentage_completed / 100
+        (length * percentage_completed / 100).floor
       end
     end
   end
