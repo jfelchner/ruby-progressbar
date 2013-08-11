@@ -5,17 +5,21 @@ describe ProgressBar::Base do
   before do
     @output = StringIO.new('', 'w+')
     @progressbar = ProgressBar::Base.new(:output => @output, :length => 80, :throttle_rate => 0.0)
+    @output.rewind
   end
 
   describe 'terminal width dropping below title length' do
-    it 'should not crash' do
-      @progressbar = ProgressBar::Base.new(:output => @output)
-      @progressbar.stub(:terminal_width).and_return(100)
-      @progressbar.title = 'a'*95
-      @progressbar.stub(:terminal_width).and_return(60)
-      expect {
-        @progressbar.title = 'a'*95
-      }.to_not raise_error
+    pit 'should not crash' do
+      IO.stub_chain(:console, :winsize).and_return [1, 30]
+      @progressbar = ProgressBar::Base.new(:output => @output, :title => 'a' * 25, :format => '%t%B', :throttle_rate => 0.0)
+
+      @progressbar.start
+
+      IO.stub_chain(:console, :winsize).and_return [1, 20]
+      @progressbar.increment
+
+      @output.rewind
+      @output.read.should match /\raaaaaaaaaaaaaaaaaaaaaaaaa     \r\s+\raaaaaaaaaaaaaaaaaaaaaaaaa\r\z/
     end
   end
 
