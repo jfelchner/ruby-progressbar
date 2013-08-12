@@ -101,6 +101,7 @@ class ProgressBar
     #
     def clear
       output.print clear_string
+      output.print "\r"
     end
 
     def refresh
@@ -128,7 +129,7 @@ class ProgressBar
     attr_accessor   :output
 
     def clear_string
-      "#{" " * length}\r"
+      "#{" " * length}"
     end
 
     def with_progressables(*args)
