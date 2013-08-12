@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "progress_bar/version"
+require "ruby-progressbar/version"
 
 Gem::Specification.new do |s|
   s.rubygems_version      = '1.3.5'
