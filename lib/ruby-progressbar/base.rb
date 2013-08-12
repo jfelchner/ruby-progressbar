@@ -101,8 +101,8 @@ class ProgressBar
     #
     def clear
       if output.tty?
-      output.print clear_string
-      output.print "\r"
+        output.print clear_string
+        output.print "\r"
       end
     end
 
@@ -151,17 +151,17 @@ class ProgressBar
 
     def update(options = {})
       if output.tty? || finished?
-      with_timers(:stop) if finished?
+        with_timers(:stop) if finished?
 
-      @throttle.choke( finished? || options[:force] ) do
-        if length_changed?
-          clear
-          reset_length
+        @throttle.choke( finished? || options[:force] ) do
+          if length_changed?
+            clear
+            reset_length
+          end
+
+          output.print self.to_s + eol
+          output.flush
         end
-
-        output.print self.to_s + eol
-        output.flush
-      end
       end
     end
 
