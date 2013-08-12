@@ -130,6 +130,28 @@ _Note: The bar will be finished automatically if the current value ever becomes 
 
 * If you need to have the bar be redisplayed to give your users more of a "real-time" feel, you can call `#refresh` which will not affect the current position but will update the elapsed and estimated timers.
 
+### Logging
+
+Many times while using the progress bar, you may wish to log some output for the user.  If you attempt to do this using a standard `puts` statement, you'll find that the text will overwrite that which makes up the bar.  For example if you were to `puts "hello"` after progress has already begun, you may get something like this:
+
+    helloess: |=======                                                             |
+    Progress: |========                                                            |
+
+The reason is that ruby-progressbar has to keep redrawing itself every time you change the progress.  It's a limitation of terminal output.  Using `puts` messes that up because `puts` adds a newline which moves the cursor to the next line, then when ruby-progressbar updates, it does so on the following line.
+
+To circumvent this, use `#log` instead.
+
+```ruby
+  progressbar = ProgressBar.create
+  progressbar.progress = 20
+  progressbar.log 'hello'
+```
+
+    hello
+    Progress: |=============                                                       |
+
+`#log` will automatically clear the bar, print your desired text and then redraw the bar on the following line.  Notice that we did not get a bar **above** the logged output.  If you consistently use `#log`, you should only every see one bar on the screen at any time.
+
 Formatting
 --------------------------------
 
