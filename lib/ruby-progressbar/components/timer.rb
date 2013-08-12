@@ -1,4 +1,4 @@
-require 'progress_bar/time'
+require 'ruby-progressbar/time'
 
 class ProgressBar
   module Components

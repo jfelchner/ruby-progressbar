@@ -2,13 +2,10 @@ class ProgressBar
   class Base
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
-    include ProgressBar::Depreciable
 
     DEFAULT_OUTPUT_STREAM = STDOUT
 
-    def initialize(*args)
-      options           = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
-
+    def initialize(options = {})
       self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
 
       super(options)
