@@ -11,7 +11,7 @@ class ProgressBar
       def initialize(options = {})
         super
 
-        self.progress_mark   = options[:progress_mark] || DEFAULT_PROGRESS_MARK
+        self.progress_mark = options[:progress_mark] || DEFAULT_PROGRESS_MARK
       end
 
       def to_s(options = {:format => :standard})
