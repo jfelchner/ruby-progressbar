@@ -102,6 +102,7 @@ The following are the list of options you can use:
 * `:length` - _(Defaults to full width if possible, otherwise `80`)_ The preferred width of the entire progress bar including any format options.
 * `:output` - _(Defaults to `STDOUT`)_ All output will be sent to this object.  Can be any object which responds to `.print`.
 * `:smoothing` - _(Defaults to `0.1`)_ See [**Smoothing Out Estimated Time Jitters**](#smoothing-out-estimated-time-jitters) below.
+* `:throttle_rate` - _(Defaults to `0.01`)_ See [**Throttling**](#throttling) below.
 
 ### Changing Progress
 
