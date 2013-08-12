@@ -13,10 +13,11 @@ class ProgressBar
 
       super(options)
 
-      @bar                = Components::Bar.new(options)
-      @estimated_time     = Components::EstimatedTimer.new(options)
-      @elapsed_time       = Components::ElapsedTimer.new
-      @throttle           = Components::Throttle.new(options)
+      @bar              = Components::Bar.new(options)
+      @estimated_time   = Components::EstimatedTimer.new(options)
+      @elapsed_time     = Components::ElapsedTimer.new
+      @throttle         = Components::Throttle.new(options)
+      @progress_touched = false
 
       start :at => options[:starting_at]
     end
@@ -37,21 +38,35 @@ class ProgressBar
     # Updating The Bar's Progress
     #
     def decrement
+      @progress_touched = true
       with_update { with_progressables(:decrement) }
     end
 
     def increment
+      @progress_touched = true
       with_update { with_progressables(:increment) }
     end
 
     def progress=(new_progress)
+      @progress_touched = true
       with_update { with_progressables(:progress=, new_progress) }
+    end
+
+    def skip
+      throw :progress_bar_skip
+    end
+
+    attr_writer :progress_touched
+
+    def progress_touched?
+      @progress_touched
     end
 
     ###
     # Stopping The Bar
     #
     def finish
+      @progress_touched = true
       with_update { with_progressables(:finish) }
     end
 
@@ -68,6 +83,7 @@ class ProgressBar
     end
 
     def reset
+      @progress_touched = true
       with_update do
         @bar.reset
         with_timers(:reset)
