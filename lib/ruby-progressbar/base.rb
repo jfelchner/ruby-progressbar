@@ -76,7 +76,7 @@ class ProgressBar
     end
 
     def stopped?
-      @estimated_time.stopped? && @elapsed_time.stopped?
+      (@estimated_time.stopped? && @elapsed_time.stopped?) || finished?
     end
 
     alias :paused? :stopped?
@@ -114,7 +114,7 @@ class ProgressBar
       clear
       output.puts string
 
-      update(:force => true) unless finished?
+      update(:force => true) unless stopped?
     end
 
     def to_s(format_string = nil)
@@ -150,10 +150,10 @@ class ProgressBar
     end
 
     def update(options = {})
-      if output.tty? || finished?
+      if output.tty? || stopped?
         with_timers(:stop) if finished?
 
-        @throttle.choke( finished? || options[:force] ) do
+        @throttle.choke( stopped? || options[:force] ) do
           if length_changed?
             clear
             reset_length
@@ -166,7 +166,7 @@ class ProgressBar
     end
 
     def eol
-      finished? || stopped? ? "\n" : "\r"
+      stopped? ? "\n" : "\r"
     end
   end
 end
