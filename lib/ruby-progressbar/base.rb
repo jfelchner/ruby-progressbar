@@ -121,7 +121,7 @@ class ProgressBar
     end
 
     def inspect
-      "#<ProgressBar:#{progress}/#{total}>"
+      "#<ProgressBar:#{progress}/#{total || 'unknown'}>"
     end
 
   private
