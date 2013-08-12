@@ -207,6 +207,31 @@ describe ProgressBar::Base do
     end
   end
 
+  context 'when a bar has an unknown amount to completion' do
+    before do
+      @progressbar = ProgressBar::Base.new(:total => nil, :output => @output, :length => 80, :unknown_progress_animation_steps => ['=--', '-=-', '--='])
+    end
+
+    it 'is represented correctly' do
+      @progressbar.to_s('%i').should eql '=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-'
+    end
+
+    it 'is represented after being incremented once' do
+      @progressbar.increment
+      @progressbar.to_s('%i').should eql '-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--='
+    end
+
+    it 'is represented after being incremented twice' do
+      @progressbar.increment
+      @progressbar.increment
+      @progressbar.to_s('%i').should eql '--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--'
+    end
+
+    it 'displays the proper ETA' do
+      @progressbar.to_s('%i%e').should eql '=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-- ETA: ??:??:??'
+    end
+  end
+
   context 'when a bar is started' do
     before do
       @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :length => 80, :throttle_rate  => 0.0)

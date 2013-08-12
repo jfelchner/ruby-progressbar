@@ -12,7 +12,7 @@ class ProgressBar
       attr_accessor             :smoothing
 
       def initialize(options = {})
-        self.total           = options[:total]     || DEFAULT_TOTAL
+        self.total           = options.fetch(:total, DEFAULT_TOTAL)
         self.smoothing       = options[:smoothing] || DEFAULT_SMOOTHING
 
         start :at => DEFAULT_BEGINNING_POSITION
@@ -60,6 +60,7 @@ class ProgressBar
 
       def percentage_completed
         return 100 if total == 0
+        return 0   if total.nil?
 
         # progress / total * 100
         #
@@ -75,7 +76,7 @@ class ProgressBar
 
     private
       def validate_total(new_total)
-        (progress.nil? || new_total >= progress) || raise("You can't set the item's total value to be less than the current progress.")
+        (progress.nil? || new_total.nil? || new_total >= progress) || raise("You can't set the item's total value to be less than the current progress.")
       end
 
       def validate_progress(new_progress)

@@ -102,6 +102,8 @@ The following are the list of options you can use:
 * `:length` - _(Defaults to full width if possible, otherwise `80`)_ The preferred width of the entire progress bar including any format options.
 * `:output` - _(Defaults to `STDOUT`)_ All output will be sent to this object.  Can be any object which responds to `.print`.
 * `:smoothing` - _(Defaults to `0.1`)_ See [**Smoothing Out Estimated Time Jitters**](#smoothing-out-estimated-time-jitters) below.
+* `:throttle_rate` - _(Defaults to `0.01`)_ See [**Throttling**](#throttling) below.
+* `:unknown_progress_animation_steps` - _(Defaults to `['=---', '-=--', '--=-', '---=']`)_ See [**Unknown Progress**](#unknown-progress) The graphical elements used to cycle when progress is changed but the total amount of items being processed is unknown.
 
 ### Changing Progress
 
@@ -110,6 +112,7 @@ The following are the list of options you can use:
 * `#progress +=`: Will allow you to increment by a relative amount.
 * `#progress -=`: Will allow you to decrement by a relative amount.
 * `#progress=`: Will allow you to jump the amount of progress directly to whatever value you would like. _Note: This will almost always mess up your estimated time if you're using it._
+* `#total=`: Will change the total number of items being processed by the bar. This can be anything (even nil) but cannot be less than the amount of progress already accumulated by the bar.
 
 ### Stopping
 
@@ -130,6 +133,42 @@ _Note: The bar will be finished automatically if the current value ever becomes 
 
 * If you need to have the bar be redisplayed to give your users more of a "real-time" feel, you can call `#refresh` which will not affect the current position but will update the elapsed and estimated timers.
 
+### Unknown Progress
+
+Sometimes when processing work, you don't know at the beginning of the job exactly how many items you will be processing.  Maybe this might be because you're downloading a chunked file or processing a set of jobs that hasn't fully loaded yet.
+
+In times like these, you can set total to `nil` and continue to increment the bar as usual.  The bar will display an 'unknown' animation which will change every time you increment.  This will give the appearance (by default) that the bar is processing work even though there is no "progress".
+
+```ruby
+progressbar = ProgressBar.create(:starting_at => 20, :total => nil)
+```
+
+Will output:
+
+    Progress: |=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---|
+
+Calling
+
+```ruby
+progressbar.increment
+```
+
+once more will output:
+
+    Progress: |-=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=--|
+
+ad infinitum.
+
+At whatever point you discover the total that you will be processing, you can call:
+
+```ruby
+progressbar.total = 100
+```
+
+And the bar will magically transform into its typical state:
+
+    Progress: |========                                                            |
+
 ### Logging
 
 Many times while using the progress bar, you may wish to log some output for the user.  If you attempt to do this using a standard `puts` statement, you'll find that the text will overwrite that which makes up the bar.  For example if you were to `puts "hello"` after progress has already begun, you may get something like this:
@@ -142,9 +181,9 @@ The reason is that ruby-progressbar has to keep redrawing itself every time you 
 To circumvent this, use `#log` instead.
 
 ```ruby
-  progressbar = ProgressBar.create
-  progressbar.progress = 20
-  progressbar.log 'hello'
+progressbar = ProgressBar.create
+progressbar.progress = 20
+progressbar.log 'hello'
 ```
 
     hello
@@ -265,6 +304,22 @@ When reporting progress of large amounts of very fast operations, whose duration
 The above progress bar will output at most 10 times a second.
 
 The default throttling rate if none is specified is 100 times per second (or 0.01)
+
+### Custom Unknown Progress Animations
+
+Following up on [unknown progress](#unknown-progress), you may wish to update the unknown progress animation to suit your specific needs.  This can be easily done by passing in the `:unknown_progress_animation_steps` option.
+
+This item should be an array of strings representing each step of the animation. The specific step used for a given progress is determined by the current progress of the bar.  For example:
+
+```ruby
+progressbar = ProgressBar.create(:unknown_progress_animation_steps => ['==>', '>==', '=>='])
+```
+
+Would use element 0 ('==>') for a progress of 1, 4, 7, 10, etc.  It would use element 3 for a progress of 3, 6, 9, 12, etc.
+
+You can have an array of as many elements as you'd like and they will be used in the same manner.  For example if you have an array of 50 animation steps, element 0 would only be used for every 50th progress (eg: 1, 51, 101, etc).
+
+Whatever element is chosen is repeated along the entire 'incomplete' portion of the bar.
 
 Road Map
 --------------------------------
