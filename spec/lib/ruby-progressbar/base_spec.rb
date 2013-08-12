@@ -4,6 +4,11 @@ require 'stringio'
 describe ProgressBar::Base do
   before do
     @output = StringIO.new('', 'w+')
+    @output.stub(:tty?).and_return true
+
+    @non_tty_output = StringIO.new('', 'w+')
+    @non_tty_output.stub(:tty?).and_return false
+
     @progressbar = ProgressBar::Base.new(:output => @output, :length => 80, :throttle_rate => 0.0)
     @output.rewind
   end
@@ -177,14 +182,29 @@ describe ProgressBar::Base do
       end
     end
 
-    it 'can log messages' do
-      @progressbar = ProgressBar::Base.new(:output => @output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
-      @progressbar.increment
-      @progressbar.log 'We All Float'
-      @progressbar.increment
+    context 'for a TTY enabled device' do
+      it 'can log messages' do
+        @progressbar = ProgressBar::Base.new(:output => @output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
+        @progressbar.increment
+        @progressbar.log 'We All Float'
+        @progressbar.increment
 
-      @output.rewind
-      @output.read.should include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
+        @output.rewind
+        @output.read.should include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
+      end
+    end
+
+    context 'for a non-TTY enabled device' do
+      it 'can log messages' do
+        @progressbar = ProgressBar::Base.new(:output => @non_tty_output, :length => 20, :starting_at => 4, :total => 6, :throttle_rate => 0.0)
+        @progressbar.increment
+        @progressbar.log 'We All Float'
+        @progressbar.increment
+        @progressbar.finish
+
+        @non_tty_output.rewind
+        @non_tty_output.read.should include "We All Float\nProgress: |========|\n"
+      end
     end
   end
 

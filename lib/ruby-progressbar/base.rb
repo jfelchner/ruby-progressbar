@@ -3,7 +3,7 @@ class ProgressBar
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
 
-    DEFAULT_OUTPUT_STREAM = STDOUT
+    DEFAULT_OUTPUT_STREAM = $stdout
 
     def initialize(options = {})
       self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
@@ -76,7 +76,7 @@ class ProgressBar
     end
 
     def stopped?
-      @estimated_time.stopped? && @elapsed_time.stopped?
+      (@estimated_time.stopped? && @elapsed_time.stopped?) || finished?
     end
 
     alias :paused? :stopped?
@@ -100,8 +100,10 @@ class ProgressBar
     # Output
     #
     def clear
-      output.print clear_string
-      output.print "\r"
+      if output.tty?
+        output.print clear_string
+        output.print "\r"
+      end
     end
 
     def refresh
@@ -112,7 +114,7 @@ class ProgressBar
       clear
       output.puts string
 
-      update(:force => true) unless finished?
+      update(:force => true) unless stopped?
     end
 
     def to_s(format_string = nil)
@@ -148,21 +150,23 @@ class ProgressBar
     end
 
     def update(options = {})
-      with_timers(:stop) if finished?
+      if output.tty? || stopped?
+        with_timers(:stop) if finished?
 
-      @throttle.choke( finished? || options[:force] ) do
-        if length_changed?
-          clear
-          reset_length
+        @throttle.choke( stopped? || options[:force] ) do
+          if length_changed?
+            clear
+            reset_length
+          end
+
+          output.print self.to_s + eol
+          output.flush
         end
-
-        output.print self.to_s + eol
-        output.flush
       end
     end
 
     def eol
-      finished? || stopped? ? "\n" : "\r"
+      stopped? ? "\n" : "\r"
     end
   end
 end
