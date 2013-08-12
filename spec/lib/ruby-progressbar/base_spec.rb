@@ -183,15 +183,15 @@ describe ProgressBar::Base do
     end
 
     context 'for a TTY enabled device' do
-    it 'can log messages' do
-      @progressbar = ProgressBar::Base.new(:output => @output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
-      @progressbar.increment
-      @progressbar.log 'We All Float'
-      @progressbar.increment
+      it 'can log messages' do
+        @progressbar = ProgressBar::Base.new(:output => @output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
+        @progressbar.increment
+        @progressbar.log 'We All Float'
+        @progressbar.increment
 
-      @output.rewind
-      @output.read.should include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
-    end
+        @output.rewind
+        @output.read.should include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
+      end
     end
 
     context 'for a non-TTY enabled device' do
