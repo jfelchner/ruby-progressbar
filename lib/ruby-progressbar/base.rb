@@ -103,6 +103,13 @@ class ProgressBar
       update
     end
 
+    def log(string)
+      clear
+      output.puts string
+
+      update(:force => true) unless finished?
+    end
+
     def to_s(format_string = nil)
       format_string ||= @format_string
 
@@ -135,10 +142,10 @@ class ProgressBar
       update
     end
 
-    def update
+    def update(options = {})
       with_timers(:stop) if finished?
 
-      @throttle.choke( finished? ) do
+      @throttle.choke( finished? || options[:force] ) do
         if length_changed?
           clear
           reset_length
