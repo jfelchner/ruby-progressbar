@@ -3,7 +3,7 @@ class ProgressBar
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
 
-    DEFAULT_OUTPUT_STREAM = STDOUT
+    DEFAULT_OUTPUT_STREAM = $stdout
 
     def initialize(options = {})
       self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
