@@ -3,20 +3,24 @@ class ProgressBar
     class Bar
       include Progressable
 
-      DEFAULT_PROGRESS_MARK = '='
+      DEFAULT_PROGRESS_MARK                    = '='
+      DEFAULT_UNKNOWN_PROGRESS_ANIMATION_STEPS = ['=---', '-=--', '--=-', '---=']
 
       attr_accessor :progress_mark
       attr_accessor :length
+      attr_accessor :unknown_progress_animation_steps
 
       def initialize(options = {})
         super
 
-        self.progress_mark = options[:progress_mark] || DEFAULT_PROGRESS_MARK
+        self.unknown_progress_animation_steps = options[:unknown_progress_animation_steps] || DEFAULT_UNKNOWN_PROGRESS_ANIMATION_STEPS
+        self.progress_mark                    = options[:progress_mark]                    || DEFAULT_PROGRESS_MARK
       end
 
       def to_s(options = {:format => :standard})
         completed_string = send(:"#{options[:format]}_complete_string")
-        completed_string.ljust(length, ' ')
+
+        "#{completed_string}#{empty_string}"
       end
 
       def integrated_percentage_complete_string
@@ -30,7 +34,18 @@ class ProgressBar
       end
 
       def empty_string
-        ' ' * (length - completed_length)
+        incomplete_length = (length - completed_length)
+
+        if total.nil?
+          current_animation_step = progress % unknown_progress_animation_steps.size
+          animation_graphic      = unknown_progress_animation_steps[current_animation_step]
+
+          unknown_incomplete_string = animation_graphic * ((incomplete_length / unknown_progress_animation_steps.size) + 2)
+
+          unknown_incomplete_string[0, incomplete_length]
+        else
+          ' ' * incomplete_length
+        end
       end
 
     private
