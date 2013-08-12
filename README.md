@@ -181,9 +181,9 @@ The reason is that ruby-progressbar has to keep redrawing itself every time you 
 To circumvent this, use `#log` instead.
 
 ```ruby
-  progressbar = ProgressBar.create
-  progressbar.progress = 20
-  progressbar.log 'hello'
+progressbar = ProgressBar.create
+progressbar.progress = 20
+progressbar.log 'hello'
 ```
 
     hello
