@@ -1,5 +1,11 @@
 # bundle exec ruby-prof --printer=graph_html --file=../results.html --require 'ruby-progressbar' --sort=total ./spec/fixtures/benchmark.rb
 
-bar = ProgressBar.create(:length => 80, :start => 0, :total => 100000)
+total  = 10
+# output = File.open('/Users/jfelchner/Downloads/benchmark.txt', 'w+')
+output = $stdout
+bar    = ProgressBar.create(:output => output, :length => 80, :start => 0, :total => total)
 
-100000.times { bar.increment }
+total.times do |i|
+  bar.log i
+  bar.increment
+end
