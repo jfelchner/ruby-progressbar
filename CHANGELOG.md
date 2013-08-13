@@ -7,3 +7,4 @@ v1.2.0
 * Add #log which will properly handle the display of the bar when sending
   a string of output to the screen.
 * Add unknown progress. See the README for more details.
+* Add proper output for non-TTY IO streams
