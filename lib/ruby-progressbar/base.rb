@@ -2,21 +2,18 @@ class ProgressBar
   class Base
     include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
-    include ProgressBar::Depreciable
 
-    DEFAULT_OUTPUT_STREAM = STDOUT
+    DEFAULT_OUTPUT_STREAM = $stdout
 
-    def initialize(*args)
-      options             = args.empty? ? {} : backwards_compatible_args_to_options_conversion(args)
-
-      self.output         = options[:output]                || DEFAULT_OUTPUT_STREAM
+    def initialize(options = {})
+      self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
 
       super(options)
 
-      @bar                = Components::Bar.new(options)
-      @estimated_time     = Components::EstimatedTimer.new(options)
-      @elapsed_time       = Components::ElapsedTimer.new
-      @throttle           = Components::Throttle.new(options)
+      @bar              = Components::Bar.new(options)
+      @estimated_time   = Components::EstimatedTimer.new(options)
+      @elapsed_time     = Components::ElapsedTimer.new
+      @throttle         = Components::Throttle.new(options)
 
       start :at => options[:starting_at]
     end
@@ -48,6 +45,10 @@ class ProgressBar
       with_update { with_progressables(:progress=, new_progress) }
     end
 
+    def total=(new_total)
+      with_update { with_progressables(:total=, new_total) }
+    end
+
     ###
     # Stopping The Bar
     #
@@ -75,7 +76,7 @@ class ProgressBar
     end
 
     def stopped?
-      @estimated_time.stopped? && @elapsed_time.stopped?
+      (@estimated_time.stopped? && @elapsed_time.stopped?) || finished?
     end
 
     alias :paused? :stopped?
@@ -99,11 +100,21 @@ class ProgressBar
     # Output
     #
     def clear
-      output.print clear_string
+      if output.tty?
+        output.print clear_string
+        output.print "\r"
+      end
     end
 
     def refresh
       update
+    end
+
+    def log(string)
+      clear
+      output.puts string
+
+      update(:force => true) unless stopped?
     end
 
     def to_s(format_string = nil)
@@ -113,34 +124,24 @@ class ProgressBar
     end
 
     def inspect
-      "#<ProgressBar:#{progress}/#{total}>"
+      "#<ProgressBar:#{progress}/#{total || 'unknown'}>"
     end
 
   private
     attr_accessor   :output
 
     def clear_string
-      "#{" " * length}\r"
+      "#{" " * length}"
     end
 
-    def with_progressables(action, *args)
-      if args.empty?
-        @bar.send(action)
-        @estimated_time.send(action)
-      else
-        @bar.send(action, *args)
-        @estimated_time.send(action, *args)
-      end
+    def with_progressables(*args)
+      @bar.send(*args)
+      @estimated_time.send(*args)
     end
 
-    def with_timers(action, *args)
-      if args.empty?
-        @estimated_time.send(action)
-        @elapsed_time.send(action)
-      else
-        @estimated_time.send(action, *args)
-        @elapsed_time.send(action, *args)
-      end
+    def with_timers(*args)
+      @estimated_time.send(*args)
+      @elapsed_time.send(*args)
     end
 
     def with_update
@@ -148,22 +149,24 @@ class ProgressBar
       update
     end
 
-    def update
-      with_timers(:stop) if finished?
+    def update(options = {})
+      if output.tty? || stopped?
+        with_timers(:stop) if finished?
 
-      @throttle.choke( finished? ) do
-        if length_changed?
-          clear
-          reset_length
+        @throttle.choke( stopped? || options[:force] ) do
+          if length_changed?
+            clear
+            reset_length
+          end
+
+          output.print self.to_s + eol
+          output.flush
         end
-
-        output.print self.to_s + eol
-        output.flush
       end
     end
 
     def eol
-      finished? || stopped? ? "\n" : "\r"
+      stopped? ? "\n" : "\r"
     end
   end
 end

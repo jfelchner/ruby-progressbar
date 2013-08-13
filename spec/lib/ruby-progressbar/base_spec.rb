@@ -4,6 +4,11 @@ require 'stringio'
 describe ProgressBar::Base do
   before do
     @output = StringIO.new('', 'w+')
+    @output.stub(:tty?).and_return true
+
+    @non_tty_output = StringIO.new('', 'w+')
+    @non_tty_output.stub(:tty?).and_return false
+
     @progressbar = ProgressBar::Base.new(:output => @output, :length => 80, :throttle_rate => 0.0)
     @output.rewind
   end
@@ -176,6 +181,31 @@ describe ProgressBar::Base do
         end
       end
     end
+
+    context 'for a TTY enabled device' do
+      it 'can log messages' do
+        @progressbar = ProgressBar::Base.new(:output => @output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
+        @progressbar.increment
+        @progressbar.log 'We All Float'
+        @progressbar.increment
+
+        @output.rewind
+        @output.read.should include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
+      end
+    end
+
+    context 'for a non-TTY enabled device' do
+      it 'can log messages' do
+        @progressbar = ProgressBar::Base.new(:output => @non_tty_output, :length => 20, :starting_at => 4, :total => 6, :throttle_rate => 0.0)
+        @progressbar.increment
+        @progressbar.log 'We All Float'
+        @progressbar.increment
+        @progressbar.finish
+
+        @non_tty_output.rewind
+        @non_tty_output.read.should include "We All Float\nProgress: |========|\n"
+      end
+    end
   end
 
   context 'when a bar is about to be completed' do
@@ -194,6 +224,31 @@ describe ProgressBar::Base do
         @output.rewind
         @output.read.end_with?("\n").should be_true
       end
+    end
+  end
+
+  context 'when a bar has an unknown amount to completion' do
+    before do
+      @progressbar = ProgressBar::Base.new(:total => nil, :output => @output, :length => 80, :unknown_progress_animation_steps => ['=--', '-=-', '--='])
+    end
+
+    it 'is represented correctly' do
+      @progressbar.to_s('%i').should eql '=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-'
+    end
+
+    it 'is represented after being incremented once' do
+      @progressbar.increment
+      @progressbar.to_s('%i').should eql '-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--='
+    end
+
+    it 'is represented after being incremented twice' do
+      @progressbar.increment
+      @progressbar.increment
+      @progressbar.to_s('%i').should eql '--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--'
+    end
+
+    it 'displays the proper ETA' do
+      @progressbar.to_s('%i%e').should eql '=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-- ETA: ??:??:??'
     end
   end
 

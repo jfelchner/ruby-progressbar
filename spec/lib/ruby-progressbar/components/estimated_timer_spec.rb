@@ -183,7 +183,7 @@ describe ProgressBar::Components::EstimatedTimer do
     #    Failure/Error: COUNT.times { bar.increment }
     #    NoMethodError:
     #      undefined method `+' for nil:NilClass
-    #    # ./lib/progress_bar/components/progressable.rb:33:in `increment'
+    #    # ./lib/ruby-progressbar/components/progressable.rb:33:in `increment'
     #
     it 'properly delegates' do
       @output = StringIO.new('', 'w+')
