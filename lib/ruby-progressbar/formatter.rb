@@ -73,6 +73,7 @@ class ProgressBar
     end
 
     def complete_bar(length)
+      length = 0 if length < 0
       @bar.length = length
       @bar.to_s
     end
