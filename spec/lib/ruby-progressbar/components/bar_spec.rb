@@ -17,6 +17,12 @@ describe ProgressBar::Components::Bar do
         end
       end
 
+      describe '#remainder_mark' do
+        it 'returns the default remainder mark' do
+          @progressbar.remainder_mark.should eql ProgressBar::Components::Bar::DEFAULT_REMAINDER_MARK
+        end
+      end
+
       context 'and the bar has not been started' do
         describe '#progress' do
           it 'returns the default beginning position' do
@@ -47,7 +53,7 @@ describe ProgressBar::Components::Bar do
     end
 
     context 'and options are passed' do
-      before { @progressbar = ProgressBar::Components::Bar.new(:total => 12, :progress_mark => 'x') }
+      before { @progressbar = ProgressBar::Components::Bar.new(:total => 12, :progress_mark => 'x', :remainder_mark => '.') }
 
       describe '#total' do
         it 'returns the overridden total' do
@@ -58,6 +64,12 @@ describe ProgressBar::Components::Bar do
       describe '#progress_mark' do
         it 'returns the overridden mark' do
           @progressbar.progress_mark.should eql 'x'
+        end
+      end
+
+      describe '#remainder_mark' do
+        it 'returns the overridden mark' do
+          @progressbar.remainder_mark.should eql '.'
         end
       end
     end

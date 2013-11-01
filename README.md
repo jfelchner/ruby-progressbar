@@ -98,6 +98,7 @@ The following are the list of options you can use:
 * `:total` - _(Defaults to `100`)_ The total number of the items that can be completed.
 * `:starting_at` - _(Defaults to `0`)_ The number of items that should be considered completed when the bar first starts.  This is also the default number that the bar will be set to if `#reset` is called.
 * `:progress_mark` - _(Defaults to `=`)_ The mark which indicates the amount of progress that has been made.
+* `:remainder_mark` - _(Defaults to ` `)_ The mark which indicates the remaining amount of progress to be made.
 * `:format` - _(Defaults to `%t: |%B|`)_ The format string which determines how the bar is displayed.  See [**Formatting**](#formatting) below.
 * `:length` - _(Defaults to full width if possible, otherwise `80`)_ The preferred width of the entire progress bar including any format options.
 * `:output` - _(Defaults to `STDOUT`)_ All output will be sent to this object.  Can be any object which responds to `.print`.
@@ -267,6 +268,7 @@ _Note: If the terminal width is less than 20 characters or ruby-progressbar is b
 The following items can be set at any time.  Changes cause an immediate bar refresh so no other action is needed:
 
 * `#progress_mark=`: Sets the string used to represent progress along the bar.
+* `#remainder_mark=`: Sets the string used to represent the empty part of the bar.
 * `#title=`: Sets the string used to represent the items the bar is tracking (or I guess whatever else you want it to be).
 * `#format(format_string)`: If you need to adjust the format that the bar uses when rendering itself, just pass in a string in the same format as describe [above](#formatting).
 
