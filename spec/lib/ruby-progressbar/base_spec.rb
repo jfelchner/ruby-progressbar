@@ -309,6 +309,15 @@ describe ProgressBar::Base do
         end
       end
 
+      describe '#remainder_mark=' do
+        it 'changes the mark used to represent the remaining part of the bar and updates the output' do
+          @progressbar.remainder_mark = 'x'
+
+          @output.rewind
+          @output.read.should match /\rProgress: \|======#{'x' * 62}\|\r\z/
+        end
+      end
+
       describe '#title=' do
         it 'changes the title used to represent the items being progressed and updates the output' do
           @progressbar.title = 'Items'
