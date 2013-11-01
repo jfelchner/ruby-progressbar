@@ -4,9 +4,11 @@ class ProgressBar
       include Progressable
 
       DEFAULT_PROGRESS_MARK                    = '='
+      DEFAULT_REMAINDER_MARK                   = ' '
       DEFAULT_UNKNOWN_PROGRESS_ANIMATION_STEPS = ['=---', '-=--', '--=-', '---=']
 
       attr_accessor :progress_mark
+      attr_accessor :remainder_mark
       attr_accessor :length
       attr_accessor :unknown_progress_animation_steps
 
@@ -15,6 +17,7 @@ class ProgressBar
 
         self.unknown_progress_animation_steps = options[:unknown_progress_animation_steps] || DEFAULT_UNKNOWN_PROGRESS_ANIMATION_STEPS
         self.progress_mark                    = options[:progress_mark]                    || DEFAULT_PROGRESS_MARK
+        self.remainder_mark                   = options[:remainder_mark]                   || DEFAULT_REMAINDER_MARK
       end
 
       def to_s(options = {:format => :standard})
@@ -44,7 +47,7 @@ class ProgressBar
 
           unknown_incomplete_string[0, incomplete_length]
         else
-          ' ' * incomplete_length
+          remainder_mark * incomplete_length
         end
       end
 

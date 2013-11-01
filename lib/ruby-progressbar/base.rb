@@ -92,6 +92,10 @@ class ProgressBar
       with_update { @bar.progress_mark = mark }
     end
 
+    def remainder_mark=(mark)
+      with_update { @bar.remainder_mark = mark }
+    end
+
     def title=(title)
       with_update { super }
     end
