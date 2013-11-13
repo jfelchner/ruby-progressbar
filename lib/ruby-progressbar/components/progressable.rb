@@ -29,8 +29,8 @@ class ProgressBar
         !!self.starting_position
       end
 
-      def increment
-        self.progress += 1 unless progress == total
+      def increment(amount=1)
+        self.progress += amount unless progress <= total - amount
       end
 
       def decrement
