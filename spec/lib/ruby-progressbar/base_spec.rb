@@ -208,6 +208,36 @@ describe ProgressBar::Base do
     end
   end
 
+  context 'when a block is passed' do
+    it 'yields the bar to the block' do
+      yielded = false
+      bar = ProgressBar::Base.new { |arg| yielded = arg }
+      yielded.should equal(bar)
+      bar.should be_stopped
+    end
+
+    it 'stops the bar in the event of a nonlocal exit' do
+      exception_class = Class.new(RuntimeError)
+      bar = nil
+      expect do
+        ProgressBar::Base.new(total: 2) do |b|
+          b.increment
+          bar = b
+          raise exception_class, 'lol'
+        end
+      end.to raise_error(exception_class)
+      bar.progress.should eq 1
+    end
+
+    it 'does not stop the bar if it finished' do
+      ProgressBar::Base.new(:total => 2, :output => @output) do |bar|
+        bar.increment
+        bar.increment
+      end
+      @output.string.scan(/\n/).size.should eq 1
+    end
+  end
+
   context 'when a bar is about to be completed' do
     before do
       @progressbar = ProgressBar::Base.new(:starting_at => 99, :total => 100, :output => @output, :length => 80)

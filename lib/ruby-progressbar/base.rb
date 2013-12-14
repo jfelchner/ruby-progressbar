@@ -16,6 +16,14 @@ class ProgressBar
       @throttle         = Components::Throttle.new(options)
 
       start :at => options[:starting_at]
+
+      if block_given?
+        begin
+          yield self
+        ensure
+          stop unless finished?
+        end
+      end
     end
 
     ###
