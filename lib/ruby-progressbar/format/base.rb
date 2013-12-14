@@ -10,6 +10,7 @@ class ProgressBar
 
       def process(environment)
         processed_string = @format_string.dup
+        ansi_sgr_codes   = %r{\e\[[\d;]+m}
 
         non_bar_molecules.each do |molecule|
           processed_string.gsub!("%#{molecule.key}", environment.send(molecule.method_name).to_s)
@@ -20,7 +21,7 @@ class ProgressBar
 
         processed_string.gsub! '%%', '%'
 
-        processed_string_length = processed_string.gsub(/\e\[[\d;]+m/, '').length
+        processed_string_length = processed_string.gsub(ansi_sgr_codes, '').length
         leftover_bar_length     = environment.send(:length) - processed_string_length + placeholder_length
         leftover_bar_length     = leftover_bar_length < 0 ? 0 : leftover_bar_length
 
