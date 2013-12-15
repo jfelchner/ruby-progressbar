@@ -104,9 +104,13 @@ class ProgressBar
     # Output
     #
     def clear
+      self.last_update_length = 0
+
       if output.tty?
         output.print clear_string
         output.print "\r"
+      else
+        output.print "\n"
       end
     end
 
@@ -132,10 +136,15 @@ class ProgressBar
     end
 
   private
-    attr_accessor   :output
+    attr_accessor   :output,
+                    :last_update_length
 
     def clear_string
       "#{" " * length}"
+    end
+
+    def last_update_length
+      @last_update_length ||= 0
     end
 
     def with_progressables(*args)
@@ -154,23 +163,37 @@ class ProgressBar
     end
 
     def update(options = {})
-      if output.tty? || stopped?
-        with_timers(:stop) if finished?
+      with_timers(:stop) if finished?
 
-        @throttle.choke( stopped? || options[:force] ) do
-          if length_changed?
-            clear
-            reset_length
-          end
+      if length_changed?
+        clear
+        reset_length
+      end
 
-          output.print self.to_s + eol
-          output.flush
+      @throttle.choke( stopped? || options[:force] ) do
+        if output.tty?
+          formatted_string = self.to_s
+          output_string    = formatted_string
+        else
+          formatted_string = self.to_s(DEFAULT_NON_TTY_FORMAT_STRING)
+          formatted_string = formatted_string[0...-1] unless finished?
+
+          output_string    = formatted_string[last_update_length..-1]
         end
+
+        self.last_update_length = formatted_string.length
+
+        output.print output_string + eol
+        output.flush
       end
     end
 
     def eol
-      stopped? ? "\n" : "\r"
+      if output.tty?
+        stopped? ? "\n" : "\r"
+      else
+        stopped? ? "\n" : ""
+      end
     end
   end
 end
