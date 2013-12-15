@@ -53,7 +53,7 @@ class ProgressBar
     # Stopping The Bar
     #
     def finish
-      with_update { with_progressables(:finish) }
+      with_update { with_progressables(:finish) } unless finished?
     end
 
     def pause
