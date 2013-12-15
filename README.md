@@ -19,6 +19,7 @@ Supported Rubies
 It's Better Than The Other 186,312 Progress Bar Libraries Because...
 --------------------------------
 * Full test suite [![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.png?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar)
+* _**ZERO**_ dependencies
 * Used by tons of other open source projects (which means we find out about bugs quickly)
 * It's pretty [freakin' sweet](https://www.youtube.com/watch?v=On3IoVhf_GM)
 * We have a road map of new features to make it even better
