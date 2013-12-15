@@ -7,6 +7,7 @@ class ProgressBar
 
     def initialize(options = {})
       self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
+      autostart         = options.fetch(:autostart, true)
 
       super(options)
 
@@ -15,7 +16,7 @@ class ProgressBar
       @elapsed_time     = Components::ElapsedTimer.new
       @throttle         = Components::Throttle.new(options)
 
-      start :at => options[:starting_at]
+      start :at => options[:starting_at] if autostart
     end
 
     ###
