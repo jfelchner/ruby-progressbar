@@ -354,10 +354,6 @@ Once the bar gets to be completely finished though:
 
 The end cap can now be added (since there is no more progress to be displayed).
 
-Road Map
---------------------------------
-We're planning on adding a bunch of really nice features to this gem over the next few weeks.  We want to keep the simple usage simple but allow for powerful features if they're needed.  Our `1.0` release is the first step in that direction.
-
 Issues
 --------------------------------
 
