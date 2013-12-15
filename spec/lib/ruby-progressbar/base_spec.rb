@@ -248,6 +248,37 @@ describe ProgressBar::Base do
         non_tty_output.rewind
         non_tty_output.read.should include "We All Float\nProgress: |========|\n"
       end
+
+      it 'can output the bar properly so that it does not spam the screen' do
+        progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
+
+        6.times { progressbar.increment }
+
+        non_tty_output.rewind
+        non_tty_output.read.should eql "\n\nProgress: |========|\n"
+      end
+
+      it 'can output the bar properly if finished in the middle of its progress' do
+        progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
+
+        3.times { progressbar.increment }
+
+        progressbar.finish
+
+        non_tty_output.rewind
+        non_tty_output.read.should eql "\n\nProgress: |========|\n"
+      end
+
+      it 'can output the bar properly if stopped in the middle of its progress' do
+        progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
+
+        3.times { progressbar.increment }
+
+        progressbar.stop
+
+        non_tty_output.rewind
+        non_tty_output.read.should eql "\n\nProgress: |====\n"
+      end
     end
   end
 
