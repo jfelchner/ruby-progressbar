@@ -12,6 +12,7 @@ Supported Rubies
 * MRI Ruby 1.8.7
 * MRI Ruby 1.9.2
 * MRI Ruby 1.9.3
+* MRI Ruby 2.0.0
 * JRuby (in 1.8 compat mode)
 * JRuby (in 1.9 compat mode)
 
@@ -98,6 +99,7 @@ The following are the list of options you can use:
 * `:total` - _(Defaults to `100`)_ The total number of the items that can be completed.
 * `:starting_at` - _(Defaults to `0`)_ The number of items that should be considered completed when the bar first starts.  This is also the default number that the bar will be set to if `#reset` is called.
 * `:progress_mark` - _(Defaults to `=`)_ The mark which indicates the amount of progress that has been made.
+* `:remainder_mark` - _(Defaults to ` `)_ The mark which indicates the remaining amount of progress to be made.
 * `:format` - _(Defaults to `%t: |%B|`)_ The format string which determines how the bar is displayed.  See [**Formatting**](#formatting) below.
 * `:length` - _(Defaults to full width if possible, otherwise `80`)_ The preferred width of the entire progress bar including any format options.
 * `:output` - _(Defaults to `STDOUT`)_ All output will be sent to this object.  Can be any object which responds to `.print`.
@@ -267,6 +269,7 @@ _Note: If the terminal width is less than 20 characters or ruby-progressbar is b
 The following items can be set at any time.  Changes cause an immediate bar refresh so no other action is needed:
 
 * `#progress_mark=`: Sets the string used to represent progress along the bar.
+* `#remainder_mark=`: Sets the string used to represent the empty part of the bar.
 * `#title=`: Sets the string used to represent the items the bar is tracking (or I guess whatever else you want it to be).
 * `#format(format_string)`: If you need to adjust the format that the bar uses when rendering itself, just pass in a string in the same format as describe [above](#formatting).
 
@@ -321,9 +324,35 @@ You can have an array of as many elements as you'd like and they will be used in
 
 Whatever element is chosen is repeated along the entire 'incomplete' portion of the bar.
 
-Road Map
---------------------------------
-We're planning on adding a bunch of really nice features to this gem over the next few weeks.  We want to keep the simple usage simple but allow for powerful features if they're needed.  Our `1.0` release is the first step in that direction.
+### Non-TTY Output
+
+Typically, when the progress bar is updated, the entire previous bar is 'overwritten' with the updated information.  Unfortunately when the bar is being output on a non-TTY enabled output stream (such as a file or pipe), that standard behavior of outputting the progress bar will not work.  This is mainly due to the fact that we can't easily go back and replace the content that the bar had previously written.
+
+To try to solve this, ruby-progressbar, when it determines that it is being used on a non-TTY device, will override any format which was set in the initializer to something which more closely resembles this:
+
+    Progress: |=============
+
+Notice that there are no dynamically updating segments like counters or ETA.  Dynamic segments are not compatible with non-TTY devices because, by their very nature, they must be updated on each refresh of the bar and as stated previously, that is not possible in non-TTY mode.
+
+Also notice that there is no end cap on the righthand side of the bar.  Again, we cannot output something which is past the point at which we next need to output text.  If we added an end cap, that would mean that any additional progress text would be placed _after_ the end cap.  Definitely not what we want.
+
+So how does it work?  First we output the title and the first end cap:
+
+    Progress: |
+
+Next, every time we increment the bar, we check whether the progress bar has grown.  If it has, we output _only the additional portion_ of the bar to the output.
+
+For example, given the previous title output, if we increment the bar once, we would get:
+
+    Progress: |=
+
+But in this case, only one `=` was output.  Not the entire `Progress: |=`.
+
+Once the bar gets to be completely finished though:
+
+    Progress: |====================================================================|
+
+The end cap can now be added (since there is no more progress to be displayed).
 
 Issues
 --------------------------------
