@@ -347,6 +347,14 @@ describe ProgressBar::Base do
           output.rewind
           output.read.should match /\rProgress: \|======#{' ' * 62}\|\n\z/
         end
+
+        it 'does not output the bar multiple times if the bar is already stopped' do
+          output.rewind
+          progressbar.stop
+          output.rewind
+
+          output.read.should_not start_with "Progress: |======#{' ' * 62}|"
+        end
       end
     end
   end

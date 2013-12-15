@@ -57,11 +57,11 @@ class ProgressBar
     end
 
     def pause
-      with_update { with_timers(:pause) }
+      with_update { with_timers(:pause) } unless paused?
     end
 
     def stop
-      with_update { with_timers(:stop) }
+      with_update { with_timers(:stop) } unless stopped?
     end
 
     def resume
