@@ -2,35 +2,41 @@ require 'spec_helper'
 require 'stringio'
 
 describe ProgressBar::Base do
+  let(:output) do
+    StringIO.new('', 'w+').tap do |io|
+      io.stub(:tty?).and_return true
+    end
+  end
+
+  let(:non_tty_output) do
+    StringIO.new('', 'w+').tap do |io|
+      io.stub(:tty?).and_return false
+    end
+  end
+
   before do
-    @output = StringIO.new('', 'w+')
-    @output.stub(:tty?).and_return true
-
-    @non_tty_output = StringIO.new('', 'w+')
-    @non_tty_output.stub(:tty?).and_return false
-
-    @progressbar = ProgressBar::Base.new(:output => @output, :length => 80, :throttle_rate => 0.0)
-    @output.rewind
+    @progressbar = ProgressBar::Base.new(:output => output, :length => 80, :throttle_rate => 0.0)
+    output.rewind
   end
 
   context 'when the terminal width is shorter than the string being output' do
     it 'can properly handle outputting the bar when the length changes on the fly to less than the minimum width' do
       IO.stub_chain(:console, :winsize).and_return [1, 30]
-      @progressbar = ProgressBar::Base.new(:output => @output, :title => 'a' * 25, :format => '%t%B', :throttle_rate => 0.0)
+      @progressbar = ProgressBar::Base.new(:output => output, :title => 'a' * 25, :format => '%t%B', :throttle_rate => 0.0)
 
       @progressbar.start
 
       IO.stub_chain(:console, :winsize).and_return [1, 20]
       @progressbar.increment
 
-      @output.rewind
-      @output.read.should match /\raaaaaaaaaaaaaaaaaaaaaaaaa     \r\s+\raaaaaaaaaaaaaaaaaaaaaaaaa\r\z/
+      output.rewind
+      output.read.should match /\raaaaaaaaaaaaaaaaaaaaaaaaa     \r\s+\raaaaaaaaaaaaaaaaaaaaaaaaa\r\z/
     end
 
     context 'and the bar length is calculated' do
       it 'returns the proper string' do
         IO.stub_chain(:console, :winsize).and_return [1, 20]
-        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 21), :starting_at => 5, :total => 10)
+        @progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :starting_at => 5, :total => 10)
 
         @progressbar.to_s('%t%w').should eql '*********************'
       end
@@ -39,14 +45,14 @@ describe ProgressBar::Base do
     context 'and the incomplete bar length is calculated' do
       it 'returns the proper string' do
         IO.stub_chain(:console, :winsize).and_return [1, 20]
-        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 21))
+        @progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21))
 
         @progressbar.to_s('%t%i').should eql '*********************'
       end
 
       it 'returns the proper string' do
         IO.stub_chain(:console, :winsize).and_return [1, 20]
-        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 21), :starting_at => 5, :total => 10)
+        @progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :starting_at => 5, :total => 10)
 
         @progressbar.to_s('%t%i').should eql '*********************'
       end
@@ -55,14 +61,14 @@ describe ProgressBar::Base do
     context 'and the full bar length is calculated (but lacks the space to output the entire bar)' do
       it 'returns the proper string' do
         IO.stub_chain(:console, :winsize).and_return [1, 20]
-        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 19), :starting_at => 5, :total => 10)
+        @progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 19), :starting_at => 5, :total => 10)
 
         @progressbar.to_s('%t%B').should eql '******************* '
       end
 
       it 'returns the proper string' do
         IO.stub_chain(:console, :winsize).and_return [1, 20]
-        @progressbar = ProgressBar::Base.new(:output => @output, :title => ('*' * 19), :starting_at => 5, :total => 10)
+        @progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 19), :starting_at => 5, :total => 10)
 
         @progressbar.to_s('%t%w%i').should eql '******************* '
       end
@@ -167,8 +173,8 @@ describe ProgressBar::Base do
           end
 
           it 'completes the bar' do
-            @output.rewind
-            @output.read.should match /Progress: \|#{'=' * 68}\|\n/
+            output.rewind
+            output.read.should match /Progress: \|#{'=' * 68}\|\n/
           end
 
           it 'shows the elapsed time instead of the estimated time since the bar is completed' do
@@ -189,7 +195,7 @@ describe ProgressBar::Base do
         @progress_mark  = "#{@color_code} #{@reset_code}"
         @progressbar    = ProgressBar::Base.new(:format        => "#{@color_code}Processing... %b%i#{@reset_code}#{@color_code} %p%%#{@reset_code}",
                                                 :progress_mark => @progress_mark,
-                                                :output        => @output,
+                                                :output        => output,
                                                 :length        => 24,
                                                 :starting_at   => 3,
                                                 :total         => 6,
@@ -198,8 +204,8 @@ describe ProgressBar::Base do
         @progressbar.increment
         @progressbar.increment
 
-        @output.rewind
-        @output.read.should include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
+        output.rewind
+        output.read.should include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
       end
 
       it 'properly calculates the length of the bar by removing the short version of the ANSI codes from the calculated length' do
@@ -208,7 +214,7 @@ describe ProgressBar::Base do
         @progress_mark  = "#{@color_code} #{@reset_code}"
         @progressbar    = ProgressBar::Base.new(:format        => "#{@color_code}Processing... %b%i#{@reset_code}#{@color_code} %p%%#{@reset_code}",
                                                 :progress_mark => @progress_mark,
-                                                :output        => @output,
+                                                :output        => output,
                                                 :length        => 24,
                                                 :starting_at   => 3,
                                                 :total         => 6,
@@ -217,40 +223,40 @@ describe ProgressBar::Base do
         @progressbar.increment
         @progressbar.increment
 
-        @output.rewind
-        @output.read.should include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
+        output.rewind
+        output.read.should include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
       end
     end
 
     context 'for a TTY enabled device' do
       it 'can log messages' do
-        @progressbar = ProgressBar::Base.new(:output => @output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
+        @progressbar = ProgressBar::Base.new(:output => output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
         @progressbar.increment
         @progressbar.log 'We All Float'
         @progressbar.increment
 
-        @output.rewind
-        @output.read.should include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
+        output.rewind
+        output.read.should include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
       end
     end
 
     context 'for a non-TTY enabled device' do
       it 'can log messages' do
-        @progressbar = ProgressBar::Base.new(:output => @non_tty_output, :length => 20, :starting_at => 4, :total => 6, :throttle_rate => 0.0)
+        @progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 4, :total => 6, :throttle_rate => 0.0)
         @progressbar.increment
         @progressbar.log 'We All Float'
         @progressbar.increment
         @progressbar.finish
 
-        @non_tty_output.rewind
-        @non_tty_output.read.should include "We All Float\nProgress: |========|\n"
+        non_tty_output.rewind
+        non_tty_output.read.should include "We All Float\nProgress: |========|\n"
       end
     end
   end
 
   context 'when a bar is about to be completed' do
     before do
-      @progressbar = ProgressBar::Base.new(:starting_at => 99, :total => 100, :output => @output, :length => 80)
+      @progressbar = ProgressBar::Base.new(:starting_at => 99, :total => 100, :output => output, :length => 80)
     end
 
     context 'and it is incremented' do
@@ -261,15 +267,15 @@ describe ProgressBar::Base do
       end
 
       it 'prints a new line' do
-        @output.rewind
-        @output.read.end_with?("\n").should be_true
+        output.rewind
+        output.read.end_with?("\n").should be_true
       end
     end
   end
 
   context 'when a bar has an unknown amount to completion' do
     before do
-      @progressbar = ProgressBar::Base.new(:total => nil, :output => @output, :length => 80, :unknown_progress_animation_steps => ['=--', '-=-', '--='])
+      @progressbar = ProgressBar::Base.new(:total => nil, :output => output, :length => 80, :unknown_progress_animation_steps => ['=--', '-=-', '--='])
     end
 
     it 'is represented correctly' do
@@ -294,7 +300,7 @@ describe ProgressBar::Base do
 
   context 'when a bar is started' do
     before do
-      @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :length => 80, :throttle_rate  => 0.0)
+      @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate  => 0.0)
     end
 
     context 'and it is incremented any number of times' do
@@ -304,8 +310,8 @@ describe ProgressBar::Base do
         it 'changes the mark used to represent progress and updates the output' do
           @progressbar.progress_mark = 'x'
 
-          @output.rewind
-          @output.read.should match /\rProgress: \|xxxxxx#{' ' * 62}\|\r\z/
+          output.rewind
+          output.read.should match /\rProgress: \|xxxxxx#{' ' * 62}\|\r\z/
         end
       end
 
@@ -313,8 +319,8 @@ describe ProgressBar::Base do
         it 'changes the mark used to represent the remaining part of the bar and updates the output' do
           @progressbar.remainder_mark = 'x'
 
-          @output.rewind
-          @output.read.should match /\rProgress: \|======#{'x' * 62}\|\r\z/
+          output.rewind
+          output.read.should match /\rProgress: \|======#{'x' * 62}\|\r\z/
         end
       end
 
@@ -322,8 +328,8 @@ describe ProgressBar::Base do
         it 'changes the title used to represent the items being progressed and updates the output' do
           @progressbar.title = 'Items'
 
-          @output.rewind
-          @output.read.should match /\rItems: \|=======#{' ' * 64}\|\r\z/
+          output.rewind
+          output.read.should match /\rItems: \|=======#{' ' * 64}\|\r\z/
         end
       end
 
@@ -331,8 +337,8 @@ describe ProgressBar::Base do
         before { @progressbar.reset }
 
         it 'resets the bar back to the starting value' do
-          @output.rewind
-          @output.read.should match /\rProgress: \|#{' ' * 68}\|\r\z/
+          output.rewind
+          output.read.should match /\rProgress: \|#{' ' * 68}\|\r\z/
         end
       end
 
@@ -340,8 +346,8 @@ describe ProgressBar::Base do
         before { @progressbar.stop }
 
         it 'forcibly halts the bar wherever it is and cancels it' do
-          @output.rewind
-          @output.read.should match /\rProgress: \|======#{' ' * 62}\|\n\z/
+          output.rewind
+          output.read.should match /\rProgress: \|======#{' ' * 62}\|\n\z/
         end
       end
     end
@@ -349,7 +355,7 @@ describe ProgressBar::Base do
 
   context 'when a bar is started from 10/100' do
     before do
-      @progressbar = ProgressBar::Base.new(:starting_at => 10, :total => 100, :output => @output, :length => 112)
+      @progressbar = ProgressBar::Base.new(:starting_at => 10, :total => 100, :output => output, :length => 112)
     end
 
     context 'and it is incremented any number of times' do
@@ -359,8 +365,8 @@ describe ProgressBar::Base do
         before { @progressbar.reset }
 
         it 'resets the bar back to the starting value' do
-          @output.rewind
-          @output.read.should match /\rProgress: \|==========#{' ' * 90}\|\r\z/
+          output.rewind
+          output.read.should match /\rProgress: \|==========#{' ' * 90}\|\r\z/
         end
       end
     end
@@ -370,8 +376,8 @@ describe ProgressBar::Base do
     it 'clears the current terminal line and/or bar text' do
       @progressbar.clear
 
-      @output.rewind
-      @output.read.should match /^#{@progressbar.send(:clear_string)}/
+      output.rewind
+      output.read.should match /^#{@progressbar.send(:clear_string)}/
     end
   end
 
@@ -379,34 +385,34 @@ describe ProgressBar::Base do
     it 'clears the current terminal line' do
       @progressbar.start
 
-      @output.rewind
-      @output.read.should match /^#{@progressbar.send(:clear_string)}/
+      output.rewind
+      output.read.should match /^#{@progressbar.send(:clear_string)}/
     end
 
     it 'prints the bar for the first time' do
       @progressbar.start
 
-      @output.rewind
-      @output.read.should match /Progress: \|                                                                    \|\r\z/
+      output.rewind
+      output.read.should match /Progress: \|                                                                    \|\r\z/
     end
 
     it 'prints correctly if passed a position to start at' do
       @progressbar.start(:at => 20)
 
-      @output.rewind
-      @output.read.should match /Progress: \|=============                                                       \|\r\z/
+      output.rewind
+      output.read.should match /Progress: \|=============                                                       \|\r\z/
     end
   end
 
   context 'when the bar has not been completed' do
-    before { @progressbar = ProgressBar::Base.new(:length => 112, :starting_at => 0, :total => 50, :output => @output, :throttle_rate => 0.0) }
+    before { @progressbar = ProgressBar::Base.new(:length => 112, :starting_at => 0, :total => 50, :output => output, :throttle_rate => 0.0) }
 
     describe '#increment' do
       before { @progressbar.increment }
 
       it 'displays the bar with the correct formatting' do
-        @output.rewind
-        @output.read.should match /Progress: \|==                                                                                                  \|\r\z/
+        output.rewind
+        output.read.should match /Progress: \|==                                                                                                  \|\r\z/
       end
     end
   end
@@ -462,7 +468,7 @@ describe ProgressBar::Base do
       end
 
       it 'displays the bar when passed the "%w" format flag' do
-        @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :starting_at => 0)
+        @progressbar = ProgressBar::Base.new(:output => output, :length => 100, :starting_at => 0)
 
         @progressbar.to_s('%w').should match /^\z/
         4.times { @progressbar.increment }
@@ -478,7 +484,7 @@ describe ProgressBar::Base do
       end
 
       it 'calculates the remaining negative space properly with an integrated percentage bar of 0 percent' do
-        @progressbar = ProgressBar::Base.new(:output => @output, :length => 100, :total => 200, :starting_at => 0)
+        @progressbar = ProgressBar::Base.new(:output => output, :length => 100, :total => 200, :starting_at => 0)
 
         @progressbar.to_s('%w%i').should match /^\s{100}\z/
         9.times { @progressbar.increment }
@@ -488,7 +494,7 @@ describe ProgressBar::Base do
       end
 
       it 'displays the current capacity when passed the "%c" format flag' do
-        @progressbar = ProgressBar::Base.new(:output => @output, :starting_at => 0)
+        @progressbar = ProgressBar::Base.new(:output => output, :starting_at => 0)
 
         @progressbar.to_s('%c').should match /^0\z/
         @progressbar.increment
@@ -570,7 +576,7 @@ describe ProgressBar::Base do
       context 'when called after #start' do
         before do
           Timecop.travel(-3723) do
-            @progressbar = ProgressBar::Base.new(:starting_at => 0, :output => @output, :smoothing => 0.0)
+            @progressbar = ProgressBar::Base.new(:starting_at => 0, :output => output, :smoothing => 0.0)
             @progressbar.start
             @progressbar.progress = 50
           end
@@ -592,7 +598,7 @@ describe ProgressBar::Base do
       context 'when it could take 100 hours or longer to finish' do
         before do
           Timecop.travel(-120000) do
-            @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => @output, :smoothing => 0.0)
+            @progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :smoothing => 0.0)
             @progressbar.start
             @progressbar.progress = 25
           end
