@@ -324,6 +324,36 @@ You can have an array of as many elements as you'd like and they will be used in
 
 Whatever element is chosen is repeated along the entire 'incomplete' portion of the bar.
 
+### Non-TTY Output
+
+Typically, when the progress bar is updated, the entire previous bar is 'overwritten' with the updated information.  Unfortunately when the bar is being output on a non-TTY enabled output stream (such as a file or pipe), that standard behavior of outputting the progress bar will not work.  This is mainly due to the fact that we can't easily go back and replace the content that the bar had previously written.
+
+To try to solve this, ruby-progressbar, when it determines that it is being used on a non-TTY device, will override any format which was set in the initializer to something which more closely resembles this:
+
+    Progress: |=============
+
+Notice that there are no dynamically updating segments like counters or ETA.  Dynamic segments are not compatible with non-TTY devices because, by their very nature, they must be updated on each refresh of the bar and as stated previously, that is not possible in non-TTY mode.
+
+Also notice that there is no end cap on the righthand side of the bar.  Again, we cannot output something which is past the point at which we next need to output text.  If we added an end cap, that would mean that any additional progress text would be placed _after_ the end cap.  Definitely not what we want.
+
+So how does it work?  First we output the title and the first end cap:
+
+    Progress: |
+
+Next, every time we increment the bar, we check whether the progress bar has grown.  If it has, we output _only the additional portion_ of the bar to the output.
+
+For example, given the previous title output, if we increment the bar once, we would get:
+
+    Progress: |=
+
+But in this case, only one `=` was output.  Not the entire `Progress: |=`.
+
+Once the bar gets to be completely finished though:
+
+    Progress: |====================================================================|
+
+The end cap can now be added (since there is no more progress to be displayed).
+
 Road Map
 --------------------------------
 We're planning on adding a bunch of really nice features to this gem over the next few weeks.  We want to keep the simple usage simple but allow for powerful features if they're needed.  Our `1.0` release is the first step in that direction.
