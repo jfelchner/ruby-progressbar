@@ -252,7 +252,7 @@ describe ProgressBar::Base do
   end
 
   context 'when a bar is about to be completed' do
-    let(:progressbar) { ProgressBar::Base.new(:starting_at => 99, :total => 100, :output => output, :length => 80) }
+    let(:progressbar) { ProgressBar::Base.new(:starting_at => 5, :total => 6, :output => output, :length => 20) }
 
     context 'and it is incremented' do
       before { progressbar.increment }
@@ -264,6 +264,13 @@ describe ProgressBar::Base do
       it 'prints a new line' do
         output.rewind
         output.read.end_with?("\n").should be_true
+      end
+
+      it 'does not continue to print bars if finish is subsequently called' do
+        progressbar.finish
+
+        output.rewind
+        output.read.should end_with "                    \rProgress: |======  |\rProgress: |========|\n"
       end
     end
   end
