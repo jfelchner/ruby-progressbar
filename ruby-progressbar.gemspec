@@ -27,9 +27,9 @@ THEDOCTOR
   s.extra_rdoc_files      = %w[README.md LICENSE]
 
   #= Manifest =#
-  s.files                 = `git ls-files`.split($/)
-  s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  s.test_files            = s.files.grep(%r{^(test|spec|features)/})
+  s.files                 = Dir.glob("lib/**/*")
+  s.test_files            = Dir.glob("{test,spec,features}/**/*")
+  s.executables           = Dir.glob("bin/*").map{ |f| File.basename(f) }
   s.require_paths         = ["lib"]
 
   s.add_development_dependency('rspec',         '~> 2.13')
