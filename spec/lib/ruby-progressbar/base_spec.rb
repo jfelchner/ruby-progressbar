@@ -356,6 +356,16 @@ describe ProgressBar::Base do
           output.read.should_not start_with "Progress: |======#{' ' * 62}|"
         end
       end
+
+      describe '#resume' do
+        it 'does not output the bar multiple times' do
+          output.rewind
+          progressbar.resume
+          output.rewind
+
+          output.read.should_not start_with "Progress: |======#{' ' * 62}|"
+        end
+      end
     end
   end
 

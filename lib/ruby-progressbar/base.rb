@@ -65,7 +65,7 @@ class ProgressBar
     end
 
     def resume
-      with_update { with_timers(:resume) }
+      with_update { with_timers(:resume) } if stopped?
     end
 
     def reset
