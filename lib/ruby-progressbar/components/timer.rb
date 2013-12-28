@@ -51,8 +51,7 @@ class ProgressBar
       def elapsed_time
         return '--:--:--' unless started?
 
-        hours, seconds = elapsed_whole_seconds.divmod(3600)
-        minutes, seconds = seconds.divmod(60)
+        hours, minutes, seconds = *divide_seconds(elapsed_whole_seconds)
 
         sprintf TIME_FORMAT, hours, minutes, seconds
       end
