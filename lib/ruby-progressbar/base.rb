@@ -49,7 +49,7 @@ class ProgressBar
     end
 
     def total=(new_total)
-      with_update { with_progressables(:total=, new_total) }
+      update_progress(:total=, new_total)
     end
 
     ###
