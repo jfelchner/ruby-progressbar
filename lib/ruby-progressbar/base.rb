@@ -37,15 +37,15 @@ class ProgressBar
     # Updating The Bar's Progress
     #
     def decrement
-      with_update { with_progressables(:decrement) }
+      update_progress(:decrement)
     end
 
     def increment
-      with_update { with_progressables(:increment) }
+      update_progress(:increment)
     end
 
     def progress=(new_progress)
-      with_update { with_progressables(:progress=, new_progress) }
+      update_progress(:progress=, new_progress)
     end
 
     def total=(new_total)
@@ -158,6 +158,10 @@ class ProgressBar
     def with_timers(*args)
       @estimated_time.send(*args)
       @elapsed_time.send(*args)
+    end
+
+    def update_progress(*args)
+        with_update { with_progressables(*args) }
     end
 
     def with_update
