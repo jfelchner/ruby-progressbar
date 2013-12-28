@@ -1,5 +1,3 @@
-require 'ruby-progressbar/errors/cannot_update_stopped_bar_error'
-
 class ProgressBar
   class Base
     include ProgressBar::LengthCalculator
