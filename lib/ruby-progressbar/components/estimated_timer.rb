@@ -34,7 +34,7 @@ class ProgressBar
       def estimated_time
         return '??:??:??' if progress_made.zero? || total.nil?
 
-        hours, minutes, seconds = divide_seconds(estimated_seconds_remaining)
+        hours, minutes, seconds = *divide_seconds(estimated_seconds_remaining)
 
         if hours > 99 && @out_of_bounds_time_format
           out_of_bounds_time
