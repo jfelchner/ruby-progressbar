@@ -29,11 +29,25 @@ class ProgressBar
         !!self.starting_position
       end
 
+      def finished?
+        self.progress == self.total
+      end
+
       def increment
+        if progress == total
+          STDOUT.puts "WARNING: Your bar is currently at #{progress} out of #{total} and cannot be incremented. In v2.0.0 this will become a RuntimeError."
+          STDOUT.puts caller.join("\n")
+        end
+
         self.progress += 1 unless progress == total
       end
 
       def decrement
+        if progress == 0
+          STDOUT.puts "WARNING: Your bar is currently at #{progress} out of #{total} and cannot be decremented. In v2.0.0 this will become a RuntimeError."
+          STDOUT.puts caller.join("\n")
+        end
+
         self.progress -= 1 unless progress == 0
       end
 
