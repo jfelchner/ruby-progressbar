@@ -163,15 +163,9 @@ class ProgressBar
     end
 
     def update_progress(*args)
-      if stopped? && started?
-        STDOUT.puts "WARNING: A previously started progress bar cannot have its progress changed while the bar is stopped, paused or finished. This will become an exception in v2.0.0. Update your code accordingly."
-        STDOUT.puts "WARNING: Your bar is currently at #{self.progress} out of a total of #{self.total}"
-        STDOUT.puts caller.join("\n")
-      else
-        with_update do
-          with_progressables(*args)
-          with_timers(:stop) if finished?
-        end
+      with_update do
+        with_progressables(*args)
+        with_timers(:stop) if finished?
       end
     end
 
