@@ -88,6 +88,10 @@ class ProgressBar
       @bar.progress == @bar.total
     end
 
+    def started?
+      @estimated_time.started? && @elapsed_time.started? && @bar.started?
+    end
+
     ###
     # UI Updates
     #
