@@ -85,7 +85,7 @@ class ProgressBar
     alias :paused? :stopped?
 
     def finished?
-      @bar.progress == @bar.total
+      @bar.finished?
     end
 
     def started?
