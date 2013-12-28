@@ -29,7 +29,7 @@ class ProgressBar
 
       with_update do
         with_progressables(:start, options)
-        @elapsed_time.start
+        with_timers(:start)
       end
     end
 
