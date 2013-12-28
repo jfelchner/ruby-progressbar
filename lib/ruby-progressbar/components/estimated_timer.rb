@@ -32,7 +32,7 @@ class ProgressBar
 
     private
       def estimated_time
-        return '??:??:??' if progress_made.zero?
+        return '??:??:??' if progress_made.zero? || total.nil?
 
         hours, minutes, seconds = divide_seconds(estimated_seconds_remaining)
 

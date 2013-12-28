@@ -339,7 +339,10 @@ describe ProgressBar::Base do
     end
 
     it 'displays the proper ETA' do
-      progressbar.to_s('%i%e').should eql '=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-- ETA: ??:??:??'
+      progressbar.increment
+
+      progressbar.to_s('%i%e').should eql '-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=- ETA: ??:??:??'
+      progressbar.to_s('%i%E').should eql '-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=- ETA: ??:??:??'
     end
   end
 
