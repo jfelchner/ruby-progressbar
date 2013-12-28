@@ -165,7 +165,10 @@ class ProgressBar
     end
 
     def update_progress(*args)
-        with_update { with_progressables(*args) }
+      with_update do
+        with_progressables(*args)
+        with_timers(:stop) if finished?
+      end
     end
 
     def with_update
@@ -174,8 +177,6 @@ class ProgressBar
     end
 
     def update(options = {})
-      with_timers(:stop) if finished?
-
       if length_changed?
         clear
         reset_length
