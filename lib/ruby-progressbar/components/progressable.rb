@@ -36,19 +36,13 @@ class ProgressBar
       end
 
       def increment
-        if progress == total
-          STDOUT.puts "WARNING: Your bar is currently at #{progress} out of #{total} and cannot be incremented. In v2.0.0 this will become a ProgressBar::InvalidProgressError."
-          STDOUT.puts caller.join("\n")
-        end
+        STDOUT.puts "WARNING: Your progress bar is currently at #{progress} out of #{total} and cannot be incremented. In v2.0.0 this will become a ProgressBar::InvalidProgressError." if progress == total
 
         self.progress += 1 unless progress == total
       end
 
       def decrement
-        if progress == 0
-          STDOUT.puts "WARNING: Your bar is currently at #{progress} out of #{total} and cannot be decremented. In v2.0.0 this will become a ProgressBar::InvalidProgressError."
-          STDOUT.puts caller.join("\n")
-        end
+        STDOUT.puts "WARNING: Your progress bar is currently at #{progress} out of #{total} and cannot be decremented. In v2.0.0 this will become a ProgressBar::InvalidProgressError." if progress == 0
 
         self.progress -= 1 unless progress == 0
       end
