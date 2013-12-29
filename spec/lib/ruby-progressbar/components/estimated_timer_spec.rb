@@ -4,7 +4,7 @@ describe ProgressBar::Components::EstimatedTimer do
   describe '#progress=' do
     it 'raises an error when passed a number larger than the total' do
       @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100)
-      lambda{ @estimated_time.progress = 101 }.should raise_error "You can't set the item's current value to be greater than the total."
+      lambda{ @estimated_time.progress = 101 }.should raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
     end
   end
 

@@ -1,3 +1,5 @@
+require 'ruby-progressbar/errors/invalid_progress_error'
+
 class ProgressBar
   module Components
     module Progressable
@@ -35,7 +37,7 @@ class ProgressBar
 
       def increment
         if progress == total
-          STDOUT.puts "WARNING: Your bar is currently at #{progress} out of #{total} and cannot be incremented. In v2.0.0 this will become a RuntimeError."
+          STDOUT.puts "WARNING: Your bar is currently at #{progress} out of #{total} and cannot be incremented. In v2.0.0 this will become a ProgressBar::InvalidProgressError."
           STDOUT.puts caller.join("\n")
         end
 
@@ -44,7 +46,7 @@ class ProgressBar
 
       def decrement
         if progress == 0
-          STDOUT.puts "WARNING: Your bar is currently at #{progress} out of #{total} and cannot be decremented. In v2.0.0 this will become a RuntimeError."
+          STDOUT.puts "WARNING: Your bar is currently at #{progress} out of #{total} and cannot be decremented. In v2.0.0 this will become a ProgressBar::InvalidProgressError."
           STDOUT.puts caller.join("\n")
         end
 
@@ -90,11 +92,11 @@ class ProgressBar
 
     private
       def validate_total(new_total)
-        (progress.nil? || new_total.nil? || new_total >= progress) || raise("You can't set the item's total value to be less than the current progress.")
+        (progress.nil? || new_total.nil? || new_total >= progress) || raise(ProgressBar::InvalidProgressError, "You can't set the item's total value to be less than the current progress.")
       end
 
       def validate_progress(new_progress)
-        (total.nil? || new_progress <= total) || raise("You can't set the item's current value to be greater than the total.")
+        (total.nil? || new_progress <= total) || raise(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
       end
 
       def progress_made
