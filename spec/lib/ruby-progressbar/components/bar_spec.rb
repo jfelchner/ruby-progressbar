@@ -203,7 +203,7 @@ describe ProgressBar::Components::Bar do
     describe '#new' do
       it 'raises an error' do
         @progressbar = ProgressBar::Components::Bar.new(:total => 10)
-        lambda { @progressbar.start :at => 11 }.should raise_error "You can't set the item's current value to be greater than the total."
+        lambda { @progressbar.start :at => 11 }.should raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
       end
     end
   end
