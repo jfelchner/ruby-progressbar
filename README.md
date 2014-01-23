@@ -253,6 +253,17 @@ Becomes:
 
 Notice that the absolute length doesn't get any longer, the bar just shrinks to fill the remaining space.
 
+Pacman-style progressbar:
+
+```ruby
+ProgressBar.create(format: '%a %bᗧ%i %p%% %t', progress_mark: ' ', remainder_mark: '･')
+```
+
+Becomes:
+
+    Time: --:--:-- ᗧ･･･････････････････････････････････････････････････ 10% Progress
+
+
 ### Overriding the Length
 
 By default, the progressbar will try to be as smart as possible about how wide it can be.  Under most Unix systems, it should be as wide as the terminal will allow while still fitting on one line.  If you wish to override this behavior, you can pass in the `:length` option when creating the bar like so:
