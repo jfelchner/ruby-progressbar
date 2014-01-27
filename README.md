@@ -253,16 +253,17 @@ Becomes:
 
 Notice that the absolute length doesn't get any longer, the bar just shrinks to fill the remaining space.
 
-Pacman-style progressbar:
 
 ```ruby
-ProgressBar.create(format: '%a %bᗧ%i %p%% %t', progress_mark: ' ', remainder_mark: '･')
+ProgressBar.create( :format         => '%a %bᗧ%i %p%% %t',
+                    :progress_mark  => ' ',
+                    :remainder_mark => '･',
+                    :starting_at    => 10)
 ```
 
-Becomes:
+Becomes **PAC-MAN**!
 
-    Time: --:--:-- ᗧ･･･････････････････････････････････････････････････ 10% Progress
-
+    Time: --:--:--       ᗧ･････････････････････････････････････････ 10% Progress
 
 ### Overriding the Length
 
