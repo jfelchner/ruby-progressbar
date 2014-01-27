@@ -74,5 +74,18 @@ describe ProgressBar::Components::ElapsedTimer do
         end
       end
     end
+
+    context "when the timer has yet to be started" do
+      it 'is false' do
+        @timer.should_not be_stopped
+      end
+    end
+
+    context "when the timer is stopped without having been started" do
+      before { @timer.stop }
+      it 'is false' do
+        @timer.should_not be_stopped
+      end
+    end
   end
 end
