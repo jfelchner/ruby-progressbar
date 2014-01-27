@@ -684,10 +684,11 @@ describe ProgressBar::Base do
   end
 
   context 'when the bar is started after having total set to 0' do
-    let(:progressbar) { ProgressBar::Base.new(:output=>output, :autostart=>false) }
+    let(:progressbar) { ProgressBar::Base.new(:output => output, :autostart => false) }
 
     it 'does not throw an error' do
       progressbar.total = 0
+
       expect { progressbar.start }.not_to raise_error
     end
   end
