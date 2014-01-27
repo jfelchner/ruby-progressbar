@@ -253,6 +253,7 @@ Becomes:
 
 Notice that the absolute length doesn't get any longer, the bar just shrinks to fill the remaining space.
 
+Want to play a game of PAC-MAN while you wait for your progress?
 
 ```ruby
 ProgressBar.create( :format         => '%a %bᗧ%i %p%% %t',
