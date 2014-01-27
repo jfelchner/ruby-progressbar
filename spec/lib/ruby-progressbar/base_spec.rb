@@ -692,4 +692,16 @@ describe ProgressBar::Base do
       expect { progressbar.start }.not_to raise_error
     end
   end
+
+  context 'when the bar has no items to process' do
+    context 'and it has not been started' do
+      let(:progressbar) { ProgressBar::Base.new(:started_at => 0, :total => 0, :autostart => false, :smoothing => 0.0, :format => ' %c/%C |%w>%i| %e ', :output => output) }
+
+      it 'does not throw an error if told to stop' do
+        progressbar.stop
+
+        expect { progressbar.start }.not_to raise_error
+      end
+    end
+  end
 end
