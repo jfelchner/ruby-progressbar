@@ -12,6 +12,7 @@ class ProgressBar
 
       def stop
         return unless started?
+
         @stopped_at = now
       end
 
