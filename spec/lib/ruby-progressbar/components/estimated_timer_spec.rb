@@ -155,9 +155,37 @@ describe ProgressBar::Components::EstimatedTimer do
           end
 
           it 'displays the correct time remaining' do
-            @estimated_time.to_s.should eql ' ETA: 105:33:19'
+            @estimated_time.to_s.should eql ' ETA: 105:33:20'
           end
         end
+      end
+    end
+
+    it 'displays a good estimate for regular increments' do
+      begin
+        Timecop.freeze(t = Time.now)
+        n = 10
+        estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => n)
+        estimated_time.start
+        results = (1..n).map do |i|
+          Timecop.freeze(t + 0.5 * i)
+          estimated_time.increment
+          estimated_time.to_s
+        end
+        results.should == [
+          ' ETA: 00:00:05',
+          ' ETA: 00:00:04',
+          ' ETA: 00:00:04',
+          ' ETA: 00:00:03',
+          ' ETA: 00:00:03',
+          ' ETA: 00:00:02',
+          ' ETA: 00:00:02',
+          ' ETA: 00:00:01',
+          ' ETA: 00:00:01',
+          ' ETA: 00:00:00',
+        ]
+      ensure
+        Timecop.return
       end
     end
   end
