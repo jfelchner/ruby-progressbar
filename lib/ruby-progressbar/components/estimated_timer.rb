@@ -32,7 +32,7 @@ class ProgressBar
 
     private
       def estimated_time
-        return '??:??:??' if progress_made.zero? || total.nil?
+        return '??:??:??' if running_average.zero? || total.nil?
 
         hours, minutes, seconds = *divide_seconds(estimated_seconds_remaining)
 
@@ -43,14 +43,8 @@ class ProgressBar
         end
       end
 
-      def average_seconds_per_each
-        return 0 if self.running_average.zero?
-
-        elapsed_whole_seconds.to_f / self.running_average
-      end
-
       def estimated_seconds_remaining
-        ((average_seconds_per_each * self.total) - elapsed_whole_seconds.to_f).floor
+        (elapsed_seconds * (self.total / self.running_average  - 1)).round
       end
 
       def out_of_bounds_time

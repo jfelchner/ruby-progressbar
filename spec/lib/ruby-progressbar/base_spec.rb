@@ -654,7 +654,7 @@ describe ProgressBar::Base do
         end
 
         it 'displays the estimated time remaining when using the "%e" flag' do
-          progressbar.to_s('%e').should match /^ ETA: 01:02:02\z/
+          progressbar.to_s('%e').should match /^ ETA: 01:02:03\z/
         end
       end
 
