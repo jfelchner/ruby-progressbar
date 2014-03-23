@@ -5,8 +5,6 @@ The **ultimate** text progress bar library for Ruby!  It'll **SMASH YOU OVER THE
 
 Don't miss out on what all the kids are talking about!  If you want everyone to know that your gem or app can survive _in the cage_ then YOU WANT **RUBY-PROGRESSBAR**!
 
-![The Cage](http://www.thekompanee.com/public_files/the-cage.png)
-
 Supported Rubies
 --------------------------------
 * MRI Ruby 1.8.7
@@ -18,7 +16,7 @@ Supported Rubies
 
 It's Better Than The Other 186,312 Progress Bar Libraries Because...
 --------------------------------
-* Full test suite [![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.png?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar)
+* Full test suite [![Build Status](https://travis-ci.org/jfelchner/ruby-progressbar.svg?branch=master)](https://travis-ci.org/jfelchner/ruby-progressbar)
 * _**ZERO**_ dependencies
 * Used by tons of other open source projects (which means we find out about bugs quickly)
 * It's pretty [freakin' sweet](https://www.youtube.com/watch?v=On3IoVhf_GM)
@@ -316,7 +314,9 @@ When mocking time, the concept of when `now` is becomes distorted.  You can imag
 
 When reporting progress of large amounts of very fast operations, whose duration is comparable to the output time of a progress bar, it becomes desirable to throttle output to the console and only perform it once in a set period. ProgressBar supports throttling if given `:throttle_rate` option:
 
-    ProgressBar.create(:throttle_rate => 0.1)
+```ruby
+ProgressBar.create(:throttle_rate => 0.1)
+```
 
 The above progress bar will output at most 10 times a second.
 
