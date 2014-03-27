@@ -8,3 +8,6 @@ rvm:
   - jruby-18mode # JRuby in 1.8 mode
   - jruby-19mode # JRuby in 1.9 mode
 script: bundle exec rspec spec
+env:
+  global:
+    secure: JyF1/jorG/dGjXhgVV5THQI9BSCvuuktsfkcPbRCuDna2lUXGfQGUrCYRyOUwPzvJTkeI3kjQ7HUEMFHXl4f5Fz2zMrUhjkyPNlNPDGJpe5KZngaHWAgemyEcn+z0deU1eanQ1WdRdRj020hZs5BHDOeyxKRELI7FI9it51HZ3g=
