@@ -32,7 +32,8 @@ THEDOCTOR
   s.executables           = Dir.glob("bin/*").map{ |f| File.basename(f) }
   s.require_paths         = ["lib"]
 
-  s.add_development_dependency('rspec',         '~> 2.13')
-  s.add_development_dependency('fuubar',        '~> 1.3')
+  s.add_development_dependency('rspec',         '~> 3.0.0beta')
+  s.add_development_dependency('rspectacular',  '~> 0.19')
+  s.add_development_dependency('fuubar',        '~> 2.0beta')
   s.add_development_dependency('timecop',       '~> 0.6')
 end
