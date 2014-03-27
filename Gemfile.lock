@@ -28,7 +28,7 @@ GEM
     rspec-mocks (3.0.0.beta2)
       rspec-support (= 3.0.0.beta2)
     rspec-support (3.0.0.beta2)
-    rspectacular (0.21.2)
+    rspectacular (0.21.3)
       fuubar (~> 2.0.beta)
       rspec (~> 3.0.beta)
     ruby-prof (0.13.1)
@@ -48,7 +48,7 @@ DEPENDENCIES
   json (~> 1.7.7)
   rake
   rspec (~> 3.0.0beta)
-  rspectacular (~> 0.21.2)
+  rspectacular (~> 0.21.3)
   ruby-prof (~> 0.13.0)
   ruby-progressbar!
   timecop (~> 0.6.0)
