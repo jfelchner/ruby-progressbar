@@ -33,7 +33,7 @@ THEDOCTOR
   s.require_paths         = ["lib"]
 
   s.add_development_dependency('rspec',                     '~> 3.0.0beta')
-  s.add_development_dependency('rspectacular',              '~> 0.20')
+  s.add_development_dependency('rspectacular',              '~> 0.21')
   s.add_development_dependency('fuubar',                    '~> 2.0beta')
   s.add_development_dependency('timecop',                   '~> 0.6')
   s.add_development_dependency('codeclimate-test-reporter', '~> 0.3.0')
