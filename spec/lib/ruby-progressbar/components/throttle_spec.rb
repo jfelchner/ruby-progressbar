@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'timecop'
+require 'rspectacular'
 
 describe ProgressBar::Components::Throttle do
   context 'given a numeric period' do
@@ -15,12 +14,12 @@ describe ProgressBar::Components::Throttle do
 
         @throttle.choke { yielded = true }
 
-        yielded.should be_true
+        expect(yielded).to eql true
       end
 
-      context 'after initial yield' do
+      context 'after initial yield', :time_mock do
         before do
-          Timecop.freeze(0) { @throttle.choke { } }
+          @throttle.choke { }
         end
 
         it "doesn't yield if period hasn't passed yet" do
@@ -29,7 +28,7 @@ describe ProgressBar::Components::Throttle do
           (1..9).each do |t|
             Timecop.freeze(t) { @throttle.choke { yielded = true } }
 
-            yielded.should be_false
+            expect(yielded).to eql false
           end
         end
 
@@ -39,7 +38,7 @@ describe ProgressBar::Components::Throttle do
           (0..25).each do |t|
             Timecop.freeze(t) { @throttle.choke(true) { yielded += 1 } }
 
-            yielded.should == t
+            expect(yielded).to eql t
           end
         end
 
@@ -48,7 +47,7 @@ describe ProgressBar::Components::Throttle do
 
           Timecop.freeze(15) { @throttle.choke { yielded = true } }
 
-          yielded.should be_true
+          expect(yielded).to eql true
         end
       end
 
@@ -64,7 +63,7 @@ describe ProgressBar::Components::Throttle do
           (16..24).each do |t|
             Timecop.freeze(t) { @throttle.choke { yielded = true } }
 
-            yielded.should be_false
+            expect(yielded).to eql false
           end
         end
 
@@ -73,7 +72,7 @@ describe ProgressBar::Components::Throttle do
 
           Timecop.freeze(25) { @throttle.choke { yielded = true } }
 
-          yielded.should be_true
+          expect(yielded).to eql true
         end
       end
     end
@@ -93,7 +92,7 @@ describe ProgressBar::Components::Throttle do
         (0..25).each do |t|
           Timecop.freeze(t) { @throttle.choke { yielded += 1 } }
 
-          yielded.should == t
+          expect(yielded).to eql t
         end
       end
     end

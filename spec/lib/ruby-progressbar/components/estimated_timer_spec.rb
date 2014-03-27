@@ -1,10 +1,11 @@
-require 'spec_helper'
+require 'rspectacular'
+require 'support/time'
 
 describe ProgressBar::Components::EstimatedTimer do
   describe '#progress=' do
     it 'raises an error when passed a number larger than the total' do
       @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100)
-      lambda{ @estimated_time.progress = 101 }.should raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
+      expect { @estimated_time.progress = 101 }.to raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
     end
   end
 
@@ -16,13 +17,13 @@ describe ProgressBar::Components::EstimatedTimer do
       end
 
       it 'displays an unknown time remaining' do
-        @estimated_time.to_s.should eql ' ETA: ??:??:??'
+        expect(@estimated_time.to_s).to eql ' ETA: ??:??:??'
       end
 
       context 'and it is incremented' do
         it 'should not display unknown time remaining' do
           @estimated_time.increment
-          @estimated_time.to_s.should_not eql ' ETA: ??:??:??'
+          expect(@estimated_time.to_s).not_to eql ' ETA: ??:??:??'
         end
       end
     end
@@ -45,7 +46,7 @@ describe ProgressBar::Components::EstimatedTimer do
             before { 20.times { @estimated_time.decrement } }
 
             it 'displays the correct time remaining' do
-              @estimated_time.to_s.should eql ' ETA: 08:38:28'
+              expect(@estimated_time.to_s).to eql ' ETA: 08:38:28'
             end
           end
 
@@ -53,12 +54,12 @@ describe ProgressBar::Components::EstimatedTimer do
             before { @estimated_time.reset }
 
             it 'displays unknown time remaining' do
-              @estimated_time.to_s.should eql ' ETA: ??:??:??'
+              expect(@estimated_time.to_s).to eql ' ETA: ??:??:??'
             end
           end
 
           it 'displays the correct time remaining' do
-            @estimated_time.to_s.should eql ' ETA: 03:42:12'
+            expect(@estimated_time.to_s).to eql ' ETA: 03:42:12'
           end
         end
 
@@ -76,7 +77,7 @@ describe ProgressBar::Components::EstimatedTimer do
             before { @estimated_time.out_of_bounds_time_format = :friendly }
 
             it 'displays "> 4 Days" remaining' do
-              @estimated_time.to_s.should eql ' ETA: > 4 Days'
+              expect(@estimated_time.to_s).to eql ' ETA: > 4 Days'
             end
           end
 
@@ -84,12 +85,12 @@ describe ProgressBar::Components::EstimatedTimer do
             before { @estimated_time.out_of_bounds_time_format = :unknown }
 
             it 'displays "??:??:??" remaining' do
-              @estimated_time.to_s.should eql ' ETA: ??:??:??'
+              expect(@estimated_time.to_s).to eql ' ETA: ??:??:??'
             end
           end
 
           it 'displays the correct time remaining' do
-            @estimated_time.to_s.should eql ' ETA: 100:00:00'
+            expect(@estimated_time.to_s).to eql ' ETA: 100:00:00'
           end
         end
       end
@@ -111,7 +112,7 @@ describe ProgressBar::Components::EstimatedTimer do
             before { 20.times { @estimated_time.decrement } }
 
             it 'displays the correct time remaining' do
-              @estimated_time.to_s.should eql ' ETA: 08:14:34'
+              expect(@estimated_time.to_s).to eql ' ETA: 08:14:34'
             end
           end
 
@@ -119,12 +120,12 @@ describe ProgressBar::Components::EstimatedTimer do
             before { @estimated_time.reset }
 
             it 'displays unknown time remaining' do
-              @estimated_time.to_s.should eql ' ETA: ??:??:??'
+              expect(@estimated_time.to_s).to eql ' ETA: ??:??:??'
             end
           end
 
           it 'displays the correct time remaining' do
-            @estimated_time.to_s.should eql ' ETA: 03:51:16'
+            expect(@estimated_time.to_s).to eql ' ETA: 03:51:16'
           end
         end
 
@@ -142,7 +143,7 @@ describe ProgressBar::Components::EstimatedTimer do
             before { @estimated_time.out_of_bounds_time_format = :friendly }
 
             it 'displays "> 4 Days" remaining' do
-              @estimated_time.to_s.should eql ' ETA: > 4 Days'
+              expect(@estimated_time.to_s).to eql ' ETA: > 4 Days'
             end
           end
 
@@ -150,12 +151,12 @@ describe ProgressBar::Components::EstimatedTimer do
             before { @estimated_time.out_of_bounds_time_format = :unknown }
 
             it 'displays "??:??:??" remaining' do
-              @estimated_time.to_s.should eql ' ETA: ??:??:??'
+              expect(@estimated_time.to_s).to eql ' ETA: ??:??:??'
             end
           end
 
           it 'displays the correct time remaining' do
-            @estimated_time.to_s.should eql ' ETA: 105:33:20'
+            expect(@estimated_time.to_s).to eql ' ETA: 105:33:20'
           end
         end
       end
@@ -172,7 +173,8 @@ describe ProgressBar::Components::EstimatedTimer do
           estimated_time.increment
           estimated_time.to_s
         end
-        results.should == [
+
+        expect(results).to eql([
           ' ETA: 00:00:05',
           ' ETA: 00:00:04',
           ' ETA: 00:00:04',
@@ -183,7 +185,7 @@ describe ProgressBar::Components::EstimatedTimer do
           ' ETA: 00:00:01',
           ' ETA: 00:00:01',
           ' ETA: 00:00:00',
-        ]
+        ])
       ensure
         Timecop.return
       end
@@ -194,7 +196,7 @@ describe ProgressBar::Components::EstimatedTimer do
     context 'when set to an invalid format' do
       it 'raises an exception' do
         @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100)
-        lambda{ @estimated_time.out_of_bounds_time_format = :foo }.should raise_error('Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]')
+        expect { @estimated_time.out_of_bounds_time_format = :foo }.to raise_error('Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]')
       end
     end
   end

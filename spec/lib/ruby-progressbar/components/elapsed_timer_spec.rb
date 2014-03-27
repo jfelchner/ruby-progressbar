@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rspectacular'
 
 describe ProgressBar::Components::ElapsedTimer do
   before { @timer = ProgressBar::Components::ElapsedTimer.new }
@@ -6,14 +6,14 @@ describe ProgressBar::Components::ElapsedTimer do
   describe '#to_s' do
     context 'when the timer has not been started' do
       it 'displays "Time: --:--:--"' do
-        @timer.to_s.should eql 'Time: --:--:--'
+        expect(@timer.to_s).to eql 'Time: --:--:--'
       end
     end
 
     context 'when it has just been started' do
       it 'displays "Time: 00:00:00"' do
         @timer.start
-        @timer.to_s.should eql 'Time: 00:00:00'
+        expect(@timer.to_s).to eql 'Time: 00:00:00'
       end
     end
 
@@ -35,12 +35,12 @@ describe ProgressBar::Components::ElapsedTimer do
           before { @timer.reset }
 
           it 'displays "Time: --:--:--"' do
-            @timer.to_s.should eql 'Time: --:--:--'
+            expect(@timer.to_s).to eql 'Time: --:--:--'
           end
         end
 
         it 'displays "Time: 04:27:41"' do
-          @timer.to_s.should eql 'Time: 04:27:41'
+          expect(@timer.to_s).to eql 'Time: 04:27:41'
         end
       end
 
@@ -48,12 +48,12 @@ describe ProgressBar::Components::ElapsedTimer do
         before { @timer.reset }
 
         it 'displays "Time: --:--:--"' do
-          @timer.to_s.should eql 'Time: --:--:--'
+          expect(@timer.to_s).to eql 'Time: --:--:--'
         end
       end
 
       it 'displays "Time: 04:28:13"' do
-        @timer.to_s.should eql 'Time: 04:28:13'
+        expect(@timer.to_s).to eql 'Time: 04:28:13'
       end
     end
   end
@@ -69,7 +69,7 @@ describe ProgressBar::Components::ElapsedTimer do
           before { @timer.start }
 
           it 'is false' do
-            @timer.should_not be_stopped
+            expect(@timer).not_to be_stopped
           end
         end
       end
@@ -77,14 +77,14 @@ describe ProgressBar::Components::ElapsedTimer do
 
     context "when the timer has yet to be started" do
       it 'is false' do
-        @timer.should_not be_stopped
+        expect(@timer).not_to be_stopped
       end
     end
 
     context "when the timer is stopped without having been started" do
       before { @timer.stop }
       it 'is false' do
-        @timer.should_not be_stopped
+        expect(@timer).not_to be_stopped
       end
     end
   end

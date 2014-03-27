@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rspectacular'
 
 describe ProgressBar::Components::Bar do
   context 'when a new bar is created' do
@@ -7,26 +7,26 @@ describe ProgressBar::Components::Bar do
 
       describe '#total' do
         it 'returns the default total' do
-          @progressbar.total.should eql ProgressBar::Components::Bar::DEFAULT_TOTAL
+          expect(@progressbar.total).to eql ProgressBar::Components::Bar::DEFAULT_TOTAL
         end
       end
 
       describe '#progress_mark' do
         it 'returns the default mark' do
-          @progressbar.progress_mark.should eql ProgressBar::Components::Bar::DEFAULT_PROGRESS_MARK
+          expect(@progressbar.progress_mark).to eql ProgressBar::Components::Bar::DEFAULT_PROGRESS_MARK
         end
       end
 
       describe '#remainder_mark' do
         it 'returns the default remainder mark' do
-          @progressbar.remainder_mark.should eql ProgressBar::Components::Bar::DEFAULT_REMAINDER_MARK
+          expect(@progressbar.remainder_mark).to eql ProgressBar::Components::Bar::DEFAULT_REMAINDER_MARK
         end
       end
 
       context 'and the bar has not been started' do
         describe '#progress' do
           it 'returns the default beginning position' do
-            @progressbar.progress.should be_zero
+            expect(@progressbar.progress).to be_zero
           end
         end
       end
@@ -36,7 +36,7 @@ describe ProgressBar::Components::Bar do
 
         describe '#progress' do
           it 'returns the default starting value' do
-            @progressbar.progress.should eql ProgressBar::Components::Progressable::DEFAULT_BEGINNING_POSITION
+            expect(@progressbar.progress).to eql ProgressBar::Components::Progressable::DEFAULT_BEGINNING_POSITION
           end
         end
       end
@@ -46,7 +46,7 @@ describe ProgressBar::Components::Bar do
 
         describe '#progress' do
           it 'returns the given starting value' do
-            @progressbar.progress.should eql 10
+            expect(@progressbar.progress).to eql 10
           end
         end
       end
@@ -57,19 +57,19 @@ describe ProgressBar::Components::Bar do
 
       describe '#total' do
         it 'returns the overridden total' do
-          @progressbar.total.should eql 12
+          expect(@progressbar.total).to eql 12
         end
       end
 
       describe '#progress_mark' do
         it 'returns the overridden mark' do
-          @progressbar.progress_mark.should eql 'x'
+          expect(@progressbar.progress_mark).to eql 'x'
         end
       end
 
       describe '#remainder_mark' do
         it 'returns the overridden mark' do
-          @progressbar.remainder_mark.should eql '.'
+          expect(@progressbar.remainder_mark).to eql '.'
         end
       end
     end
@@ -84,13 +84,13 @@ describe ProgressBar::Components::Bar do
 
     describe '#percentage_completed' do
       it 'calculates the amount' do
-        @progressbar.percentage_completed.should eql 0
+        expect(@progressbar.percentage_completed).to eql 0
       end
     end
 
     describe '#to_s' do
       it 'displays the bar with no indication of progress' do
-        @progressbar.to_s.should eql '                                                                                                    '
+        expect(@progressbar.to_s).to eql '                                                                                                    '
       end
     end
   end
@@ -106,31 +106,31 @@ describe ProgressBar::Components::Bar do
       before { @progressbar.increment }
 
       it 'adds to the progress amount' do
-        @progressbar.progress.should eql 1
+        expect(@progressbar.progress).to eql 1
       end
 
       describe '#percentage_completed' do
         it 'calculates the amount completed' do
-          @progressbar.percentage_completed.should eql 2
+          expect(@progressbar.percentage_completed).to eql 2
         end
       end
 
       describe '#to_s' do
         it 'displays the bar with an indication of progress' do
-          @progressbar.to_s.should eql '==                                                                                                  '
+          expect(@progressbar.to_s).to eql '==                                                                                                  '
         end
       end
     end
 
     describe '#percentage_completed' do
       it 'is zero' do
-        @progressbar.percentage_completed.should eql 0
+        expect(@progressbar.percentage_completed).to eql 0
       end
     end
 
     describe '#to_s' do
       it 'displays the bar with no indication of progress' do
-        @progressbar.to_s.should eql '                                                                                                    '
+        expect(@progressbar.to_s).to eql '                                                                                                    '
       end
     end
   end
@@ -144,13 +144,13 @@ describe ProgressBar::Components::Bar do
 
     describe '#percentage_completed' do
       it 'always rounds down' do
-        @progressbar.percentage_completed.should eql 0
+        expect(@progressbar.percentage_completed).to eql 0
       end
     end
 
     describe '#to_s' do
       it 'displays the bar with no indication of progress' do
-        @progressbar.to_s.should eql '                                                                                                    '
+        expect(@progressbar.to_s).to eql '                                                                                                    '
       end
     end
   end
@@ -166,13 +166,13 @@ describe ProgressBar::Components::Bar do
       before { @progressbar.increment }
 
       it 'does not increment past the total' do
-        @progressbar.progress.should eql 50
-        @progressbar.percentage_completed.should eql 100
+        expect(@progressbar.progress).to eql 50
+        expect(@progressbar.percentage_completed).to eql 100
       end
 
       describe '#to_s' do
         it 'displays the bar as 100% complete' do
-          @progressbar.to_s.should eql '=' * 100
+          expect(@progressbar.to_s).to eql '=' * 100
         end
       end
     end
@@ -181,20 +181,20 @@ describe ProgressBar::Components::Bar do
       before { @progressbar.decrement }
 
       it 'removes some progress from the bar' do
-        @progressbar.progress.should eql 49
-        @progressbar.percentage_completed.should eql 98
+        expect(@progressbar.progress).to eql 49
+        expect(@progressbar.percentage_completed).to eql 98
       end
 
       describe '#to_s' do
         it 'displays the bar as 98% complete' do
-          @progressbar.to_s.should eql "#{'=' * 98}  "
+          expect(@progressbar.to_s).to eql "#{'=' * 98}  "
         end
       end
     end
 
     describe '#to_s' do
       it 'displays the bar as 100% complete' do
-        @progressbar.to_s.should eql ('=' * 100)
+        expect(@progressbar.to_s).to eql ('=' * 100)
       end
     end
   end
@@ -203,7 +203,7 @@ describe ProgressBar::Components::Bar do
     describe '#new' do
       it 'raises an error' do
         @progressbar = ProgressBar::Components::Bar.new(:total => 10)
-        lambda { @progressbar.start :at => 11 }.should raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
+        expect { @progressbar.start :at => 11 }.to raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
       end
     end
   end
