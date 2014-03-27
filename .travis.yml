@@ -11,3 +11,7 @@ script: bundle exec rspec spec
 env:
   global:
     secure: JyF1/jorG/dGjXhgVV5THQI9BSCvuuktsfkcPbRCuDna2lUXGfQGUrCYRyOUwPzvJTkeI3kjQ7HUEMFHXl4f5Fz2zMrUhjkyPNlNPDGJpe5KZngaHWAgemyEcn+z0deU1eanQ1WdRdRj020hZs5BHDOeyxKRELI7FI9it51HZ3g=
+notifications:
+  slack:
+    rooms:
+      - thekompanee:p46x27zMG89XW66DgGuutoaW#open-source
