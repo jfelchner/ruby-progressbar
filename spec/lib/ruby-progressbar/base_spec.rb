@@ -502,14 +502,46 @@ describe ProgressBar::Base do
     end
 
     context '#to_s' do
-      it 'displays the rate when passed the "%r" format flag' do
-        Timecop.freeze do
-          progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 0)
-          progressbar.start
-          progressbar.progress += 20
+      context 'when no time has elapsed' do
+        it 'displays zero for the rate' do
+          Timecop.freeze do
+            progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 0)
+
+            expect(progressbar.to_s('%r')).to match /^0\z/
+          end
+        end
+      end
+
+      context 'when any time has elasped' do
+        it 'displays zero for the rate if no progress has been made' do
+          progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
 
           Timecop.travel(2) do
-            expect(progressbar.to_s('%r')).to match /^10\z/
+            expect(progressbar.to_s('%r')).to match /^0\z/
+          end
+        end
+
+        it 'takes into account the starting position when calculating rate' do
+          Timecop.freeze do
+            progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
+            progressbar.start
+            progressbar.progress += 20
+
+            Timecop.travel(2) do
+              expect(progressbar.to_s('%r')).to match /^10\z/
+            end
+          end
+        end
+
+        it 'displays the rate when passed the "%r" format flag' do
+          Timecop.freeze do
+            progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 0)
+            progressbar.start
+            progressbar.progress += 20
+
+            Timecop.travel(2) do
+              expect(progressbar.to_s('%r')).to match /^10\z/
+            end
           end
         end
       end
