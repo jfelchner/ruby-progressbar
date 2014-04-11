@@ -513,7 +513,7 @@ describe ProgressBar::Base do
       end
 
       context 'when any time has elasped' do
-        it 'displays zero for the rate if no progress has been made' do
+        it 'displays zero for %r if no progress has been made' do
           progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
 
           Timecop.travel(2) do
@@ -521,7 +521,15 @@ describe ProgressBar::Base do
           end
         end
 
-        it 'takes into account the starting position when calculating rate' do
+        it 'displays zero for %R if no progress has been made' do
+          progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
+
+          Timecop.travel(2) do
+            expect(progressbar.to_s('%R')).to match /^0.00\z/
+          end
+        end
+
+        it 'takes into account the starting position when calculating %r' do
           Timecop.freeze do
             progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
             progressbar.start
@@ -529,6 +537,18 @@ describe ProgressBar::Base do
 
             Timecop.travel(2) do
               expect(progressbar.to_s('%r')).to match /^10\z/
+            end
+          end
+        end
+
+        it 'takes into account the starting position when calculating %R' do
+          Timecop.freeze do
+            progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
+            progressbar.start
+            progressbar.progress += 13
+
+            Timecop.travel(2) do
+              expect(progressbar.to_s('%R')).to match /^6.50\z/
             end
           end
         end
@@ -541,6 +561,18 @@ describe ProgressBar::Base do
 
             Timecop.travel(2) do
               expect(progressbar.to_s('%r')).to match /^10\z/
+            end
+          end
+        end
+
+        it 'displays the rate when passed the "%R" format flag' do
+          Timecop.freeze do
+            progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 0)
+            progressbar.start
+            progressbar.progress += 10
+
+            Timecop.travel(6) do
+              expect(progressbar.to_s('%R')).to match /^1.67\z/
             end
           end
         end
