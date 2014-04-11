@@ -214,6 +214,8 @@ The flags you can use in the format string are as follows:
 * `%B`: The full progress bar including 'incomplete' space (eg: `==========    `)
 * `%b`: Progress bar only (eg: `==========`)
 * `%w`: Bar With Integrated Percentage (eg: `==== 75 ====`)
+* `%r`: Rate of Progress as a whole number (eg: `13`)
+* `%R`: Rate of Progress as a decimal number (eg: `13.67`)
 * `%i`: Display the incomplete space of the bar (this string will only contain whitespace eg: `    `)
 * `%%`: A literal percent sign `%`
 
