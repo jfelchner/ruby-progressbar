@@ -14,11 +14,11 @@ class ProgressBar
         as(Progressable).reset
       end
 
-      def to_s
-        elapsed = elapsed_whole_seconds
+      def to_s(format_string = "%i")
+        elapsed = elapsed_whole_seconds.to_f
         return 0 unless elapsed > 0
 
-        "%i" % (progress_made / elapsed)
+        format_string % (progress_made / elapsed)
       end
 
     private
