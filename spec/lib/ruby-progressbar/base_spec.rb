@@ -502,6 +502,18 @@ describe ProgressBar::Base do
     end
 
     context '#to_s' do
+      it 'displays the rate when passed the "%r" format flag' do
+        Timecop.freeze do
+          progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 0)
+          progressbar.start
+          progressbar.progress += 20
+
+          Timecop.travel(2) do
+            expect(progressbar.to_s('%r')).to match /^10\z/
+          end
+        end
+      end
+
       it 'displays the title when passed the "%t" format flag' do
         expect(progressbar.to_s('%t')).to match /^Progress\z/
       end
