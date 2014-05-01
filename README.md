@@ -135,11 +135,11 @@ _Note: The bar will be finished automatically if the current value is equal to t
 
 ### Refreshing
 
-* If you need to have the bar be redisplayed to give your users more of a "real-time" feel, you can call `#refresh` which will not affect the current position but will update the elapsed and estimated timers.
+* If you need to redisplay the progress bar to give your users  a "real-time" feel, you can call `#refresh`. `#refresh` will not affect the current position but will update the elapsed and estimated timers.
 
 ### Unknown Progress
 
-Sometimes when processing work, you don't know at the beginning of the job exactly how many items you will be processing.  This might be because you're downloading a chunked file or processing a set of jobs that hasn't been fully loaded yet.
+Sometimes when processing work, you don't know exactly how many items you will need to process.  This might be because you're downloading a chunked file or processing a set of jobs that hasn't been fully loaded yet.
 
 In times like these, you can set total to `nil` and continue to increment the bar as usual.  The bar will display an 'unknown' animation which will change every time you increment.  This will give the appearance (by default) that the bar is processing work even though there is no "progress".
 
