@@ -300,7 +300,7 @@ Sometimes when you're tracking progress, you have some items which take signific
 
 __RUBY PROGRESS BAR TO THE RESCUE!__
 
-Thanks to [@L2G](https://github.com/L2G) and 'the maths' you can pass the `:smoothing` option when creating a new bar.  Your progress bar will then use an exponentially smoothed average rather than a linear one.  A value of `0.0` means no smoothing and is equivalent to the classic behavior.  A value of `1.0` is the maximum amount of smoothing.  Any values between those two are valid. The defaul valut is `0.1`.
+Thanks to [@L2G](https://github.com/L2G) and 'the maths' you can pass the `:smoothing` option when creating a new bar.  Your progress bar will then use an exponentially smoothed average rather than a linear one.  A value of `0.0` means no smoothing and is equivalent to the classic behavior.  A value of `1.0` is the maximum amount of smoothing.  Any values between those two are valid. The default value is `0.1`.
 
 ```ruby
 ProgressBar.create(:smoothing => 0.6)
