@@ -91,5 +91,13 @@ class ProgressBar
     def estimated_time
       finished? ? @elapsed_time : @estimated_time
     end
+
+    def rate_of_change
+      @rate.to_s
+    end
+
+    def rate_of_change_with_precision
+      @rate.to_s("%.2f")
+    end
   end
 end

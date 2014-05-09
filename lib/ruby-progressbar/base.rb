@@ -12,6 +12,7 @@ class ProgressBar
       super(options)
 
       @bar              = Components::Bar.new(options)
+      @rate             = Components::Rate.new(options)
       @estimated_time   = Components::EstimatedTimer.new(options)
       @elapsed_time     = Components::ElapsedTimer.new
       @throttle         = Components::Throttle.new(options)
@@ -155,11 +156,13 @@ class ProgressBar
     def with_progressables(*args)
       @bar.send(*args)
       @estimated_time.send(*args)
+      @rate.send(*args)
     end
 
     def with_timers(*args)
       @estimated_time.send(*args)
       @elapsed_time.send(*args)
+      @rate.send(*args)
     end
 
     def update_progress(*args)
