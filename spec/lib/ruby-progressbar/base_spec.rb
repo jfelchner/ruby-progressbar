@@ -578,6 +578,72 @@ describe ProgressBar::Base do
             end
           end
         end
+
+        context 'and the a custom rate is applied' do
+          it 'displays zero for %r if no progress has been made' do
+            progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20, :rate_scale => lambda { |rate| rate / 2 })
+
+            Timecop.travel(2) do
+              expect(progressbar.to_s('%r')).to match /^0\z/
+            end
+          end
+
+          it 'displays zero for %R if no progress has been made' do
+            progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20, :rate_scale => lambda { |rate| rate / 2 })
+
+            Timecop.travel(2) do
+              expect(progressbar.to_s('%R')).to match /^0.00\z/
+            end
+          end
+
+          it 'takes into account the starting position when calculating %r' do
+            Timecop.freeze do
+              progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20, :rate_scale => lambda { |rate| rate / 2 })
+              progressbar.start
+              progressbar.progress += 20
+
+              Timecop.travel(2) do
+                expect(progressbar.to_s('%r')).to match /^5\z/
+              end
+            end
+          end
+
+          it 'takes into account the starting position when calculating %R' do
+            Timecop.freeze do
+              progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20, :rate_scale => lambda { |rate| rate / 2 })
+              progressbar.start
+              progressbar.progress += 13
+
+              Timecop.travel(2) do
+                expect(progressbar.to_s('%R')).to match /^3.25\z/
+              end
+            end
+          end
+
+          it 'displays the rate when passed the "%r" format flag' do
+            Timecop.freeze do
+              progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 0, :rate_scale => lambda { |rate| rate / 2 })
+              progressbar.start
+              progressbar.progress += 20
+
+              Timecop.travel(2) do
+                expect(progressbar.to_s('%r')).to match /^5\z/
+              end
+            end
+          end
+
+          it 'displays the rate when passed the "%R" format flag' do
+            Timecop.freeze do
+              progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 0, :rate_scale => lambda { |rate| rate / 2 })
+              progressbar.start
+              progressbar.progress += 10
+
+              Timecop.travel(6) do
+                expect(progressbar.to_s('%R')).to match /^0.83\z/
+              end
+            end
+          end
+        end
       end
 
       it 'displays the title when passed the "%t" format flag' do
