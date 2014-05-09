@@ -290,6 +290,27 @@ The following items can be set at any time.  Changes cause an immediate bar refr
 * `#title=`: Sets the string used to represent the items the bar is tracking (or I guess whatever else you want it to be).
 * `#format(format_string)`: If you need to adjust the format that the bar uses when rendering itself, just pass in a string in the same format as describe [above](#formatting).
 
+### Rate Scaling
+
+By default the rate shown on the progress bar is shown as the number of items
+processed per second.  Often times, you won't want to display the literal number
+of items, but rather scale it in some way.  For example, if you're displaying
+the progress of a file being transferred, and you are representing the bar as
+the number of bytes in the file, by default the `%r` formatter will show the
+number of bytes per second.
+
+If instead of the bytes per second you wanted to show the user the number of
+kilobytes per second, you can do that like so:
+
+```ruby
+ProgressBar.create(:format     => '%a %B %p%% %r KB/sec',
+                   :rate_scale => lambda { |rate| rate / 1024 })
+```
+
+Now, when the bar is displayed it will look something like so:
+
+    Time: --:--:-- ===============                                40% - 102 KB/sec
+
 ## In The Weeds
 
 This is some stuff that makes ruby-progressbar extra awesome, but for the most part it "Just Works" and you won't have to even know it's there, but if you're curious like us, here it is.

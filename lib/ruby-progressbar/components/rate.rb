@@ -4,6 +4,14 @@ class ProgressBar
       include Timer
       include Progressable
 
+      attr_accessor :rate_scale
+
+      def initialize(options = {})
+        self.rate_scale = options[:rate_scale]
+
+        super
+      end
+
       def start(options = {})
         as(Timer).start
         as(Progressable).start(options)
@@ -18,7 +26,15 @@ class ProgressBar
         elapsed = elapsed_whole_seconds.to_f
         return 0 unless elapsed > 0
 
-        format_string % (progress_made / elapsed)
+        base_rate   = (progress_made / elapsed)
+
+        if rate_scale
+          scaled_rate = rate_scale.call(base_rate)
+        else
+          scaled_rate = base_rate
+        end
+
+        format_string % scaled_rate
       end
 
     private
