@@ -1,21 +1,18 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "ruby-progressbar/version"
 
 Gem::Specification.new do |s|
-  s.rubygems_version      = '1.3.5'
-
   s.name                  = 'ruby-progressbar'
-  s.rubyforge_project     = 'ruby-progressbar'
 
   s.version               = ProgressBar::VERSION
-  s.platform              = Gem::Platform::RUBY
 
   s.authors               = ["thekompanee", "jfelchner"]
   s.email                 = 'support@thekompanee.com'
-  s.date                  = Time.now
   s.homepage              = 'https://github.com/jfelchner/ruby-progressbar'
 
+  s.license               = 'MIT'
   s.summary               = 'Ruby/ProgressBar is a flexible text progress bar library for Ruby.'
   s.description           = <<-THEDOCTOR
 Ruby/ProgressBar is an extremely flexible text progress bar library for Ruby.
@@ -26,7 +23,7 @@ THEDOCTOR
   s.rdoc_options          = ['--charset', 'UTF-8']
   s.extra_rdoc_files      = %w[README.md LICENSE]
 
-  #= Manifest =#
+  # Manifest
   s.files                 = Dir.glob("lib/**/*")
   s.test_files            = Dir.glob("{test,spec,features}/**/*")
   s.executables           = Dir.glob("bin/*").map{ |f| File.basename(f) }
