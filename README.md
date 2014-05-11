@@ -64,7 +64,7 @@ It's simple to get started:
 ProgressBar.create
 ```
 
-Creates a basic progress bar beginning at `0`, a total capacity of `100` and tells it to start.
+Create a basic progress bar beginning at `0`,  with a maximum capacity of `100` and tells it to start.
 
     Progress: |                                                                       |
 
@@ -85,13 +85,13 @@ Advanced Usage
 
 ### Options
 
-If you would like to customize your prompt, you can pass options when you call `.create`.
+If you would like to customize your prompt, you can pass in a options hash when you call `.create`.
 
 ```ruby
 ProgressBar.create(:title => "Items", :starting_at => 20, :total => 200)
 ```
 
-Will output:
+This will output:
 
     Items: |=======                                                                |
 
@@ -115,7 +115,7 @@ The following are the list of options you can use:
 * `#decrement`: Will retract the bar's progress by `1` unit.
 * `#progress +=`: Will allow you to increment by a relative amount.
 * `#progress -=`: Will allow you to decrement by a relative amount.
-* `#progress=`: Will allow you to jump the amount of progress directly to whatever value you would like. _Note: This will almost always mess up your estimated time if you're using it._
+* `#progress=`: Will set the bar's progress to whatever value you would like. _Note: This will likely mess up your estimated time if you're using it._
 * `#total=`: Will change the total number of items being processed by the bar. This can be anything (even nil) but cannot be less than the amount of progress already accumulated by the bar.
 
 ### Stopping
@@ -124,22 +124,22 @@ The bar can be stopped in four ways:
 
 * `#finish`: Will stop the bar by completing it immediately.  The current position will be advanced to the total.
 * `#stop`: Will stop the bar by immediately cancelling it.  The current position will remain where it is.
-* `#pause`: Will stop the bar similar to `#stop` but will allow it to be restarted where it previously left off by calling `#resume`. _Note: Elapsed Time and Estimated Time will stop being affected while the bar is paused._
+* `#pause`: Will stop the bar like `#stop` but will allow it to be restarted from where it previously left off by calling `#resume`. _Note: Elapsed Time and Estimated Time will stop being affected while the bar is paused._
 * `#reset`: Will stop the bar by resetting all information.  The current position of the bar will be reset to where it began when it was created. _(eg if you passed `:starting_at => 5` when you created the bar, it would reset to `5` and not `0`)_
 
 ### Finishing
 
 * See `#finish` above.
 
-_Note: The bar will be finished automatically if the current value ever becomes equal to the total._
+_Note: The bar will be finished automatically if the current value is equal to the total._
 
 ### Refreshing
 
-* If you need to have the bar be redisplayed to give your users more of a "real-time" feel, you can call `#refresh` which will not affect the current position but will update the elapsed and estimated timers.
+* If you need to redisplay the progress bar to give your users  a "real-time" feel, you can call `#refresh`. `#refresh` will not affect the current position but will update the elapsed and estimated timers.
 
 ### Unknown Progress
 
-Sometimes when processing work, you don't know at the beginning of the job exactly how many items you will be processing.  Maybe this might be because you're downloading a chunked file or processing a set of jobs that hasn't fully loaded yet.
+Sometimes when processing work, you don't know exactly how many items you will need to process.  This might be because you're downloading a chunked file or processing a set of jobs that hasn't been fully loaded yet.
 
 In times like these, you can set total to `nil` and continue to increment the bar as usual.  The bar will display an 'unknown' animation which will change every time you increment.  This will give the appearance (by default) that the bar is processing work even though there is no "progress".
 
@@ -175,12 +175,12 @@ And the bar will magically transform into its typical state:
 
 ### Logging
 
-Many times while using the progress bar, you may wish to log some output for the user.  If you attempt to do this using a standard `puts` statement, you'll find that the text will overwrite that which makes up the bar.  For example if you were to `puts "hello"` after progress has already begun, you may get something like this:
+While using the progress bar, you may wish to log some output for the user.  If you attempt to do this using a standard `puts` statement, you'll find that the text will overwrite the bar.  For example if you were to `puts "hello"` after progress has already begun, you may get something like this:
 
     helloess: |=======                                                             |
     Progress: |========                                                            |
 
-The reason is that ruby-progressbar has to keep redrawing itself every time you change the progress.  It's a limitation of terminal output.  Using `puts` messes that up because `puts` adds a newline which moves the cursor to the next line, then when ruby-progressbar updates, it does so on the following line.
+This will happen because the ruby-progressbar has to keep redrawing itself every time you change the progress.  It's a limitation of terminal output.  Using `puts` messes that up because `puts` adds a newline which moves the cursor to the next line, then when ruby-progressbar updates, it does so on the following line.
 
 To circumvent this, use `#log` instead.
 
@@ -193,12 +193,12 @@ progressbar.log 'hello'
     hello
     Progress: |=============                                                       |
 
-`#log` will automatically clear the bar, print your desired text and then redraw the bar on the following line.  Notice that we did not get a bar **above** the logged output.  If you consistently use `#log`, you should only every see one bar on the screen at any time.
+`#log` will automatically clear the bar, print your desired text and then redraw the bar on the next line.  Notice that we did not get a bar **above** the logged output.  If you consistently use `#log`, you should only see one bar on the screen at any time.
 
 Formatting
 --------------------------------
 
-The format of the progress bar is extremely easy to customize.  When you create the progress bar and pass the `:format` option, that string will be used to determine what the bar looks like.
+To customize the format of the progress bar, you can pass the `:format` option when creating the progress bar.
 
 The flags you can use in the format string are as follows:
 
@@ -271,19 +271,19 @@ Becomes **PAC-MAN**!
 
 ### Overriding the Length
 
-By default, the progressbar will try to be as smart as possible about how wide it can be.  Under most Unix systems, it should be as wide as the terminal will allow while still fitting on one line.  If you wish to override this behavior, you can pass in the `:length` option when creating the bar like so:
+By default, the progress bar will try to be as smart as possible about how wide it can be.  Under most Unix systems, it should be as wide as the terminal will allow while still fitting on one line.  If you wish to override this behavior, you can pass in the `:length` option when creating the bar:
 
 ```ruby
 ProgressBar.create(:length => 40)
 ```
 
-Additionally, if you don't have access to the code calling the progressbar itself (say if you're using a gem like Fuubar), you can set the `RUBY_PROGRESS_BAR_LENGTH` environment variable and it will always override any other setting.
+If you don't have access to the code calling the progress bar itself (say if you're using a gem like Fuubar), you can set the `RUBY_PROGRESS_BAR_LENGTH` environment variable and it will override any other setting.
 
 _Note: If the terminal width is less than 20 characters or ruby-progressbar is being used on a non-*nix system, the bar will default to an 80 character width._
 
 ### Realtime Customization
 
-The following items can be set at any time.  Changes cause an immediate bar refresh so no other action is needed:
+The following items can be set at any time.  Changes cause an immediate bar refresh so, no other action is needed:
 
 * `#progress_mark=`: Sets the string used to represent progress along the bar.
 * `#remainder_mark=`: Sets the string used to represent the empty part of the bar.
@@ -319,11 +319,11 @@ This is some stuff that makes ruby-progressbar extra awesome, but for the most p
 
 #### Smoothing Out Estimated Time Jitters
 
-Sometimes when you're tracking progress, you could have some items which take significantly longer than others.  When this is the case, the ETA gauge can vary wildly from increment to increment.
+Sometimes when you're tracking progress, you have some items which take significantly longer than others to complete.  When this is the case, the ETA gauge can vary wildly from increment to increment.
 
 __RUBY PROGRESS BAR TO THE RESCUE!__
 
-Thanks to [@L2G](https://github.com/L2G) and 'the maths' you can pass the `:smoothing` option when creating a new bar and it will use an exponentially smoothed average rather than a linear one.  A value of `0.0` means no smoothing and is equivalent to the classic behavior.  A value of `1.0` is the maximum amount of smoothing.  Any values between those two are valid. `0.1` is the default.
+Thanks to [@L2G](https://github.com/L2G) and 'the maths' you can pass the `:smoothing` option when creating a new bar.  Your progress bar will then use an exponentially smoothed average rather than a linear one.  A value of `0.0` means no smoothing and is equivalent to the classic behavior.  A value of `1.0` is the maximum amount of smoothing.  Any values between those two are valid. The default value is `0.1`.
 
 ```ruby
 ProgressBar.create(:smoothing => 0.6)
@@ -331,7 +331,7 @@ ProgressBar.create(:smoothing => 0.6)
 
 #### Time Mocking Support
 
-When mocking time, the concept of when `now` is becomes distorted.  You can imagine that because ruby-progressbar tracks elapsed and estimated times, if it used the mocked version of `now` the results would be very undesirable.  Fortunately, if you use one of our supported Ruby time mocking libraries, your elapsed and estimated times will appear correctly no matter when your 'now' is.  Currently supported are:
+When mocking time, the concept of when `now` is, becomes distorted.  You can imagine that because ruby-progressbar tracks elapsed and estimated times, if it used the mocked version of `now` the results would be very undesirable.  But, if you use one of our supported Ruby time mocking libraries, your elapsed and estimated times will always appear correctly.  Currently supported are:
 
   * [Timecop](https://github.com/jtrupiano/timecop)
   * [Delorean](https://github.com/bebanjo/delorean)
@@ -344,13 +344,13 @@ When reporting progress of large amounts of very fast operations, whose duration
 
 The above progress bar will output at most 10 times a second.
 
-The default throttling rate if none is specified is 100 times per second (or 0.01)
+The default throttling rate is 100 times per second (or 0.01)
 
 ### Custom Unknown Progress Animations
 
 Following up on [unknown progress](#unknown-progress), you may wish to update the unknown progress animation to suit your specific needs.  This can be easily done by passing in the `:unknown_progress_animation_steps` option.
 
-This item should be an array of strings representing each step of the animation. The specific step used for a given progress is determined by the current progress of the bar.  For example:
+This item should be an array of strings that represent each step of the animation. The specific step used for a given progress is determined by the current progress of the bar.  For example:
 
 ```ruby
 progressbar = ProgressBar.create(:unknown_progress_animation_steps => ['==>', '>==', '=>='])
@@ -364,29 +364,31 @@ Whatever element is chosen is repeated along the entire 'incomplete' portion of 
 
 ### Non-TTY Output
 
-Typically, when the progress bar is updated, the entire previous bar is 'overwritten' with the updated information.  Unfortunately when the bar is being output on a non-TTY enabled output stream (such as a file or pipe), that standard behavior of outputting the progress bar will not work.  This is mainly due to the fact that we can't easily go back and replace the content that the bar had previously written.
+Normally, when the progress bar is updated, the entire previous bar is 'overwritten' with the updated information.  However when the bar is being output on a non-TTY enabled output stream (such as a file or pipe), that standard behavior of outputting the progress bar will not work.  This is mainly due to the fact that we can't easily go back and replace the content that the bar had previously written.
 
-To try to solve this, ruby-progressbar, when it determines that it is being used on a non-TTY device, will override any format which was set in the initializer to something which more closely resembles this:
+To try to solve this problem, ruby-progressbar, when it determines that it is being used on a non-TTY device, will override any format which was set in the initializer to something which more closely resembles this:
 
     Progress: |=============
 
-Notice that there are no dynamically updating segments like counters or ETA.  Dynamic segments are not compatible with non-TTY devices because, by their very nature, they must be updated on each refresh of the bar and as stated previously, that is not possible in non-TTY mode.
+Notice that there are no dynamically updating segments like counters or ETA.  Dynamic segments are incompatible with non-TTY devices. This is because dynamic segments needs to be updated on each refresh of the bar which is  impossible in non-TTY mode.
 
-Also notice that there is no end cap on the righthand side of the bar.  Again, we cannot output something which is past the point at which we next need to output text.  If we added an end cap, that would mean that any additional progress text would be placed _after_ the end cap.  Definitely not what we want.
+Notice that there is no end cap on the righthand side of the bar.  We cannot output something which is past the point where we next need to output text next.  If we added an end cap, that would mean that any additional progress text would be placed _after_ the end cap.  Definitely not what we want.
 
-So how does it work?  First we output the title and the first end cap:
+So how does it work?  
+
+First we output the title and the first end cap:
 
     Progress: |
 
-Next, every time we increment the bar, we check whether the progress bar has grown.  If it has, we output _only the additional portion_ of the bar to the output.
+Next, every time we increment the bar, we check whether the progress bar has grown.  If it has, we _only output the additional portion_ of the bar to the output.
 
 For example, given the previous title output, if we increment the bar once, we would get:
 
     Progress: |=
 
-But in this case, only one `=` was output.  Not the entire `Progress: |=`.
+But in this case, only 1 `=` was outputted.  Not the entire `Progress: |=`.
 
-Once the bar gets to be completely finished though:
+However when the bar is completed:
 
     Progress: |====================================================================|
 
