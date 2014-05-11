@@ -13,7 +13,7 @@ describe ProgressBar::Components::Progressable do
       subject.start :at => 0
       expect(subject.running_average).to be_zero
 
-      subject.start :at => 40
+      subject.progress += 40
       expect(subject.running_average).to eql 36.0
     end
   end
