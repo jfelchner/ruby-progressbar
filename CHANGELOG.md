@@ -1,6 +1,41 @@
 Changelog
 ================================================================================
 
+v1.5.0
+--------------------------------------------------------------------------------
+* Official Ruby 2.x support
+* Add '%r' and '%R' which will display the rate per second
+* Add a `rate_scale` option when creating the bar which adjusts the rate in
+  realtime
+
+v1.4.2
+--------------------------------------------------------------------------------
+* Fix ETA when progress happens very quickly - c/o @marcandre
+
+v1.4.1
+--------------------------------------------------------------------------------
+* Use Kernel.warn instead of STDOUT.puts so that warnings can be suppressed
+  globally
+* Fix problem where progress bar would error if it was stopped while it was
+  already stopped. - c/o @jdelStrother
+
+v1.4.0
+--------------------------------------------------------------------------------
+* Add `#started?`
+* Timers are now explicitly stopped when the bar is stopped
+* Bar now outputs a warning if a paused bar has its progress changed
+* Any changes to the bar total now refreshes the bar
+* Fix problem where the bar would blow up if the total was nil
+
+v1.3.2
+--------------------------------------------------------------------------------
+* Testing fixes
+
+v1.3.1
+--------------------------------------------------------------------------------
+* Fix problem where the bar would blow up if the throttle rate was passed in as
+  nil.
+
 v1.3.0
 --------------------------------------------------------------------------------
 * Improved output for non-TTY streams. Incremental output is not enabled.
