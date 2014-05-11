@@ -84,6 +84,10 @@ class ProgressBar
         format('%5.2f', (progress.to_f * 100.0 / total * 100.0).floor / 100.0)
       end
 
+      def progress_made
+        started? ? self.progress - self.starting_position : 0
+      end
+
     private
       def validate_total(new_total)
         (progress.nil? || new_total.nil? || new_total >= progress) || raise(ProgressBar::InvalidProgressError, "You can't set the item's total value to be less than the current progress.")
@@ -93,12 +97,8 @@ class ProgressBar
         (total.nil? || new_progress <= total) || raise(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
       end
 
-      def progress_made
-        started? ? self.progress - self.starting_position : 0
-      end
-
       def update_running_average
-        self.running_average = RunningAverageCalculator.calculate(self.running_average, self.progress, self.smoothing)
+        self.running_average = RunningAverageCalculator.calculate(self.running_average, self.progress_made, self.smoothing)
       end
     end
   end
