@@ -196,8 +196,10 @@ class ProgressBar
 
         self.last_update_length = formatted_string.length
 
-        output.print output_string + eol
-        output.flush
+        if output_string
+          output.print output_string + eol
+          output.flush
+        end
       end
     end
 
