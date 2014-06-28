@@ -722,10 +722,22 @@ describe ProgressBar::Base do
         expect(progressbar.to_s('%p')).to match /^16\z/
       end
 
+      it 'displays the justified percentage complete when passed the "%j" format flag' do
+        progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
+
+        expect(progressbar.to_s('%j')).to match /^ 16\z/
+      end
+
       it 'displays the percentage complete when passed the "%P" format flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
 
         expect(progressbar.to_s('%P')).to match /^16.50\z/
+      end
+
+      it 'displays the justified percentage complete when passed the "%J" format flag' do
+        progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
+
+        expect(progressbar.to_s('%J')).to match /^ 16.50\z/
       end
 
       it 'displays only up to 2 decimal places when using the "%P" flag' do

@@ -45,8 +45,16 @@ class ProgressBar
       @bar.percentage_completed
     end
 
+    def justified_percentage
+      @bar.percentage_completed.to_s.rjust(3)
+    end
+
     def percentage_with_precision
       @bar.percentage_completed_with_precision
+    end
+
+    def justified_percentage_with_precision
+      @bar.percentage_completed_with_precision.to_s.rjust(6)
     end
 
     def elapsed_time
