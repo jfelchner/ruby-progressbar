@@ -700,6 +700,20 @@ describe ProgressBar::Base do
         expect(progressbar.to_s('%w%i')).to match /^= 5 =\s{95}\z/
       end
 
+      it 'can display a percentage, even if the total is unknown' do
+        progressbar = ProgressBar::Base.new(:output => output, :length => 100, :total => nil, :starting_at => 0)
+
+        expect(progressbar.to_s('%p')).to match /\A0\z/
+        expect(progressbar.to_s('%P')).to match /\A0\.0\z/
+      end
+
+      it 'can display a percentage, even if the total is zero' do
+        progressbar = ProgressBar::Base.new(:output => output, :length => 100, :total => 0, :starting_at => 0)
+
+        expect(progressbar.to_s('%p')).to match /\A100\z/
+        expect(progressbar.to_s('%P')).to match /\A100\.0\z/
+      end
+
       it 'displays the current capacity when passed the "%c" format flag' do
         progressbar = ProgressBar::Base.new(:output => output, :starting_at => 0)
 

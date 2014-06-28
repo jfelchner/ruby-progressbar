@@ -81,6 +81,9 @@ class ProgressBar
       end
 
       def percentage_completed_with_precision
+        return 100.0  if total == 0
+        return 0.0    if total.nil?
+
         format('%5.2f', (progress.to_f * 100.0 / total * 100.0).floor / 100.0)
       end
 
