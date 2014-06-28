@@ -210,6 +210,8 @@ The flags you can use in the format string are as follows:
 * `%f`: Force estimated time to be displayed even if it exceeds `99:00:00`
 * `%p`: Percentage complete represented as a whole number (eg: `82`)
 * `%P`: Percentage complete represented as a decimal number (eg: `82.33`)
+* `%j`: Percentage complete right-justified to 3 places (eg: ` 82`)
+* `%J`: Percentage complete right-justified to 6 places (eg: ` 82.33`)
 * `%c`: Number of items currently completed
 * `%C`: Total number of items to be completed
 * `%B`: The full progress bar including 'incomplete' space (eg: `==========    `)
