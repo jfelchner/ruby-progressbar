@@ -8,6 +8,8 @@ class ProgressBar
         :C => :total,
         :p => :percentage,
         :P => :percentage_with_precision,
+        :j => :justified_percentage,
+        :J => :justified_percentage_with_precision,
         :a => :elapsed_time,
         :e => :estimated_time_with_unknown_oob,
         :E => :estimated_time_with_friendly_oob,
