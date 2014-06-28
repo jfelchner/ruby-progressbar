@@ -1,14 +1,56 @@
-*.gem
-tags
-*.rbc
-.bundle
-.config
-.yardoc
-Gemfile.lock
-_yardoc
+# Vendored Dependencies
+**/vendor/bundler_gems
+node_modules
+vendor/*
+
+# Database Files
+**/db/*.sqlite3
+**/db/schema.rb
+**/db/structure*.sql
+
+# Default Uploads Location
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Testing Files
 coverage
-lib/bundler/man
-pkg
-spec/reports
-tmp
+rerun.txt
+pickle-email-*.html
+
+# Cache Files
+**/public/stylesheets/*.css
+.sass-cache
+public/system/
 tags
+
+# Local Configuration Files
+**/config/secrets.yml
+database.yml
+.foreman
+.rspec
+.rvmrc
+.bundle
+
+# Temporary files
+**/log/**
+**/tmp/**
+*.swp
+*.swo
+**.orig
+**/*.log
+connect.lock
+libpeerconnection.log
+npm-debug.log
+testem.log
+dump.rdb
+
+# Compiled Files
+*.rbc
+dist
+pkg
+
+# Always Version .keep and .gitkeep files
+!.keep
+!.gitkeep
