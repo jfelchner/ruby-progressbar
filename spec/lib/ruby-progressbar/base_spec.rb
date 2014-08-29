@@ -336,6 +336,13 @@ describe ProgressBar::Base do
         expect(output.read.end_with?("\n")).to eql false
       end
 
+      it 'allows reset' do
+        progressbar.finish
+        expect(progressbar).to be_finished
+        progressbar.reset
+        expect(progressbar).not_to be_finished
+      end
+
       it 'does prints a new line when manually finished' do
         progressbar.finish
         expect(progressbar).to be_finished
