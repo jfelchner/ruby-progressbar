@@ -321,6 +321,37 @@ describe ProgressBar::Base do
     end
   end
 
+  context 'when a bar with autofinish=false is about to be completed' do
+    let(:progressbar) { ProgressBar::Base.new(:autofinish => false, :starting_at => 5, :total => 6, :output => output, :length => 20) }
+
+    context 'and it is incremented' do
+      before { progressbar.increment }
+
+      it 'does not automatically finish' do
+        expect(progressbar).not_to be_finished
+      end
+
+      it 'does not prints a new line' do
+        output.rewind
+        expect(output.read.end_with?("\n")).to eql false
+      end
+
+      it 'does prints a new line when manually finished' do
+        progressbar.finish
+        expect(progressbar).to be_finished
+        output.rewind
+        expect(output.read.end_with?("\n")).to eql true
+      end
+
+      it 'does not continue to print bars if finish is subsequently called' do
+        progressbar.finish
+
+        output.rewind
+        expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\n"
+      end
+    end
+  end
+
   context 'when a bar has an unknown amount to completion' do
     let(:progressbar) { ProgressBar::Base.new(:total => nil, :output => output, :length => 80, :unknown_progress_animation_steps => ['=--', '-=-', '--=']) }
 
