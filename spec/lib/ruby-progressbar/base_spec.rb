@@ -294,6 +294,31 @@ describe ProgressBar::Base do
         non_tty_output.rewind
         expect(non_tty_output.read).to eql "\n\nProgress: |====\n"
       end
+
+      it 'ignores changes to the title due to the fact that the bar length cannot change' do
+        progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
+
+        3.times { progressbar.increment }
+
+        progressbar.title = "Testing"
+        progressbar.stop
+
+        non_tty_output.rewind
+
+        expect(non_tty_output.read).to eql "\n\nProgress: |====\n"
+      end
+
+      it 'allows the title to be customized when the bar is created' do
+        progressbar = ProgressBar::Base.new(:output => non_tty_output, :title => 'Custom', :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
+
+        3.times { progressbar.increment }
+
+        progressbar.stop
+
+        non_tty_output.rewind
+
+        expect(non_tty_output.read).to eql "\n\nCustom: |=====\n"
+      end
     end
   end
 
