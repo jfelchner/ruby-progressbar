@@ -358,20 +358,25 @@ describe ProgressBar::Base do
 
       it 'does not prints a new line' do
         output.rewind
+
         expect(output.read.end_with?("\n")).to eql false
       end
 
       it 'allows reset' do
         progressbar.finish
         expect(progressbar).to be_finished
+
         progressbar.reset
+
         expect(progressbar).not_to be_finished
       end
 
       it 'does prints a new line when manually finished' do
         progressbar.finish
         expect(progressbar).to be_finished
+
         output.rewind
+
         expect(output.read.end_with?("\n")).to eql true
       end
 
@@ -379,6 +384,7 @@ describe ProgressBar::Base do
         progressbar.finish
 
         output.rewind
+
         expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\n"
       end
     end
