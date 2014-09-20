@@ -1,0 +1,114 @@
+{
+  'excludeFiles':                             [
+    'node_modules/**',
+    'vendor/**',
+    'package.json',
+    'bower.json'
+  ],
+  'requireCurlyBraces':                       [
+    'if',
+    'else',
+    'for',
+    'while',
+    'do',
+    'try',
+    'catch',
+    'case',
+    'default'
+  ],
+  'requireSpaceAfterKeywords':                [
+    'else',
+    'do',
+    'return',
+    'try',
+  ],
+  'disallowSpaceAfterKeywords':               [
+    'if',
+    'for',
+    'while',
+    'switch',
+    'catch'
+  ],
+  'requireSpacesInConditionalExpression':     {
+    'afterTest':                                true,
+    'beforeConsequent':                         true,
+    'afterConsequent':                          true,
+    'beforeAlternate':                          true
+  },
+  'disallowSpacesInConditionalExpression':    {
+    'afterTest':                                false,
+    'beforeConsequent':                         false,
+    'afterConsequent':                          false,
+    'beforeAlternate':                          false
+  },
+  'requireSpacesInFunctionExpression':        {
+    'beforeOpeningRoundBrace':                  false,
+    'beforeOpeningCurlyBrace':                  true
+  },
+  'disallowSpacesInFunctionExpression':       {
+    'beforeOpeningRoundBrace':                  true,
+    'beforeOpeningCurlyBrace':                  false
+  },
+  'requireSpacesInFunctionDeclaration':       {
+    'beforeOpeningRoundBrace':                  false,
+    'beforeOpeningCurlyBrace':                  true
+  },
+  'disallowSpacesInFunctionDeclaration':      {
+    'beforeOpeningRoundBrace':                  true,
+    'beforeOpeningCurlyBrace':                  false
+  },
+  'requireKeywordsOnNewLine':                 [
+    'else'
+  ],
+  'safeContextKeyword':                       [
+    'self'
+  ],
+  'requireSpaceBeforeBlockStatements':        true,
+  'requireParenthesesAroundIIFE':             true,
+  'disallowMultipleVarDecl':                  true,
+  'requireMultipleVarDecl':                   false,
+  'requireBlocksOnNewline':                   1,
+  'requirePaddingNewlinesInBlocks':           false,
+  'disallowPaddingNewlinesInBlocks':          true,
+  'disallowEmptyBlocks':                      true,
+  'disallowSpacesInsideObjectBrackets':       false,
+  'disallowSpacesInsideArrayBrackets':        'all',
+  'disallowSpacesInsideParentheses':          true,
+  'requireSpacesInsideObjectBrackets':        'allButNested',
+  'requireSpacesInsideArrayBrackets':         false,
+  'requireSpacesInsideParentheses':           false,
+  'disallowQuotedKeysInObjects':              'allButReserved',
+  'disallowDanglingUnderscores':              false,
+  'disallowSpaceAfterObjectKeys':             true,
+  'requireSpaceAfterObjectKeys':              false,
+  'disallowCommaBeforeLineBreak':             false,
+  'requireCommaBeforeLineBreak':              true,
+  'requireAlignedObjectValues':               'all',
+  'requireOperatorBeforeLineBreak':           true,
+  'disallowSpaceAfterPrefixUnaryOperators':   true,
+  'requireSpaceAfterPrefixUnaryOperators':    false,
+  'disallowSpaceBeforePostfixUnaryOperators': true,
+  'requireSpaceBeforePostfixUnaryOperators':  false,
+  'disallowSpaceBeforeBinaryOperators':       false,
+  'requireSpaceBeforeBinaryOperators':        true,
+  'disallowSpaceAfterBinaryOperators':        false,
+  'requireSpaceAfterBinaryOperators':         true,
+  'disallowImplicitTypeConversion':           true,
+  'requireCamelCaseOrUpperCaseIdentifiers':   'ignoreProperties',
+  'disallowMultipleLineStrings':              true,
+  'disallowMultipleLineBreaks':               true,
+  'validateLineBreaks':                       'LF',
+  'validateQuoteMarks':                       "'",
+  'validateIndentation':                      '2',
+  'disallowMixedSpacesAndTabs':               true,
+  'disallowTrailingWhitespace':               true,
+  'disallowTrailingComma':                    true,
+  'requireTrailingComma':                     false,
+  'disallowKeywordsOnNewLine':                false,
+  'requireLineFeedAtFileEnd':                 true,
+  'maximumLineLength':                        90,
+  'requireCapitalizedConstructors':           true,
+  'requireDotNotation':                       true,
+  'requireYodaConditions':                    false,
+  'disallowYodaConditions':                   true
+}
