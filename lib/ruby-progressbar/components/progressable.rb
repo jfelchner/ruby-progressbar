@@ -13,6 +13,7 @@ class ProgressBar
       attr_accessor             :running_average
       attr_accessor             :smoothing
       attr_accessor             :autofinish
+      attr_accessor             :finished
 
       def initialize(options = {})
         self.total           = options.fetch(:total, DEFAULT_TOTAL)
@@ -23,7 +24,7 @@ class ProgressBar
       end
 
       def start(options = {})
-        @finished = false
+        self.finished          = false
         self.running_average   = 0
         self.progress          = \
         self.starting_position = options[:at] || self.progress
@@ -34,7 +35,7 @@ class ProgressBar
       end
 
       def finished?
-        @finished || (autofinish && progress == total)
+        finished || (autofinish && progress == total)
       end
 
       def increment
@@ -67,7 +68,7 @@ class ProgressBar
       end
 
       def finish
-        @finished = true
+        self.finished = true
         self.progress = total
       end
 
