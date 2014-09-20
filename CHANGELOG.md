@@ -1,3 +1,23 @@
+Version v1.6.0 - September 20, 2014
+================================================================================
+
+  Docs
+  ------------------------------------------------------------------------------
+  * Massive CHANGELOG reformatting
+  * Add documentation about the new 'autofinish' feature
+
+  Feature
+  ------------------------------------------------------------------------------
+  * Add ability to disable auto-finish
+  * Add SCSS lint configuration
+  * Update JSHint config with our custom version
+  * Add right-justified percentages - Closes #77
+
+  Bugfix
+  ------------------------------------------------------------------------------
+  * Don't allow title to change for non-TTY output
+  * Percentage formatter failed when total was 0 or unknown
+
 Version v1.5.1 - May 14, 2014
 ================================================================================
 
