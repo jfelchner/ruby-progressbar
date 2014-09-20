@@ -18,7 +18,7 @@ class ProgressBar
       def initialize(options = {})
         self.total           = options.fetch(:total, DEFAULT_TOTAL)
         self.smoothing       = options[:smoothing] || DEFAULT_SMOOTHING
-        self.autofinish      = options.include?(:autofinish) ? options[:autofinish] : true
+        self.autofinish      = options.fetch(:autofinish, true)
 
         start :at => DEFAULT_BEGINNING_POSITION
       end
