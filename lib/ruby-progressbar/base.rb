@@ -103,7 +103,9 @@ class ProgressBar
     end
 
     def title=(title)
-      with_update { super }
+      if output.tty?
+        with_update { super }
+      end
     end
 
     ###
