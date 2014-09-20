@@ -132,7 +132,23 @@ The bar can be stopped in four ways:
 
 * See `#finish` above.
 
-_Note: The bar will be finished automatically if the current value ever becomes equal to the total._
+By default, the bar will be finished automatically if the current value ever
+becomes equal to the total.  If you do not want the bar to autofinish, pass
+`:autofinish => false` when creating your bar.
+
+```ruby
+progressbar = ProgressBar.create(:starting_at => 9, :total => 10)
+progressbar.increment
+
+progressbar.finished? # => true
+```
+
+```ruby
+progressbar = ProgressBar.create(:starting_at => 9, :total => 10, :autofinish => false)
+progressbar.increment
+
+progressbar.finished? # => false
+```
 
 ### Refreshing
 
