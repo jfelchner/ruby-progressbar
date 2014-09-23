@@ -7,6 +7,6 @@ require 'ruby-progressbar/base'
 
 class ProgressBar
   def self.create(*args)
-    ProgressBar::Base.new *args
+    ProgressBar::Base.new(*args)
   end
 end
