@@ -32,7 +32,7 @@ describe ProgressBar::Base do
       progressbar.increment
 
       output.rewind
-      expect(output.read).to match /\raaaaaaaaaaaaaaaaaaaaaaaaa     \r\s+\raaaaaaaaaaaaaaaaaaaaaaaaa\r\z/
+      expect(output.read).to match(/\raaaaaaaaaaaaaaaaaaaaaaaaa     \r\s+\raaaaaaaaaaaaaaaaaaaaaaaaa\r\z/)
     end
 
     context 'and the bar length is calculated' do
@@ -186,7 +186,7 @@ describe ProgressBar::Base do
 
           it 'completes the bar' do
             output.rewind
-            expect(output.read).to match /Progress: \|#{'=' * 68}\|\n/
+            expect(output.read).to match(/Progress: \|#{'=' * 68}\|\n/)
           end
 
           it 'shows the elapsed time instead of the estimated time since the bar is completed' do
@@ -427,7 +427,7 @@ describe ProgressBar::Base do
           progressbar.progress_mark = 'x'
 
           output.rewind
-          expect(output.read).to match /\rProgress: \|xxxxxx#{' ' * 62}\|\r\z/
+          expect(output.read).to match(/\rProgress: \|xxxxxx#{' ' * 62}\|\r\z/)
         end
       end
 
@@ -436,7 +436,7 @@ describe ProgressBar::Base do
           progressbar.remainder_mark = 'x'
 
           output.rewind
-          expect(output.read).to match /\rProgress: \|======#{'x' * 62}\|\r\z/
+          expect(output.read).to match(/\rProgress: \|======#{'x' * 62}\|\r\z/)
         end
       end
 
@@ -445,7 +445,7 @@ describe ProgressBar::Base do
           progressbar.title = 'Items'
 
           output.rewind
-          expect(output.read).to match /\rItems: \|=======#{' ' * 64}\|\r\z/
+          expect(output.read).to match(/\rItems: \|=======#{' ' * 64}\|\r\z/)
         end
       end
 
@@ -454,7 +454,7 @@ describe ProgressBar::Base do
 
         it 'resets the bar back to the starting value' do
           output.rewind
-          expect(output.read).to match /\rProgress: \|#{' ' * 68}\|\r\z/
+          expect(output.read).to match(/\rProgress: \|#{' ' * 68}\|\r\z/)
         end
       end
 
@@ -463,7 +463,7 @@ describe ProgressBar::Base do
 
         it 'forcibly halts the bar wherever it is and cancels it' do
           output.rewind
-          expect(output.read).to match /\rProgress: \|======#{' ' * 62}\|\n\z/
+          expect(output.read).to match(/\rProgress: \|======#{' ' * 62}\|\n\z/)
         end
 
         it 'does not output the bar multiple times if the bar is already stopped' do
@@ -498,7 +498,7 @@ describe ProgressBar::Base do
 
         it 'resets the bar back to the starting value' do
           output.rewind
-          expect(output.read).to match /\rProgress: \|==========#{' ' * 90}\|\r\z/
+          expect(output.read).to matc((/\rProgress: \|==========#{' ' * 90}\|\r\z/))
         end
       end
     end
@@ -509,7 +509,7 @@ describe ProgressBar::Base do
       progressbar.clear
 
       output.rewind
-      expect(output.read).to match /^#{progressbar.send(:clear_string)}/
+      expect(output.read).to match(/^#{progressbar.send(:clear_string)}/)
     end
   end
 
@@ -518,21 +518,21 @@ describe ProgressBar::Base do
       progressbar.start
 
       output.rewind
-      expect(output.read).to match /^#{progressbar.send(:clear_string)}/
+      expect(output.read).to match(/^#{progressbar.send(:clear_string)}/)
     end
 
     it 'prints the bar for the first time' do
       progressbar.start
 
       output.rewind
-      expect(output.read).to match /Progress: \|                                                                    \|\r\z/
+      expect(output.read).to match(/Progress: \|                                                                    \|\r\z/)
     end
 
     it 'prints correctly if passed a position to start at' do
       progressbar.start(:at => 20)
 
       output.rewind
-      expect(output.read).to match /Progress: \|=============                                                       \|\r\z/
+      expect(output.read).to match(/Progress: \|=============                                                       \|\r\z/)
     end
   end
 
@@ -544,7 +544,7 @@ describe ProgressBar::Base do
 
       it 'displays the bar with the correct formatting' do
         output.rewind
-        expect(output.read).to match /Progress: \|==                                                                                                  \|\r\z/
+        expect(output.read).to match(/Progress: \|==                                                                                                  \|\r\z/)
       end
     end
   end
@@ -557,7 +557,7 @@ describe ProgressBar::Base do
         before { progressbar.format }
 
         it 'resets the format back to the default' do
-          expect(progressbar.to_s).to match /^Progress: \|\s+\|\z/
+          expect(progressbar.to_s).to match(/^Progress: \|\s+\|\z/)
         end
       end
 
@@ -565,7 +565,7 @@ describe ProgressBar::Base do
         before { progressbar.format '%t' }
 
         it 'sets it as the new format for the bar' do
-          expect(progressbar.to_s).to match /^Progress\z/
+          expect(progressbar.to_s).to match(/^Progress\z/)
         end
       end
     end
@@ -576,7 +576,7 @@ describe ProgressBar::Base do
           Timecop.freeze do
             progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 0)
 
-            expect(progressbar.to_s('%r')).to match /^0\z/
+            expect(progressbar.to_s('%r')).to match(/^0\z/)
           end
         end
       end
@@ -587,7 +587,7 @@ describe ProgressBar::Base do
             progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
 
             Timecop.travel(2) do
-              expect(progressbar.to_s('%r')).to match /^0\z/
+              expect(progressbar.to_s('%r')).to match(/^0\z/)
             end
           end
 
@@ -595,7 +595,7 @@ describe ProgressBar::Base do
             progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
 
             Timecop.travel(2) do
-              expect(progressbar.to_s('%R')).to match /^0.00\z/
+              expect(progressbar.to_s('%R')).to match(/^0.00\z/)
             end
           end
 
@@ -606,7 +606,7 @@ describe ProgressBar::Base do
               progressbar.progress += 20
 
               Timecop.travel(2) do
-                expect(progressbar.to_s('%r')).to match /^10\z/
+                expect(progressbar.to_s('%r')).to match(/^10\z/)
               end
             end
           end
@@ -618,7 +618,7 @@ describe ProgressBar::Base do
               progressbar.progress += 13
 
               Timecop.travel(2) do
-                expect(progressbar.to_s('%R')).to match /^6.50\z/
+                expect(progressbar.to_s('%R')).to match(/^6.50\z/)
               end
             end
           end
@@ -630,7 +630,7 @@ describe ProgressBar::Base do
               progressbar.progress += 20
 
               Timecop.travel(2) do
-                expect(progressbar.to_s('%r')).to match /^10\z/
+                expect(progressbar.to_s('%r')).to match(/^10\z/)
               end
             end
           end
@@ -642,7 +642,7 @@ describe ProgressBar::Base do
               progressbar.progress += 10
 
               Timecop.travel(6) do
-                expect(progressbar.to_s('%R')).to match /^1.67\z/
+                expect(progressbar.to_s('%R')).to match(/^1.67\z/)
               end
             end
           end
@@ -653,7 +653,7 @@ describe ProgressBar::Base do
             progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20, :rate_scale => lambda { |rate| rate / 2 })
 
             Timecop.travel(2) do
-              expect(progressbar.to_s('%r')).to match /^0\z/
+              expect(progressbar.to_s('%r')).to match(/^0\z/)
             end
           end
 
@@ -661,7 +661,7 @@ describe ProgressBar::Base do
             progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20, :rate_scale => lambda { |rate| rate / 2 })
 
             Timecop.travel(2) do
-              expect(progressbar.to_s('%R')).to match /^0.00\z/
+              expect(progressbar.to_s('%R')).to match(/^0.00\z/)
             end
           end
 
@@ -672,7 +672,7 @@ describe ProgressBar::Base do
               progressbar.progress += 20
 
               Timecop.travel(2) do
-                expect(progressbar.to_s('%r')).to match /^5\z/
+                expect(progressbar.to_s('%r')).to match(/^5\z/)
               end
             end
           end
@@ -684,7 +684,7 @@ describe ProgressBar::Base do
               progressbar.progress += 13
 
               Timecop.travel(2) do
-                expect(progressbar.to_s('%R')).to match /^3.25\z/
+                expect(progressbar.to_s('%R')).to match(/^3.25\z/)
               end
             end
           end
@@ -696,7 +696,7 @@ describe ProgressBar::Base do
               progressbar.progress += 20
 
               Timecop.travel(2) do
-                expect(progressbar.to_s('%r')).to match /^5\z/
+                expect(progressbar.to_s('%r')).to match(/^5\z/)
               end
             end
           end
@@ -708,7 +708,7 @@ describe ProgressBar::Base do
               progressbar.progress += 10
 
               Timecop.travel(6) do
-                expect(progressbar.to_s('%R')).to match /^0.83\z/
+                expect(progressbar.to_s('%R')).to match(/^0.83\z/)
               end
             end
           end
@@ -716,135 +716,135 @@ describe ProgressBar::Base do
       end
 
       it 'displays the title when passed the "%t" format flag' do
-        expect(progressbar.to_s('%t')).to match /^Progress\z/
+        expect(progressbar.to_s('%t')).to match(/^Progress\z/)
       end
 
       it 'displays the title when passed the "%T" format flag' do
-        expect(progressbar.to_s('%T')).to match /^Progress\z/
+        expect(progressbar.to_s('%T')).to match(/^Progress\z/)
       end
 
       it 'displays the bar when passed the "%B" format flag (including empty space)' do
         progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
-        expect(progressbar.to_s('%B')).to match /^#{'=' * 20}#{' ' * 80}\z/
+        expect(progressbar.to_s('%B')).to match(/^#{'=' * 20}#{' ' * 80}\z/)
       end
 
       it 'displays the bar when passed the combined "%b%i" format flags' do
         progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
-        expect(progressbar.to_s('%b%i')).to match /^#{'=' * 20}#{' ' * 80}\z/
+        expect(progressbar.to_s('%b%i')).to match(/^#{'=' * 20}#{' ' * 80}\z/)
       end
 
       it 'displays the bar when passed the "%b" format flag (excluding empty space)' do
         progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
-        expect(progressbar.to_s('%b')).to match /^#{'=' * 20}\z/
+        expect(progressbar.to_s('%b')).to match(/^#{'=' * 20}\z/)
       end
 
       it 'displays the incomplete space when passed the "%i" format flag' do
         progressbar = ProgressBar::Base.new(:length => 100, :starting_at => 20)
-        expect(progressbar.to_s('%i')).to match /^#{' ' * 80}\z/
+        expect(progressbar.to_s('%i')).to match(/^#{' ' * 80}\z/)
       end
 
       it 'displays the bar when passed the "%w" format flag' do
         progressbar = ProgressBar::Base.new(:output => output, :length => 100, :starting_at => 0)
 
-        expect(progressbar.to_s('%w')).to match /^\z/
+        expect(progressbar.to_s('%w')).to match(/^\z/)
         4.times { progressbar.increment }
-        expect(progressbar.to_s('%w')).to match /^====\z/
+        expect(progressbar.to_s('%w')).to match(/^====\z/)
         progressbar.increment
-        expect(progressbar.to_s('%w')).to match /^= 5 =\z/
+        expect(progressbar.to_s('%w')).to match(/^= 5 =\z/)
         5.times { progressbar.increment }
-        expect(progressbar.to_s('%w')).to match /^=== 10 ===\z/
+        expect(progressbar.to_s('%w')).to match(/^=== 10 ===\z/)
         progressbar.decrement
-        expect(progressbar.to_s('%w')).to match /^=== 9 ===\z/
+        expect(progressbar.to_s('%w')).to match(/^=== 9 ===\z/)
         91.times { progressbar.increment }
-        expect(progressbar.to_s('%w')).to match /^#{'=' * 47} 100 #{'=' * 48}\z/
+        expect(progressbar.to_s('%w')).to match(/^#{'=' * 47} 100 #{'=' * 48}\z/)
       end
 
       it 'calculates the remaining negative space properly with an integrated percentage bar of 0 percent' do
         progressbar = ProgressBar::Base.new(:output => output, :length => 100, :total => 200, :starting_at => 0)
 
-        expect(progressbar.to_s('%w%i')).to match /^\s{100}\z/
+        expect(progressbar.to_s('%w%i')).to match(/^\s{100}\z/)
         9.times { progressbar.increment }
-        expect(progressbar.to_s('%w%i')).to match /^====\s{96}\z/
+        expect(progressbar.to_s('%w%i')).to match(/^====\s{96}\z/)
         progressbar.increment
-        expect(progressbar.to_s('%w%i')).to match /^= 5 =\s{95}\z/
+        expect(progressbar.to_s('%w%i')).to match(/^= 5 =\s{95}\z/)
       end
 
       it 'can display a percentage, even if the total is unknown' do
         progressbar = ProgressBar::Base.new(:output => output, :length => 100, :total => nil, :starting_at => 0)
 
-        expect(progressbar.to_s('%p')).to match /\A0\z/
-        expect(progressbar.to_s('%P')).to match /\A0\.0\z/
+        expect(progressbar.to_s('%p')).to match(/\A0\z/)
+        expect(progressbar.to_s('%P')).to match(/\A0\.0\z/)
       end
 
       it 'can display a percentage, even if the total is zero' do
         progressbar = ProgressBar::Base.new(:output => output, :length => 100, :total => 0, :starting_at => 0)
 
-        expect(progressbar.to_s('%p')).to match /\A100\z/
-        expect(progressbar.to_s('%P')).to match /\A100\.0\z/
+        expect(progressbar.to_s('%p')).to match(/\A100\z/)
+        expect(progressbar.to_s('%P')).to match(/\A100\.0\z/)
       end
 
       it 'displays the current capacity when passed the "%c" format flag' do
         progressbar = ProgressBar::Base.new(:output => output, :starting_at => 0)
 
-        expect(progressbar.to_s('%c')).to match /^0\z/
+        expect(progressbar.to_s('%c')).to match(/^0\z/)
         progressbar.increment
-        expect(progressbar.to_s('%c')).to match /^1\z/
+        expect(progressbar.to_s('%c')).to match(/^1\z/)
         progressbar.decrement
-        expect(progressbar.to_s('%c')).to match /^0\z/
+        expect(progressbar.to_s('%c')).to match(/^0\z/)
       end
 
       it 'displays the total capacity when passed the "%C" format flag' do
         progressbar = ProgressBar::Base.new(:total => 100)
 
-        expect(progressbar.to_s('%C')).to match /^100\z/
+        expect(progressbar.to_s('%C')).to match(/^100\z/)
       end
 
       it 'displays the percentage complete when passed the "%p" format flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
 
-        expect(progressbar.to_s('%p')).to match /^16\z/
+        expect(progressbar.to_s('%p')).to match(/^16\z/)
       end
 
       it 'displays the justified percentage complete when passed the "%j" format flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
 
-        expect(progressbar.to_s('%j')).to match /^ 16\z/
+        expect(progressbar.to_s('%j')).to match(/^ 16\z/)
       end
 
       it 'displays the percentage complete when passed the "%P" format flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
 
-        expect(progressbar.to_s('%P')).to match /^16.50\z/
+        expect(progressbar.to_s('%P')).to match(/^16.50\z/)
       end
 
       it 'displays the justified percentage complete when passed the "%J" format flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
 
-        expect(progressbar.to_s('%J')).to match /^ 16.50\z/
+        expect(progressbar.to_s('%J')).to match(/^ 16.50\z/)
       end
 
       it 'displays only up to 2 decimal places when using the "%P" flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 66, :total => 99)
 
-        expect(progressbar.to_s('%P')).to match /^66.66\z/
+        expect(progressbar.to_s('%P')).to match(/^66.66\z/)
       end
 
       it 'displays a literal percent sign when using the "%%" flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 66, :total => 99)
 
-        expect(progressbar.to_s('%%')).to match /^%\z/
+        expect(progressbar.to_s('%%')).to match(/^%\z/)
       end
 
       it 'displays a literal percent sign when using the "%%" flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 66, :total => 99)
 
-        expect(progressbar.to_s('%%')).to match /^%\z/
+        expect(progressbar.to_s('%%')).to match(/^%\z/)
       end
 
       # Autostarting for now.  This will be applicable later.
       # context "when called before #start" do
         # it "displays unknown time elapsed when using the %a flag" do
-        # expect(progressbar.to_s('%a')).to match /^Time: --:--:--\z/
+        # expect(progressbar.to_s('%a')).to match(/^Time: --:--:--\z/)
         # end
       # end
 
@@ -859,19 +859,19 @@ describe ProgressBar::Base do
           before { progressbar.reset }
 
           it 'displays "??:??:??" until finished when passed the %e flag' do
-            expect(progressbar.to_s('%a')).to match /^Time: --:--:--\z/
+            expect(progressbar.to_s('%a')).to match(/^Time: --:--:--\z/)
           end
         end
 
         it 'displays the time elapsed when using the "%a" flag' do
-          expect(progressbar.to_s('%a')).to match /^Time: 01:02:03\z/
+          expect(progressbar.to_s('%a')).to match(/^Time: 01:02:03\z/)
         end
       end
 
       context 'when called before #start' do
         it 'displays unknown time until finished when passed the "%e" flag' do
           progressbar = ProgressBar::Base.new
-          expect(progressbar.to_s('%e')).to match /^ ETA: \?\?:\?\?:\?\?\z/
+          expect(progressbar.to_s('%e')).to match(/^ ETA: \?\?:\?\?:\?\?\z/)
         end
       end
 
@@ -889,12 +889,12 @@ describe ProgressBar::Base do
           before { progressbar.reset }
 
           it 'displays "??:??:??" until finished when passed the "%e" flag' do
-            expect(progressbar.to_s('%e')).to match /^ ETA: \?\?:\?\?:\?\?\z/
+            expect(progressbar.to_s('%e')).to match(/^ ETA: \?\?:\?\?:\?\?\z/)
           end
         end
 
         it 'displays the estimated time remaining when using the "%e" flag' do
-          expect(progressbar.to_s('%e')).to match /^ ETA: 01:02:03\z/
+          expect(progressbar.to_s('%e')).to match(/^ ETA: 01:02:03\z/)
         end
       end
 
@@ -909,15 +909,15 @@ describe ProgressBar::Base do
         end
 
         it 'displays "> 4 Days" until finished when passed the "%E" flag' do
-          expect(progressbar.to_s('%E')).to match /^ ETA: > 4 Days\z/
+          expect(progressbar.to_s('%E')).to match(/^ ETA: > 4 Days\z/)
         end
 
         it 'displays "??:??:??" until finished when passed the "%e" flag' do
-          expect(progressbar.to_s('%e')).to match /^ ETA: \?\?:\?\?:\?\?\z/
+          expect(progressbar.to_s('%e')).to match(/^ ETA: \?\?:\?\?:\?\?\z/)
         end
 
         it 'displays the exact estimated time until finished when passed the "%f" flag' do
-          expect(progressbar.to_s('%f')).to match /^ ETA: 100:00:00\z/
+          expect(progressbar.to_s('%f')).to match(/^ ETA: 100:00:00\z/)
         end
       end
     end
