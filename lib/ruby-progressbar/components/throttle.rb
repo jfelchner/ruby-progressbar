@@ -5,6 +5,7 @@ class ProgressBar
 
       def initialize(options = {})
         @period = options.delete(:throttle_rate) { 0.01 } || 0.01
+        reset
       end
 
       def choke(force = false, &block)

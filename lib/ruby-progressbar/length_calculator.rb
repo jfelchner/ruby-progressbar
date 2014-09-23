@@ -3,6 +3,7 @@ class ProgressBar
     def initialize(options)
       @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH'] || options[:length]
       @length_override = @length_override.to_i if @length_override
+      @current_length = nil
 
       super()
     end

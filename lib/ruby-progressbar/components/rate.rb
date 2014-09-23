@@ -8,6 +8,7 @@ class ProgressBar
 
       def initialize(options = {})
         self.rate_scale = options[:rate_scale]
+        as(Timer).reset
 
         super
       end

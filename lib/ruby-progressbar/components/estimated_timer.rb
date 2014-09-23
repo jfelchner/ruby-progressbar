@@ -8,6 +8,7 @@ class ProgressBar
 
       def initialize(options = {})
         @out_of_bounds_time_format = nil
+        as(Timer).reset
         super
       end
 
