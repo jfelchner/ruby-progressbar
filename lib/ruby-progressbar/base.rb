@@ -143,9 +143,12 @@ class ProgressBar
       "#<ProgressBar:#{progress}/#{total || 'unknown'}>"
     end
 
+  protected
+
+    attr_accessor :output,
+                  :last_update_length
+
   private
-    attr_accessor   :output,
-                    :last_update_length
 
     def clear_string
       "#{" " * length}"
