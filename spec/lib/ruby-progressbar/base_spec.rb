@@ -498,7 +498,7 @@ describe ProgressBar::Base do
 
         it 'resets the bar back to the starting value' do
           output.rewind
-          expect(output.read).to matc((/\rProgress: \|==========#{' ' * 90}\|\r\z/))
+          expect(output.read).to match(/\rProgress: \|==========#{' ' * 90}\|\r\z/)
         end
       end
     end
