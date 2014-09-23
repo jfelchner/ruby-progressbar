@@ -5,6 +5,11 @@ class ProgressBar
     module Timer
       TIME_FORMAT = '%02d:%02d:%02d'
 
+      def initialize
+        @started_at = nil
+        @stopped_at = nil
+      end
+
       def start
         @started_at = stopped? ? now - (@stopped_at - @started_at) : now
         @stopped_at = nil
