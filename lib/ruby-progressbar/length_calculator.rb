@@ -39,7 +39,7 @@ class ProgressBar
       require 'io/console'
 
       def dynamic_width
-        rows, columns = IO.console.winsize
+        _rows, columns = IO.console.winsize
         columns
       end
     rescue LoadError
