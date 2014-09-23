@@ -7,6 +7,7 @@ class ProgressBar
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       def initialize(options = {})
+        @out_of_bounds_time_format = nil
         super
       end
 
