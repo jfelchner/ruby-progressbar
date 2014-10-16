@@ -25,10 +25,12 @@ class ProgressBar
       end
 
       def started?
+        @started_at ||= nil
         !!@started_at
       end
 
       def stopped?
+        @stopped_at ||= nil
         !!@stopped_at
       end
 

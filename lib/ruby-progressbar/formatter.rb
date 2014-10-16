@@ -30,6 +30,7 @@ class ProgressBar
 
   private
     def format_string=(format_string)
+      @format_string ||= nil
       if @format_string != format_string
         @format_string = format_string
         @format        = ProgressBar::Format::Base.new(format_string)

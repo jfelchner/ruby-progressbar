@@ -4,6 +4,7 @@ class ProgressBar
       @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH'] || options[:length]
       @length_override = @length_override.to_i if @length_override
 
+      @current_length = nil
       super()
     end
 
@@ -39,7 +40,7 @@ class ProgressBar
       require 'io/console'
 
       def dynamic_width
-        rows, columns = IO.console.winsize
+        _rows, columns = IO.console.winsize
         columns
       end
     rescue LoadError
