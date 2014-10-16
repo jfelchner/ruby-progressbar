@@ -6,7 +6,7 @@ class ProgressBar
     DEFAULT_OUTPUT_STREAM = $stdout
 
     def initialize(options = {})
-      self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
+      @output           = options[:output] || DEFAULT_OUTPUT_STREAM
       autostart         = options.fetch(:autostart, true)
 
       super(options)
@@ -112,7 +112,7 @@ class ProgressBar
     # Output
     #
     def clear
-      self.last_update_length = 0
+      @last_update_length = 0
 
       if output.tty?
         output.print clear_string
@@ -143,10 +143,9 @@ class ProgressBar
       "#<ProgressBar:#{progress}/#{total || 'unknown'}>"
     end
 
-  private
-    attr_accessor   :output,
-                    :last_update_length
+    attr_reader :output
 
+  private
     def clear_string
       "#{" " * length}"
     end
@@ -196,7 +195,7 @@ class ProgressBar
           output_string    = formatted_string[last_update_length..-1]
         end
 
-        self.last_update_length = formatted_string.length
+        @last_update_length = formatted_string.length
 
         output.print output_string + eol
         output.flush
