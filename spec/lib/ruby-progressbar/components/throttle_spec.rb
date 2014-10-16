@@ -1,4 +1,4 @@
-require 'rspectacular'
+require 'spec_helper'
 
 describe ProgressBar::Components::Throttle do
   context 'given a numeric period' do
