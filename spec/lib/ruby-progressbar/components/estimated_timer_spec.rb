@@ -1,4 +1,4 @@
-require 'rspectacular'
+require 'spec_helper'
 require 'support/time'
 
 describe ProgressBar::Components::EstimatedTimer do
