@@ -1,4 +1,4 @@
-require 'rspectacular'
+require 'spec_helper'
 
 describe ProgressBar::Components::Bar do
   context 'when a new bar is created' do

@@ -1,4 +1,4 @@
-require 'rspectacular'
+require 'spec_helper'
 
 class ProgressableClass
   include ProgressBar::Components::Progressable
