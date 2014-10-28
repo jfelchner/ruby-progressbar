@@ -1,55 +1,77 @@
 # Vendored Dependencies
-**/vendor/bundler_gems
 node_modules
-vendor/*
-
-# Database Files
-**/db/*.sqlite3
-**/db/schema.rb
-**/db/structure*.sql
-
-# Default Uploads Location
+bower_components
+vendor
 
 # OS Files
 .DS_Store
 Thumbs.db
 
 # Testing Files
-coverage
 rerun.txt
 pickle-email-*.html
+capybara*
+public/uploads
+public/assets/src
+test/data
 
 # Cache Files
-**/public/stylesheets/*.css
 .sass-cache
-public/system/
+public/system
+spec/reports
 tags
+.rake_tasks
+.yardoc
+_yardoc
 
-# Local Configuration Files
-**/config/secrets.yml
-database.yml
-.foreman
-.rspec
-.rvmrc
-.bundle
-
-# Temporary files
-**/log/**
-**/tmp/**
-*.swp
-*.swo
-**.orig
-**/*.log
-connect.lock
-libpeerconnection.log
-npm-debug.log
-testem.log
-dump.rdb
-
-# Compiled Files
+# Local Compiled Files
+**/public/stylesheets/*.css
 *.rbc
+*.so
+*.o
+*.a
+coverage
+coverage.data
+rdoc
+docs
 dist
 pkg
+
+# Local Configuration Files
+secrets.yml
+database.yml
+config.yml
+.env.yml
+.env
+.bundle
+.foreman
+.idea
+.rspec
+.rvmrc
+.railsrc
+.bundle
+nbproject
+*.project
+*.bundle
+*.tmproj
+.chamber.pem
+.chamber.pem.enc
+Gemfile.local
+
+# Temporary files
+log
+tmp
+*.swp
+*.swo
+*.orig
+*.log*
+*.lock
+*.sqlite3
+*.sqlite3-journal
+dump.rdb
+
+# Always keep Gemfile.lock
+!Gemfile.lock
 
 # Always Version .keep and .gitkeep files
 !.keep
