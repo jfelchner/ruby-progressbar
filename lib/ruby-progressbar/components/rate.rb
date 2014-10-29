@@ -8,6 +8,7 @@ class ProgressBar
 
       def initialize(options = {})
         self.rate_scale = options[:rate_scale]
+        as(Timer).reset
 
         super
       end
@@ -49,7 +50,7 @@ class ProgressBar
       end
 
       class As
-        private *instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ }
+        private(*instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ })
 
         def initialize(subject, ancestor)
           @subject = subject

@@ -144,8 +144,18 @@ class ProgressBar
     end
 
   private
-    attr_accessor   :output,
-                    :last_update_length
+
+    def output
+      @output
+    end
+
+    def output= output
+      @output = output
+    end
+
+    def last_update_length= last_update_length
+      @last_update_length = last_update_length
+    end
 
     def clear_string
       "#{" " * length}"
