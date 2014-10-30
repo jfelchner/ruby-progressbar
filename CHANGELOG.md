@@ -1,3 +1,25 @@
+Version v1.6.1 - October 30, 2014
+================================================================================
+
+  Uncategorized
+  ------------------------------------------------------------------------------
+  * Update readme about output option
+  * Display warnings when testing
+
+  Bugfix
+  ------------------------------------------------------------------------------
+  * Remove warnings from uninitialized instance variable
+  * Instance variable @started_at not initialized
+  * Instance variable @out_of_bounds_time_format not initialized
+  * Change private attributes to protected
+  * `*' interpreted as argument prefix
+  * Prefix assigned but unused variables with underscores
+  * Ambiguous first argument
+
+  Docs
+  ------------------------------------------------------------------------------
+  * Add CHANGELOG entries for v1.6.0
+
 Version v1.6.0 - September 20, 2014
 ================================================================================
 
