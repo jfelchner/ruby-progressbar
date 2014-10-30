@@ -1,6 +1,7 @@
+require 'ruby-progressbar/length_calculator'
+
 class ProgressBar
   class Base
-    include ProgressBar::LengthCalculator
     include ProgressBar::Formatter
 
     DEFAULT_OUTPUT_STREAM = $stdout
@@ -11,6 +12,7 @@ class ProgressBar
 
       super(options)
 
+      @length_calc      = LengthCalculator.new(options)
       @bar              = Components::Bar.new(options)
       @rate             = Components::Rate.new(options)
       @estimated_time   = Components::EstimatedTimer.new(options)
@@ -151,7 +153,7 @@ class ProgressBar
   private
 
     def clear_string
-      "#{" " * length}"
+      "#{" " * @length_calc.length}"
     end
 
     def last_update_length
@@ -183,9 +185,9 @@ class ProgressBar
     end
 
     def update(options = {})
-      if length_changed?
+      if @length_calc.length_changed?
         clear
-        reset_length
+        @length_calc.reset_length
       end
 
       @throttle.choke( stopped? || options[:force] ) do
