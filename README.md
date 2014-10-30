@@ -105,7 +105,7 @@ The following are the list of options you can use:
 * `:remainder_mark` - _(Defaults to ` `)_ The mark which indicates the remaining amount of progress to be made.
 * `:format` - _(Defaults to `%t: |%B|`)_ The format string which determines how the bar is displayed.  See [**Formatting**](#formatting) below.
 * `:length` - _(Defaults to full width if possible, otherwise `80`)_ The preferred width of the entire progress bar including any format options.
-* `:output` - _(Defaults to `STDOUT`)_ All output will be sent to this object.  Can be any object which responds to `.print`.
+* `:output` - _(Defaults to `STDOUT`)_ All output will be sent to this object.  Can be any object which responds to `.print` `.flush` `.tty?` `.puts`.
 * `:smoothing` - _(Defaults to `0.1`)_ See [**Smoothing Out Estimated Time Jitters**](#smoothing-out-estimated-time-jitters) below.
 * `:throttle_rate` - _(Defaults to `0.01`)_ See [**Throttling**](#throttling) below.
 * `:unknown_progress_animation_steps` - _(Defaults to `['=---', '-=--', '--=-', '---=']`)_ See [**Unknown Progress**](#unknown-progress) The graphical elements used to cycle when progress is changed but the total amount of items being processed is unknown.
