@@ -3,6 +3,11 @@ class ProgressBar
     class ElapsedTimer
       include Timer
 
+      def initialize
+        @started_at = nil
+        @stopped_at = nil
+      end
+
       def to_s
         "Time: #{elapsed_time}"
       end

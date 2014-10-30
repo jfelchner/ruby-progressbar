@@ -7,6 +7,10 @@ class ProgressBar
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       def initialize(options = {})
+        @out_of_bounds_time_format = nil
+        @starting_at               = nil
+        @stopped_at                = nil
+
         super
       end
 
@@ -66,7 +70,7 @@ class ProgressBar
       end
 
       class As
-        private *instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ }
+        private(*instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ })
 
         def initialize(subject, ancestor)
           @subject = subject

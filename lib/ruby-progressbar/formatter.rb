@@ -5,6 +5,7 @@ class ProgressBar
     DEFAULT_TITLE                 = 'Progress'
 
     def initialize(options)
+      @format_string     = nil
       self.format_string = options[:format] || DEFAULT_FORMAT_STRING
       @title             = options[:title]  || DEFAULT_TITLE
 
