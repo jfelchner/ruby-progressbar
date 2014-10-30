@@ -21,12 +21,12 @@ describe ProgressBar::Base do
     it 'can properly handle outputting the bar when the length changes on the fly to less than the minimum width' do
       progressbar = ProgressBar::Base.new(:output => output, :title => 'a' * 25, :format => '%t%B', :throttle_rate => 0.0)
 
-      allow(progressbar).to receive(:terminal_width).
+      allow(progressbar.instance_variable_get(:@length_calc)).to receive(:terminal_width).
                             and_return 30
 
       progressbar.start
 
-      allow(progressbar).to receive(:terminal_width).
+      allow(progressbar.instance_variable_get(:@length_calc)).to receive(:terminal_width).
                             and_return 20
 
       progressbar.increment
@@ -39,7 +39,7 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :starting_at => 5, :total => 10, :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
+        allow(progressbar.instance_variable_get(:@length_calc)).to receive(:terminal_width).
                               and_return 20
 
         expect(progressbar.to_s('%t%w')).to eql '*********************'
@@ -50,7 +50,7 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
+        allow(progressbar.instance_variable_get(:@length_calc)).to receive(:terminal_width).
                               and_return 20
 
         expect(progressbar.to_s('%t%i')).to eql '*********************'
@@ -59,7 +59,7 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :starting_at => 5, :total => 10, :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
+        allow(progressbar.instance_variable_get(:@length_calc)).to receive(:terminal_width).
                               and_return 20
 
         expect(progressbar.to_s('%t%i')).to eql '*********************'
@@ -70,7 +70,7 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 19), :starting_at => 5, :total => 10, :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
+        allow(progressbar.instance_variable_get(:@length_calc)).to receive(:terminal_width).
                               and_return 20
 
         expect(progressbar.to_s('%t%B')).to eql '******************* '
@@ -79,7 +79,7 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 19), :starting_at => 5, :total => 10, :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
+        allow(progressbar.instance_variable_get(:@length_calc)).to receive(:terminal_width).
                               and_return 20
 
         expect(progressbar.to_s('%t%w%i')).to eql '******************* '
@@ -110,7 +110,7 @@ describe ProgressBar::Base do
 
           it 'returns the length of the environment variable as an integer' do
             progressbar = ProgressBar::Base.new
-            expect(progressbar.send(:length)).to eql 44
+            expect(progressbar.instance_variable_get(:@length_calc).send(:length)).to eql 44
           end
         end
 
@@ -120,21 +120,21 @@ describe ProgressBar::Base do
           context 'but the length option was passed in' do
             it 'returns the length specified in the option' do
               progressbar = ProgressBar::Base.new(:length => 88)
-              expect(progressbar.send(:length)).to eql 88
+              expect(progressbar.instance_variable_get(:@length_calc).send(:length)).to eql 88
             end
           end
 
           context 'and no length option was passed in' do
             it 'returns the width of the terminal if it is a Unix environment' do
-              allow(progressbar).to receive(:terminal_width).and_return(99)
-              progressbar.send(:reset_length)
-              expect(progressbar.send(:length)).to eql 99
+              allow(progressbar.instance_variable_get(:@length_calc)).to receive(:terminal_width).and_return(99)
+              progressbar.instance_variable_get(:@length_calc).send(:reset_length)
+              expect(progressbar.instance_variable_get(:@length_calc).send(:length)).to eql 99
             end
 
             it 'returns 80 if it is not a Unix environment' do
-              allow(progressbar).to receive(:unix?).and_return(false)
-              progressbar.send(:reset_length)
-              expect(progressbar.send(:length)).to eql 80
+              allow(progressbar.instance_variable_get(:@length_calc)).to receive(:unix?).and_return(false)
+              progressbar.instance_variable_get(:@length_calc).send(:reset_length)
+              expect(progressbar.instance_variable_get(:@length_calc).send(:length)).to eql 80
             end
           end
         end
@@ -158,7 +158,7 @@ describe ProgressBar::Base do
 
       describe '#length' do
         it 'returns the overridden length' do
-          expect(progressbar.send(:length)).to eql 88
+          expect(progressbar.instance_variable_get(:@length_calc).send(:length)).to eql 88
         end
       end
     end

@@ -8,8 +8,6 @@ class ProgressBar
       @format_string     = nil
       self.format_string = options[:format] || DEFAULT_FORMAT_STRING
       @title             = options[:title]  || DEFAULT_TITLE
-
-      super(options)
     end
 
     def format(new_format_string = DEFAULT_FORMAT_STRING)
