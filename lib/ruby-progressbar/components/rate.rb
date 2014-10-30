@@ -8,6 +8,8 @@ class ProgressBar
 
       def initialize(options = {})
         self.rate_scale = options[:rate_scale]
+        @started_at     = nil
+        @stopped_at     = nil
 
         super
       end
