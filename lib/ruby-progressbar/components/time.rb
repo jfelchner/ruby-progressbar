@@ -23,6 +23,23 @@ class ProgressBar
         "Time: #{elapsed}"
       end
 
+      def estimated_time_with_no_oob
+        self.out_of_bounds_time_format = nil
+        estimated_with_elapsed_fallback
+      end
+
+      def estimated_time_with_unknown_oob
+        self.out_of_bounds_time_format = :unknown
+        estimated_with_elapsed_fallback
+      end
+
+      def estimated_time_with_friendly_oob
+        self.out_of_bounds_time_format = :friendly
+        estimated_with_elapsed_fallback
+      end
+
+    private
+
       def estimated
         return '??:??:??' if @progress.running_average.zero? || @progress.total.nil? || @timer.reset?
 
@@ -42,23 +59,6 @@ class ProgressBar
 
         sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
       end
-
-      def estimated_time_with_no_oob
-        self.out_of_bounds_time_format = nil
-        estimated_with_elapsed_fallback
-      end
-
-      def estimated_time_with_unknown_oob
-        self.out_of_bounds_time_format = :unknown
-        estimated_with_elapsed_fallback
-      end
-
-      def estimated_time_with_friendly_oob
-        self.out_of_bounds_time_format = :friendly
-        estimated_with_elapsed_fallback
-      end
-
-    private
 
       def estimated_with_elapsed_fallback
         @progress.finished? ? elapsed_with_label : estimated_with_label
