@@ -23,7 +23,6 @@ class ProgressBar
       @bar              = Components::Bar.new(options.merge(:progress => @progress))
       @rate             = Components::Rate.new(options.merge(:timer => @timer, :progress => @progress))
       @estimated_time   = Components::EstimatedTimer.new(options.merge(:timer => @timer, :progress => @progress))
-      @elapsed_time     = Components::ElapsedTimer.new({:timer => @timer})
 
       start :at => options[:starting_at] if autostart
     end
@@ -237,7 +236,7 @@ class ProgressBar
     end
 
     def elapsed_time
-      @elapsed_time
+      @estimated_time.elapsed_time_to_s
     end
 
     def estimated_time_with_no_oob
@@ -276,7 +275,7 @@ class ProgressBar
     end
 
     def estimated_time
-      finished? ? @elapsed_time : @estimated_time
+      finished? ? @estimated_time.elapsed_time_to_s : @estimated_time
     end
   end
 end
