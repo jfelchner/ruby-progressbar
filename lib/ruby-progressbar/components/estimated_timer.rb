@@ -1,25 +1,12 @@
 class ProgressBar
   module Components
     class EstimatedTimer
-      include Progressable
-
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       def initialize(options = {})
         @out_of_bounds_time_format = nil
-        @starting_at               = nil
-        @stopped_at                = nil
         @timer                     = options[:timer]
-
-        super
-      end
-
-      def start(options = {})
-        as(Progressable).start(options)
-      end
-
-      def reset
-        as(Progressable).reset
+        @progressable              = options[:progress]
       end
 
       def out_of_bounds_time_format=(format)
@@ -34,7 +21,7 @@ class ProgressBar
 
     private
       def estimated_time
-        return '??:??:??' if running_average.zero? || total.nil? || @timer.reset?
+        return '??:??:??' if @progressable.running_average.zero? || @progressable.total.nil? || @timer.reset?
 
         hours, minutes, seconds = *@timer.divide_seconds(estimated_seconds_remaining)
 
@@ -46,7 +33,7 @@ class ProgressBar
       end
 
       def estimated_seconds_remaining
-        (@timer.elapsed_seconds * (self.total / self.running_average  - 1)).round
+        (@timer.elapsed_seconds * (@progressable.total / @progressable.running_average  - 1)).round
       end
 
       def out_of_bounds_time
@@ -55,32 +42,6 @@ class ProgressBar
           '??:??:??'
         when :friendly
           '> 4 Days'
-        end
-      end
-
-      def as(ancestor, &blk)
-        @__as ||= {}
-        unless r = @__as[ancestor]
-          r = (@__as[ancestor] = As.new(self, ancestor))
-        end
-        r.instance_eval(&blk) if block_given?
-        r
-      end
-
-      class As
-        private(*instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ })
-
-        def initialize(subject, ancestor)
-          @subject = subject
-          @ancestor = ancestor
-        end
-
-        def start(*args, &blk)
-          @ancestor.instance_method(:start).bind(@subject).call(*args,&blk)
-        end
-
-        def method_missing(sym, *args, &blk)
-          @ancestor.instance_method(sym).bind(@subject).call(*args,&blk)
         end
       end
     end
