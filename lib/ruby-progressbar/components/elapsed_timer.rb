@@ -17,7 +17,7 @@ class ProgressBar
 
         hours, minutes, seconds = @timer.divide_seconds(@timer.elapsed_whole_seconds)
 
-        sprintf ProgressBar::Components::Timer::TIME_FORMAT, hours, minutes, seconds
+        sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
       end
     end
   end

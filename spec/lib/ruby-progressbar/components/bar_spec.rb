@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ProgressBar::Components::Bar do
-  let(:progressable) { ProgressBar::Components::Progressable.new(:total => progress_total) }
+  let(:progress) { ProgressBar::Progress.new(:total => progress_total) }
   let(:progress_total) { 100 }
 
   context 'when a new bar is created' do
@@ -23,7 +23,7 @@ describe ProgressBar::Components::Bar do
 
     context 'and options are passed' do
       let(:progress_total) { 12 }
-      before { @progressbar = ProgressBar::Components::Bar.new(:progress_mark => 'x', :remainder_mark => '.', :progress => progressable) }
+      before { @progressbar = ProgressBar::Components::Bar.new(:progress_mark => 'x', :remainder_mark => '.', :progress => progress) }
 
       describe '#progress_mark' do
         it 'returns the overridden mark' do
@@ -42,9 +42,9 @@ describe ProgressBar::Components::Bar do
   context 'when just begun' do
     let(:progress_total) { 50 }
     before do
-      @progressbar = ProgressBar::Components::Bar.new(:progress => progressable)
+      @progressbar = ProgressBar::Components::Bar.new(:progress => progress)
       @progressbar.length = 100
-      progressable.start
+      progress.start
     end
 
     describe '#to_s' do
@@ -58,13 +58,13 @@ describe ProgressBar::Components::Bar do
     let(:progress_total) { 50 }
 
     before do
-      @progressbar = ProgressBar::Components::Bar.new(:progress => progressable)
+      @progressbar = ProgressBar::Components::Bar.new(:progress => progress)
       @progressbar.length = 100
-      progressable.start
+      progress.start
     end
 
     context 'and the bar is incremented' do
-      before { progressable.increment }
+      before { progress.increment }
 
       describe '#to_s' do
         it 'displays the bar with an indication of progress' do
@@ -83,9 +83,9 @@ describe ProgressBar::Components::Bar do
   context 'when a fraction of a percentage has been completed' do
     let(:progress_total) { 200 }
     before do
-      @progressbar = ProgressBar::Components::Bar.new(:progress => progressable)
+      @progressbar = ProgressBar::Components::Bar.new(:progress => progress)
       @progressbar.length = 100
-      progressable.start :at => 1
+      progress.start :at => 1
     end
 
     describe '#to_s' do
@@ -98,13 +98,13 @@ describe ProgressBar::Components::Bar do
   context 'when completed' do
     let(:progress_total) { 50 }
     before do
-      @progressbar = ProgressBar::Components::Bar.new(:progress => progressable)
+      @progressbar = ProgressBar::Components::Bar.new(:progress => progress)
       @progressbar.length = 100
-      progressable.start :at => 50
+      progress.start :at => 50
     end
 
     context 'and the bar is incremented' do
-      before { progressable.increment }
+      before { progress.increment }
 
       describe '#to_s' do
         it 'displays the bar as 100% complete' do
@@ -114,7 +114,7 @@ describe ProgressBar::Components::Bar do
     end
 
     context 'and the bar is decremented' do
-      before { progressable.decrement }
+      before { progress.decrement }
 
       describe '#to_s' do
         it 'displays the bar as 98% complete' do
@@ -135,8 +135,8 @@ describe ProgressBar::Components::Bar do
       let(:progress_total) { 10 }
 
       it 'raises an error' do
-        @progressbar = ProgressBar::Components::Bar.new(:progress => progressable)
-        expect { progressable.start :at => 11 }.to raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
+        @progressbar = ProgressBar::Components::Bar.new(:progress => progress)
+        expect { progress.start :at => 11 }.to raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
       end
     end
   end

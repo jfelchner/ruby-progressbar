@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe ProgressBar::Components::Throttle do
-  let(:timer) { ProgressBar::Components::Timer.new(:time => Time) }
+describe ProgressBar::Throttle do
+  let(:timer) { ProgressBar::Timer.new(:time => Time) }
 
   context 'given a numeric period' do
     before do
       Timecop.freeze(0) {
-        @throttle = ProgressBar::Components::Throttle.new(:throttle_rate => 10,
+        @throttle = ProgressBar::Throttle.new(:throttle_rate => 10,
                                                           :timer         => timer)
       }
     end
@@ -84,7 +84,7 @@ describe ProgressBar::Components::Throttle do
   context 'given no throttle period' do
     before do
       Timecop.freeze(0) {
-        @throttle = ProgressBar::Components::Throttle.new(:timer => timer)
+        @throttle = ProgressBar::Throttle.new(:timer => timer)
       }
     end
 

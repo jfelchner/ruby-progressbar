@@ -8,14 +8,14 @@ class ProgressBar
       attr_accessor :progress_mark
       attr_accessor :remainder_mark
       attr_accessor :length
-      attr_accessor :progressable
+      attr_accessor :progress
       attr_accessor :unknown_progress_animation_steps
 
       def initialize(options = {})
         self.unknown_progress_animation_steps = options[:unknown_progress_animation_steps] || DEFAULT_UNKNOWN_PROGRESS_ANIMATION_STEPS
         self.progress_mark                    = options[:progress_mark]                    || DEFAULT_PROGRESS_MARK
         self.remainder_mark                   = options[:remainder_mark]                   || DEFAULT_REMAINDER_MARK
-        self.progressable                     = options[:progress]
+        self.progress                         = options[:progress]
       end
 
       def to_s(options = {:format => :standard})
@@ -27,7 +27,7 @@ class ProgressBar
       def integrated_percentage_complete_string
         return standard_complete_string if completed_length < 5
 
-        " #{@progressable.percentage_completed} ".to_s.center(completed_length, progress_mark)
+        " #{@progress.percentage_completed} ".to_s.center(completed_length, progress_mark)
       end
 
       def standard_complete_string
@@ -37,8 +37,8 @@ class ProgressBar
       def empty_string
         incomplete_length = (length - completed_length)
 
-        if @progressable.total.nil?
-          current_animation_step = @progressable.progress % unknown_progress_animation_steps.size
+        if @progress.total.nil?
+          current_animation_step = @progress.progress % unknown_progress_animation_steps.size
           animation_graphic      = unknown_progress_animation_steps[current_animation_step]
 
           unknown_incomplete_string = animation_graphic * ((incomplete_length / unknown_progress_animation_steps.size) + 2)
@@ -51,7 +51,7 @@ class ProgressBar
 
     private
       def completed_length
-        (length * @progressable.percentage_completed / 100).floor
+        (length * @progress.percentage_completed / 100).floor
       end
     end
   end

@@ -1,8 +1,7 @@
 require 'ruby-progressbar/errors/invalid_progress_error'
 
 class ProgressBar
-  module Components
-    class Progressable
+    class Progress
       DEFAULT_TOTAL              = 100
       DEFAULT_BEGINNING_POSITION = 0
       DEFAULT_SMOOTHING          = 0.1
@@ -108,5 +107,4 @@ class ProgressBar
         self.running_average = RunningAverageCalculator.calculate(self.running_average, self.progress_made, self.smoothing)
       end
     end
-  end
 end

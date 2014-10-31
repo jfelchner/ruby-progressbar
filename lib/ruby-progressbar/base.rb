@@ -15,14 +15,15 @@ class ProgressBar
       self.format_string = options[:format] || DEFAULT_FORMAT_STRING
       @title             = options[:title]  || DEFAULT_TITLE
 
-      @timer            = Components::Timer.new(options)
-      @progressable     = Components::Progressable.new(options)
+      @timer            = Timer.new(options)
+      @progress         = Progress.new(options)
+      @throttle         = Throttle.new(options.merge(:timer => @timer))
       @length_calc      = LengthCalculator.new(options)
-      @bar              = Components::Bar.new(options.merge(:progress => @progressable))
-      @rate             = Components::Rate.new(options.merge(:timer => @timer, :progress => @progressable))
-      @estimated_time   = Components::EstimatedTimer.new(options.merge(:timer => @timer, :progress => @progressable))
+
+      @bar              = Components::Bar.new(options.merge(:progress => @progress))
+      @rate             = Components::Rate.new(options.merge(:timer => @timer, :progress => @progress))
+      @estimated_time   = Components::EstimatedTimer.new(options.merge(:timer => @timer, :progress => @progress))
       @elapsed_time     = Components::ElapsedTimer.new({:timer => @timer})
-      @throttle         = Components::Throttle.new(options.merge(:timer => @timer))
 
       start :at => options[:starting_at] if autostart
     end
@@ -31,7 +32,7 @@ class ProgressBar
       clear
 
       with_update do
-        @progressable.start(options)
+        @progress.start(options)
         @timer.start
       end
     end
@@ -53,7 +54,7 @@ class ProgressBar
     end
 
     def finish
-      with_update { @progressable.finish; @timer.stop } unless finished?
+      with_update { @progress.finish; @timer.stop } unless finished?
     end
 
     def pause
@@ -70,7 +71,7 @@ class ProgressBar
 
     def reset
       with_update do
-        @progressable.reset
+        @progress.reset
         @timer.reset
       end
     end
@@ -82,11 +83,11 @@ class ProgressBar
     alias :paused? :stopped?
 
     def finished?
-      @progressable.finished?
+      @progress.finished?
     end
 
     def started?
-      @timer.started? && @progressable.started?
+      @timer.started? && @progress.started?
     end
 
     def progress_mark=(mark)
@@ -109,11 +110,11 @@ class ProgressBar
     end
 
     def progress
-      @progressable.progress
+      @progress.progress
     end
 
     def total
-      @progressable.total
+      @progress.total
     end
 
     def clear
@@ -165,7 +166,7 @@ class ProgressBar
 
     def update_progress(*args)
       with_update do
-        @progressable.send(*args)
+        @progress.send(*args)
         @timer.stop if finished?
       end
     end
@@ -220,19 +221,19 @@ class ProgressBar
     end
 
     def percentage
-      @progressable.percentage_completed
+      @progress.percentage_completed
     end
 
     def justified_percentage
-      @progressable.percentage_completed.to_s.rjust(3)
+      @progress.percentage_completed.to_s.rjust(3)
     end
 
     def percentage_with_precision
-      @progressable.percentage_completed_with_precision
+      @progress.percentage_completed_with_precision
     end
 
     def justified_percentage_with_precision
-      @progressable.percentage_completed_with_precision.to_s.rjust(6)
+      @progress.percentage_completed_with_precision.to_s.rjust(6)
     end
 
     def elapsed_time

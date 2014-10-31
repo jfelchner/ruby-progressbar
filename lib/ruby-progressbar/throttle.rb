@@ -1,5 +1,4 @@
 class ProgressBar
-  module Components
     class Throttle
       def initialize(options = {})
         @period     = options.delete(:throttle_rate) { 0.01 } || 0.01
@@ -14,5 +13,4 @@ class ProgressBar
         end
       end
     end
-  end
 end
