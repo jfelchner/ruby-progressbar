@@ -23,19 +23,19 @@ class ProgressBar
         "Time: #{elapsed}"
       end
 
-      def estimated_time_with_no_oob
+      def estimated_with_no_oob
         self.out_of_bounds_time_format = nil
 
         estimated_with_elapsed_fallback
       end
 
-      def estimated_time_with_unknown_oob
+      def estimated_with_unknown_oob
         self.out_of_bounds_time_format = :unknown
 
         estimated_with_elapsed_fallback
       end
 
-      def estimated_time_with_friendly_oob
+      def estimated_with_friendly_oob
         self.out_of_bounds_time_format = :friendly
 
         estimated_with_elapsed_fallback
