@@ -323,7 +323,7 @@ describe ProgressBar::Base do
   end
 
   context 'when a bar is about to be completed' do
-    let(:progressbar) { ProgressBar::Base.new(:starting_at => 5, :total => 6, :output => output, :length => 20) }
+    let(:progressbar) { ProgressBar::Base.new(:starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0) }
 
     context 'and it is incremented' do
       before { progressbar.increment }

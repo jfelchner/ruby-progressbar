@@ -15,12 +15,13 @@ class ProgressBar
       self.format_string = options[:format] || DEFAULT_FORMAT_STRING
       @title             = options[:title]  || DEFAULT_TITLE
 
+      @timer            = Components::Timer.new(options)
       @length_calc      = LengthCalculator.new(options)
       @bar              = Components::Bar.new(options)
-      @rate             = Components::Rate.new(options)
-      @estimated_time   = Components::EstimatedTimer.new(options)
-      @elapsed_time     = Components::ElapsedTimer.new
-      @throttle         = Components::Throttle.new(options)
+      @rate             = Components::Rate.new(options.merge(:timer => @timer))
+      @estimated_time   = Components::EstimatedTimer.new(options.merge(:timer => @timer))
+      @elapsed_time     = Components::ElapsedTimer.new({:timer => @timer})
+      @throttle         = Components::Throttle.new(options.merge(:timer => @timer))
 
       start :at => options[:starting_at] if autostart
     end
@@ -83,7 +84,7 @@ class ProgressBar
     end
 
     def stopped?
-      (@estimated_time.stopped? && @elapsed_time.stopped?) || finished?
+      @timer.stopped? || finished?
     end
 
     alias :paused? :stopped?
@@ -93,7 +94,7 @@ class ProgressBar
     end
 
     def started?
-      @estimated_time.started? && @elapsed_time.started? && @bar.started?
+      @timer.started? && @bar.started?
     end
 
     ###
@@ -183,9 +184,7 @@ class ProgressBar
     end
 
     def with_timers(*args)
-      @estimated_time.send(*args)
-      @elapsed_time.send(*args)
-      @rate.send(*args)
+      @timer.send(*args)
     end
 
     def update_progress(*args)

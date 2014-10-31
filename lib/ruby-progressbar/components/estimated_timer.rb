@@ -1,7 +1,6 @@
 class ProgressBar
   module Components
     class EstimatedTimer
-      include Timer
       include Progressable
 
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
@@ -10,17 +9,16 @@ class ProgressBar
         @out_of_bounds_time_format = nil
         @starting_at               = nil
         @stopped_at                = nil
+        @timer                     = options[:timer]
 
         super
       end
 
       def start(options = {})
-        as(Timer).start
         as(Progressable).start(options)
       end
 
       def reset
-        as(Timer).reset
         as(Progressable).reset
       end
 
@@ -36,19 +34,19 @@ class ProgressBar
 
     private
       def estimated_time
-        return '??:??:??' if running_average.zero? || total.nil?
+        return '??:??:??' if running_average.zero? || total.nil? || @timer.reset?
 
-        hours, minutes, seconds = *divide_seconds(estimated_seconds_remaining)
+        hours, minutes, seconds = *@timer.divide_seconds(estimated_seconds_remaining)
 
         if hours > 99 && @out_of_bounds_time_format
           out_of_bounds_time
         else
-          sprintf TIME_FORMAT, hours, minutes, seconds
+          sprintf ProgressBar::Components::Timer::TIME_FORMAT, hours, minutes, seconds
         end
       end
 
       def estimated_seconds_remaining
-        (elapsed_seconds * (self.total / self.running_average  - 1)).round
+        (@timer.elapsed_seconds * (self.total / self.running_average  - 1)).round
       end
 
       def out_of_bounds_time

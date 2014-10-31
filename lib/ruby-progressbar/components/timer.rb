@@ -2,18 +2,22 @@ require 'ruby-progressbar/time'
 
 class ProgressBar
   module Components
-    module Timer
+    class Timer
       TIME_FORMAT = '%02d:%02d:%02d'
 
+      def initialize(options = {})
+        self.time = options[:time] || ProgressBar::Time
+      end
+
       def start
-        @started_at = stopped? ? now - (@stopped_at - @started_at) : now
+        @started_at = stopped? ? time.now - (@stopped_at - @started_at) : time.now
         @stopped_at = nil
       end
 
       def stop
         return unless started?
 
-        @stopped_at = now
+        @stopped_at = time.now
       end
 
       def pause
@@ -37,13 +41,12 @@ class ProgressBar
         @stopped_at = nil
       end
 
-    private
-      def now
-        ProgressBar::Time.now
+      def reset?
+        !@started_at
       end
 
       def elapsed_seconds
-        ((@stopped_at || now) - @started_at)
+        ((@stopped_at || time.now) - @started_at)
       end
 
       def elapsed_whole_seconds
@@ -64,6 +67,10 @@ class ProgressBar
 
         [hours, minutes, seconds]
       end
+
+      protected
+
+      attr_accessor :time
     end
   end
 end

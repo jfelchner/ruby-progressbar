@@ -1,11 +1,10 @@
 class ProgressBar
   module Components
     class ElapsedTimer
-      include Timer
-
-      def initialize
+      def initialize(options = {})
         @started_at = nil
         @stopped_at = nil
+        @timer      = options[:timer]
       end
 
       def to_s
@@ -14,11 +13,11 @@ class ProgressBar
 
     private
       def elapsed_time
-        return '--:--:--' unless started?
+        return '--:--:--' unless @timer.started?
 
-        hours, minutes, seconds = divide_seconds(elapsed_whole_seconds)
+        hours, minutes, seconds = @timer.divide_seconds(@timer.elapsed_whole_seconds)
 
-        sprintf TIME_FORMAT, hours, minutes, seconds
+        sprintf ProgressBar::Components::Timer::TIME_FORMAT, hours, minutes, seconds
       end
     end
   end
