@@ -53,7 +53,7 @@ class ProgressBar
     private
 
       def estimated
-        return '??:??:??' if progress.running_average.zero? || progress.total.nil? || timer.reset?
+        return '??:??:??' if progress.unknown? || timer.stopped?
 
         hours, minutes, seconds = *timer.divide_seconds(estimated_seconds_remaining)
 
