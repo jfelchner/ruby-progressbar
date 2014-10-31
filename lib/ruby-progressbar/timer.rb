@@ -2,8 +2,6 @@ require 'ruby-progressbar/time'
 
 class ProgressBar
     class Timer
-      TIME_FORMAT = '%02d:%02d:%02d'
-
       def initialize(options = {})
         self.time = options[:time] || ProgressBar::Time
       end
