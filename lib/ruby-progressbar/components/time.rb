@@ -43,6 +43,25 @@ class ProgressBar
         sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
       end
 
+      def estimated_time_with_no_oob
+        self.out_of_bounds_time_format = nil
+        estimated_time
+      end
+
+      def estimated_time_with_unknown_oob
+        self.out_of_bounds_time_format = :unknown
+        estimated_time
+      end
+
+      def estimated_time_with_friendly_oob
+        self.out_of_bounds_time_format = :friendly
+        estimated_time
+      end
+
+      def estimated_time
+        @progress.finished? ? elapsed_with_label : estimated_with_label
+      end
+
     private
 
       def estimated_seconds_remaining

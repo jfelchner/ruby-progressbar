@@ -235,25 +235,6 @@ class ProgressBar
       @progress.percentage_completed_with_precision.to_s.rjust(6)
     end
 
-    def elapsed_time
-      @time.elapsed_with_label
-    end
-
-    def estimated_time_with_no_oob
-      @time.out_of_bounds_time_format = nil
-      estimated_time
-    end
-
-    def estimated_time_with_unknown_oob
-      @time.out_of_bounds_time_format = :unknown
-      estimated_time
-    end
-
-    def estimated_time_with_friendly_oob
-      @time.out_of_bounds_time_format = :friendly
-      estimated_time
-    end
-
     def bar(length)
       @bar.length = length
       @bar.standard_complete_string
@@ -272,10 +253,6 @@ class ProgressBar
     def bar_with_percentage(length)
       @bar.length = length
       @bar.integrated_percentage_complete_string
-    end
-
-    def estimated_time
-      finished? ? @time.elapsed_with_label : @time.estimated_with_label
     end
   end
 end
