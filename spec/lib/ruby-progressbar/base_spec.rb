@@ -347,7 +347,7 @@ describe ProgressBar::Base do
   end
 
   context 'when a bar with autofinish=false is about to be completed' do
-    let(:progressbar) { ProgressBar::Base.new(:autofinish => false, :starting_at => 5, :total => 6, :output => output, :length => 20) }
+    let(:progressbar) { ProgressBar::Base.new(:autofinish => false, :starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0) }
 
     context 'and it is incremented' do
       before { progressbar.increment }
@@ -385,7 +385,7 @@ describe ProgressBar::Base do
 
         output.rewind
 
-        expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\n"
+        expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\rProgress: |========|\n"
       end
     end
   end
