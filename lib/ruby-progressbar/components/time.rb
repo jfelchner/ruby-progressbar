@@ -20,7 +20,7 @@ class ProgressBar
       end
 
       def elapsed_with_label
-        "Time: #{elapsed_time}"
+        "Time: #{elapsed}"
       end
 
       def estimated
@@ -35,7 +35,7 @@ class ProgressBar
         end
       end
 
-      def elapsed_time
+      def elapsed
         return '--:--:--' unless @timer.started?
 
         hours, minutes, seconds = @timer.divide_seconds(@timer.elapsed_whole_seconds)
