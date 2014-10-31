@@ -58,11 +58,11 @@ class ProgressBar
         estimated_with_elapsed_fallback
       end
 
+    private
+
       def estimated_with_elapsed_fallback
         @progress.finished? ? elapsed_with_label : estimated_with_label
       end
-
-    private
 
       def estimated_seconds_remaining
         (@timer.elapsed_seconds * (@progress.total / @progress.running_average  - 1)).round
