@@ -1,7 +1,6 @@
 class ProgressBar
   module Components
     class Rate
-      include Timer
       include Progressable
 
       attr_accessor :rate_scale
@@ -10,22 +9,21 @@ class ProgressBar
         self.rate_scale = options[:rate_scale]
         @started_at     = nil
         @stopped_at     = nil
+        @timer          = options[:timer]
 
         super
       end
 
       def start(options = {})
-        as(Timer).start
         as(Progressable).start(options)
       end
 
       def reset
-        as(Timer).reset
         as(Progressable).reset
       end
 
       def to_s(format_string = "%i")
-        elapsed = elapsed_whole_seconds.to_f
+        elapsed = @timer.elapsed_whole_seconds.to_f
         return 0 unless elapsed > 0
 
         base_rate   = (progress_made / elapsed)
