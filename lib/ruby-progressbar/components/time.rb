@@ -1,6 +1,7 @@
 class ProgressBar
   module Components
     class Time
+      TIME_FORMAT      = '%02d:%02d:%02d'
       OOB_TIME_FORMATS = [:unknown, :friendly, nil]
       ESTIMATED_LABEL  = ' ETA'
       ELAPSED_LABEL    = 'Time'
@@ -59,7 +60,7 @@ class ProgressBar
         if hours > 99 && out_of_bounds_time_format
           out_of_bounds_time
         else
-          sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
+          sprintf TIME_FORMAT, hours, minutes, seconds
         end
       end
 
@@ -68,7 +69,7 @@ class ProgressBar
 
         hours, minutes, seconds = timer.divide_seconds(timer.elapsed_whole_seconds)
 
-        sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
+        sprintf TIME_FORMAT, hours, minutes, seconds
       end
 
       def estimated_with_elapsed_fallback
