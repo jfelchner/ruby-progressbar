@@ -1,7 +1,7 @@
 class ProgressBar
   module Components
     class Time
-      VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
+      OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       def initialize(options = {})
         @out_of_bounds_time_format = nil
@@ -10,7 +10,7 @@ class ProgressBar
       end
 
       def out_of_bounds_time_format=(format)
-        raise "Invalid Out Of Bounds time format.  Valid formats are #{VALID_OOB_TIME_FORMATS.inspect}" unless VALID_OOB_TIME_FORMATS.include? format
+        raise "Invalid Out Of Bounds time format.  Valid formats are #{OOB_TIME_FORMATS.inspect}" unless OOB_TIME_FORMATS.include? format
 
         @out_of_bounds_time_format = format
       end
