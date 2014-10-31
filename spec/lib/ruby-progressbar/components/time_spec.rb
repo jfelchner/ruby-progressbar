@@ -86,7 +86,7 @@ describe ProgressBar::Components::Time do
           end
 
           context 'and the out of bounds time format has been set to "friendly"' do
-            before { @time.out_of_bounds_time_format = :friendly }
+            before { @time.send(:out_of_bounds_time_format=, :friendly) }
 
             it 'displays "> 4 Days" remaining' do
               expect(@time.estimated_with_label).to eql ' ETA: > 4 Days'
@@ -94,7 +94,7 @@ describe ProgressBar::Components::Time do
           end
 
           context 'and the out of bounds time format has been set to "unknown"' do
-            before { @time.out_of_bounds_time_format = :unknown }
+            before { @time.send(:out_of_bounds_time_format=, :unknown) }
 
             it 'displays "??:??:??" remaining' do
               expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
@@ -154,7 +154,7 @@ describe ProgressBar::Components::Time do
           end
 
           context 'and the out of bounds time format has been set to "friendly"' do
-            before { @time.out_of_bounds_time_format = :friendly }
+            before { @time.send(:out_of_bounds_time_format=, :friendly) }
 
             it 'displays "> 4 Days" remaining' do
               expect(@time.estimated_with_label).to eql ' ETA: > 4 Days'
@@ -162,7 +162,7 @@ describe ProgressBar::Components::Time do
           end
 
           context 'and the out of bounds time format has been set to "unknown"' do
-            before { @time.out_of_bounds_time_format = :unknown }
+            before { @time.send(:out_of_bounds_time_format=, :unknown) }
 
             it 'displays "??:??:??" remaining' do
               expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
@@ -271,7 +271,7 @@ describe ProgressBar::Components::Time do
     context 'when set to an invalid format' do
       it 'raises an exception' do
         @time = ProgressBar::Components::Time.new(:total => 100, :timer => timer, :progress => progress)
-        expect { @time.out_of_bounds_time_format = :foo }.to raise_error('Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]')
+        expect { @time.send(:out_of_bounds_time_format=, :foo) }.to raise_error('Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]')
       end
     end
   end
