@@ -25,6 +25,12 @@ class ProgressBar
 
         format_string % scaled_rate
       end
+
+      alias_method :rate_of_change, :to_s
+
+      def rate_of_change_with_precision
+        to_s("%.2f")
+      end
     end
   end
 end
