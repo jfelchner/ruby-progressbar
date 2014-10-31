@@ -34,8 +34,8 @@ class ProgressBar
       clear
 
       with_update do
-        with_progressables(:start, options)
-        with_timers(:start)
+        @progressable.start(options)
+        @timer.start
       end
     end
 
@@ -62,25 +62,25 @@ class ProgressBar
     # Stopping The Bar
     #
     def finish
-      with_update { with_progressables(:finish); with_timers(:stop) } unless finished?
+      with_update { @progressable.finish; @timer.stop } unless finished?
     end
 
     def pause
-      with_update { with_timers(:pause) } unless paused?
+      with_update { @timer.pause } unless paused?
     end
 
     def stop
-      with_update { with_timers(:stop) } unless stopped?
+      with_update { @timer.stop } unless stopped?
     end
 
     def resume
-      with_update { with_timers(:resume) } if stopped?
+      with_update { @timer.resume } if stopped?
     end
 
     def reset
       with_update do
         @progressable.reset
-        with_timers(:reset)
+        @timer.reset
       end
     end
 
@@ -178,18 +178,10 @@ class ProgressBar
       @last_update_length ||= 0
     end
 
-    def with_progressables(*args)
-      @progressable.send(*args)
-    end
-
-    def with_timers(*args)
-      @timer.send(*args)
-    end
-
     def update_progress(*args)
       with_update do
-        with_progressables(*args)
-        with_timers(:stop) if finished?
+        @progressable.send(*args)
+        @timer.stop if finished?
       end
     end
 
