@@ -16,7 +16,7 @@ describe ProgressBar::Components::Time do
     end
   end
 
-  describe '#to_s' do
+  describe '#estimated_with_label' do
     context 'when the timer has been started but no progress has been made' do
       before do
         @time = ProgressBar::Components::Time.new(:total => 100,
@@ -27,13 +27,13 @@ describe ProgressBar::Components::Time do
       end
 
       it 'displays an unknown time remaining' do
-        expect(@time.to_s).to eql ' ETA: ??:??:??'
+        expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
       end
 
       context 'and it is incremented' do
         it 'should not display unknown time remaining' do
           progress.increment
-          expect(@time.to_s).not_to eql ' ETA: ??:??:??'
+          expect(@time.estimated_with_label).not_to eql ' ETA: ??:??:??'
         end
       end
     end
@@ -57,7 +57,7 @@ describe ProgressBar::Components::Time do
             before { 20.times { progress.decrement } }
 
             it 'displays the correct time remaining' do
-              expect(@time.to_s).to eql ' ETA: 08:38:28'
+              expect(@time.estimated_with_label).to eql ' ETA: 08:38:28'
             end
           end
 
@@ -65,12 +65,12 @@ describe ProgressBar::Components::Time do
             before { progress.reset }
 
             it 'displays unknown time remaining' do
-              expect(@time.to_s).to eql ' ETA: ??:??:??'
+              expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
             end
           end
 
           it 'displays the correct time remaining' do
-            expect(@time.to_s).to eql ' ETA: 03:42:12'
+            expect(@time.estimated_with_label).to eql ' ETA: 03:42:12'
           end
         end
 
@@ -89,7 +89,7 @@ describe ProgressBar::Components::Time do
             before { @time.out_of_bounds_time_format = :friendly }
 
             it 'displays "> 4 Days" remaining' do
-              expect(@time.to_s).to eql ' ETA: > 4 Days'
+              expect(@time.estimated_with_label).to eql ' ETA: > 4 Days'
             end
           end
 
@@ -97,12 +97,12 @@ describe ProgressBar::Components::Time do
             before { @time.out_of_bounds_time_format = :unknown }
 
             it 'displays "??:??:??" remaining' do
-              expect(@time.to_s).to eql ' ETA: ??:??:??'
+              expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
             end
           end
 
           it 'displays the correct time remaining' do
-            expect(@time.to_s).to eql ' ETA: 100:00:00'
+            expect(@time.estimated_with_label).to eql ' ETA: 100:00:00'
           end
         end
       end
@@ -125,7 +125,7 @@ describe ProgressBar::Components::Time do
             before { 20.times { progress.decrement } }
 
             it 'displays the correct time remaining' do
-              expect(@time.to_s).to eql ' ETA: 08:14:34'
+              expect(@time.estimated_with_label).to eql ' ETA: 08:14:34'
             end
           end
 
@@ -133,12 +133,12 @@ describe ProgressBar::Components::Time do
             before { progress.reset }
 
             it 'displays unknown time remaining' do
-              expect(@time.to_s).to eql ' ETA: ??:??:??'
+              expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
             end
           end
 
           it 'displays the correct time remaining' do
-            expect(@time.to_s).to eql ' ETA: 03:51:16'
+            expect(@time.estimated_with_label).to eql ' ETA: 03:51:16'
           end
         end
 
@@ -157,7 +157,7 @@ describe ProgressBar::Components::Time do
             before { @time.out_of_bounds_time_format = :friendly }
 
             it 'displays "> 4 Days" remaining' do
-              expect(@time.to_s).to eql ' ETA: > 4 Days'
+              expect(@time.estimated_with_label).to eql ' ETA: > 4 Days'
             end
           end
 
@@ -165,12 +165,12 @@ describe ProgressBar::Components::Time do
             before { @time.out_of_bounds_time_format = :unknown }
 
             it 'displays "??:??:??" remaining' do
-              expect(@time.to_s).to eql ' ETA: ??:??:??'
+              expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
             end
           end
 
           it 'displays the correct time remaining' do
-            expect(@time.to_s).to eql ' ETA: 105:33:20'
+            expect(@time.estimated_with_label).to eql ' ETA: 105:33:20'
           end
         end
       end
@@ -188,7 +188,7 @@ describe ProgressBar::Components::Time do
         results = (1..progress_total).map do |i|
           Timecop.freeze(t + 0.5 * i)
           progress.increment
-          time.to_s
+          time.estimated_with_label
         end
 
         expect(results).to eql([
