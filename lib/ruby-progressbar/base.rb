@@ -236,7 +236,7 @@ class ProgressBar
     end
 
     def elapsed_time
-      @time.elapsed_time_to_s
+      @time.elapsed_with_label
     end
 
     def estimated_time_with_no_oob
@@ -275,7 +275,7 @@ class ProgressBar
     end
 
     def estimated_time
-      finished? ? @time.elapsed_time_to_s : @time.estimated_with_label
+      finished? ? @time.elapsed_with_label : @time.estimated_with_label
     end
   end
 end

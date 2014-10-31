@@ -210,19 +210,19 @@ describe ProgressBar::Components::Time do
     end
   end
 
-  describe '#elapsed_time_to_s' do
+  describe '#elapsed_with_label' do
     before { @time = ProgressBar::Components::Time.new(:smoothing => smoothing, :timer => timer, :progress => progress) }
 
     context 'when the timer has not been started' do
       it 'displays "Time: --:--:--"' do
-        expect(@time.elapsed_time_to_s).to eql 'Time: --:--:--'
+        expect(@time.elapsed_with_label).to eql 'Time: --:--:--'
       end
     end
 
     context 'when it has just been started' do
       it 'displays "Time: 00:00:00"' do
         timer.start
-        expect(@time.elapsed_time_to_s).to eql 'Time: 00:00:00'
+        expect(@time.elapsed_with_label).to eql 'Time: 00:00:00'
       end
     end
 
@@ -244,12 +244,12 @@ describe ProgressBar::Components::Time do
           before { timer.reset }
 
           it 'displays "Time: --:--:--"' do
-            expect(@time.elapsed_time_to_s).to eql 'Time: --:--:--'
+            expect(@time.elapsed_with_label).to eql 'Time: --:--:--'
           end
         end
 
         it 'displays "Time: 04:27:41"' do
-          expect(@time.elapsed_time_to_s).to eql 'Time: 04:27:41'
+          expect(@time.elapsed_with_label).to eql 'Time: 04:27:41'
         end
       end
 
@@ -257,12 +257,12 @@ describe ProgressBar::Components::Time do
         before { timer.reset }
 
         it 'displays "Time: --:--:--"' do
-          expect(@time.elapsed_time_to_s).to eql 'Time: --:--:--'
+          expect(@time.elapsed_with_label).to eql 'Time: --:--:--'
         end
       end
 
       it 'displays "Time: 04:28:13"' do
-        expect(@time.elapsed_time_to_s).to eql 'Time: 04:28:13'
+        expect(@time.elapsed_with_label).to eql 'Time: 04:28:13'
       end
     end
   end

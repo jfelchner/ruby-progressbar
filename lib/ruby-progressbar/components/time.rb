@@ -19,7 +19,7 @@ class ProgressBar
         " ETA: #{estimated_time}"
       end
 
-      def elapsed_time_to_s
+      def elapsed_with_label
         "Time: #{elapsed_time}"
       end
 
