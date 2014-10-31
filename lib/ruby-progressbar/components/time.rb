@@ -2,6 +2,8 @@ class ProgressBar
   module Components
     class Time
       OOB_TIME_FORMATS = [:unknown, :friendly, nil]
+      ESTIMATED_LABEL  = ' ETA'
+      ELAPSED_LABEL    = 'Time'
 
       def initialize(options = {})
         self.out_of_bounds_time_format = nil
@@ -10,11 +12,11 @@ class ProgressBar
       end
 
       def estimated_with_label
-        " ETA: #{estimated}"
+        "#{ESTIMATED_LABEL}: #{estimated}"
       end
 
       def elapsed_with_label
-        "Time: #{elapsed}"
+        "#{ELAPSED_LABEL}: #{elapsed}"
       end
 
       def estimated_with_no_oob
