@@ -2,7 +2,7 @@ require 'ruby-progressbar/errors/invalid_progress_error'
 
 class ProgressBar
   module Components
-    module Progressable
+    class Progressable
       DEFAULT_TOTAL              = 100
       DEFAULT_BEGINNING_POSITION = 0
       DEFAULT_SMOOTHING          = 0.1

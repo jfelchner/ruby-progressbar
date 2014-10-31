@@ -16,10 +16,11 @@ class ProgressBar
       @title             = options[:title]  || DEFAULT_TITLE
 
       @timer            = Components::Timer.new(options)
+      @progressable     = Components::Progressable.new(options)
       @length_calc      = LengthCalculator.new(options)
-      @bar              = Components::Bar.new(options)
-      @rate             = Components::Rate.new(options.merge(:timer => @timer))
-      @estimated_time   = Components::EstimatedTimer.new(options.merge(:timer => @timer))
+      @bar              = Components::Bar.new(options.merge(:progress => @progressable))
+      @rate             = Components::Rate.new(options.merge(:timer => @timer, :progress => @progressable))
+      @estimated_time   = Components::EstimatedTimer.new(options.merge(:timer => @timer, :progress => @progressable))
       @elapsed_time     = Components::ElapsedTimer.new({:timer => @timer})
       @throttle         = Components::Throttle.new(options.merge(:timer => @timer))
 
@@ -78,7 +79,7 @@ class ProgressBar
 
     def reset
       with_update do
-        @bar.reset
+        @progressable.reset
         with_timers(:reset)
       end
     end
@@ -90,11 +91,11 @@ class ProgressBar
     alias :paused? :stopped?
 
     def finished?
-      @estimated_time.finished? && @bar.finished?
+      @progressable.finished?
     end
 
     def started?
-      @timer.started? && @bar.started?
+      @timer.started? && @progressable.started?
     end
 
     ###
@@ -120,11 +121,11 @@ class ProgressBar
     end
 
     def progress
-      @bar.progress
+      @progressable.progress
     end
 
     def total
-      @bar.total
+      @progressable.total
     end
 
     ###
@@ -178,9 +179,7 @@ class ProgressBar
     end
 
     def with_progressables(*args)
-      @bar.send(*args)
-      @estimated_time.send(*args)
-      @rate.send(*args)
+      @progressable.send(*args)
     end
 
     def with_timers(*args)
@@ -244,19 +243,19 @@ class ProgressBar
     end
 
     def percentage
-      @bar.percentage_completed
+      @progressable.percentage_completed
     end
 
     def justified_percentage
-      @bar.percentage_completed.to_s.rjust(3)
+      @progressable.percentage_completed.to_s.rjust(3)
     end
 
     def percentage_with_precision
-      @bar.percentage_completed_with_precision
+      @progressable.percentage_completed_with_precision
     end
 
     def justified_percentage_with_precision
-      @bar.percentage_completed_with_precision.to_s.rjust(6)
+      @progressable.percentage_completed_with_precision.to_s.rjust(6)
     end
 
     def elapsed_time
