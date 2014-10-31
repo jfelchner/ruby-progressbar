@@ -27,9 +27,6 @@ class ProgressBar
       start :at => options[:starting_at] if autostart
     end
 
-    ###
-    # Starting The Bar
-    #
     def start(options = {})
       clear
 
@@ -39,9 +36,6 @@ class ProgressBar
       end
     end
 
-    ###
-    # Updating The Bar's Progress
-    #
     def decrement
       update_progress(:decrement)
     end
@@ -58,9 +52,6 @@ class ProgressBar
       update_progress(:total=, new_total)
     end
 
-    ###
-    # Stopping The Bar
-    #
     def finish
       with_update { @progressable.finish; @timer.stop } unless finished?
     end
@@ -98,9 +89,6 @@ class ProgressBar
       @timer.started? && @progressable.started?
     end
 
-    ###
-    # UI Updates
-    #
     def progress_mark=(mark)
       with_update { @bar.progress_mark = mark }
     end
@@ -128,9 +116,6 @@ class ProgressBar
       @progressable.total
     end
 
-    ###
-    # Output
-    #
     def clear
       self.last_update_length = 0
 
