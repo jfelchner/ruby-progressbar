@@ -16,14 +16,14 @@ class ProgressBar
       end
 
       def estimated_with_label
-        " ETA: #{estimated_time}"
+        " ETA: #{estimated}"
       end
 
       def elapsed_with_label
         "Time: #{elapsed_time}"
       end
 
-      def estimated_time
+      def estimated
         return '??:??:??' if @progress.running_average.zero? || @progress.total.nil? || @timer.reset?
 
         hours, minutes, seconds = *@timer.divide_seconds(estimated_seconds_remaining)
