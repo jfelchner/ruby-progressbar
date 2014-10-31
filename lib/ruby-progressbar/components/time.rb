@@ -4,9 +4,9 @@ class ProgressBar
       OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       def initialize(options = {})
-        @out_of_bounds_time_format = nil
-        @timer                     = options[:timer]
-        @progress                  = options[:progress]
+        self.out_of_bounds_time_format = nil
+        self.timer                     = options[:timer]
+        self.progress                  = options[:progress]
       end
 
       def estimated_with_label
@@ -37,6 +37,10 @@ class ProgressBar
 
     protected
 
+      attr_accessor :out_of_bounds_time_format,
+                    :timer,
+                    :progress
+
       def out_of_bounds_time_format=(format)
         raise "Invalid Out Of Bounds time format.  Valid formats are #{OOB_TIME_FORMATS.inspect}" unless OOB_TIME_FORMATS.include? format
 
@@ -46,11 +50,11 @@ class ProgressBar
     private
 
       def estimated
-        return '??:??:??' if @progress.running_average.zero? || @progress.total.nil? || @timer.reset?
+        return '??:??:??' if progress.running_average.zero? || progress.total.nil? || timer.reset?
 
-        hours, minutes, seconds = *@timer.divide_seconds(estimated_seconds_remaining)
+        hours, minutes, seconds = *timer.divide_seconds(estimated_seconds_remaining)
 
-        if hours > 99 && @out_of_bounds_time_format
+        if hours > 99 && out_of_bounds_time_format
           out_of_bounds_time
         else
           sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
@@ -58,23 +62,23 @@ class ProgressBar
       end
 
       def elapsed
-        return '--:--:--' unless @timer.started?
+        return '--:--:--' unless timer.started?
 
-        hours, minutes, seconds = @timer.divide_seconds(@timer.elapsed_whole_seconds)
+        hours, minutes, seconds = timer.divide_seconds(timer.elapsed_whole_seconds)
 
         sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
       end
 
       def estimated_with_elapsed_fallback
-        @progress.finished? ? elapsed_with_label : estimated_with_label
+        progress.finished? ? elapsed_with_label : estimated_with_label
       end
 
       def estimated_seconds_remaining
-        (@timer.elapsed_seconds * (@progress.total / @progress.running_average  - 1)).round
+        (timer.elapsed_seconds * (progress.total / progress.running_average  - 1)).round
       end
 
       def out_of_bounds_time
-        case @out_of_bounds_time_format
+        case out_of_bounds_time_format
         when :unknown
           '??:??:??'
         when :friendly
