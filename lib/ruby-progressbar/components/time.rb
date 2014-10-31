@@ -9,12 +9,6 @@ class ProgressBar
         @progress                  = options[:progress]
       end
 
-      def out_of_bounds_time_format=(format)
-        raise "Invalid Out Of Bounds time format.  Valid formats are #{OOB_TIME_FORMATS.inspect}" unless OOB_TIME_FORMATS.include? format
-
-        @out_of_bounds_time_format = format
-      end
-
       def estimated_with_label
         " ETA: #{estimated}"
       end
@@ -39,6 +33,14 @@ class ProgressBar
         self.out_of_bounds_time_format = :friendly
 
         estimated_with_elapsed_fallback
+      end
+
+    protected
+
+      def out_of_bounds_time_format=(format)
+        raise "Invalid Out Of Bounds time format.  Valid formats are #{OOB_TIME_FORMATS.inspect}" unless OOB_TIME_FORMATS.include? format
+
+        @out_of_bounds_time_format = format
       end
 
     private
