@@ -2,14 +2,14 @@ require 'rspectacular'
 
 describe ProgressBar::Format::Molecule do
   describe '#new' do
-    before { @molecule = ProgressBar::Format::Molecule.new('e') }
+    before { @molecule = ProgressBar::Format::Molecule.new('t') }
 
     it 'sets the key when initialized' do
-      expect(@molecule.key).to eql 'e'
+      expect(@molecule.key).to eql 't'
     end
 
     it 'sets the method name when initialized' do
-      expect(@molecule.method_name).to eql :estimated_time_with_unknown_oob
+      expect(@molecule.method_name).to eql :title
     end
   end
 
