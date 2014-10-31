@@ -210,6 +210,63 @@ describe ProgressBar::Components::EstimatedTimer do
     end
   end
 
+  describe '#elapsed_time_to_s' do
+    before { @estimated_time = ProgressBar::Components::EstimatedTimer.new(:smoothing => smoothing, :timer => timer, :progress => progress) }
+
+    context 'when the timer has not been started' do
+      it 'displays "Time: --:--:--"' do
+        expect(@estimated_time.elapsed_time_to_s).to eql 'Time: --:--:--'
+      end
+    end
+
+    context 'when it has just been started' do
+      it 'displays "Time: 00:00:00"' do
+        timer.start
+        expect(@estimated_time.elapsed_time_to_s).to eql 'Time: 00:00:00'
+      end
+    end
+
+    context 'when it was started 4 hours, 28 minutes and 13 seconds ago' do
+      before do
+        Timecop.travel(-16093) do
+          timer.start
+        end
+      end
+
+      context 'and it was stopped 32 seconds ago' do
+        before do
+          Timecop.travel(-32) do
+            timer.stop
+          end
+        end
+
+        context 'and #reset is called' do
+          before { timer.reset }
+
+          it 'displays "Time: --:--:--"' do
+            expect(@estimated_time.elapsed_time_to_s).to eql 'Time: --:--:--'
+          end
+        end
+
+        it 'displays "Time: 04:27:41"' do
+          expect(@estimated_time.elapsed_time_to_s).to eql 'Time: 04:27:41'
+        end
+      end
+
+      context 'and #reset is called' do
+        before { timer.reset }
+
+        it 'displays "Time: --:--:--"' do
+          expect(@estimated_time.elapsed_time_to_s).to eql 'Time: --:--:--'
+        end
+      end
+
+      it 'displays "Time: 04:28:13"' do
+        expect(@estimated_time.elapsed_time_to_s).to eql 'Time: 04:28:13'
+      end
+    end
+  end
+
   describe '#out_of_bounds_time_format=' do
     context 'when set to an invalid format' do
       it 'raises an exception' do

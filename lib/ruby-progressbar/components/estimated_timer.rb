@@ -19,7 +19,10 @@ class ProgressBar
         " ETA: #{estimated_time}"
       end
 
-    private
+      def elapsed_time_to_s
+        "Time: #{elapsed_time}"
+      end
+
       def estimated_time
         return '??:??:??' if @progress.running_average.zero? || @progress.total.nil? || @timer.reset?
 
@@ -31,6 +34,16 @@ class ProgressBar
           sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
         end
       end
+
+      def elapsed_time
+        return '--:--:--' unless @timer.started?
+
+        hours, minutes, seconds = @timer.divide_seconds(@timer.elapsed_whole_seconds)
+
+        sprintf ProgressBar::Timer::TIME_FORMAT, hours, minutes, seconds
+      end
+
+    private
 
       def estimated_seconds_remaining
         (@timer.elapsed_seconds * (@progress.total / @progress.running_average  - 1)).round
