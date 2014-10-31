@@ -83,6 +83,10 @@ class ProgressBar
         (self.progress * 100 / total).to_i
       end
 
+      def unknown?
+        running_average.zero? || total.nil?
+      end
+
       def percentage_completed_with_precision
         return 100.0  if total == 0
         return 0.0    if total.nil?
