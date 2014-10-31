@@ -1,6 +1,6 @@
 class ProgressBar
   module Components
-    class EstimatedTimer
+    class Time
       VALID_OOB_TIME_FORMATS = [:unknown, :friendly, nil]
 
       def initialize(options = {})
