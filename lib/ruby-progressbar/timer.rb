@@ -1,7 +1,6 @@
 require 'ruby-progressbar/time'
 
 class ProgressBar
-  module Components
     class Timer
       TIME_FORMAT = '%02d:%02d:%02d'
 
@@ -72,5 +71,4 @@ class ProgressBar
 
       attr_accessor :time
     end
-  end
 end

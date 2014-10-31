@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'support/time'
 
 describe ProgressBar::Components::EstimatedTimer do
-  let(:timer) { ProgressBar::Components::Timer.new }
-  let(:progressable) { ProgressBar::Components::Progressable.new(:starting_at => 0, :total => progress_total, :smoothing => smoothing) }
+  let(:timer) { ProgressBar::Timer.new }
+  let(:progress) { ProgressBar::Progress.new(:starting_at => 0, :total => progress_total, :smoothing => smoothing) }
   let(:smoothing)    { 0.1 }
   let(:progress_total) { 100 }
 
@@ -11,8 +11,8 @@ describe ProgressBar::Components::EstimatedTimer do
     it 'raises an error when passed a number larger than the total' do
       @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100,
                                                                     :timer => timer,
-                                                                    :progress => progressable)
-      expect { progressable.progress = 101 }.to raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
+                                                                    :progress => progress)
+      expect { progress.progress = 101 }.to raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
     end
   end
 
@@ -21,8 +21,8 @@ describe ProgressBar::Components::EstimatedTimer do
       before do
         @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100,
                                                                       :timer => timer,
-                                                                      :progress => progressable)
-        progressable.start
+                                                                      :progress => progress)
+        progress.start
         timer.start
       end
 
@@ -32,7 +32,7 @@ describe ProgressBar::Components::EstimatedTimer do
 
       context 'and it is incremented' do
         it 'should not display unknown time remaining' do
-          progressable.increment
+          progress.increment
           expect(@estimated_time.to_s).not_to eql ' ETA: ??:??:??'
         end
       end
@@ -44,17 +44,17 @@ describe ProgressBar::Components::EstimatedTimer do
 
         context 'and it took 3:42:12 to do it' do
           before do
-            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:timer => timer, :progress => progressable)
+            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:timer => timer, :progress => progress)
 
             Timecop.travel(-13332) do
-              progressable.start
+              progress.start
               timer.start
-              50.times { progressable.increment }
+              50.times { progress.increment }
             end
           end
 
           context 'when #decrement is called' do
-            before { 20.times { progressable.decrement } }
+            before { 20.times { progress.decrement } }
 
             it 'displays the correct time remaining' do
               expect(@estimated_time.to_s).to eql ' ETA: 08:38:28'
@@ -62,7 +62,7 @@ describe ProgressBar::Components::EstimatedTimer do
           end
 
           context 'when #reset is called' do
-            before { progressable.reset }
+            before { progress.reset }
 
             it 'displays unknown time remaining' do
               expect(@estimated_time.to_s).to eql ' ETA: ??:??:??'
@@ -76,12 +76,12 @@ describe ProgressBar::Components::EstimatedTimer do
 
         context 'when it is estimated to take longer than 99:59:59' do
           before do
-            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:timer => timer, :progress => progressable)
+            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:timer => timer, :progress => progress)
 
             Timecop.travel(-120000) do
-              progressable.start
+              progress.start
               timer.start
-              25.times { progressable.increment }
+              25.times { progress.increment }
             end
           end
 
@@ -112,17 +112,17 @@ describe ProgressBar::Components::EstimatedTimer do
 
         context 'and it took 3:42:12 to do it' do
           before do
-            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:timer => timer, :progress => progressable)
+            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:timer => timer, :progress => progress)
 
             Timecop.travel(-13332) do
-              progressable.start
+              progress.start
               timer.start
-              50.times { progressable.increment }
+              50.times { progress.increment }
             end
           end
 
           context 'when #decrement is called' do
-            before { 20.times { progressable.decrement } }
+            before { 20.times { progress.decrement } }
 
             it 'displays the correct time remaining' do
               expect(@estimated_time.to_s).to eql ' ETA: 08:14:34'
@@ -130,7 +130,7 @@ describe ProgressBar::Components::EstimatedTimer do
           end
 
           context 'when #reset is called' do
-            before { progressable.reset }
+            before { progress.reset }
 
             it 'displays unknown time remaining' do
               expect(@estimated_time.to_s).to eql ' ETA: ??:??:??'
@@ -144,12 +144,12 @@ describe ProgressBar::Components::EstimatedTimer do
 
         context 'when it is estimated to take longer than 99:59:59' do
           before do
-            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:smoothing => smoothing, :timer => timer, :progress => progressable)
+            @estimated_time = ProgressBar::Components::EstimatedTimer.new(:smoothing => smoothing, :timer => timer, :progress => progress)
 
             Timecop.travel(-120000) do
-              progressable.start
+              progress.start
               timer.start
-              25.times { progressable.increment }
+              25.times { progress.increment }
             end
           end
 
@@ -182,12 +182,12 @@ describe ProgressBar::Components::EstimatedTimer do
     it 'displays a good estimate for regular increments' do
       begin
         Timecop.freeze(t = Time.now)
-        estimated_time = ProgressBar::Components::EstimatedTimer.new(:smoothing => smoothing, :timer => timer, :progress => progressable)
-        progressable.start
+        estimated_time = ProgressBar::Components::EstimatedTimer.new(:smoothing => smoothing, :timer => timer, :progress => progress)
+        progress.start
         timer.start
         results = (1..progress_total).map do |i|
           Timecop.freeze(t + 0.5 * i)
-          progressable.increment
+          progress.increment
           estimated_time.to_s
         end
 
@@ -213,7 +213,7 @@ describe ProgressBar::Components::EstimatedTimer do
   describe '#out_of_bounds_time_format=' do
     context 'when set to an invalid format' do
       it 'raises an exception' do
-        @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100, :timer => timer, :progress => progressable)
+        @estimated_time = ProgressBar::Components::EstimatedTimer.new(:total => 100, :timer => timer, :progress => progress)
         expect { @estimated_time.out_of_bounds_time_format = :foo }.to raise_error('Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]')
       end
     end
@@ -231,7 +231,7 @@ describe ProgressBar::Components::EstimatedTimer do
     #    Failure/Error: COUNT.times { bar.increment }
     #    NoMethodError:
     #      undefined method `+' for nil:NilClass
-    #    # ./lib/ruby-progressbar/components/progressable.rb:33:in `increment'
+    #    # ./lib/ruby-progressbar/components/progress.rb:33:in `increment'
     #
     it 'properly delegates' do
       @output = StringIO.new('', 'w+')

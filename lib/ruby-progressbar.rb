@@ -1,3 +1,6 @@
+require 'ruby-progressbar/timer'
+require 'ruby-progressbar/progress'
+require 'ruby-progressbar/throttle'
 require 'ruby-progressbar/length_calculator'
 require 'ruby-progressbar/running_average_calculator'
 require 'ruby-progressbar/components'

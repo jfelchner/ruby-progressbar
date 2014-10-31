@@ -8,14 +8,14 @@ class ProgressBar
         @started_at     = nil
         @stopped_at     = nil
         @timer          = options[:timer]
-        @progressable   = options[:progress]
+        @progress       = options[:progress]
       end
 
       def to_s(format_string = "%i")
         elapsed = @timer.elapsed_whole_seconds.to_f
         return 0 unless elapsed > 0
 
-        base_rate   = (@progressable.progress_made / elapsed)
+        base_rate   = (@progress.progress_made / elapsed)
 
         if rate_scale
           scaled_rate = rate_scale.call(base_rate)

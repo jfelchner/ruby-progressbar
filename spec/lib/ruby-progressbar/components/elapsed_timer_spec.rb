@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ProgressBar::Components::ElapsedTimer do
-  let(:timer) { ProgressBar::Components::Timer.new(:time => Time) }
+  let(:timer) { ProgressBar::Timer.new(:time => Time) }
 
   before { @timer = ProgressBar::Components::ElapsedTimer.new(:timer => timer) }
 
