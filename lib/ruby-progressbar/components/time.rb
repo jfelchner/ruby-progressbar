@@ -15,7 +15,7 @@ class ProgressBar
         @out_of_bounds_time_format = format
       end
 
-      def to_s
+      def estimated_with_label
         " ETA: #{estimated_time}"
       end
 
