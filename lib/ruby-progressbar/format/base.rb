@@ -13,7 +13,11 @@ class ProgressBar
         ansi_sgr_codes   = %r{\e\[[\d;]+m}
 
         non_bar_molecules.each do |molecule|
-          processed_string.gsub!("%#{molecule.key}", environment.send(molecule.method_name).to_s)
+          if molecule.method_name.is_a? Array
+            processed_string.gsub!("%#{molecule.key}", environment.instance_variable_get(molecule.method_name[0]).send(molecule.method_name[1]).to_s)
+          else
+            processed_string.gsub!("%#{molecule.key}", environment.send(molecule.method_name).to_s)
+          end
         end
 
         remaining_molecules = bar_molecules.size

@@ -18,8 +18,8 @@ class ProgressBar
         :b => :bar,
         :w => :bar_with_percentage,
         :i => :incomplete_space,
-        :r => :rate_of_change,
-        :R => :rate_of_change_with_precision,
+        :r => [:@rate, :rate_of_change],
+        :R => [:@rate, :rate_of_change_with_precision],
       }
 
       BAR_MOLECULES     = %w{w B b i}
