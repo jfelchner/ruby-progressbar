@@ -45,7 +45,7 @@ class ProgressBar
         estimated_with_elapsed_fallback
       end
 
-    protected
+      protected
 
       attr_accessor :out_of_bounds_time_format,
                     :timer,
@@ -53,14 +53,14 @@ class ProgressBar
 
       def out_of_bounds_time_format=(format)
         unless OOB_TIME_FORMATS.include? format
-          raise "Invalid Out Of Bounds time format.  Valid formats are " +
-                OOB_TIME_FORMATS.inspect
+          fail 'Invalid Out Of Bounds time format.  Valid formats are ' +
+            OOB_TIME_FORMATS.inspect
         end
 
         @out_of_bounds_time_format = format
       end
 
-    private
+      private
 
       def estimated
         return OOB_UNKNOWN_TIME_TEXT if progress.unknown? || timer.stopped?
@@ -70,7 +70,7 @@ class ProgressBar
         if hours > OOB_LIMIT_IN_HOURS && out_of_bounds_time_format
           out_of_bounds_time
         else
-          sprintf TIME_FORMAT, hours, minutes, seconds
+          TIME_FORMAT % [hours, minutes, seconds]
         end
       end
 
@@ -79,7 +79,7 @@ class ProgressBar
 
         hours, minutes, seconds = timer.divide_seconds(timer.elapsed_whole_seconds)
 
-        sprintf TIME_FORMAT, hours, minutes, seconds
+        TIME_FORMAT % [hours, minutes, seconds]
       end
 
       def estimated_with_elapsed_fallback
