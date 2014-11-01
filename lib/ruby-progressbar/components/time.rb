@@ -1,10 +1,14 @@
 class ProgressBar
   module Components
     class Time
-      TIME_FORMAT      = '%02d:%02d:%02d'
-      OOB_TIME_FORMATS = [:unknown, :friendly, nil]
-      ESTIMATED_LABEL  = ' ETA'
-      ELAPSED_LABEL    = 'Time'
+      TIME_FORMAT            = '%02d:%02d:%02d'
+      OOB_TIME_FORMATS       = [:unknown, :friendly, nil]
+      OOB_LIMIT_IN_HOURS     = 99
+      OOB_UNKNOWN_TIME_TEXT  = '??:??:??'
+      OOB_FRIENDLY_TIME_TEXT = '> 4 Days'
+      NO_TIME_ELAPSED_TEXT   = '--:--:--'
+      ESTIMATED_LABEL        = ' ETA'
+      ELAPSED_LABEL          = 'Time'
 
       def initialize(options = {})
         self.out_of_bounds_time_format = nil
@@ -53,11 +57,11 @@ class ProgressBar
     private
 
       def estimated
-        return '??:??:??' if progress.unknown? || timer.stopped?
+        return OOB_UNKNOWN_TIME_TEXT if progress.unknown? || timer.stopped?
 
         hours, minutes, seconds = timer.divide_seconds(estimated_seconds_remaining)
 
-        if hours > 99 && out_of_bounds_time_format
+        if hours > OOB_LIMIT_IN_HOURS && out_of_bounds_time_format
           out_of_bounds_time
         else
           sprintf TIME_FORMAT, hours, minutes, seconds
@@ -65,7 +69,7 @@ class ProgressBar
       end
 
       def elapsed
-        return '--:--:--' unless timer.started?
+        return NO_TIME_ELAPSED_TEXT unless timer.started?
 
         hours, minutes, seconds = timer.divide_seconds(timer.elapsed_whole_seconds)
 
@@ -83,9 +87,9 @@ class ProgressBar
       def out_of_bounds_time
         case out_of_bounds_time_format
         when :unknown
-          '??:??:??'
+          OOB_UNKNOWN_TIME_TEXT
         when :friendly
-          '> 4 Days'
+          OOB_FRIENDLY_TIME_TEXT
         end
       end
     end
