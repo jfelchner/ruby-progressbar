@@ -49,7 +49,10 @@ class ProgressBar
                     :progress
 
       def out_of_bounds_time_format=(format)
-        raise "Invalid Out Of Bounds time format.  Valid formats are #{OOB_TIME_FORMATS.inspect}" unless OOB_TIME_FORMATS.include? format
+        unless OOB_TIME_FORMATS.include? format
+          raise "Invalid Out Of Bounds time format.  Valid formats are " +
+                OOB_TIME_FORMATS.inspect
+        end
 
         @out_of_bounds_time_format = format
       end
