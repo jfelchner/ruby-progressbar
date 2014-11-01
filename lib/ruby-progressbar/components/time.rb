@@ -1,3 +1,6 @@
+###
+# OOB = 'Out of Bounds'
+#
 class ProgressBar
   module Components
     class Time
