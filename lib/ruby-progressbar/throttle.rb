@@ -7,7 +7,9 @@ class ProgressBar
         @timer      = options[:timer]
       end
 
-      def choke(force = false, &block)
+      def choke(options = {}, &block)
+        force = options.fetch(:force_update_if, false)
+
         if !@timer.started? || @period.nil? || force || @timer.elapsed_seconds >= @period
           yield
         end

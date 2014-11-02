@@ -39,7 +39,7 @@ describe ProgressBar::Throttle do
           yielded = -1
 
           (0..25).each do |t|
-            Timecop.freeze(t) { @throttle.choke(true) { yielded += 1; timer.start } }
+            Timecop.freeze(t) { @throttle.choke(:force_update_if => true) { yielded += 1; timer.start } }
 
             expect(yielded).to eql t
           end
