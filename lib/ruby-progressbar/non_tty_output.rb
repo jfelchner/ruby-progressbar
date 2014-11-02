@@ -24,7 +24,7 @@ class ProgressBar
       output_string
     end
 
-    def update_with_format_change(&block); end
+    def refresh_with_format_change(&block); end
 
     def eol
       bar.stopped? ? "\n" : ""

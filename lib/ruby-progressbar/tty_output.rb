@@ -4,7 +4,7 @@ class ProgressBar
   class TtyOutput < Output
     DEFAULT_FORMAT_STRING = '%t: |%B|'
 
-    alias_method :update_with_format_change, :with_update
+    alias_method :refresh_with_format_change, :with_refresh
 
     def clear
       stream.print clear_string
