@@ -4,8 +4,7 @@ class ProgressBar
   class Base
     extend Forwardable
 
-    DEFAULT_FORMAT_STRING         = '%t: |%B|'
-    DEFAULT_TITLE                 = 'Progress'
+    DEFAULT_TITLE = 'Progress'
 
     attr_accessor :title
 
@@ -22,7 +21,7 @@ class ProgressBar
       self.autostart    = options.fetch(:autostart,  true)
       self.autofinish   = options.fetch(:autofinish, true)
       self.finished     = false
-      self.format       = options[:format] || DEFAULT_FORMAT_STRING
+      self.format       = options[:format] || ProgressBar::TtyOutput::DEFAULT_FORMAT_STRING
       @title            = options[:title]  || DEFAULT_TITLE
 
       self.timer        = Timer.new(options)
@@ -33,7 +32,7 @@ class ProgressBar
       self.rate         = Components::Rate.new(options.merge(:timer => timer, :progress => progressable))
       self.time         = Components::Time.new(options.merge(:timer => timer, :progress => progressable))
 
-      self.output       = Output.new(options.merge(:bar => self, :timer => timer))
+      self.output       = Output.detect(options.merge(:bar => self, :timer => timer))
 
       start :at => options[:starting_at] if autostart
     end
@@ -129,7 +128,7 @@ class ProgressBar
 
     def format=(other)
       @formatter = nil
-      @format    = (other || DEFAULT_FORMAT_STRING)
+      @format    = (other || ProgressBar::TtyOutput::DEFAULT_FORMAT_STRING)
     end
 
     def formatter
