@@ -24,6 +24,10 @@ class ProgressBar
       output_string
     end
 
+    def default_format
+      DEFAULT_FORMAT_STRING
+    end
+
     def refresh_with_format_change(&block); end
 
     def eol
