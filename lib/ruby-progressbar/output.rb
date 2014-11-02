@@ -27,7 +27,7 @@ class ProgressBar
       clear
       stream.puts string
 
-      update(:force => true) unless bar.stopped?
+      refresh(:force => true) unless bar.stopped?
     end
 
     def clear_string
@@ -40,14 +40,14 @@ class ProgressBar
 
     def with_update
       yield
-      update
+      refresh
     end
 
     def tty?
       stream.tty?
     end
 
-    def update(options = {})
+    def refresh(options = {})
       if length_calc.length_changed?
         clear
         length_calc.reset_length
