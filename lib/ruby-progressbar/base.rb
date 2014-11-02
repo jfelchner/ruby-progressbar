@@ -21,7 +21,7 @@ class ProgressBar
       self.timer        = Timer.new(options)
       self.progressable = Progress.new(options)
 
-      @title            = Components::Title.new(:title => options[:title])
+      self.title_comp   = Components::Title.new(:title => options[:title])
       self.bar          = Components::Bar.new(options.merge(:progress => progressable))
       self.percentage   = Components::Percentage.new(:progress => progressable)
       self.rate         = Components::Rate.new(options.merge(:timer => timer, :progress => progressable))
@@ -107,11 +107,11 @@ class ProgressBar
     end
 
     def title
-      @title.title
+      title_comp.title
     end
 
     def title=(title)
-      output.refresh_with_format_change { @title.title = title }
+      output.refresh_with_format_change { title_comp.title = title }
     end
 
     def to_s(format = nil)
@@ -140,6 +140,7 @@ class ProgressBar
     attr_accessor :output,
                   :timer,
                   :progressable,
+                  :title_comp,
                   :bar,
                   :percentage,
                   :rate,
