@@ -41,7 +41,7 @@ class ProgressBar
     end
 
     def finish
-      output.with_update do
+      output.with_refresh do
         self.finished = true
         progressable.finish
         timer.stop
@@ -49,19 +49,19 @@ class ProgressBar
     end
 
     def pause
-      output.with_update { timer.pause } unless paused?
+      output.with_refresh { timer.pause } unless paused?
     end
 
     def stop
-      output.with_update { timer.stop } unless stopped?
+      output.with_refresh { timer.stop } unless stopped?
     end
 
     def resume
-      output.with_update { timer.resume } if stopped?
+      output.with_refresh { timer.resume } if stopped?
     end
 
     def reset
-      output.with_update do
+      output.with_refresh do
         self.finished = false
         progressable.reset
         timer.reset
@@ -99,11 +99,11 @@ class ProgressBar
     end
 
     def progress_mark=(mark)
-      output.update_with_format_change { bar.progress_mark = mark }
+      output.refresh_with_format_change { bar.progress_mark = mark }
     end
 
     def remainder_mark=(mark)
-      output.update_with_format_change { bar.remainder_mark = mark }
+      output.refresh_with_format_change { bar.remainder_mark = mark }
     end
 
     def title
@@ -111,7 +111,7 @@ class ProgressBar
     end
 
     def title=(title)
-      output.update_with_format_change { @title.title = title }
+      output.refresh_with_format_change { @title.title = title }
     end
 
     def to_s(format = nil)
@@ -147,7 +147,7 @@ class ProgressBar
                   :finished
 
     def update_progress(*args)
-      output.with_update do
+      output.with_refresh do
         progressable.send(*args)
         timer.stop if finished?
       end

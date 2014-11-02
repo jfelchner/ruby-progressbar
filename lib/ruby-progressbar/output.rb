@@ -34,7 +34,7 @@ class ProgressBar
       length_calc.length
     end
 
-    def with_update
+    def with_refresh
       yield
       refresh
     end
