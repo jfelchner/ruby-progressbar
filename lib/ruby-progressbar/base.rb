@@ -1,9 +1,22 @@
+require 'forwardable'
+
 class ProgressBar
   class Base
+    extend Forwardable
+
     DEFAULT_FORMAT_STRING         = '%t: |%B|'
     DEFAULT_TITLE                 = 'Progress'
 
     attr_accessor :title
+
+    def_delegators :output,
+                   :clear,
+                   :log,
+                   :refresh
+
+    def_delegators :progressable,
+                   :progress,
+                   :total
 
     def initialize(options = {})
       self.autostart    = options.fetch(:autostart,  true)
@@ -102,26 +115,6 @@ class ProgressBar
       if output.tty?
         output.with_update { @title = title }
       end
-    end
-
-    def progress
-      progressable.progress
-    end
-
-    def total
-      progressable.total
-    end
-
-    def clear
-      output.clear
-    end
-
-    def refresh
-      output.refresh
-    end
-
-    def log(string)
-      output.log(string)
     end
 
     def to_s(format = nil)
