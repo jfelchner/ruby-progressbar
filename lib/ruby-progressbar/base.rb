@@ -125,8 +125,10 @@ class ProgressBar
     end
 
     def format=(other)
-      @formatter = nil
-      @format    = (other || output.default_format)
+      output.refresh_with_format_change do
+        @formatter = nil
+        @format    = (other || output.default_format)
+      end
     end
 
     def formatter
