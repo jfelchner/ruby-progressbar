@@ -15,7 +15,7 @@ class ProgressBar
         elapsed = @timer.elapsed_whole_seconds.to_f
         return 0 unless elapsed > 0
 
-        base_rate   = (@progress.progress_made / elapsed)
+        base_rate   = (@progress.absolute / elapsed)
 
         if rate_scale
           scaled_rate = rate_scale.call(base_rate)
