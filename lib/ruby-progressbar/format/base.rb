@@ -26,7 +26,7 @@ class ProgressBar
         processed_string.gsub! '%%', '%'
 
         processed_string_length = processed_string.gsub(ansi_sgr_codes, '').length
-        leftover_bar_length     = environment.instance_variable_get(:@length_calc).send(:length) - processed_string_length + placeholder_length
+        leftover_bar_length     = environment.instance_variable_get(:@output).send(:length_calc).send(:length) - processed_string_length + placeholder_length
         leftover_bar_length     = leftover_bar_length < 0 ? 0 : leftover_bar_length
 
         bar_molecules.each do |molecule|
