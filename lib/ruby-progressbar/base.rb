@@ -103,17 +103,15 @@ class ProgressBar
     end
 
     def progress_mark=(mark)
-      output.with_update { bar.progress_mark = mark }
+      output.update_with_format_change { bar.progress_mark = mark }
     end
 
     def remainder_mark=(mark)
-      output.with_update { bar.remainder_mark = mark }
+      output.update_with_format_change { bar.remainder_mark = mark }
     end
 
     def title=(title)
-      if output.tty?
-        output.with_update { @title = title }
-      end
+      output.update_with_format_change { @title = title }
     end
 
     def to_s(format = nil)

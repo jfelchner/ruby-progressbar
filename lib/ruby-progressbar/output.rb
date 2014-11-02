@@ -35,10 +35,6 @@ class ProgressBar
       refresh
     end
 
-    def tty?
-      stream.tty?
-    end
-
     def refresh(options = {})
       if length_calc.length_changed?
         clear
