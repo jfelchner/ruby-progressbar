@@ -4,10 +4,6 @@ class ProgressBar
   class Base
     extend Forwardable
 
-    DEFAULT_TITLE = 'Progress'
-
-    attr_accessor :title
-
     def_delegators :output,
                    :clear,
                    :log,
@@ -22,11 +18,11 @@ class ProgressBar
       self.autofinish   = options.fetch(:autofinish, true)
       self.finished     = false
       self.format       = options[:format] || ProgressBar::TtyOutput::DEFAULT_FORMAT_STRING
-      @title            = options[:title]  || DEFAULT_TITLE
 
       self.timer        = Timer.new(options)
       self.progressable = Progress.new(options)
 
+      @title            = Components::Title.new(:title => options[:title])
       self.bar          = Components::Bar.new(options.merge(:progress => progressable))
       self.percentage   = Components::Percentage.new(:progress => progressable)
       self.rate         = Components::Rate.new(options.merge(:timer => timer, :progress => progressable))
@@ -110,8 +106,12 @@ class ProgressBar
       output.update_with_format_change { bar.remainder_mark = mark }
     end
 
+    def title
+      @title.title
+    end
+
     def title=(title)
-      output.update_with_format_change { @title = title }
+      output.update_with_format_change { @title.title = title }
     end
 
     def to_s(format = nil)
