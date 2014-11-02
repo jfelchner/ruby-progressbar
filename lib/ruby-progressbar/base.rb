@@ -28,7 +28,7 @@ class ProgressBar
       self.time         = Components::Time.new(options.merge(:timer => timer, :progress => progressable))
 
       self.output       = Output.detect(options.merge(:bar => self, :timer => timer))
-      self.format       = options[:format] || output.default_format
+      @format           = output.resolve_format(options[:format])
 
       start :at => options[:starting_at] if autostart
     end
