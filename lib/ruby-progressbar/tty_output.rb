@@ -15,6 +15,10 @@ class ProgressBar
       bar.to_s
     end
 
+    def default_format
+      DEFAULT_FORMAT_STRING
+    end
+
     def eol
       bar.stopped? ? "\n" : "\r"
     end

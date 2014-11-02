@@ -17,7 +17,6 @@ class ProgressBar
       self.autostart    = options.fetch(:autostart,  true)
       self.autofinish   = options.fetch(:autofinish, true)
       self.finished     = false
-      self.format       = options[:format] || ProgressBar::TtyOutput::DEFAULT_FORMAT_STRING
 
       self.timer        = Timer.new(options)
       self.progressable = Progress.new(options)
@@ -29,6 +28,7 @@ class ProgressBar
       self.time         = Components::Time.new(options.merge(:timer => timer, :progress => progressable))
 
       self.output       = Output.detect(options.merge(:bar => self, :timer => timer))
+      self.format       = options[:format] || output.default_format
 
       start :at => options[:starting_at] if autostart
     end
@@ -126,7 +126,7 @@ class ProgressBar
 
     def format=(other)
       @formatter = nil
-      @format    = (other || ProgressBar::TtyOutput::DEFAULT_FORMAT_STRING)
+      @format    = (other || output.default_format)
     end
 
     def formatter
