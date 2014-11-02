@@ -1,4 +1,6 @@
 require 'ruby-progressbar/output'
+require 'ruby-progressbar/tty_output'
+require 'ruby-progressbar/non_tty_output'
 require 'ruby-progressbar/timer'
 require 'ruby-progressbar/progress'
 require 'ruby-progressbar/throttle'
