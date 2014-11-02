@@ -30,6 +30,10 @@ class ProgressBar
       "#{" " * length_calc.length}"
     end
 
+    def length
+      length_calc.length
+    end
+
     def with_update
       yield
       refresh
