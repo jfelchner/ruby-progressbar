@@ -21,6 +21,7 @@ class ProgressBar
       @length_calc      = LengthCalculator.new(options)
 
       @bar              = Components::Bar.new(options.merge(:progress => @progress))
+      @percentage       = Components::Percentage.new(:progress => @progress)
       @rate             = Components::Rate.new(options.merge(:timer => @timer, :progress => @progress))
       @time             = Components::Time.new(options.merge(:timer => @timer, :progress => @progress))
 
@@ -217,22 +218,6 @@ class ProgressBar
     # Format Methods
     def title
       @title
-    end
-
-    def percentage
-      @progress.percentage_completed
-    end
-
-    def justified_percentage
-      @progress.percentage_completed.to_s.rjust(3)
-    end
-
-    def percentage_with_precision
-      @progress.percentage_completed_with_precision
-    end
-
-    def justified_percentage_with_precision
-      @progress.percentage_completed_with_precision.to_s.rjust(6)
     end
 
     def bar(length)
