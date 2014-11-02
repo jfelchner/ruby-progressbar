@@ -36,10 +36,7 @@ class ProgressBar
     end
 
     def refresh(options = {})
-      if length_calc.length_changed?
-        clear
-        length_calc.reset_length
-      end
+      clear if length_calc.length_changed?
 
       throttle.choke( bar.stopped? || options[:force] ) do
         stream.print bar_update_string + eol

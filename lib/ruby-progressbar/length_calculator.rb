@@ -11,7 +11,10 @@ class ProgressBar
     end
 
     def length_changed?
-      @current_length != calculate_length
+      previous_length = @current_length
+      @current_length = calculate_length
+
+      previous_length != @current_length
     end
 
     def calculate_length
