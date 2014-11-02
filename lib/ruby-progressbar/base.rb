@@ -117,7 +117,7 @@ class ProgressBar
     end
 
     def refresh
-      output.update
+      output.refresh
     end
 
     def log(string)
