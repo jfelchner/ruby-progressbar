@@ -15,7 +15,7 @@ class ProgressBar
     end
 
     def bar_update_string
-      formatted_string        = bar.to_s(DEFAULT_FORMAT_STRING)
+      formatted_string        = bar.to_s
       formatted_string        = formatted_string[0...-1] unless bar.finished?
 
       output_string           = formatted_string[last_update_length..-1]
@@ -26,6 +26,10 @@ class ProgressBar
 
     def default_format
       DEFAULT_FORMAT_STRING
+    end
+
+    def resolve_format(other_format)
+      default_format
     end
 
     def refresh_with_format_change(&block); end
