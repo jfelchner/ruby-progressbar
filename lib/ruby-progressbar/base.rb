@@ -8,22 +8,20 @@ class ProgressBar
     DEFAULT_TITLE                 = 'Progress'
 
     def initialize(options = {})
-      self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
-      autostart         = options.fetch(:autostart, true)
+      autostart    = options.fetch(:autostart, true)
+      self.output  = options[:output] || DEFAULT_OUTPUT_STREAM
+      self.format  = options[:format] || DEFAULT_FORMAT_STRING
+      @title       = options[:title]  || DEFAULT_TITLE
 
-      @format            = nil
-      self.format        = options[:format] || DEFAULT_FORMAT_STRING
-      @title             = options[:title]  || DEFAULT_TITLE
+      @timer       = Timer.new(options)
+      @progress    = Progress.new(options)
+      @throttle    = Throttle.new(options.merge(:timer => @timer))
+      @length_calc = LengthCalculator.new(options)
 
-      @timer            = Timer.new(options)
-      @progress         = Progress.new(options)
-      @throttle         = Throttle.new(options.merge(:timer => @timer))
-      @length_calc      = LengthCalculator.new(options)
-
-      @bar              = Components::Bar.new(options.merge(:progress => @progress))
-      @percentage       = Components::Percentage.new(:progress => @progress)
-      @rate             = Components::Rate.new(options.merge(:timer => @timer, :progress => @progress))
-      @time             = Components::Time.new(options.merge(:timer => @timer, :progress => @progress))
+      @bar         = Components::Bar.new(options.merge(:progress => @progress))
+      @percentage  = Components::Percentage.new(:progress => @progress)
+      @rate        = Components::Rate.new(options.merge(:timer => @timer, :progress => @progress))
+      @time        = Components::Time.new(options.merge(:timer => @timer, :progress => @progress))
 
       start :at => options[:starting_at] if autostart
     end
