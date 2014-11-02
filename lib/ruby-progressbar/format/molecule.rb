@@ -2,8 +2,8 @@ class ProgressBar
   module Format
     class Molecule
       MOLECULES = {
-        :t => :title,
-        :T => :title,
+        :t => [:@title,        :title],
+        :T => [:@title,        :title],
         :c => [:@progressable, :progress],
         :C => [:@progressable, :total],
         :p => [:@percentage,   :percentage],
