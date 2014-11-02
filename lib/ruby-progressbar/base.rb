@@ -117,7 +117,7 @@ class ProgressBar
     def to_s(format = nil)
       self.format = format if format
 
-      formatter.process(self)
+      formatter.process(self, output.length)
     end
 
     def inspect
