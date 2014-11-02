@@ -4,8 +4,8 @@ class ProgressBar
       MOLECULES = {
         :t => :title,
         :T => :title,
-        :c => :progress,
-        :C => :total,
+        :c => [:@progressable, :progress],
+        :C => [:@progressable, :total],
         :p => [:@percentage,  :percentage],
         :P => [:@percentage,  :percentage_with_precision],
         :j => [:@percentage,  :justified_percentage],
