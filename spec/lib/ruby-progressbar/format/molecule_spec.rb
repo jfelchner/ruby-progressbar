@@ -9,7 +9,7 @@ describe ProgressBar::Format::Molecule do
     end
 
     it 'sets the method name when initialized' do
-      expect(@molecule.method_name).to eql [:@title_comp, :title]
+      expect(@molecule.method_name).to eql [:title_comp, :title]
     end
   end
 
