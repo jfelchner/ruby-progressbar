@@ -7,7 +7,7 @@ class ProgressBar
     def initialize(options = {})
       self.bar    = options[:bar]
       self.stream      = options[:output] || DEFAULT_OUTPUT_STREAM
-      self.length_calc = LengthCalculator.new(options)
+      self.length_calculator = LengthCalculator.new(options)
       self.throttle    = Throttle.new(options.merge(:timer => options[:timer]))
     end
 
@@ -27,11 +27,11 @@ class ProgressBar
     end
 
     def clear_string
-      "#{" " * length_calc.length}"
+      "#{" " * length_calculator.length}"
     end
 
     def length
-      length_calc.length
+      length_calculator.length
     end
 
     def with_refresh
@@ -40,7 +40,7 @@ class ProgressBar
     end
 
     def refresh(options = {})
-      clear if length_calc.length_changed?
+      clear if length_calculator.length_changed?
 
       throttle.choke(:force_update_if => (bar.stopped? || options[:force])) do
         stream.print bar_update_string + eol
@@ -50,7 +50,7 @@ class ProgressBar
 
     protected
 
-    attr_accessor :length_calc,
+    attr_accessor :length_calculator,
                   :throttle,
                   :bar
   end
