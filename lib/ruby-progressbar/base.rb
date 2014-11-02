@@ -6,7 +6,9 @@ class ProgressBar
     attr_accessor :title
 
     def initialize(options = {})
-      autostart         = options.fetch(:autostart, true)
+      self.autostart    = options.fetch(:autostart,  true)
+      self.autofinish   = options.fetch(:autofinish, true)
+      self.finished     = false
       self.format       = options[:format] || DEFAULT_FORMAT_STRING
       @title            = options[:title]  || DEFAULT_TITLE
 
@@ -26,30 +28,13 @@ class ProgressBar
     def start(options = {})
       clear
 
-      output.with_update do
-        progressable.start(options)
-        timer.start
-      end
-    end
-
-    def decrement
-      update_progress(:decrement)
-    end
-
-    def increment
-      update_progress(:increment)
-    end
-
-    def progress=(new_progress)
-      update_progress(:progress=, new_progress)
-    end
-
-    def total=(new_total)
-      update_progress(:total=, new_total)
+      timer.start
+      update_progress(:start, options)
     end
 
     def finish
       output.with_update do
+        self.finished = true
         progressable.finish
         timer.stop
       end unless finished?
@@ -69,6 +54,7 @@ class ProgressBar
 
     def reset
       output.with_update do
+        self.finished = false
         progressable.reset
         timer.reset
       end
@@ -81,11 +67,27 @@ class ProgressBar
     alias :paused? :stopped?
 
     def finished?
-      progressable.finished?
+      finished || (autofinish && progressable.finished?)
     end
 
     def started?
-      timer.started? && progressable.started?
+      timer.started?
+    end
+
+    def decrement
+      update_progress(:decrement)
+    end
+
+    def increment
+      update_progress(:increment)
+    end
+
+    def progress=(new_progress)
+      update_progress(:progress=, new_progress)
+    end
+
+    def total=(new_total)
+      update_progress(:total=, new_total)
     end
 
     def progress_mark=(mark)
@@ -149,12 +151,15 @@ class ProgressBar
                   :bar,
                   :percentage,
                   :rate,
-                  :time
+                  :time,
+                  :autostart,
+                  :autofinish,
+                  :finished
 
     def update_progress(*args)
       output.with_update do
         progressable.send(*args)
-        timer.stop if progressable.finished?
+        timer.stop if finished?
       end
     end
   end
