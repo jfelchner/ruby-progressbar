@@ -219,25 +219,5 @@ class ProgressBar
     def title
       @title
     end
-
-    def bar(length)
-      @bar.length = length
-      @bar.standard_complete_string
-    end
-
-    def complete_bar(length)
-      @bar.length = length
-      @bar.to_s
-    end
-
-    def incomplete_space(length)
-      @bar.length = length
-      @bar.empty_string
-    end
-
-    def bar_with_percentage(length)
-      @bar.length = length
-      @bar.integrated_percentage_complete_string
-    end
   end
 end
