@@ -11,8 +11,8 @@ class ProgressBar
       self.output       = options[:output] || DEFAULT_OUTPUT_STREAM
       autostart         = options.fetch(:autostart, true)
 
-      @format_string     = nil
-      self.format_string = options[:format] || DEFAULT_FORMAT_STRING
+      @format            = nil
+      self.format        = options[:format] || DEFAULT_FORMAT_STRING
       @title             = options[:title]  || DEFAULT_TITLE
 
       @timer            = Timer.new(options)
@@ -104,11 +104,6 @@ class ProgressBar
       end
     end
 
-    def format(new_format_string = DEFAULT_FORMAT_STRING)
-      self.format_string = new_format_string
-      @format.process(self)
-    end
-
     def progress
       @progress.progress
     end
@@ -139,14 +134,23 @@ class ProgressBar
       update(:force => true) unless stopped?
     end
 
-    def to_s(format_string = nil)
-      format_string ||= @format_string
+    def to_s(format = nil)
+      self.format = format if format
 
-      format(format_string)
+      formatter.process(self)
     end
 
     def inspect
       "#<ProgressBar:#{progress}/#{total || 'unknown'}>"
+    end
+
+    def format=(other)
+      @formatter = nil
+      @format = (other || DEFAULT_FORMAT_STRING)
+    end
+
+    def formatter
+      @formatter ||= ProgressBar::Format::Base.new(@format)
     end
 
   protected
@@ -205,13 +209,6 @@ class ProgressBar
         stopped? ? "\n" : "\r"
       else
         stopped? ? "\n" : ""
-      end
-    end
-
-    def format_string=(format_string)
-      if @format_string != format_string
-        @format_string = format_string
-        @format        = ProgressBar::Format::Base.new(format_string)
       end
     end
 

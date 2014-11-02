@@ -554,7 +554,7 @@ describe ProgressBar::Base do
       let(:progressbar) { ProgressBar::Base.new(:format => '%B %p%%') }
 
       context 'if called with no arguments' do
-        before { progressbar.format }
+        before { progressbar.format = nil }
 
         it 'resets the format back to the default' do
           expect(progressbar.to_s).to match(/^Progress: \|\s+\|\z/)
@@ -562,7 +562,7 @@ describe ProgressBar::Base do
       end
 
       context 'if called with a specific format string' do
-        before { progressbar.format '%t' }
+        before { progressbar.format = '%t' }
 
         it 'sets it as the new format for the bar' do
           expect(progressbar.to_s).to match(/^Progress\z/)
