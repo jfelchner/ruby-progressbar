@@ -28,7 +28,7 @@ class ProgressBar
       self.time         = Components::Time.new(options.merge(:timer => timer, :progress => progressable))
 
       self.output       = Output.detect(options.merge(:bar => self, :timer => timer))
-      @format           = output.resolve_format(options[:format])
+      @format           = Format::String.new(output.resolve_format(options[:format]))
 
       start :at => options[:starting_at] if autostart
     end
@@ -114,10 +114,14 @@ class ProgressBar
       output.refresh_with_format_change { title_comp.title = title }
     end
 
-    def to_s(format = nil)
-      self.format = format if format
+    def to_s(new_format = nil)
+      self.format = new_format if new_format
 
-      formatter.process(self, output.length)
+      @format.each_molecule do |molecule, string|
+        bar_length = string.length_available_for_bar(output.length)
+
+        string.gsub!(molecule.full_key, molecule.lookup_value(self, bar_length))
+      end
     end
 
     def inspect
@@ -126,14 +130,11 @@ class ProgressBar
 
     def format=(other)
       output.refresh_with_format_change do
-        @formatter = nil
-        @format    = (other || output.default_format)
+        @format = Format::String.new(other || output.default_format)
       end
     end
 
-    def formatter
-      @formatter ||= ProgressBar::Format::Base.new(@format)
-    end
+    alias_method :format, :format=
 
   protected
 

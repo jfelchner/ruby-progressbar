@@ -1,2 +1,2 @@
 require 'ruby-progressbar/format/molecule'
-require 'ruby-progressbar/format/base'
+require 'ruby-progressbar/format/string'
