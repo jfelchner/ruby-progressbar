@@ -11,11 +11,11 @@ class   Time
   end
 
   def self.time_mocking_library_methods
-    %i{
-      now_without_mock_time
-      now_without_delorean
-      now
-    }
+    [
+      :now_without_mock_time,       # Timecop
+      :now_without_delorean,        # Delorean
+      :now                          # Actual
+    ]
   end
 end
 end
