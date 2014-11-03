@@ -35,6 +35,18 @@ class ProgressBar
       def bar_molecule?
         BAR_MOLECULES.include? @key
       end
+
+      def full_key
+        "%#{key}"
+      end
+
+      def lookup_value(environment, length = 0)
+        if bar_molecule?
+          environment.send(method_name[0]).send(method_name[1], length).to_s
+        else
+          environment.send(method_name[0]).send(method_name[1]).to_s
+        end
+      end
     end
   end
 end
