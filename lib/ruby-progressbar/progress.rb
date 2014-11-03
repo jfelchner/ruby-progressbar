@@ -57,21 +57,21 @@ class   Progress
     fail ProgressBar::InvalidProgressError,
           "You can't set the item's current value to be greater than the total." \
     unless total.nil? ||
-            new_progress <= total
+           new_progress <= total
 
     @progress = new_progress
 
     self.running_average = Calculators::RunningAverage.calculate(running_average,
-                                                                  absolute,
-                                                                  smoothing)
+                                                                 absolute,
+                                                                 smoothing)
   end
 
   def total=(new_total)
     fail ProgressBar::InvalidProgressError,
           "You can't set the item's total value to less than the current progress." \
     unless progress.nil?  ||
-            new_total.nil? ||
-            new_total >= progress
+           new_total.nil? ||
+           new_total >= progress
 
     @total = new_total
   end
