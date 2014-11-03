@@ -1,7 +1,8 @@
 require 'ruby-progressbar/output'
 
 class ProgressBar
-  class NonTtyOutput < Output
+  module Outputs
+  class NonTty < Output
     DEFAULT_FORMAT_STRING = '%t: |%b|'
 
     def clear
@@ -41,5 +42,6 @@ class ProgressBar
     protected
 
     attr_accessor :last_update_length
+  end
   end
 end

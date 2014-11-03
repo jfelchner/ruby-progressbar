@@ -1,7 +1,8 @@
 require 'ruby-progressbar/output'
 
 class ProgressBar
-  class TtyOutput < Output
+  module Outputs
+  class Tty < Output
     DEFAULT_FORMAT_STRING = '%t: |%B|'
 
     alias_method :refresh_with_format_change, :with_refresh
@@ -26,5 +27,6 @@ class ProgressBar
     def eol
       bar.stopped? ? "\n" : "\r"
     end
+  end
   end
 end

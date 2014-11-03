@@ -54,7 +54,7 @@ class ProgressBar
 
         @progress = new_progress
 
-        self.running_average = RunningAverageCalculator.calculate(running_average, absolute, smoothing)
+        self.running_average = Calculators::RunningAverage.calculate(running_average, absolute, smoothing)
       end
 
       def total=(new_total)
