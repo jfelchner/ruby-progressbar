@@ -7,15 +7,15 @@ class ProgressBar
     def initialize(options = {})
       self.bar    = options[:bar]
       self.stream      = options[:output] || DEFAULT_OUTPUT_STREAM
-      self.length_calculator = LengthCalculator.new(options)
+      self.length_calculator = Calculators::Length.new(options)
       self.throttle    = Throttle.new(options.merge(:timer => options[:timer]))
     end
 
     def self.detect(options = {})
       if (options[:output] || DEFAULT_OUTPUT_STREAM).tty?
-        TtyOutput.new(options)
+        Outputs::Tty.new(options)
       else
-        NonTtyOutput.new(options)
+        Outputs::NonTty.new(options)
       end
     end
 

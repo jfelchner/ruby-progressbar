@@ -1,5 +1,6 @@
 class ProgressBar
-  class LengthCalculator
+  module Calculators
+  class Length
     attr_accessor :length_override,
                   :current_length
 
@@ -69,5 +70,6 @@ class ProgressBar
     def unix?
       RUBY_PLATFORM =~ /(aix|darwin|linux|(net|free|open)bsd|cygwin|solaris|irix|hpux)/i
     end
+  end
   end
 end
