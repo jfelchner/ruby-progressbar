@@ -1,3 +1,3 @@
-class ProgressBar
+class   ProgressBar
   VERSION = '1.6.1'
 end

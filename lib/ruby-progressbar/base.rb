@@ -1,160 +1,163 @@
 require 'forwardable'
 
-class ProgressBar
-  class Base
-    extend Forwardable
+class   ProgressBar
+class   Base
+  extend Forwardable
 
-    def_delegators :output,
-                   :clear,
-                   :log,
-                   :refresh
+  def_delegators :output,
+                  :clear,
+                  :log,
+                  :refresh
 
-    def_delegators :progressable,
-                   :progress,
-                   :total
+  def_delegators :progressable,
+                  :progress,
+                  :total
 
-    def initialize(options = {})
-      self.autostart    = options.fetch(:autostart,  true)
-      self.autofinish   = options.fetch(:autofinish, true)
-      self.finished     = false
+  def initialize(options = {})
+    self.autostart    = options.fetch(:autostart,  true)
+    self.autofinish   = options.fetch(:autofinish, true)
+    self.finished     = false
 
-      self.timer        = Timer.new(options)
-      self.progressable = Progress.new(options)
+    self.timer        = Timer.new(options)
+    self.progressable = Progress.new(options)
 
-      self.title_comp   = Components::Title.new(:title => options[:title])
-      self.bar          = Components::Bar.new(options.merge(:progress => progressable))
-      self.percentage   = Components::Percentage.new(:progress => progressable)
-      self.rate         = Components::Rate.new(options.merge(:timer => timer, :progress => progressable))
-      self.time         = Components::Time.new(options.merge(:timer => timer, :progress => progressable))
+    options           = options.merge(:timer    => timer,
+                                      :progress => progressable)
 
-      self.output       = Output.detect(options.merge(:bar => self, :timer => timer))
-      @format           = Format::String.new(output.resolve_format(options[:format]))
+    self.title_comp   = Components::Title.new(options)
+    self.bar          = Components::Bar.new(options)
+    self.percentage   = Components::Percentage.new(options)
+    self.rate         = Components::Rate.new(options)
+    self.time         = Components::Time.new(options)
 
-      start :at => options[:starting_at] if autostart
+    self.output       = Output.detect(options.merge(:bar => self))
+    @format           = Format::String.new(output.resolve_format(options[:format]))
+
+    start :at => options[:starting_at] if autostart
+  end
+
+  def start(options = {})
+    clear
+
+    timer.start
+    update_progress(:start, options)
+  end
+
+  def finish
+    output.with_refresh do
+      self.finished = true
+      progressable.finish
+      timer.stop
+    end unless finished?
+  end
+
+  def pause
+    output.with_refresh { timer.pause } unless paused?
+  end
+
+  def stop
+    output.with_refresh { timer.stop } unless stopped?
+  end
+
+  def resume
+    output.with_refresh { timer.resume } if stopped?
+  end
+
+  def reset
+    output.with_refresh do
+      self.finished = false
+      progressable.reset
+      timer.reset
     end
+  end
 
-    def start(options = {})
-      clear
+  def stopped?
+    timer.stopped? || finished?
+  end
 
-      timer.start
-      update_progress(:start, options)
+  alias_method :paused?, :stopped?
+
+  def finished?
+    finished || (autofinish && progressable.finished?)
+  end
+
+  def started?
+    timer.started?
+  end
+
+  def decrement
+    update_progress(:decrement)
+  end
+
+  def increment
+    update_progress(:increment)
+  end
+
+  def progress=(new_progress)
+    update_progress(:progress=, new_progress)
+  end
+
+  def total=(new_total)
+    update_progress(:total=, new_total)
+  end
+
+  def progress_mark=(mark)
+    output.refresh_with_format_change { bar.progress_mark = mark }
+  end
+
+  def remainder_mark=(mark)
+    output.refresh_with_format_change { bar.remainder_mark = mark }
+  end
+
+  def title
+    title_comp.title
+  end
+
+  def title=(title)
+    output.refresh_with_format_change { title_comp.title = title }
+  end
+
+  def to_s(new_format = nil)
+    self.format = new_format if new_format
+
+    @format.each_molecule do |molecule, string|
+      bar_length = string.length_available_for_bar(output.length)
+
+      string.gsub!(molecule.full_key, molecule.lookup_value(self, bar_length))
     end
+  end
 
-    def finish
-      output.with_refresh do
-        self.finished = true
-        progressable.finish
-        timer.stop
-      end unless finished?
+  def inspect
+    "#<ProgressBar:#{progress}/#{total || 'unknown'}>"
+  end
+
+  def format=(other)
+    output.refresh_with_format_change do
+      @format = Format::String.new(other || output.default_format)
     end
+  end
 
-    def pause
-      output.with_refresh { timer.pause } unless paused?
-    end
-
-    def stop
-      output.with_refresh { timer.stop } unless stopped?
-    end
-
-    def resume
-      output.with_refresh { timer.resume } if stopped?
-    end
-
-    def reset
-      output.with_refresh do
-        self.finished = false
-        progressable.reset
-        timer.reset
-      end
-    end
-
-    def stopped?
-      timer.stopped? || finished?
-    end
-
-    alias :paused? :stopped?
-
-    def finished?
-      finished || (autofinish && progressable.finished?)
-    end
-
-    def started?
-      timer.started?
-    end
-
-    def decrement
-      update_progress(:decrement)
-    end
-
-    def increment
-      update_progress(:increment)
-    end
-
-    def progress=(new_progress)
-      update_progress(:progress=, new_progress)
-    end
-
-    def total=(new_total)
-      update_progress(:total=, new_total)
-    end
-
-    def progress_mark=(mark)
-      output.refresh_with_format_change { bar.progress_mark = mark }
-    end
-
-    def remainder_mark=(mark)
-      output.refresh_with_format_change { bar.remainder_mark = mark }
-    end
-
-    def title
-      title_comp.title
-    end
-
-    def title=(title)
-      output.refresh_with_format_change { title_comp.title = title }
-    end
-
-    def to_s(new_format = nil)
-      self.format = new_format if new_format
-
-      @format.each_molecule do |molecule, string|
-        bar_length = string.length_available_for_bar(output.length)
-
-        string.gsub!(molecule.full_key, molecule.lookup_value(self, bar_length))
-      end
-    end
-
-    def inspect
-      "#<ProgressBar:#{progress}/#{total || 'unknown'}>"
-    end
-
-    def format=(other)
-      output.refresh_with_format_change do
-        @format = Format::String.new(other || output.default_format)
-      end
-    end
-
-    alias_method :format, :format=
+  alias_method :format, :format=
 
   protected
 
-    attr_accessor :output,
-                  :timer,
-                  :progressable,
-                  :title_comp,
-                  :bar,
-                  :percentage,
-                  :rate,
-                  :time,
-                  :autostart,
-                  :autofinish,
-                  :finished
+  attr_accessor :output,
+                :timer,
+                :progressable,
+                :title_comp,
+                :bar,
+                :percentage,
+                :rate,
+                :time,
+                :autostart,
+                :autofinish,
+                :finished
 
-    def update_progress(*args)
-      output.with_refresh do
-        progressable.send(*args)
-        timer.stop if finished?
-      end
+  def update_progress(*args)
+    output.with_refresh do
+      progressable.send(*args)
+      timer.stop if finished?
     end
   end
+end
 end
