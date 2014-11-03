@@ -14,7 +14,7 @@ class   Time
   ELAPSED_LABEL          = 'Time'
 
   def initialize(options = {})
-    self.out_of_bounds_time_format = nil
+    self.out_of_bounds_time_format = options[:out_of_bounds_time_format]
     self.timer                     = options[:timer]
     self.progress                  = options[:progress]
   end
@@ -26,6 +26,8 @@ class   Time
   def elapsed_with_label
     "#{ELAPSED_LABEL}: #{elapsed}"
   end
+
+  protected
 
   def estimated_with_no_oob
     self.out_of_bounds_time_format = nil
@@ -44,8 +46,6 @@ class   Time
 
     estimated_with_elapsed_fallback
   end
-
-  protected
 
   attr_accessor :out_of_bounds_time_format,
                 :timer,

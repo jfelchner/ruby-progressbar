@@ -1,317 +1,308 @@
-require 'spec_helper'
-require 'support/time'
+require 'rspectacular'
+require 'ruby-progressbar/components/time'
 
-describe ProgressBar::Components::Time do
-  let(:timer) { ProgressBar::Timer.new }
-  let(:progress) { ProgressBar::Progress.new(:starting_at => 0, :total => progress_total, :smoothing => smoothing) }
-  let(:smoothing)    { 0.1 }
-  let(:progress_total) { 100 }
+class     ProgressBar
+module    Components
+describe  Time do
+  let(:timer) { Timer.new(:time => ::Time) }
 
-  describe '#progress=' do
-    it 'raises an error when passed a number larger than the total' do
-      @time = ProgressBar::Components::Time.new(:total    => 100,
-                                                :timer    => timer,
-                                                :progress => progress)
-      expect { progress.progress = 101 }.to raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
-    end
+  it 'displays an unknown estimated time remaining when the timer has been started ' \
+     'but no progress has been made' do
+
+    progress = Progress.new(:total => 100)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    timer.start
+
+    expect(time.estimated_with_label).to eql ' ETA: ??:??:??'
   end
 
-  describe '#estimated_with_label' do
-    context 'when the timer has been started but no progress has been made' do
-      before do
-        @time = ProgressBar::Components::Time.new(:total    => 100,
-                                                  :timer    => timer,
-                                                  :progress => progress)
-        progress.start
-        timer.start
-      end
+  it 'does not display unknown time remaining when the timer has been started and ' \
+     'it is incremented' do
 
-      it 'displays an unknown time remaining' do
-        expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
-      end
+    progress = Progress.new(:total => 100)
+    time = Time.new(:timer    => timer,
+                    :progress => progress)
 
-      context 'and it is incremented' do
-        it 'should not display unknown time remaining' do
-          progress.increment
-          expect(@time.estimated_with_label).not_to eql ' ETA: ??:??:??'
-        end
-      end
-    end
+    timer.start
+    progress.increment
 
-    context 'when half the progress has been made' do
-      context 'and smoothing is turned off' do
-        let(:smoothing) { 0.0 }
-
-        context 'and it took 3:42:12 to do it' do
-          before do
-            @time = ProgressBar::Components::Time.new(:timer => timer, :progress => progress)
-
-            Timecop.travel(-13_332) do
-              progress.start
-              timer.start
-              50.times { progress.increment }
-            end
-          end
-
-          context 'when #decrement is called' do
-            before { 20.times { progress.decrement } }
-
-            it 'displays the correct time remaining' do
-              expect(@time.estimated_with_label).to eql ' ETA: 08:38:28'
-            end
-          end
-
-          context 'when #reset is called' do
-            before { progress.reset }
-
-            it 'displays unknown time remaining' do
-              expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
-            end
-          end
-
-          it 'displays the correct time remaining' do
-            expect(@time.estimated_with_label).to eql ' ETA: 03:42:12'
-          end
-        end
-
-        context 'when it is estimated to take longer than 99:59:59' do
-          before do
-            @time = ProgressBar::Components::Time.new(:timer => timer, :progress => progress)
-
-            Timecop.travel(-120_000) do
-              progress.start
-              timer.start
-              25.times { progress.increment }
-            end
-          end
-
-          context 'and the out of bounds time format has been set to "friendly"' do
-            before { @time.send(:out_of_bounds_time_format=, :friendly) }
-
-            it 'displays "> 4 Days" remaining' do
-              expect(@time.estimated_with_label).to eql ' ETA: > 4 Days'
-            end
-          end
-
-          context 'and the out of bounds time format has been set to "unknown"' do
-            before { @time.send(:out_of_bounds_time_format=, :unknown) }
-
-            it 'displays "??:??:??" remaining' do
-              expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
-            end
-          end
-
-          it 'displays the correct time remaining' do
-            expect(@time.estimated_with_label).to eql ' ETA: 100:00:00'
-          end
-        end
-      end
-
-      context 'and smoothing is turned on' do
-        let(:smoothing) { 0.5 }
-
-        context 'and it took 3:42:12 to do it' do
-          before do
-            @time = ProgressBar::Components::Time.new(:timer => timer, :progress => progress)
-
-            Timecop.travel(-13_332) do
-              progress.start
-              timer.start
-              50.times { progress.increment }
-            end
-          end
-
-          context 'when #decrement is called' do
-            before { 20.times { progress.decrement } }
-
-            it 'displays the correct time remaining' do
-              expect(@time.estimated_with_label).to eql ' ETA: 08:14:34'
-            end
-          end
-
-          context 'when #reset is called' do
-            before { progress.reset }
-
-            it 'displays unknown time remaining' do
-              expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
-            end
-          end
-
-          it 'displays the correct time remaining' do
-            expect(@time.estimated_with_label).to eql ' ETA: 03:51:16'
-          end
-        end
-
-        context 'when it is estimated to take longer than 99:59:59' do
-          before do
-            @time = ProgressBar::Components::Time.new(:smoothing => smoothing, :timer => timer, :progress => progress)
-
-            Timecop.travel(-120_000) do
-              progress.start
-              timer.start
-              25.times { progress.increment }
-            end
-          end
-
-          context 'and the out of bounds time format has been set to "friendly"' do
-            before { @time.send(:out_of_bounds_time_format=, :friendly) }
-
-            it 'displays "> 4 Days" remaining' do
-              expect(@time.estimated_with_label).to eql ' ETA: > 4 Days'
-            end
-          end
-
-          context 'and the out of bounds time format has been set to "unknown"' do
-            before { @time.send(:out_of_bounds_time_format=, :unknown) }
-
-            it 'displays "??:??:??" remaining' do
-              expect(@time.estimated_with_label).to eql ' ETA: ??:??:??'
-            end
-          end
-
-          it 'displays the correct time remaining' do
-            expect(@time.estimated_with_label).to eql ' ETA: 105:33:20'
-          end
-        end
-      end
-    end
-
-    context 'a thing with a total' do
-      let(:progress_total) { 10 }
-
-      it 'displays a good estimate for regular increments' do
-        begin
-          Timecop.freeze(t = Time.now)
-          time = ProgressBar::Components::Time.new(:smoothing => smoothing, :timer => timer, :progress => progress)
-          progress.start
-          timer.start
-          results = (1..progress_total).map do |i|
-            Timecop.freeze(t + 0.5 * i)
-            progress.increment
-            time.estimated_with_label
-          end
-
-          expect(results).to eql([
-            ' ETA: 00:00:05',
-            ' ETA: 00:00:04',
-            ' ETA: 00:00:04',
-            ' ETA: 00:00:03',
-            ' ETA: 00:00:03',
-            ' ETA: 00:00:02',
-            ' ETA: 00:00:02',
-            ' ETA: 00:00:01',
-            ' ETA: 00:00:01',
-            ' ETA: 00:00:00',
-          ])
-        ensure
-          Timecop.return
-        end
-      end
-    end
+    expect(time.estimated_with_label).to eql ' ETA: 00:00:00'
   end
 
-  describe '#elapsed_with_label' do
-    before { @time = ProgressBar::Components::Time.new(:smoothing => smoothing, :timer => timer, :progress => progress) }
+  it 'displays unsmoothed time remaining when progress has been made' do
+    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
 
-    context 'when the timer has not been started' do
-      it 'displays "Time: --:--:--"' do
-        expect(@time.elapsed_with_label).to eql 'Time: --:--:--'
-      end
-    end
+    Timecop.freeze(-13_332)
 
-    context 'when it has just been started' do
-      it 'displays "Time: 00:00:00"' do
-        timer.start
-        expect(@time.elapsed_with_label).to eql 'Time: 00:00:00'
-      end
-    end
+    timer.start
+    50.times { progress.increment }
 
-    context 'when it was started 4 hours, 28 minutes and 13 seconds ago' do
-      before do
-        Timecop.travel(-16_093) do
-          timer.start
-        end
-      end
+    Timecop.return
 
-      context 'and it was stopped 32 seconds ago' do
-        before do
-          Timecop.travel(-32) do
-            timer.stop
-          end
-        end
-
-        context 'and #reset is called' do
-          before { timer.reset }
-
-          it 'displays "Time: --:--:--"' do
-            expect(@time.elapsed_with_label).to eql 'Time: --:--:--'
-          end
-        end
-
-        it 'displays "Time: 04:27:41"' do
-          expect(@time.elapsed_with_label).to eql 'Time: 04:27:41'
-        end
-      end
-
-      context 'and #reset is called' do
-        before { timer.reset }
-
-        it 'displays "Time: --:--:--"' do
-          expect(@time.elapsed_with_label).to eql 'Time: --:--:--'
-        end
-      end
-
-      it 'displays "Time: 04:28:13"' do
-        expect(@time.elapsed_with_label).to eql 'Time: 04:28:13'
-      end
-    end
+    expect(time.estimated_with_label).to eql ' ETA: 03:42:12'
   end
 
-  describe '#out_of_bounds_time_format=' do
-    context 'when set to an invalid format' do
-      it 'raises an exception' do
-        @time = ProgressBar::Components::Time.new(:total => 100, :timer => timer, :progress => progress)
-        expect { @time.send(:out_of_bounds_time_format=, :foo) }.to raise_error('Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]')
-      end
-    end
+  it 'displays unknown time remaining when progress has been made and then progress ' \
+     'is reset' do
+
+    progress = Progress.new(:total => 100)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    Timecop.freeze(-13_332)
+
+    timer.start
+    50.times { progress.increment }
+
+    Timecop.return
+
+    progress.reset
+
+    expect(time.estimated_with_label).to eql ' ETA: ??:??:??'
   end
 
-  describe '#start' do
+  it 'displays unsmoothed time remaining when progress has been made even after the ' \
+     'bar is decremented' do
 
-    ###
-    # Using ruby-debug under jruby pulls in ruby-debug-base, which defines
-    # Kernel.start. This causes a bug, as Time::As::method_missing calls
-    # Kernel.start instead of Time.start. This spec duplicates the bug.
-    # Without the fix, this results in the following exception:
-    #
-    # 1) ruby-debug-base doesn't stop the progressbar from working
-    #    Failure/Error: COUNT.times { bar.increment }
-    #    NoMethodError:
-    #      undefined method `+' for nil:NilClass
-    #    # ./lib/ruby-progressbar/components/progress.rb:33:in `increment'
-    #
-    it 'properly delegates' do
-      @output = StringIO.new('', 'w+')
+    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
 
-      module Kernel
-        def start(*_args)
-          puts 'Kernel.start has been called'
+    Timecop.freeze(-13_332)
 
-          nil
-        end
-      end
+    timer.start
+    50.times { progress.increment }
 
-      begin
-        COUNT = 100
+    Timecop.return
 
-        bar = ProgressBar.create(:output => @output, :title => 'ruby-debug-base', :total => COUNT)
+    20.times { progress.decrement }
 
-        COUNT.times { bar.increment }
-      ensure
-        module Kernel
-          remove_method :start
-        end
-      end
-    end
+    expect(time.estimated_with_label).to eql ' ETA: 08:38:28'
   end
+
+  it 'displays estimated time of "> 4 Days" when estimated time is out of bounds ' \
+     'and the out of bounds format is set to "friendly"' do
+
+    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    time     = Time.new(:out_of_bounds_time_format => :friendly,
+                        :timer                     => timer,
+                        :progress                  => progress)
+
+    Timecop.freeze(-120_000)
+
+    timer.start
+    25.times { progress.increment }
+
+    Timecop.return
+
+    expect(time.estimated_with_label).to eql ' ETA: > 4 Days'
+  end
+
+  it 'displays estimated time of "??:??:??" when estimated time is out of bounds ' \
+     'and the out of bounds format is set to "unknown"' do
+
+    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    time     = Time.new(:out_of_bounds_time_format => :unknown,
+                        :timer                     => timer,
+                        :progress                  => progress)
+
+    Timecop.freeze(-120_000)
+
+    timer.start
+    25.times { progress.increment }
+
+    Timecop.return
+
+    expect(time.estimated_with_label).to eql ' ETA: ??:??:??'
+  end
+
+  it 'displays actual estimated time when estimated time is out of bounds and the ' \
+     'out of bounds format is unset' do
+
+    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    time     = Time.new(:out_of_bounds_time_format => nil,
+                        :timer                     => timer,
+                        :progress                  => progress)
+
+    Timecop.freeze(-120_000)
+
+    timer.start
+    25.times { progress.increment }
+
+    Timecop.return
+
+    expect(time.estimated_with_label).to eql ' ETA: 100:00:00'
+  end
+
+  it 'displays smoothed estimated time properly even when taking decrements into ' \
+     'account' do
+
+    progress = Progress.new(:total => 100, :smoothing => 0.5)
+    time     = Time.new(:timer                     => timer,
+                        :progress                  => progress)
+
+    Timecop.freeze(-13_332)
+
+    timer.start
+    50.times { progress.increment }
+
+    Timecop.return
+
+    20.times { progress.decrement }
+
+    expect(time.estimated_with_label).to eql ' ETA: 08:14:34'
+  end
+
+  it 'displays smoothed unknown estimated time when reset is called after progress ' \
+     'is made' do
+
+    progress = Progress.new(:total => 100, :smoothing => 0.5)
+    time     = Time.new(:timer                     => timer,
+                        :progress                  => progress)
+
+    Timecop.freeze(-13_332)
+
+    timer.start
+    50.times { progress.increment }
+
+    Timecop.return
+
+    progress.reset
+
+    expect(time.estimated_with_label).to eql ' ETA: ??:??:??'
+  end
+
+  it 'displays smoothed estimated time after progress has been made' do
+    progress = Progress.new(:total => 100, :smoothing => 0.5)
+    time     = Time.new(:timer                     => timer,
+                        :progress                  => progress)
+
+    Timecop.freeze(-13_332)
+
+    timer.start
+    50.times { progress.increment }
+
+    Timecop.return
+
+    expect(time.estimated_with_label).to eql ' ETA: 03:51:16'
+  end
+
+  it 'displays the estimated time remaining properly even for progress increments ' \
+     'very short intervals' do
+
+    progress = Progress.new(:total => 10, :smoothing => 0.1)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    estimated_time_results = []
+    now                    = ::Time.now
+
+    Timecop.freeze(now)
+
+    timer.start
+
+    (1..10).each do
+      Timecop.freeze(now = now + 0.5)
+      progress.increment
+
+      estimated_time_results << time.estimated_with_label
+    end
+
+    Timecop.return
+
+    expect(estimated_time_results).to eql(
+      [
+        ' ETA: 00:00:05',
+        ' ETA: 00:00:04',
+        ' ETA: 00:00:04',
+        ' ETA: 00:00:03',
+        ' ETA: 00:00:03',
+        ' ETA: 00:00:02',
+        ' ETA: 00:00:02',
+        ' ETA: 00:00:01',
+        ' ETA: 00:00:01',
+        ' ETA: 00:00:00',
+      ]
+    )
+  end
+
+  it 'displays unknown elapsed time when the timer has not been started' do
+    progress = Progress.new
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    expect(time.elapsed_with_label).to eql 'Time: --:--:--'
+  end
+
+  it 'displays elapsed time when the timer has just been started' do
+    progress = Progress.new
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    timer.start
+
+    expect(time.elapsed_with_label).to eql 'Time: 00:00:00'
+  end
+
+  it 'displays elapsed time if it was previously started' do
+    progress = Progress.new
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    Timecop.freeze(-16_093)
+
+    timer.start
+
+    Timecop.return
+
+    expect(time.elapsed_with_label).to eql 'Time: 04:28:13'
+  end
+
+  it 'displays elapsed time frozen to a specific time if it was previously stopped' do
+    progress = Progress.new
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    Timecop.freeze(-16_093)
+
+    timer.start
+
+    Timecop.return
+    Timecop.freeze(-32)
+
+    timer.stop
+
+    Timecop.return
+
+    expect(time.elapsed_with_label).to eql 'Time: 04:27:41'
+  end
+
+  it 'displays unknown elapsed time after reset has been called' do
+    progress = Progress.new
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    Timecop.freeze(-16_093)
+
+    timer.start
+
+    Timecop.return
+
+    timer.reset
+
+    expect(time.elapsed_with_label).to eql 'Time: --:--:--'
+  end
+
+  it 'raises an exception when an invalid out of bounds time format is specified' do
+    expect do
+      Time.new(:out_of_bounds_time_format => :foo)
+    end.
+    to raise_error('Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]')
+  end
+end
+end
 end
