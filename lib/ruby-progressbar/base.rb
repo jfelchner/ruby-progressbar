@@ -5,13 +5,13 @@ class   Base
   extend Forwardable
 
   def_delegators :output,
-                  :clear,
-                  :log,
-                  :refresh
+                 :clear,
+                 :log,
+                 :refresh
 
   def_delegators :progressable,
-                  :progress,
-                  :total
+                 :progress,
+                 :total
 
   def initialize(options = {})
     self.autostart    = options.fetch(:autostart,  true)
