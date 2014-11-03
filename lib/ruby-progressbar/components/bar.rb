@@ -27,7 +27,7 @@ class ProgressBar
       def integrated_percentage_complete_string
         return standard_complete_string if completed_length < 5
 
-        " #{@progress.percentage_completed} ".to_s.center(completed_length, progress_mark)
+        " #{progress.percentage_completed} ".to_s.center(completed_length, progress_mark)
       end
 
       def standard_complete_string
@@ -37,8 +37,8 @@ class ProgressBar
       def empty_string
         incomplete_length = (length - completed_length)
 
-        if @progress.total.nil?
-          current_animation_step = @progress.progress % unknown_progress_animation_steps.size
+        if progress.total.nil?
+          current_animation_step = progress.progress % unknown_progress_animation_steps.size
           animation_graphic      = unknown_progress_animation_steps[current_animation_step]
 
           unknown_incomplete_string = animation_graphic * ((incomplete_length / unknown_progress_animation_steps.size) + 2)
@@ -71,7 +71,7 @@ class ProgressBar
 
     private
       def completed_length
-        (length * @progress.percentage_completed / 100).floor
+        (length * progress.percentage_completed / 100).floor
       end
     end
   end

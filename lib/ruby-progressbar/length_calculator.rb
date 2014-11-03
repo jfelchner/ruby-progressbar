@@ -1,28 +1,35 @@
 class ProgressBar
   class LengthCalculator
+    attr_accessor :length_override,
+                  :current_length
+
     def initialize(options)
-      @length_override = ENV['RUBY_PROGRESS_BAR_LENGTH'] || options[:length]
-      @length_override = @length_override.to_i if @length_override
-      @current_length  = nil
+      self.length_override = options[:length]
+      self.current_length  = nil
     end
 
     def length
-      @current_length || reset_length
+      current_length || reset_length
     end
 
     def length_changed?
-      previous_length = @current_length
-      @current_length = calculate_length
+      previous_length     = current_length
+      self.current_length = calculate_length
 
-      previous_length != @current_length
+      previous_length != current_length
     end
 
     def calculate_length
-      @length_override || terminal_width || 80
+      length_override || terminal_width || 80
     end
 
     def reset_length
-      @current_length = calculate_length
+      self.current_length = calculate_length
+    end
+
+    def length_override=(other)
+      @length_override ||= ENV['RUBY_PROGRESS_BAR_LENGTH'] || other
+      @length_override = @length_override.to_i if @length_override
     end
 
   private

@@ -24,16 +24,16 @@ class ProgressBar
 
       BAR_MOLECULES     = %w{w B b i}
 
-      attr_reader   :key
-      attr_reader   :method_name
+      attr_accessor :key,
+                    :method_name
 
       def initialize(letter)
-        @key         = letter
-        @method_name = MOLECULES.fetch(@key.to_sym)
+        self.key         = letter
+        self.method_name = MOLECULES.fetch(key.to_sym)
       end
 
       def bar_molecule?
-        BAR_MOLECULES.include? @key
+        BAR_MOLECULES.include? key
       end
 
       def full_key

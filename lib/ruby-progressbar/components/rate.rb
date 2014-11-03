@@ -1,21 +1,25 @@
 class ProgressBar
   module Components
     class Rate
-      attr_accessor :rate_scale
+      attr_accessor :rate_scale,
+                    :started_at,
+                    :stopped_at,
+                    :timer,
+                    :progress
 
       def initialize(options = {})
         self.rate_scale = options[:rate_scale]
-        @started_at     = nil
-        @stopped_at     = nil
-        @timer          = options[:timer]
-        @progress       = options[:progress]
+        self.started_at = nil
+        self.stopped_at = nil
+        self.timer      = options[:timer]
+        self.progress   = options[:progress]
       end
 
       def to_s(format_string = "%i")
-        elapsed = @timer.elapsed_whole_seconds.to_f
+        elapsed = timer.elapsed_whole_seconds.to_f
         return 0 unless elapsed > 0
 
-        base_rate   = (@progress.absolute / elapsed)
+        base_rate   = (progress.absolute / elapsed)
 
         if rate_scale
           scaled_rate = rate_scale.call(base_rate)
