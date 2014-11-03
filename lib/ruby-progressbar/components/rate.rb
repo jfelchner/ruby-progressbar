@@ -8,32 +8,35 @@ class   Rate
                 :progress
 
   def initialize(options = {})
-    self.rate_scale = options[:rate_scale]
+    self.rate_scale = options[:rate_scale] || lambda {|x| x}
     self.started_at = nil
     self.stopped_at = nil
     self.timer      = options[:timer]
     self.progress   = options[:progress]
   end
 
-  def to_s(format_string = '%i')
-    elapsed = timer.elapsed_whole_seconds.to_f
-    return 0 unless elapsed > 0
+  private
 
-    base_rate   = (progress.absolute / elapsed)
-
-    if rate_scale
-      scaled_rate = rate_scale.call(base_rate)
-    else
-      scaled_rate = base_rate
-    end
+  def rate_of_change(format_string = '%i')
+    return 0 unless elapsed_seconds > 0
 
     format_string % scaled_rate
   end
 
-  alias_method :rate_of_change, :to_s
-
   def rate_of_change_with_precision
-    to_s('%.2f')
+    rate_of_change('%.2f')
+  end
+
+  def scaled_rate
+    rate_scale.call(base_rate)
+  end
+
+  def base_rate
+    progress.absolute / elapsed_seconds
+  end
+
+  def elapsed_seconds
+    timer.elapsed_whole_seconds.to_f
   end
 end
 end
