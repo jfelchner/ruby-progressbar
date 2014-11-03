@@ -63,7 +63,7 @@ class   Time
   private
 
   def estimated
-    return OOB_UNKNOWN_TIME_TEXT if progress.unknown? || timer.stopped?
+    return OOB_UNKNOWN_TIME_TEXT if progress.unknown? || progress.none? || timer.stopped?
 
     hours, minutes, seconds = timer.divide_seconds(estimated_seconds_remaining)
 

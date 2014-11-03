@@ -88,8 +88,12 @@ class   Progress
     (progress * 100 / total).to_i
   end
 
+  def none?
+    progress.zero? || running_average.zero?
+  end
+
   def unknown?
-    running_average.zero? || total.nil?
+    progress.nil? || total.nil?
   end
 
   def percentage_completed_with_precision
