@@ -8,7 +8,8 @@ class PBTimeTester
   end
 end
 
-class ::ProgressBar::Time
+class ProgressBar
+class Time
   class << self
     alias_method :old_now, :now
 
@@ -16,4 +17,5 @@ class ::ProgressBar::Time
       old_now(time)
     end
   end
+end
 end

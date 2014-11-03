@@ -125,7 +125,7 @@ describe ProgressBar::Components::Bar do
 
     describe '#to_s' do
       it 'displays the bar as 100% complete' do
-        expect(@progressbar.to_s).to eql ('=' * 100)
+        expect(@progressbar.to_s).to eql('=' * 100)
       end
     end
   end

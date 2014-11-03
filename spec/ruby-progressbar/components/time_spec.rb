@@ -9,9 +9,9 @@ describe ProgressBar::Components::Time do
 
   describe '#progress=' do
     it 'raises an error when passed a number larger than the total' do
-      @time = ProgressBar::Components::Time.new(:total => 100,
-                                                                    :timer => timer,
-                                                                    :progress => progress)
+      @time = ProgressBar::Components::Time.new(:total    => 100,
+                                                :timer    => timer,
+                                                :progress => progress)
       expect { progress.progress = 101 }.to raise_error(ProgressBar::InvalidProgressError, "You can't set the item's current value to be greater than the total.")
     end
   end
@@ -19,9 +19,9 @@ describe ProgressBar::Components::Time do
   describe '#estimated_with_label' do
     context 'when the timer has been started but no progress has been made' do
       before do
-        @time = ProgressBar::Components::Time.new(:total => 100,
-                                                                      :timer => timer,
-                                                                      :progress => progress)
+        @time = ProgressBar::Components::Time.new(:total    => 100,
+                                                  :timer    => timer,
+                                                  :progress => progress)
         progress.start
         timer.start
       end
@@ -46,7 +46,7 @@ describe ProgressBar::Components::Time do
           before do
             @time = ProgressBar::Components::Time.new(:timer => timer, :progress => progress)
 
-            Timecop.travel(-13332) do
+            Timecop.travel(-13_332) do
               progress.start
               timer.start
               50.times { progress.increment }
@@ -78,7 +78,7 @@ describe ProgressBar::Components::Time do
           before do
             @time = ProgressBar::Components::Time.new(:timer => timer, :progress => progress)
 
-            Timecop.travel(-120000) do
+            Timecop.travel(-120_000) do
               progress.start
               timer.start
               25.times { progress.increment }
@@ -114,7 +114,7 @@ describe ProgressBar::Components::Time do
           before do
             @time = ProgressBar::Components::Time.new(:timer => timer, :progress => progress)
 
-            Timecop.travel(-13332) do
+            Timecop.travel(-13_332) do
               progress.start
               timer.start
               50.times { progress.increment }
@@ -146,7 +146,7 @@ describe ProgressBar::Components::Time do
           before do
             @time = ProgressBar::Components::Time.new(:smoothing => smoothing, :timer => timer, :progress => progress)
 
-            Timecop.travel(-120000) do
+            Timecop.travel(-120_000) do
               progress.start
               timer.start
               25.times { progress.increment }
@@ -179,34 +179,34 @@ describe ProgressBar::Components::Time do
     context 'a thing with a total' do
       let(:progress_total) { 10 }
 
-    it 'displays a good estimate for regular increments' do
-      begin
-        Timecop.freeze(t = Time.now)
-        time = ProgressBar::Components::Time.new(:smoothing => smoothing, :timer => timer, :progress => progress)
-        progress.start
-        timer.start
-        results = (1..progress_total).map do |i|
-          Timecop.freeze(t + 0.5 * i)
-          progress.increment
-          time.estimated_with_label
-        end
+      it 'displays a good estimate for regular increments' do
+        begin
+          Timecop.freeze(t = Time.now)
+          time = ProgressBar::Components::Time.new(:smoothing => smoothing, :timer => timer, :progress => progress)
+          progress.start
+          timer.start
+          results = (1..progress_total).map do |i|
+            Timecop.freeze(t + 0.5 * i)
+            progress.increment
+            time.estimated_with_label
+          end
 
-        expect(results).to eql([
-          ' ETA: 00:00:05',
-          ' ETA: 00:00:04',
-          ' ETA: 00:00:04',
-          ' ETA: 00:00:03',
-          ' ETA: 00:00:03',
-          ' ETA: 00:00:02',
-          ' ETA: 00:00:02',
-          ' ETA: 00:00:01',
-          ' ETA: 00:00:01',
-          ' ETA: 00:00:00',
-        ])
-      ensure
-        Timecop.return
+          expect(results).to eql([
+            ' ETA: 00:00:05',
+            ' ETA: 00:00:04',
+            ' ETA: 00:00:04',
+            ' ETA: 00:00:03',
+            ' ETA: 00:00:03',
+            ' ETA: 00:00:02',
+            ' ETA: 00:00:02',
+            ' ETA: 00:00:01',
+            ' ETA: 00:00:01',
+            ' ETA: 00:00:00',
+          ])
+        ensure
+          Timecop.return
+        end
       end
-    end
     end
   end
 
@@ -228,7 +228,7 @@ describe ProgressBar::Components::Time do
 
     context 'when it was started 4 hours, 28 minutes and 13 seconds ago' do
       before do
-        Timecop.travel(-16093) do
+        Timecop.travel(-16_093) do
           timer.start
         end
       end
@@ -294,9 +294,10 @@ describe ProgressBar::Components::Time do
       @output = StringIO.new('', 'w+')
 
       module Kernel
-        def start(options={}, &block)
-          puts "Kernel.start has been called"
-          return nil
+        def start(*_args)
+          puts 'Kernel.start has been called'
+
+          nil
         end
       end
 

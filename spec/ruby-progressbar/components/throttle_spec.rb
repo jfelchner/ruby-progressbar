@@ -5,17 +5,20 @@ describe ProgressBar::Throttle do
 
   context 'given a numeric period' do
     before do
-      Timecop.freeze(0) {
+      Timecop.freeze(0) do
         @throttle = ProgressBar::Throttle.new(:throttle_rate => 10,
-                                                          :timer         => timer)
-      }
+                                              :timer         => timer)
+      end
     end
 
     describe '#choke' do
       it 'yields the first time' do
         yielded = false
 
-        @throttle.choke { yielded = true; timer.start }
+        @throttle.choke do
+          yielded = true
+          timer.start
+        end
 
         expect(yielded).to eql true
       end
@@ -25,11 +28,16 @@ describe ProgressBar::Throttle do
           @throttle.choke { timer.start }
         end
 
-        it "doesn't yield if period hasn't passed yet" do
+        it 'does not yield if period has not passed yet' do
           yielded = false
 
           (1..9).each do |t|
-            Timecop.freeze(t) { @throttle.choke { yielded = true; timer.start } }
+            Timecop.freeze(t) do
+              @throttle.choke do
+                yielded = true
+                timer.start
+              end
+            end
 
             expect(yielded).to eql false
           end
@@ -39,16 +47,26 @@ describe ProgressBar::Throttle do
           yielded = -1
 
           (0..25).each do |t|
-            Timecop.freeze(t) { @throttle.choke(:force_update_if => true) { yielded += 1; timer.start } }
+            Timecop.freeze(t) do
+              @throttle.choke(:force_update_if => true) do
+                yielded += 1
+                timer.start
+              end
+            end
 
             expect(yielded).to eql t
           end
         end
 
-        it "yields after period has passed" do
+        it 'yields after period has passed' do
           yielded = false
 
-          Timecop.freeze(15) { @throttle.choke { yielded = true; timer.start } }
+          Timecop.freeze(15) do
+            @throttle.choke do
+              yielded = true
+              timer.start
+            end
+          end
 
           expect(yielded).to eql true
         end
@@ -60,20 +78,30 @@ describe ProgressBar::Throttle do
           Timecop.freeze(15) { @throttle.choke { timer.start } }
         end
 
-        it "doesn't yield if period hasn't passed yet" do
+        it 'does not yield if period has not passed yet' do
           yielded = false
 
           (16..24).each do |t|
-            Timecop.freeze(t) { @throttle.choke { yielded = true; timer.start } }
+            Timecop.freeze(t) do
+              @throttle.choke do
+                yielded = true
+                timer.start
+              end
+            end
 
             expect(yielded).to eql false
           end
         end
 
-        it "yields after period has passed" do
+        it 'yields after period has passed' do
           yielded = false
 
-          Timecop.freeze(25) { @throttle.choke { yielded = true; timer.start } }
+          Timecop.freeze(25) do
+            @throttle.choke do
+              yielded = true
+              timer.start
+            end
+          end
 
           expect(yielded).to eql true
         end
@@ -83,9 +111,9 @@ describe ProgressBar::Throttle do
 
   context 'given no throttle period' do
     before do
-      Timecop.freeze(0) {
+      Timecop.freeze(0) do
         @throttle = ProgressBar::Throttle.new(:timer => timer)
-      }
+      end
     end
 
     describe '#choke' do
@@ -93,7 +121,12 @@ describe ProgressBar::Throttle do
         yielded = -1
 
         (0..25).each do |t|
-          Timecop.freeze(t) { @throttle.choke { yielded += 1; timer.start } }
+          Timecop.freeze(t) do
+            @throttle.choke do
+              yielded += 1
+              timer.start
+            end
+          end
 
           expect(yielded).to eql t
         end
