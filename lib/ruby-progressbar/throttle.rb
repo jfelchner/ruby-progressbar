@@ -6,7 +6,7 @@ class   Throttle
                 :timer
 
   def initialize(options = {})
-    self.rate       = options.delete(:throttle_rate) { 0.01 } || 0.01
+    self.rate       = options.fetch(:throttle_rate, 0.01)
     self.started_at = nil
     self.stopped_at = nil
     self.timer      = options.fetch(:throttle_timer, Timer.new)
