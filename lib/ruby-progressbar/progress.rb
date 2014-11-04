@@ -6,11 +6,11 @@ class   Progress
   DEFAULT_BEGINNING_POSITION = 0
   DEFAULT_SMOOTHING          = 0.1
 
-  attr_reader               :total
-  attr_reader               :progress
-  attr_accessor             :starting_position
-  attr_accessor             :running_average
-  attr_accessor             :smoothing
+  attr_accessor             :total,
+                            :progress,
+                            :starting_position,
+                            :running_average,
+                            :smoothing
 
   def initialize(options = {})
     self.total     = options.fetch(:total, DEFAULT_TOTAL)
