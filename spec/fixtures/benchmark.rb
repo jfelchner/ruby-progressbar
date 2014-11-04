@@ -3,7 +3,7 @@
 #                       --require 'ruby-progressbar'
 #                       --sort=total ./spec/fixtures/benchmark.rb
 
-total  = 10
+total  = 10_000
 # output = File.open('/Users/jfelchner/Downloads/benchmark.txt', 'w+')
 output = $stdout
 bar    = ProgressBar.create(:output => output,
@@ -12,6 +12,6 @@ bar    = ProgressBar.create(:output => output,
                             :total  => total)
 
 total.times do |i|
-  bar.log i
+  # bar.log i
   bar.increment
 end
