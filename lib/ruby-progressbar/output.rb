@@ -40,9 +40,9 @@ class   Output
   end
 
   def refresh(options = {})
-    clear if length_calculator.length_changed?
-
     throttle.choke(:force_update_if => (bar.stopped? || options[:force])) do
+      clear if length_calculator.length_changed?
+
       print_and_flush
     end
   end
