@@ -122,11 +122,7 @@ class   Base
   def to_s(new_format = nil)
     self.format = new_format if new_format
 
-    @format.each_molecule do |molecule, string|
-      bar_length = string.length_available_for_bar(output.length)
-
-      string.gsub!(molecule.full_key, molecule.lookup_value(self, bar_length))
-    end
+    Format::Formatter.process(@format, output.length, self)
   end
 
   def inspect
