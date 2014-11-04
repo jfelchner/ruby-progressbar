@@ -56,8 +56,8 @@ class   Progress
   def progress=(new_progress)
     fail ProgressBar::InvalidProgressError,
          "You can't set the item's current value to be greater than the total." \
-    unless total.nil? ||
-           new_progress <= total
+    if total &&
+       new_progress > total
 
     @progress = new_progress
 
