@@ -45,6 +45,11 @@ class   Timer
     !started_at
   end
 
+  def restart
+    reset
+    start
+  end
+
   def elapsed_seconds
     ((stopped_at || time.now) - started_at)
   end
