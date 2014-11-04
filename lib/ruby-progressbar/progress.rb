@@ -30,7 +30,7 @@ class   Progress
   end
 
   def finished?
-    progress == total
+    @progress == @total
   end
 
   def increment
