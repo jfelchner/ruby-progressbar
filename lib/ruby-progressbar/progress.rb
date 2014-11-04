@@ -35,16 +35,16 @@ class   Progress
 
   def increment
     warn "WARNING: Your progress bar is currently at #{progress} out of #{total} " \
-          'and cannot be incremented. In v2.0.0 this will become a ' \
-          'ProgressBar::InvalidProgressError.' if progress == total
+         'and cannot be incremented. In v2.0.0 this will become a ' \
+         'ProgressBar::InvalidProgressError.' if progress == total
 
     self.progress += 1 unless progress == total
   end
 
   def decrement
     warn "WARNING: Your progress bar is currently at #{progress} out of #{total} " \
-          'and cannot be decremented. In v2.0.0 this will become a ' \
-          'ProgressBar::InvalidProgressError.' if progress == 0
+         'and cannot be decremented. In v2.0.0 this will become a ' \
+         'ProgressBar::InvalidProgressError.' if progress == 0
 
     self.progress -= 1 unless progress == 0
   end
@@ -55,7 +55,7 @@ class   Progress
 
   def progress=(new_progress)
     fail ProgressBar::InvalidProgressError,
-          "You can't set the item's current value to be greater than the total." \
+         "You can't set the item's current value to be greater than the total." \
     unless total.nil? ||
            new_progress <= total
 
@@ -68,7 +68,7 @@ class   Progress
 
   def total=(new_total)
     fail ProgressBar::InvalidProgressError,
-          "You can't set the item's total value to less than the current progress." \
+         "You can't set the item's total value to less than the current progress." \
     unless progress.nil?  ||
            new_total.nil? ||
            new_total >= progress

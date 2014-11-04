@@ -43,9 +43,13 @@ class   Output
     clear if length_calculator.length_changed?
 
     throttle.choke(:force_update_if => (bar.stopped? || options[:force])) do
-      stream.print bar_update_string + eol
-      stream.flush
+      print_and_flush
     end
+  end
+
+  def print_and_flush
+    stream.print bar_update_string + eol
+    stream.flush
   end
 
   protected

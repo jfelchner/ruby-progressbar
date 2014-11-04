@@ -14,3 +14,7 @@ Style/SymbolArray:
 
 Style/Lambda:
   Enabled: false
+
+Style/FileName:
+  Exclude:
+    - 'lib/ruby-progressbar.rb'

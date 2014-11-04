@@ -142,8 +142,8 @@ describe  Time do
      'account' do
 
     progress = Progress.new(:total => 100, :smoothing => 0.5)
-    time     = Time.new(:timer                     => timer,
-                        :progress                  => progress)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
 
     Timecop.freeze(-13_332)
 
@@ -161,8 +161,8 @@ describe  Time do
      'is made' do
 
     progress = Progress.new(:total => 100, :smoothing => 0.5)
-    time     = Time.new(:timer                     => timer,
-                        :progress                  => progress)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
 
     Timecop.freeze(-13_332)
 
@@ -178,8 +178,8 @@ describe  Time do
 
   it 'displays smoothed estimated time after progress has been made' do
     progress = Progress.new(:total => 100, :smoothing => 0.5)
-    time     = Time.new(:timer                     => timer,
-                        :progress                  => progress)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
 
     Timecop.freeze(-13_332)
 
@@ -206,7 +206,7 @@ describe  Time do
     timer.start
 
     (1..10).each do
-      Timecop.freeze(now = now + 0.5)
+      Timecop.freeze(now += 0.5)
       progress.increment
 
       estimated_time_results << time.estimated_with_label
@@ -226,7 +226,7 @@ describe  Time do
         ' ETA: 00:00:01',
         ' ETA: 00:00:01',
         ' ETA: 00:00:00',
-      ]
+      ],
     )
   end
 
@@ -301,7 +301,8 @@ describe  Time do
     expect do
       Time.new(:out_of_bounds_time_format => :foo)
     end.
-    to raise_error('Invalid Out Of Bounds time format.  Valid formats are [:unknown, :friendly, nil]')
+    to raise_error 'Invalid Out Of Bounds time format.  Valid formats are ' \
+                   '[:unknown, :friendly, nil]'
   end
 end
 end

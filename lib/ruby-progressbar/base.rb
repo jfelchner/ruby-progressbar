@@ -13,6 +13,7 @@ class   Base
                  :progress,
                  :total
 
+  # rubocop:disable Metrics/AbcSize
   def initialize(options = {})
     self.autostart    = options.fetch(:autostart,  true)
     self.autofinish   = options.fetch(:autofinish, true)
@@ -35,6 +36,7 @@ class   Base
 
     start :at => options[:starting_at] if autostart
   end
+  # rubocop:enable Metrics/AbcSize
 
   def start(options = {})
     clear
