@@ -6,7 +6,7 @@ class   Throttle
                 :timer
 
   def initialize(options = {})
-    self.rate       = options.fetch(:throttle_rate, 0.01)
+    self.rate       = options[:throttle_rate] || 0.01
     self.started_at = nil
     self.stopped_at = nil
     self.timer      = options.fetch(:throttle_timer, Timer.new)
@@ -14,7 +14,6 @@ class   Throttle
 
   def choke(options = {})
     return unless !timer.started?                        ||
-                  rate.nil?                              ||
                   options.fetch(:force_update_if, false) ||
                   timer.elapsed_seconds >= rate
 
