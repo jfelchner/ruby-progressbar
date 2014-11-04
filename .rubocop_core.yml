@@ -147,6 +147,8 @@ Style/MultilineBlockChain:
 
 Style/MultilineOperationIndentation:
   EnforcedStyle:                 'aligned'
+  Exclude:
+    - 'spec/**/*_spec.rb'
 
 Style/Next:
   EnforcedStyle:                 'skip_modifier_ifs'

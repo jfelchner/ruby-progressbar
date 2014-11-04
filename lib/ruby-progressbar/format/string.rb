@@ -3,6 +3,7 @@ module  Format
 class   String < ::String
   ANSI_SGR_PATTERN = /\e\[[\d;]+m/
 
+  # rubocop:disable Style/MultilineBlockChain, Style/MultilineOperationIndentation
   def each_molecule
     dup.
     each_non_bar_molecule do |molecule, string|
@@ -19,6 +20,7 @@ class   String < ::String
     end.
     gsub('%%', '%')
   end
+  # rubocop:enable Style/MultilineBlockChain, Style/MultilineOperationIndentation
 
   def each_bar_molecule
     bar_molecules.each_with_object(self) do |molecule, string|

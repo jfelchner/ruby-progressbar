@@ -4,14 +4,13 @@ require 'ruby-progressbar/components/bar'
 class     ProgressBar
 module    Components
 describe  Bar do
-  let(:progress)       { Progress.new(:total => progress_total) }
-  let(:progress_total) { 100 }
-
   it 'has a default mark when a new bar is created and no parameters are passed' do
     expect(Bar.new.progress_mark).to eql Bar::DEFAULT_PROGRESS_MARK
   end
 
-  it 'has a default remainder mark when a new bar is created and no parameters are passed' do
+  it 'has a default remainder mark when a new bar is created and no parameters ' \
+     'are passed' do
+
     expect(Bar.new.remainder_mark).to eql Bar::DEFAULT_REMAINDER_MARK
   end
 
@@ -30,7 +29,9 @@ describe  Bar do
   end
 
   it 'displays the bar with no indication of progress when just begun' do
-    progressbar = Bar.new(:progress => progress, :length => 100)
+    progress    = Progress.new(:total => 50)
+    progressbar = Bar.new(:progress => progress,
+                          :length   => 100)
 
     expect(progressbar.to_s).to eql ' ' * 100
   end
@@ -56,13 +57,15 @@ describe  Bar do
     expect(progressbar.to_s).to eql ' ' * 100
   end
 
-  it 'displays the bar with no indication of progress when a fraction of a percentage has been completed' do
+  it 'displays the bar with no indication of progress when a fraction of a percentage ' \
+     'has been completed' do
+
     progress    = Progress.new :total    => 200
     progressbar = Bar.new      :progress => progress,
                                :length   => 100
     progress.start :at => 1
 
-    expect(progressbar.to_s).to eql '                                                                                                    '
+    expect(progressbar.to_s).to eql(' ' * 100)
   end
 
   it 'displays the bar as 100% complete when completed' do
@@ -92,7 +95,7 @@ describe  Bar do
     progress.start :at => 50
     progress.decrement
 
-    expect(progressbar.to_s).to eql ('=' * 98) + (' ' * 2)
+    expect(progressbar.to_s).to eql(('=' * 98) + (' ' * 2))
   end
 
   it 'is represented correctly when a bar has an unknown amount to completion' do
@@ -103,7 +106,9 @@ describe  Bar do
     expect(progressbar.to_s).to eql('=---' * 20)
   end
 
-  it 'is represented after being incremented once when a bar has an unknown amount to completion' do
+  it 'is represented after being incremented once when a bar has an unknown amount ' \
+     'to completion' do
+
     progress    = Progress.new :total    => nil
     progressbar = Bar.new      :progress => progress,
                                :length   => 80
@@ -113,7 +118,9 @@ describe  Bar do
     expect(progressbar.to_s).to eql('-=--' * 20)
   end
 
-  it 'is represented after being incremented twice when a bar has an unknown amount to completion' do
+  it 'is represented after being incremented twice when a bar has an unknown amount ' \
+     'to completion' do
+
     progress    = Progress.new :total    => nil
     progressbar = Bar.new      :progress => progress,
                                :length   => 80
@@ -129,7 +136,7 @@ describe  Bar do
                                :unknown_progress_animation_steps => ['*--', '-*-', '--*'],
                                :length                           => 80
 
-    expect(progressbar.to_s).to eql ('*--' * 26) + '*-'
+    expect(progressbar.to_s).to eql(('*--' * 26) + '*-')
   end
 
   it 'displays the bar with an integrated percentage properly when empty' do
@@ -188,7 +195,7 @@ describe  Bar do
     progress.finish
 
     bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql ('=' * 47) + ' 100 ' + ('=' * 48)
+    expect(bar_text).to eql(('=' * 47) + ' 100 ' + ('=' * 48))
   end
 
   it 'calculates the remaining negative space properly with an integrated percentage ' \
@@ -215,8 +222,8 @@ describe  Bar do
   it 'raises an error when attempting to set the current value of the bar to be ' \
      'greater than the total' do
 
-    progress    = Progress.new :total    => 10
-    progressbar = Bar.new      :progress => progress
+    progress     = Progress.new :total    => 10
+    _progressbar = Bar.new      :progress => progress
 
     expect { progress.start :at => 11 }.to \
     raise_error(InvalidProgressError,

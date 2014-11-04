@@ -23,11 +23,11 @@ describe  Throttle do
                                          :throttle_timer => timer)
     timer.start
 
-    throttle.choke { }
+    throttle.choke {}
 
     yielded = false
 
-    (1..9).each do |i|
+    (1..9).each do
       Timecop.freeze(1)
 
       throttle.choke do
@@ -47,11 +47,11 @@ describe  Throttle do
                                          :throttle_timer => timer)
     timer.start
 
-    throttle.choke { }
+    throttle.choke {}
 
     yielded = 0
 
-    (1..25).each do |i|
+    (1..25).each do
       Timecop.freeze(1)
 
       throttle.choke(:force_update_if => true) do
@@ -69,7 +69,7 @@ describe  Throttle do
                                          :throttle_timer => timer)
     timer.start
 
-    throttle.choke { }
+    throttle.choke {}
 
     yielded = false
 
@@ -98,7 +98,7 @@ describe  Throttle do
 
     yielded = false
 
-    (16..24).each do |t|
+    (16..24).each do
       Timecop.freeze(1)
 
       throttle.choke do
@@ -121,7 +121,7 @@ describe  Throttle do
 
     Timecop.freeze(15)
 
-    throttle.choke { }
+    throttle.choke {}
 
     yielded = false
 
@@ -140,9 +140,8 @@ describe  Throttle do
     throttle    = Throttle.new(:throttle_timer => timer,
                                :throttle_rate  => nil)
     yield_count = 0
-    now         = ::Time.now
 
-    (1..25).each do |i|
+    (1..25).each do
       Timecop.freeze(1)
 
       throttle.choke do

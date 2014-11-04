@@ -8,7 +8,7 @@ class   Rate
                 :progress
 
   def initialize(options = {})
-    self.rate_scale = options[:rate_scale] || lambda {|x| x}
+    self.rate_scale = options[:rate_scale] || lambda { |x| x }
     self.started_at = nil
     self.stopped_at = nil
     self.timer      = options[:timer]

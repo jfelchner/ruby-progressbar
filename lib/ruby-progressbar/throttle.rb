@@ -13,17 +13,14 @@ class   Throttle
   end
 
   def choke(options = {})
-    force = options.fetch(:force_update_if, false)
+    return unless !timer.started?                        ||
+                  rate.nil?                              ||
+                  options.fetch(:force_update_if, false) ||
+                  timer.elapsed_seconds >= rate
 
-    if !timer.started? ||
-       rate.nil?       ||
-       force           ||
-       timer.elapsed_seconds >= rate
+    timer.restart
 
-      timer.restart
-
-      yield
-    end
+    yield
   end
 end
 end
