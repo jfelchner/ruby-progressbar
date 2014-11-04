@@ -6,7 +6,7 @@ class   Timer
                 :stopped_at
 
   def initialize(options = {})
-    self.time = options[:time] || ProgressBar::Time
+    self.time = options[:time] || Time
   end
 
   def start
@@ -59,7 +59,7 @@ class   Timer
   end
 
   def divide_seconds(seconds)
-    hours, seconds = seconds.divmod(3600)
+    hours, seconds   = seconds.divmod(3600)
     minutes, seconds = seconds.divmod(60)
 
     [hours, minutes, seconds]
