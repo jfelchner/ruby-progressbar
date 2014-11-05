@@ -1,13 +1,26 @@
+Version v1.7.0 - November 4, 2014
+================================================================================
+
+Feature
+--------------------------------------------------------------------------------
+  * Massive internal refactoring. Now 236% faster!
+  * Add Timer#restart
+
+Docs
+--------------------------------------------------------------------------------
+  * Add comment to 'Time' about what 'OOB' means
+  * Remove useless comments
+
 Version v1.6.1 - October 30, 2014
 ================================================================================
 
-  Uncategorized
-  ------------------------------------------------------------------------------
+Uncategorized
+--------------------------------------------------------------------------------
   * Update readme about output option
   * Display warnings when testing
 
-  Bugfix
-  ------------------------------------------------------------------------------
+Bugfix
+--------------------------------------------------------------------------------
   * Remove warnings from uninitialized instance variable
   * Instance variable @started_at not initialized
   * Instance variable @out_of_bounds_time_format not initialized
@@ -16,40 +29,40 @@ Version v1.6.1 - October 30, 2014
   * Prefix assigned but unused variables with underscores
   * Ambiguous first argument
 
-  Docs
-  ------------------------------------------------------------------------------
+Docs
+--------------------------------------------------------------------------------
   * Add CHANGELOG entries for v1.6.0
 
 Version v1.6.0 - September 20, 2014
 ================================================================================
 
-  Docs
-  ------------------------------------------------------------------------------
+Docs
+--------------------------------------------------------------------------------
   * Massive CHANGELOG reformatting
   * Add documentation about the new 'autofinish' feature
 
-  Feature
-  ------------------------------------------------------------------------------
+Feature
+--------------------------------------------------------------------------------
   * Add ability to disable auto-finish
   * Add SCSS lint configuration
   * Update JSHint config with our custom version
   * Add right-justified percentages - Closes #77
 
-  Bugfix
-  ------------------------------------------------------------------------------
+Bugfix
+--------------------------------------------------------------------------------
   * Don't allow title to change for non-TTY output
   * Percentage formatter failed when total was 0 or unknown
 
 Version v1.5.1 - May 14, 2014
 ================================================================================
 
-  Docs
-  ------------------------------------------------------------------------------
+Docs
+--------------------------------------------------------------------------------
   * Specify Ruby 2.0.x and 2.1.x compatibility in the README
   * Properly update the CHANGELOG
 
-  Uncategorized
-  ------------------------------------------------------------------------------
+Uncategorized
+--------------------------------------------------------------------------------
   * Make grammar and spelling corrections in the README
   * Add the ability to scale the rate component
   * Add notes to the README about the new format components
@@ -76,8 +89,8 @@ Version v1.5.1 - May 14, 2014
   * Add Ruby 2.1 to Travis
   * Convert to RSpec 3
 
-  Feature
-  ------------------------------------------------------------------------------
+Feature
+--------------------------------------------------------------------------------
   * The running average is always set back to 0 when the bar is reset
 
 Version v1.4.2 - March 1, 2014
