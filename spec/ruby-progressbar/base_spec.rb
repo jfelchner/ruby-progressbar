@@ -21,13 +21,13 @@ describe ProgressBar::Base do
     it 'can properly handle outputting the bar when the length changes on the fly to less than the minimum width' do
       progressbar = ProgressBar::Base.new(:output => output, :title => 'a' * 25, :format => '%t%B', :throttle_rate => 0.0)
 
-      allow(progressbar).to receive(:terminal_width).
-                            and_return 30
+      allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
+                                                                   and_return 30
 
       progressbar.start
 
-      allow(progressbar).to receive(:terminal_width).
-                            and_return 20
+      allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
+                                                                   and_return 20
 
       progressbar.increment
 
@@ -39,8 +39,8 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :starting_at => 5, :total => 10, :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
-                              and_return 20
+        allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
+                                                                     and_return 20
 
         expect(progressbar.to_s('%t%w')).to eql '*********************'
       end
@@ -50,8 +50,8 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
-                              and_return 20
+        allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
+                                                                     and_return 20
 
         expect(progressbar.to_s('%t%i')).to eql '*********************'
       end
@@ -59,8 +59,8 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :starting_at => 5, :total => 10, :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
-                              and_return 20
+        allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
+                                                                     and_return 20
 
         expect(progressbar.to_s('%t%i')).to eql '*********************'
       end
@@ -70,8 +70,8 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 19), :starting_at => 5, :total => 10, :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
-                              and_return 20
+        allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
+                                                                     and_return 20
 
         expect(progressbar.to_s('%t%B')).to eql '******************* '
       end
@@ -79,8 +79,8 @@ describe ProgressBar::Base do
       it 'returns the proper string' do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 19), :starting_at => 5, :total => 10, :autostart => false)
 
-        allow(progressbar).to receive(:terminal_width).
-                              and_return 20
+        allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
+                                                                     and_return 20
 
         expect(progressbar.to_s('%t%w%i')).to eql '******************* '
       end
@@ -93,13 +93,13 @@ describe ProgressBar::Base do
 
       describe '#title' do
         it 'returns the default title' do
-          expect(progressbar.send(:title).to_s).to eql ProgressBar::Base::DEFAULT_TITLE
+          expect(progressbar.send(:title).to_s).to eql ProgressBar::Components::Title::DEFAULT_TITLE
         end
       end
 
       describe '#output' do
         it 'returns the default output stream' do
-          expect(progressbar.send(:output)).to eql ProgressBar::Base::DEFAULT_OUTPUT_STREAM
+          expect(progressbar.send(:output).send(:stream)).to eql ProgressBar::Output::DEFAULT_OUTPUT_STREAM
         end
       end
 
@@ -110,7 +110,7 @@ describe ProgressBar::Base do
 
           it 'returns the length of the environment variable as an integer' do
             progressbar = ProgressBar::Base.new
-            expect(progressbar.send(:length)).to eql 44
+            expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 44
           end
         end
 
@@ -120,21 +120,21 @@ describe ProgressBar::Base do
           context 'but the length option was passed in' do
             it 'returns the length specified in the option' do
               progressbar = ProgressBar::Base.new(:length => 88)
-              expect(progressbar.send(:length)).to eql 88
+              expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 88
             end
           end
 
           context 'and no length option was passed in' do
             it 'returns the width of the terminal if it is a Unix environment' do
-              allow(progressbar).to receive(:terminal_width).and_return(99)
-              progressbar.send(:reset_length)
-              expect(progressbar.send(:length)).to eql 99
+              allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).and_return(99)
+              progressbar.send(:output).send(:length_calculator).send(:reset_length)
+              expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 99
             end
 
             it 'returns 80 if it is not a Unix environment' do
-              allow(progressbar).to receive(:unix?).and_return(false)
-              progressbar.send(:reset_length)
-              expect(progressbar.send(:length)).to eql 80
+              allow(progressbar.send(:output).send(:length_calculator)).to receive(:unix?).and_return(false)
+              progressbar.send(:output).send(:length_calculator).send(:reset_length)
+              expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 80
             end
           end
         end
@@ -152,13 +152,13 @@ describe ProgressBar::Base do
 
       describe '#output' do
         it 'returns the overridden output stream' do
-          expect(progressbar.send(:output)).to eql STDOUT
+          expect(progressbar.send(:output).send(:stream)).to eql STDOUT
         end
       end
 
       describe '#length' do
         it 'returns the overridden length' do
-          expect(progressbar.send(:length)).to eql 88
+          expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 88
         end
       end
     end
@@ -202,16 +202,16 @@ describe ProgressBar::Base do
 
     context 'which includes ANSI SGR codes in the format string' do
       it 'properly calculates the length of the bar by removing the long version of the ANSI codes from the calculated length' do
-        @color_code     = "\e[0m\e[32m\e[7m\e[1m"
-        @reset_code     = "\e[0m"
-        @progress_mark  = "#{@color_code} #{@reset_code}"
+        @color_code    = "\e[0m\e[32m\e[7m\e[1m"
+        @reset_code    = "\e[0m"
+        @progress_mark = "#{@color_code} #{@reset_code}"
         progressbar    = ProgressBar::Base.new(:format        => "#{@color_code}Processing... %b%i#{@reset_code}#{@color_code} %p%%#{@reset_code}",
-                                                :progress_mark => @progress_mark,
-                                                :output        => output,
-                                                :length        => 24,
-                                                :starting_at   => 3,
-                                                :total         => 6,
-                                                :throttle_rate => 0.0)
+                                               :progress_mark => @progress_mark,
+                                               :output        => output,
+                                               :length        => 24,
+                                               :starting_at   => 3,
+                                               :total         => 6,
+                                               :throttle_rate => 0.0)
 
         progressbar.increment
         progressbar.increment
@@ -221,16 +221,16 @@ describe ProgressBar::Base do
       end
 
       it 'properly calculates the length of the bar by removing the short version of the ANSI codes from the calculated length' do
-        @color_code     = "\e[0;32;7;1m"
-        @reset_code     = "\e[0m"
-        @progress_mark  = "#{@color_code} #{@reset_code}"
+        @color_code    = "\e[0;32;7;1m"
+        @reset_code    = "\e[0m"
+        @progress_mark = "#{@color_code} #{@reset_code}"
         progressbar    = ProgressBar::Base.new(:format        => "#{@color_code}Processing... %b%i#{@reset_code}#{@color_code} %p%%#{@reset_code}",
-                                                :progress_mark => @progress_mark,
-                                                :output        => output,
-                                                :length        => 24,
-                                                :starting_at   => 3,
-                                                :total         => 6,
-                                                :throttle_rate => 0.0)
+                                               :progress_mark => @progress_mark,
+                                               :output        => output,
+                                               :length        => 24,
+                                               :starting_at   => 3,
+                                               :total         => 6,
+                                               :throttle_rate => 0.0)
 
         progressbar.increment
         progressbar.increment
@@ -300,7 +300,7 @@ describe ProgressBar::Base do
 
         3.times { progressbar.increment }
 
-        progressbar.title = "Testing"
+        progressbar.title = 'Testing'
         progressbar.stop
 
         non_tty_output.rewind
@@ -323,7 +323,7 @@ describe ProgressBar::Base do
   end
 
   context 'when a bar is about to be completed' do
-    let(:progressbar) { ProgressBar::Base.new(:starting_at => 5, :total => 6, :output => output, :length => 20) }
+    let(:progressbar) { ProgressBar::Base.new(:starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0) }
 
     context 'and it is incremented' do
       before { progressbar.increment }
@@ -509,7 +509,7 @@ describe ProgressBar::Base do
       progressbar.clear
 
       output.rewind
-      expect(output.read).to match(/^#{progressbar.send(:clear_string)}/)
+      expect(output.read).to match(/^#{progressbar.send(:output).send(:clear_string)}/)
     end
   end
 
@@ -518,7 +518,7 @@ describe ProgressBar::Base do
       progressbar.start
 
       output.rewind
-      expect(output.read).to match(/^#{progressbar.send(:clear_string)}/)
+      expect(output.read).to match(/^#{progressbar.send(:output).send(:clear_string)}/)
     end
 
     it 'prints the bar for the first time' do
@@ -554,7 +554,7 @@ describe ProgressBar::Base do
       let(:progressbar) { ProgressBar::Base.new(:format => '%B %p%%') }
 
       context 'if called with no arguments' do
-        before { progressbar.format }
+        before { progressbar.format = nil }
 
         it 'resets the format back to the default' do
           expect(progressbar.to_s).to match(/^Progress: \|\s+\|\z/)
@@ -562,7 +562,7 @@ describe ProgressBar::Base do
       end
 
       context 'if called with a specific format string' do
-        before { progressbar.format '%t' }
+        before { progressbar.format = '%t' }
 
         it 'sets it as the new format for the bar' do
           expect(progressbar.to_s).to match(/^Progress\z/)
@@ -841,16 +841,9 @@ describe ProgressBar::Base do
         expect(progressbar.to_s('%%')).to match(/^%\z/)
       end
 
-      # Autostarting for now.  This will be applicable later.
-      # context "when called before #start" do
-        # it "displays unknown time elapsed when using the %a flag" do
-        # expect(progressbar.to_s('%a')).to match(/^Time: --:--:--\z/)
-        # end
-      # end
-
       context 'when called after #start' do
         before do
-          Timecop.travel(-3723) do
+          Timecop.travel(-3_723) do
             progressbar.start
           end
         end
@@ -877,7 +870,7 @@ describe ProgressBar::Base do
 
       context 'when called after #start' do
         let(:progressbar) do
-          Timecop.travel(-3723) do
+          Timecop.travel(-3_723) do
             progressbar = ProgressBar::Base.new(:starting_at => 0, :output => output, :smoothing => 0.0)
             progressbar.start
             progressbar.progress = 50
@@ -900,7 +893,7 @@ describe ProgressBar::Base do
 
       context 'when it could take 100 hours or longer to finish' do
         let(:progressbar) do
-          Timecop.travel(-120000) do
+          Timecop.travel(-120_000) do
             progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :smoothing => 0.0)
             progressbar.start
             progressbar.progress = 25

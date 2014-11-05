@@ -1,5 +1,4 @@
 AllCops:
-  Enabled:      true
   Include:
     - '**/Thorfile'
     - '**/thor.gemspec'
@@ -63,6 +62,7 @@ Style/ClassCheck:
   EnforcedStyle:                 'is_a?'
 
 Style/CollectionMethods:
+  Enabled:                       true
   PreferredMethods:
     collect:                     'map'
     collect!:                    'map!'
@@ -86,7 +86,6 @@ Style/DotPosition:
 
 Style/ElseAlignment:
   Enabled:                       true
-  AlignWith:                     'keyword'
 
 Style/EmptyLineBetweenDefs:
   AllowAdjacentOneLineDefs:      true
@@ -148,6 +147,8 @@ Style/MultilineBlockChain:
 
 Style/MultilineOperationIndentation:
   EnforcedStyle:                 'aligned'
+  Exclude:
+    - 'spec/**/*_spec.rb'
 
 Style/Next:
   EnforcedStyle:                 'skip_modifier_ifs'
@@ -241,6 +242,9 @@ Style/StringLiterals:
   Exclude:
     - '**/config/application.rb'
     - '**/config/environments/**/*'
+
+Style/SymbolArray:
+  Enabled: true
 
 Style/SymbolProc:
   IgnoredMethods:

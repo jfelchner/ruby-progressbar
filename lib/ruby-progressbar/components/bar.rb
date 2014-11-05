@@ -1,60 +1,96 @@
-class ProgressBar
-  module Components
-    class Bar
-      include Progressable
+###
+# UPA = Unknown Progress Animation
+#
+class   ProgressBar
+module  Components
+class   Bar
+  DEFAULT_PROGRESS_MARK  = '='
+  DEFAULT_REMAINDER_MARK = ' '
+  DEFAULT_UPA_STEPS      = ['=---', '-=--', '--=-', '---=']
 
-      DEFAULT_PROGRESS_MARK                    = '='
-      DEFAULT_REMAINDER_MARK                   = ' '
-      DEFAULT_UNKNOWN_PROGRESS_ANIMATION_STEPS = ['=---', '-=--', '--=-', '---=']
+  attr_accessor :progress_mark,
+                :remainder_mark,
+                :length,
+                :progress,
+                :upa_steps
 
-      attr_accessor :progress_mark
-      attr_accessor :remainder_mark
-      attr_accessor :length
-      attr_accessor :unknown_progress_animation_steps
+  def initialize(options = {})
+    self.upa_steps      = options[:unknown_progress_animation_steps] || DEFAULT_UPA_STEPS
+    self.progress_mark  = options[:progress_mark]  || DEFAULT_PROGRESS_MARK
+    self.remainder_mark = options[:remainder_mark] || DEFAULT_REMAINDER_MARK
+    self.progress       = options[:progress]
+    self.length         = options[:length]
+  end
 
-      def initialize(options = {})
-        super
-
-        self.unknown_progress_animation_steps = options[:unknown_progress_animation_steps] || DEFAULT_UNKNOWN_PROGRESS_ANIMATION_STEPS
-        self.progress_mark                    = options[:progress_mark]                    || DEFAULT_PROGRESS_MARK
-        self.remainder_mark                   = options[:remainder_mark]                   || DEFAULT_REMAINDER_MARK
-      end
-
-      def to_s(options = {:format => :standard})
-        completed_string = send(:"#{options[:format]}_complete_string")
-
-        "#{completed_string}#{empty_string}"
-      end
-
-      def integrated_percentage_complete_string
-        return standard_complete_string if completed_length < 5
-
-        " #{percentage_completed} ".to_s.center(completed_length, progress_mark)
-      end
-
-      def standard_complete_string
-        progress_mark * completed_length
-      end
-
-      def empty_string
-        incomplete_length = (length - completed_length)
-
-        if total.nil?
-          current_animation_step = progress % unknown_progress_animation_steps.size
-          animation_graphic      = unknown_progress_animation_steps[current_animation_step]
-
-          unknown_incomplete_string = animation_graphic * ((incomplete_length / unknown_progress_animation_steps.size) + 2)
-
-          unknown_incomplete_string[0, incomplete_length]
-        else
-          remainder_mark * incomplete_length
-        end
-      end
-
-    private
-      def completed_length
-        (length * percentage_completed / 100).floor
-      end
+  def to_s(options = { :format => :standard })
+    if progress.unknown?
+      unknown_string
+    elsif options[:format] == :standard
+      "#{standard_complete_string}#{incomplete_string}"
+    elsif options[:format] == :integrated_percentage
+      "#{integrated_percentage_complete_string}#{incomplete_string}"
     end
   end
+
+  private
+
+  def integrated_percentage_complete_string
+    return standard_complete_string if completed_length < 5
+
+    " #{progress.percentage_completed} ".to_s.center(completed_length, progress_mark)
+  end
+
+  def standard_complete_string
+    progress_mark * completed_length
+  end
+
+  def incomplete_string
+    remainder_mark * (length - completed_length)
+  end
+
+  def bar(length)
+    self.length = length
+
+    standard_complete_string
+  end
+
+  def complete_bar(length)
+    self.length = length
+
+    to_s
+  end
+
+  def unknown_string
+    unknown_frame_string = unknown_progress_frame * ((length / upa_steps.size) + 2)
+
+    unknown_frame_string[0, length]
+  end
+
+  def incomplete_space(length)
+    self.length = length
+
+    if progress.unknown?
+      unknown_string
+    else
+      incomplete_string
+    end
+  end
+
+  def bar_with_percentage(length)
+    self.length = length
+
+    integrated_percentage_complete_string
+  end
+
+  def completed_length
+    (length * progress.percentage_completed / 100).floor
+  end
+
+  def unknown_progress_frame
+    current_animation_step = progress.progress % upa_steps.size
+
+    upa_steps[current_animation_step]
+  end
+end
+end
 end
