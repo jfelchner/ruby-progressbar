@@ -1,40 +1,58 @@
-class ProgressBar
-  module Format
-    class Molecule
-      MOLECULES = {
-        :t => :title,
-        :T => :title,
-        :c => :progress,
-        :C => :total,
-        :p => :percentage,
-        :P => :percentage_with_precision,
-        :j => :justified_percentage,
-        :J => :justified_percentage_with_precision,
-        :a => :elapsed_time,
-        :e => :estimated_time_with_unknown_oob,
-        :E => :estimated_time_with_friendly_oob,
-        :f => :estimated_time_with_no_oob,
-        :B => :complete_bar,
-        :b => :bar,
-        :w => :bar_with_percentage,
-        :i => :incomplete_space,
-        :r => :rate_of_change,
-        :R => :rate_of_change_with_precision,
-      }
+class   ProgressBar
+module  Format
+class   Molecule
+  MOLECULES = {
+    :t => [:title_comp,   :title],
+    :T => [:title_comp,   :title],
+    :c => [:progressable, :progress],
+    :C => [:progressable, :total],
+    :p => [:percentage,   :percentage],
+    :P => [:percentage,   :percentage_with_precision],
+    :j => [:percentage,   :justified_percentage],
+    :J => [:percentage,   :justified_percentage_with_precision],
+    :a => [:time,         :elapsed_with_label],
+    :e => [:time,         :estimated_with_unknown_oob],
+    :E => [:time,         :estimated_with_friendly_oob],
+    :f => [:time,         :estimated_with_no_oob],
+    :B => [:bar,          :complete_bar],
+    :b => [:bar,          :bar],
+    :w => [:bar,          :bar_with_percentage],
+    :i => [:bar,          :incomplete_space],
+    :r => [:rate,         :rate_of_change],
+    :R => [:rate,         :rate_of_change_with_precision],
+  }
 
-      BAR_MOLECULES     = %w{w B b i}
+  BAR_MOLECULES = %w{w B b i}
 
-      attr_reader   :key
-      attr_reader   :method_name
+  attr_accessor :key,
+                :method_name
 
-      def initialize(letter)
-        @key         = letter
-        @method_name = MOLECULES.fetch(@key.to_sym)
-      end
+  def initialize(letter)
+    self.key         = letter
+    self.method_name = MOLECULES.fetch(key.to_sym)
+  end
 
-      def bar_molecule?
-        BAR_MOLECULES.include? @key
-      end
+  def bar_molecule?
+    BAR_MOLECULES.include? key
+  end
+
+  def non_bar_molecule?
+    !bar_molecule?
+  end
+
+  def full_key
+    "%#{key}"
+  end
+
+  def lookup_value(environment, length = 0)
+    component = environment.send(method_name[0])
+
+    if bar_molecule?
+      component.send(method_name[1], length).to_s
+    else
+      component.send(method_name[1]).to_s
     end
   end
+end
+end
 end

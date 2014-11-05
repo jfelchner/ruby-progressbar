@@ -5,3 +5,16 @@ inherit_from:
 
 Style/IndentationWidth:
   Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/FileName:
+  Exclude:
+    - 'lib/ruby-progressbar.rb'

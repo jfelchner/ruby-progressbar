@@ -1,5 +1,5 @@
-require "rspectacular"
-require "warning_filter"
+require 'rspectacular'
+require 'warning_filter'
 
 RSpec.configure do |config|
   config.warnings = true
