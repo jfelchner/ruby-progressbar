@@ -226,8 +226,7 @@ describe  Time do
         ' ETA: 00:00:01',
         ' ETA: 00:00:01',
         ' ETA: 00:00:00',
-      ],
-    )
+      ])
   end
 
   it 'displays unknown elapsed time when the timer has not been started' do
