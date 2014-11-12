@@ -25,13 +25,15 @@ class   Bar
     self.length            = options[:length]
   end
 
-  def to_s(options = { :format => :standard })
+  def to_s(options = { :format => :precise })
     if progress.unknown?
       unknown_string
     elsif options[:format] == :standard
       "#{standard_complete_string}#{incomplete_string}"
     elsif options[:format] == :integrated_percentage
       "#{integrated_percentage_complete_string}#{incomplete_string}"
+    elsif options[:format] == :precise
+      "#{precise_complete_string}#{incomplete_string}"
     end
   end
 
@@ -67,6 +69,12 @@ class   Bar
     self.length = length
 
     to_s
+  end
+
+  def precise_bar(length)
+    self.length = length
+
+    to_s(:format => :precise)
   end
 
   def unknown_string
