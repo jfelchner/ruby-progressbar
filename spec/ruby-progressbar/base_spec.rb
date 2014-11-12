@@ -240,6 +240,15 @@ describe ProgressBar::Base do
       end
     end
 
+    context 'when the total cannot be fully displayed by regular progress marks' do
+      it 'can show an intermediate mark' do
+        progressbar = ProgressBar::Base.new(:output => output, :length => 50, :total => 100, :starting_at => 5, :throttle_rate => 0.0)
+
+        output.rewind
+        expect(output.read).to end_with "Progress: |=-#{' ' * 36}|\r"
+      end
+    end
+
     context 'for a TTY enabled device' do
       it 'can log messages' do
         progressbar = ProgressBar::Base.new(:output => output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
