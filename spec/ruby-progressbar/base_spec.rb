@@ -248,7 +248,7 @@ describe ProgressBar::Base do
         progressbar.increment
 
         output.rewind
-        expect(output.read).to include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
+        expect(output.read).to include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======- |\r"
       end
     end
 
@@ -341,7 +341,7 @@ describe ProgressBar::Base do
         progressbar.finish
 
         output.rewind
-        expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\n"
+        expect(output.read).to end_with "                    \rProgress: |======- |\rProgress: |========|\n"
       end
     end
   end
@@ -385,7 +385,7 @@ describe ProgressBar::Base do
 
         output.rewind
 
-        expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\rProgress: |========|\n"
+        expect(output.read).to end_with "                    \rProgress: |======- |\rProgress: |========|\rProgress: |========|\n"
       end
     end
   end
@@ -427,7 +427,7 @@ describe ProgressBar::Base do
           progressbar.progress_mark = 'x'
 
           output.rewind
-          expect(output.read).to match(/\rProgress: \|xxxxxx#{' ' * 62}\|\r\z/)
+          expect(output.read).to match(/\rProgress: \|xxxxxx-#{' ' * 61}\|\r\z/)
         end
       end
 
@@ -436,7 +436,7 @@ describe ProgressBar::Base do
           progressbar.remainder_mark = 'x'
 
           output.rewind
-          expect(output.read).to match(/\rProgress: \|======#{'x' * 62}\|\r\z/)
+          expect(output.read).to match(/\rProgress: \|======-#{'x' * 61}\|\r\z/)
         end
       end
 
@@ -463,7 +463,7 @@ describe ProgressBar::Base do
 
         it 'forcibly halts the bar wherever it is and cancels it' do
           output.rewind
-          expect(output.read).to match(/\rProgress: \|======#{' ' * 62}\|\n\z/)
+          expect(output.read).to match(/\rProgress: \|======-#{' ' * 61}\|\n\z/)
         end
 
         it 'does not output the bar multiple times if the bar is already stopped' do
@@ -532,7 +532,7 @@ describe ProgressBar::Base do
       progressbar.start(:at => 20)
 
       output.rewind
-      expect(output.read).to match(/Progress: \|=============                                                       \|\r\z/)
+      expect(output.read).to match(/Progress: \|=============-                                                      \|\r\z/)
     end
   end
 
