@@ -423,7 +423,7 @@ If you have problems, please create a [Github issue](https://github.com/nex3/rub
 Credits
 --------------------------------
 
-![thekompanee](http://www.thekompanee.com/public_files/kompanee-github-readme-logo.png)
+![The Kompanee](https://www.dropbox.com/s/86jfka1d6bhv8as/kompanee-text-black.png?dl=1)
 
 ruby-progressbar is maintained by [The Kompanee, Ltd.](http://www.thekompanee.com)
 
