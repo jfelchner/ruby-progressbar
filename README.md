@@ -420,6 +420,11 @@ Issues
 
 If you have problems, please create a [Github issue](https://github.com/nex3/ruby-progressbar/issues).
 
+Full Reference
+--------------------------------
+
+Visit the [wiki](https://github.com/jfelchner/ruby-progressbar/wiki)
+
 Credits
 --------------------------------
 
