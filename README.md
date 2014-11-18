@@ -6,7 +6,7 @@ The **ultimate** text progress bar library for Ruby!  It'll **SMASH YOU OVER THE
 
 Don't miss out on what all the kids are talking about!  If you want everyone to know that your gem or app can survive _in the cage_ then YOU WANT **RUBY-PROGRESSBAR**!
 
-![The Cage](http://www.thekompanee.com/public_files/the-cage.png)
+![The Cage](https://www.dropbox.com/s/pe9o1yobxtubof8/ruby-progressbar-cage.png?dl=1)
 
 Full Reference
 --------------------------------
