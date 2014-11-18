@@ -13,7 +13,7 @@ Don't miss out on what all the kids are talking about!  If you want everyone to 
 Full Reference
 --------------------------------
 
-Visit the [wiki](https://github.com/jfelchner/ruby-progressbar/wiki)
+There's gotten to be too much awesome to pack into one page.  Visit the [wiki](https://github.com/jfelchner/ruby-progressbar/wiki) for the full documentation.
 
 Issues
 --------------------------------
