@@ -1,4 +1,4 @@
-Ruby/ProgressBar: A Text Progress Bar Library for Ruby
+Ruby/ProgressBar
 ================================
 [![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.png?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar.png)](https://codeclimate.com/github/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar/coverage.png)](https://codeclimate.com/github/jfelchner/ruby-progressbar)
 
