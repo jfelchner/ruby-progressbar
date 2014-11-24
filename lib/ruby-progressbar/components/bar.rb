@@ -39,16 +39,16 @@ class   Bar
 
   private
 
+  def full_bar(length)
+    self.length = length
+
+    "#{precise_complete_string}#{incomplete_string}"
+  end
+
   def bar(length)
     self.length = length
 
     precise_complete_string
-  end
-
-  def complete_bar(length)
-    self.length = length
-
-    to_s
   end
 
   def fully_completed_bar(length)
