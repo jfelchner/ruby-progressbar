@@ -85,8 +85,12 @@ class   Bar
     integrated_percentage_complete_string
   end
 
+  def precise_completed_length
+    (length * progress.percentage_completed / 100.0)
+  end
+
   def fully_completed_length
-    (length * progress.percentage_completed / 100).floor
+    precise_completed_length.floor
   end
 
   def unknown_progress_frame
