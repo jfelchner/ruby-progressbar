@@ -64,6 +64,21 @@ describe ProgressBar::Base do
 
         expect(progressbar.to_s('%t%i')).to eql '*********************'
       end
+
+      it 'properly calculates the length of the bar' do
+        progressbar    = ProgressBar::Base.new(:format        => 'Processing... %b%i %p%%',
+                                               :output        => output,
+                                               :length        => 24,
+                                               :starting_at   => 3,
+                                               :total         => 6,
+                                               :throttle_rate => 0.0)
+
+        progressbar.increment
+        progressbar.increment
+
+        output.rewind
+        expect(output.read).to include "Processing... ===    50%\rProcessing... ===-   66%\rProcessing... ====-  83%\r"
+      end
     end
 
     context 'and the full bar length is calculated (but lacks the space to output the entire bar)' do
@@ -217,7 +232,7 @@ describe ProgressBar::Base do
         progressbar.increment
 
         output.rewind
-        expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
+        expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}-#{' ' * 2}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}-#{' ' * 1}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
       end
 
       it 'properly calculates the length of the bar by removing the short version of the ANSI codes from the calculated length' do
@@ -236,7 +251,7 @@ describe ProgressBar::Base do
         progressbar.increment
 
         output.rewind
-        expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
+        expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}-#{' ' * 2}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}-#{' ' * 1}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
       end
     end
 

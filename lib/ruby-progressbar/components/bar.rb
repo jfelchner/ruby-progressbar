@@ -62,13 +62,19 @@ class   Bar
   def bar(length)
     self.length = length
 
-    standard_complete_string
+    precise_complete_string
   end
 
   def complete_bar(length)
     self.length = length
 
     to_s
+  end
+
+  def fully_completed_bar(length)
+    self.length = length
+
+    standard_complete_string
   end
 
   def precise_bar(length)
