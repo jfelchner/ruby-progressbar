@@ -39,26 +39,6 @@ class   Bar
 
   private
 
-  def integrated_percentage_complete_string
-    return standard_complete_string if fully_completed_length < 5
-
-    " #{progress.percentage_completed} ".to_s.center(fully_completed_length, progress_mark)
-  end
-
-  def standard_complete_string
-    progress_mark * fully_completed_length
-  end
-
-  def precise_complete_string
-    intermediate_bar = intermediate_mark * intermediate_completed_length
-
-    standard_complete_string + intermediate_bar
-  end
-
-  def incomplete_string
-    remainder_mark * (length - fully_completed_length - intermediate_completed_length)
-  end
-
   def bar(length)
     self.length = length
 
@@ -83,12 +63,6 @@ class   Bar
     to_s(:format => :precise)
   end
 
-  def unknown_string
-    unknown_frame_string = unknown_progress_frame * ((length / upa_steps.size) + 2)
-
-    unknown_frame_string[0, length]
-  end
-
   def incomplete_space(length)
     self.length = length
 
@@ -103,6 +77,12 @@ class   Bar
     self.length = length
 
     integrated_percentage_complete_string
+  end
+
+  def unknown_string
+    unknown_frame_string = unknown_progress_frame * ((length / upa_steps.size) + 2)
+
+    unknown_frame_string[0, length]
   end
 
   def precise_completed_length
@@ -121,6 +101,26 @@ class   Bar
     current_animation_step = progress.progress % upa_steps.size
 
     upa_steps[current_animation_step]
+  end
+
+  def integrated_percentage_complete_string
+    return standard_complete_string if fully_completed_length < 5
+
+    " #{progress.percentage_completed} ".to_s.center(fully_completed_length, progress_mark)
+  end
+
+  def standard_complete_string
+    progress_mark * fully_completed_length
+  end
+
+  def precise_complete_string
+    intermediate_bar = intermediate_mark * intermediate_completed_length
+
+    standard_complete_string + intermediate_bar
+  end
+
+  def incomplete_string
+    remainder_mark * (length - fully_completed_length - intermediate_completed_length)
   end
 end
 end
