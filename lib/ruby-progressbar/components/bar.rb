@@ -4,10 +4,10 @@
 class   ProgressBar
 module  Components
 class   Bar
-  DEFAULT_PROGRESS_MARK  = '='
+  DEFAULT_PROGRESS_MARK     = '='
   DEFAULT_INTERMEDIATE_MARK = '-'
-  DEFAULT_REMAINDER_MARK = ' '
-  DEFAULT_UPA_STEPS      = ['=---', '-=--', '--=-', '---=']
+  DEFAULT_REMAINDER_MARK    = ' '
+  DEFAULT_UPA_STEPS         = ['=---', '-=--', '--=-', '---=']
 
   attr_accessor :progress_mark,
                 :intermediate_mark,
@@ -17,12 +17,12 @@ class   Bar
                 :upa_steps
 
   def initialize(options = {})
-    self.upa_steps      = options[:unknown_progress_animation_steps] || DEFAULT_UPA_STEPS
-    self.progress_mark  = options[:progress_mark]  || DEFAULT_PROGRESS_MARK
+    self.upa_steps         = options[:unknown_progress_animation_steps] || DEFAULT_UPA_STEPS
+    self.progress_mark     = options[:progress_mark] || DEFAULT_PROGRESS_MARK
     self.intermediate_mark = options[:intermediate_mark] || DEFAULT_INTERMEDIATE_MARK
-    self.remainder_mark = options[:remainder_mark] || DEFAULT_REMAINDER_MARK
-    self.progress       = options[:progress]
-    self.length         = options[:length]
+    self.remainder_mark    = options[:remainder_mark] || DEFAULT_REMAINDER_MARK
+    self.progress          = options[:progress]
+    self.length            = options[:length]
   end
 
   def to_s(options = { :format => :standard })
