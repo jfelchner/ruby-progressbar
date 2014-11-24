@@ -47,8 +47,14 @@ class   Bar
     progress_mark * fully_completed_length
   end
 
+  def precise_complete_string
+    intermediate_bar = intermediate_mark * intermediate_completed_length
+
+    standard_complete_string + intermediate_bar
+  end
+
   def incomplete_string
-    remainder_mark * (length - fully_completed_length)
+    remainder_mark * (length - fully_completed_length - intermediate_completed_length)
   end
 
   def bar(length)
@@ -91,6 +97,10 @@ class   Bar
 
   def fully_completed_length
     precise_completed_length.floor
+  end
+
+  def intermediate_completed_length
+    (precise_completed_length.round - fully_completed_length).round
   end
 
   def unknown_progress_frame
