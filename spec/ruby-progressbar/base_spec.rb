@@ -866,6 +866,13 @@ describe ProgressBar::Base do
           progressbar = ProgressBar::Base.new
           expect(progressbar.to_s('%e')).to match(/^ ETA: \?\?:\?\?:\?\?\z/)
         end
+
+        context 'when started_at is set to a value greater than 0' do
+          it 'displays unknown time until finished when passed the "%e" flag' do
+            progressbar = ProgressBar::Base.new(:starting_at =>  1)
+            expect(progressbar.to_s('%e')).to match(/^ ETA: \?\?:\?\?:\?\?\z/)
+          end
+        end
       end
 
       context 'when called after #start' do
