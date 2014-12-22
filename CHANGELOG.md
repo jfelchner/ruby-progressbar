@@ -1,3 +1,21 @@
+Version v1.7.1 - December 21, 2014
+================================================================================
+
+Bugfix
+--------------------------------------------------------------------------------
+  * ETA works again, when ProgressBar is initialized with a non zero
+    starting_at.
+
+Uncategorized
+--------------------------------------------------------------------------------
+  * Describe the wiki link
+  * Inline the cage image in the README
+  * THE CAGE
+  * Remove superfluous subtitle
+  * Remove sections from the README that were moved to the Wiki
+  * Add link to wiki
+  * Update logo
+
 Version v1.7.0 - November 4, 2014
 ================================================================================
 
@@ -5,11 +23,6 @@ Feature
 --------------------------------------------------------------------------------
   * Massive internal refactoring. Now 236% faster!
   * Add Timer#restart
-
-Docs
---------------------------------------------------------------------------------
-  * Add comment to 'Time' about what 'OOB' means
-  * Remove useless comments
 
 Version v1.6.1 - October 30, 2014
 ================================================================================
@@ -29,17 +42,8 @@ Bugfix
   * Prefix assigned but unused variables with underscores
   * Ambiguous first argument
 
-Docs
---------------------------------------------------------------------------------
-  * Add CHANGELOG entries for v1.6.0
-
 Version v1.6.0 - September 20, 2014
 ================================================================================
-
-Docs
---------------------------------------------------------------------------------
-  * Massive CHANGELOG reformatting
-  * Add documentation about the new 'autofinish' feature
 
 Feature
 --------------------------------------------------------------------------------
@@ -55,11 +59,6 @@ Bugfix
 
 Version v1.5.1 - May 14, 2014
 ================================================================================
-
-Docs
---------------------------------------------------------------------------------
-  * Specify Ruby 2.0.x and 2.1.x compatibility in the README
-  * Properly update the CHANGELOG
 
 Uncategorized
 --------------------------------------------------------------------------------
