@@ -38,7 +38,7 @@ GEM
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
     timecop (0.6.1)
-    warning_filter (0.0.2)
+    warning_filter (0.0.3)
 
 PLATFORMS
   ruby
@@ -53,4 +53,4 @@ DEPENDENCIES
   ruby-prof (~> 0.13.0)
   ruby-progressbar!
   timecop (~> 0.6.0)
-  warning_filter (~> 0.0.2)
+  warning_filter (~> 0.0.3)
