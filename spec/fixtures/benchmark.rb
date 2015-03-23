@@ -22,7 +22,7 @@ bar = ProgressBar.create(:output => output,
                          :start  => 0,
                          :total  => total)
 
-total.times do |i|
+total.times do |_i|
   # bar.log i
   bar.increment
 end
