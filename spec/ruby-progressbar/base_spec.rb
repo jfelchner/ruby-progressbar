@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'support/time'
 require 'stringio'
 
+# rubocop:disable Metrics/LineLength
 describe ProgressBar::Base do
   let(:output) do
     StringIO.new('', 'w+').tap do |io|
@@ -945,3 +946,4 @@ describe ProgressBar::Base do
     end
   end
 end
+# rubocop:enable Metrics/LineLength
