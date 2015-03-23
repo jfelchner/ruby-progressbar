@@ -19,7 +19,8 @@ if [ -n "$CIRCLECI" ]; then
   echo "--------------------------------------------------------------------------------"
   echo ""
 
-  echo ":rubygems_api_key: ${RUBYGEMS_API_KEY}" >> $HOME/.gem/credentials
+  echo ":rubygems_api_key: ${RUBYGEMS_API_KEY}" > $HOME/.gem/credentials
+  chmod 0600 $HOME/.gem/credentials
 
   echo "Done."
 fi
@@ -63,7 +64,7 @@ if gem push $gem_file | tee push.log; then
   deploy_successful=true
 fi
 
-if [ "$deploy_successful" -eq "false" ]; then
+if [[ "$deploy_successful" == "false" ]]; then
   echo "There was a problem pushing your gem to Rubygems."
   echo ""
   echo "Aborting deploy"
