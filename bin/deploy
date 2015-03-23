@@ -79,13 +79,13 @@ release_message=""
 color=""
 
 if [ -n "$(cat push.log | grep 'Successfully registered gem')" ]; then
-  release_message="${app_name} ${latest_release_tag} has been successfully released to Rubygems"
+  release_message="${gem_name} ${latest_release_tag} has been successfully released to Rubygems"
   color="success"
 elif [ -n "$(cat push.log | grep 'Repushing of gem versions is not allowed')" ]; then
-  release_message="${app_name} ${latest_release_tag} has already been pushed to Rubygems"
+  release_message="${gem_name} ${latest_release_tag} has already been pushed to Rubygems"
   color="warning"
 else
-  release_message="There was a problem pushing ${app_name} ${latest_release_tag} to Rubygems"
+  release_message="There was a problem pushing ${gem_name} ${latest_release_tag} to Rubygems"
   color="danger"
 fi
 
