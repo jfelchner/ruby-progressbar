@@ -27,7 +27,7 @@ fi
 echo ""
 echo "Detecting the Version to Release"
 echo "--------------------------------------------------------------------------------"
-latest_release_tag="$(git tag | grep 'release' | sort --version-sort | tail -n 1)"
+latest_release_tag="$(git tag | grep -E 'releases' | sort --version-sort | tail -n 1)"
 
 if [ -n "$latest_release_tag" ]; then
   echo "The latest release detected was '${latest_release_tag}'."
