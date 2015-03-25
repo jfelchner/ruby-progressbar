@@ -47,8 +47,8 @@ class   Time
     estimated_with_elapsed_fallback
   end
 
-  attr_accessor :out_of_bounds_time_format,
-                :timer,
+  attr_reader   :out_of_bounds_time_format
+  attr_accessor :timer,
                 :progress
 
   def out_of_bounds_time_format=(format)
