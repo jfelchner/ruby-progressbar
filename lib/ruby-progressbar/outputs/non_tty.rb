@@ -41,7 +41,7 @@ class   NonTty < Output
 
   protected
 
-  attr_accessor :last_update_length
+  attr_writer :last_update_length
 end
 end
 end
