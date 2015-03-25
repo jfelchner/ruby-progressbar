@@ -6,9 +6,10 @@ class   Progress
   DEFAULT_BEGINNING_POSITION = 0
   DEFAULT_SMOOTHING          = 0.1
 
-  attr_accessor             :total,
-                            :progress,
-                            :starting_position,
+  attr_reader               :total,
+                            :progress
+
+  attr_accessor             :starting_position,
                             :running_average,
                             :smoothing
 
