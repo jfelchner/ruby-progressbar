@@ -1,8 +1,8 @@
 class   ProgressBar
 module  Calculators
 class   Length
-  attr_accessor :length_override,
-                :current_length
+  attr_reader   :length_override
+  attr_accessor :current_length
 
   def initialize(options)
     self.length_override = options[:length]
