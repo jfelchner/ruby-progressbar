@@ -89,7 +89,7 @@ else
   color="danger"
 fi
 
-curl -X POST --data-urlencode "payload={\"username\": \"rubygems\", \"text\": \"${release_message}\", \"icon_url\": \"https://pbs.twimg.com/profile_images/535452674729078784/5jL6-BA5_400x400.jpeg\"}" https://hooks.slack.com/services/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
+curl -X POST --data-urlencode "payload={\"username\": \"rubygems\", \"text\": \"${release_message}\", \"icon_url\": \"https://pbs.twimg.com/profile_images/535452674729078784/5jL6-BA5_400x400.jpeg\"}" https://goodscout.slack.com/services/hooks/incoming-webhook?token=i7p6sAtGqMYG0owvtqmwVaDv
 
 if ! $deploy_successful; then
   exit 1;
