@@ -1,11 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rake'
-gem 'json', '~> 1.7.7'
+gem 'json'
 gem 'chamber'
 
 platforms :ruby do
-  gem 'ruby-prof', '~> 0.13.0'
+  gem 'ruby-prof', '~> 0.15.8'
 end
 
 gemspec
