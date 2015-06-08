@@ -23,10 +23,9 @@ percentage, bars of various formats, elapsed time and estimated time remaining.
   spec.test_files    = Dir['{test,spec,features}/**/*']
 
 
-  spec.add_development_dependency 'rspec',                      ["~> 3.1"]
-  spec.add_development_dependency 'rspectacular',               ["~> 0.21.6"]
-  spec.add_development_dependency 'fuubar',                     ["~> 2.0"]
-  spec.add_development_dependency 'warning_filter',             ["~> 0.0.2"]
-  spec.add_development_dependency 'timecop',                    ["~> 0.6.0"]
-  spec.add_development_dependency 'codeclimate-test-reporter',  ["~> 0.3.0"]
+  spec.add_development_dependency 'rspec',          ["~> 3.2"]
+  spec.add_development_dependency 'rspectacular',   ["~> 0.62.1"]
+  spec.add_development_dependency 'fuubar',         ["~> 2.0"]
+  spec.add_development_dependency 'warning_filter', ["~> 0.0.2"]
+  spec.add_development_dependency 'timecop',        ["~> 0.7.4"]
 end
