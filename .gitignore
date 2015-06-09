@@ -38,7 +38,7 @@ dist
 pkg
 
 # Local Configuration Files
-secrets.yml
+config/secrets.yml
 database.yml
 config.yml
 .env.yml
