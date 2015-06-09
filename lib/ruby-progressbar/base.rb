@@ -13,7 +13,6 @@ class   Base
                  :progress,
                  :total
 
-  # rubocop:disable Metrics/AbcSize
   def initialize(options = {})
     self.autostart    = options.fetch(:autostart,  true)
     self.autofinish   = options.fetch(:autofinish, true)
@@ -36,7 +35,6 @@ class   Base
 
     start :at => options[:starting_at] if autostart
   end
-  # rubocop:enable Metrics/AbcSize
 
   def start(options = {})
     clear
@@ -77,7 +75,7 @@ class   Base
     timer.stopped? || finished?
   end
 
-  alias_method :paused?, :stopped?
+  alias paused? stopped?
 
   def finished?
     finished || (autofinish && progressable.finished?)
@@ -135,7 +133,7 @@ class   Base
     end
   end
 
-  alias_method :format, :format=
+  alias format format=
 
   protected
 
@@ -153,7 +151,7 @@ class   Base
 
   def update_progress(*args)
     output.with_refresh do
-      progressable.send(*args)
+      progressable.__send__(*args)
       timer.stop if finished?
     end
   end

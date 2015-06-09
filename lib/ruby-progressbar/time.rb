@@ -3,7 +3,7 @@ class   Time
   def self.now(time = ::Time)
     @time = time
 
-    @time.send unmocked_time_method
+    @time.__send__ unmocked_time_method
   end
 
   def self.unmocked_time_method

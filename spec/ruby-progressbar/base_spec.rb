@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'support/time'
 require 'stringio'
 
-# rubocop:disable Metrics/LineLength
+# rubocop:disable Metrics/LineLength, Style/UnneededInterpolation, Performance/EndWith
 describe ProgressBar::Base do
   let(:output) do
     StringIO.new('', 'w+').tap do |io|
@@ -418,7 +418,7 @@ describe ProgressBar::Base do
   end
 
   context 'when a bar is started' do
-    let(:progressbar) { ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate  => 0.0) }
+    let(:progressbar) { ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate => 0.0) }
 
     context 'and it is incremented any number of times' do
       before { 10.times { progressbar.increment } }

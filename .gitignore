@@ -1,6 +1,9 @@
 # Vendored Dependencies
-node_modules
 bower_components
+node_modules
+site/web/app/mu-plugins
+site/web/app/plugins
+site/web/wp
 vendor
 
 # OS Files
@@ -8,71 +11,106 @@ vendor
 Thumbs.db
 
 # Testing Files
-rerun.txt
-pickle-email-*.html
+*.gemfile.lock
 capybara*
+pickle-email-*.html
+public/assets
 public/uploads
-public/assets/src
+rerun.txt
+site/web/app/uploads
 test/data
 
 # Cache Files
-.sass-cache
-public/system
-spec/reports
-tags
+*.tfstate
+.byebug_history
+.divshot-cache
 .rake_tasks
+.sass-cache
 .yardoc
 _yardoc
+disk_image_for_*.json
+disk_image_settings.json
+lambdas/*.js
+lambdas/*.py
+lambdas/*.zip
+packer_cache
+public/system
+site/web/app/upgrade
+spec/reports
+tags
+terraform.tfvars
+tmtags
+variables.sls
+variables.tf.json
 
 # Local Compiled Files
 **/public/stylesheets/*.css
+*.a
+*.o
 *.rbc
 *.so
-*.o
-*.a
 coverage
 coverage.data
-rdoc
-docs
 dist
+docs
+files/scripts/**/*.js
+files/scripts/**/*.py
+files/scripts/**/*.zip
 pkg
+rdoc
 
 # Local Configuration Files
-secrets.yml
-database.yml
-config.yml
-.env.yml
-.env
-.bundle
-.foreman
-.idea
-.rspec
-.rvmrc
-.railsrc
-.bundle
-nbproject
-*.project
+!.env.example
 *.bundle
+*.project
 *.tmproj
+.bundle
 .chamber.pem
 .chamber.pem.enc
+.env
+.env.yml
+.foreman
+.htaccess
+.idea
+.railsrc
+.rspec
+.rvmrc
+.secrets
+.shellwreck.sh
+.terraform
 Gemfile.local
+config.yml
+config/database.yml
+config/secrets.yml
+nbproject
 
 # Temporary files
-log
-tmp
-*.swp
-*.swo
-*.orig
-*.log*
+*.backup
+*.bak
 *.lock
+*.log*
+*.old
+*.orig
 *.sqlite3
 *.sqlite3-journal
+*.swo
+*.swp
+*~
+.\#*
+\#*
+db-sync
 dump.rdb
+log
+sql-dump-*.sql
+tmp
+
+# Vagrant
+.vagrant
 
 # Always keep Gemfile.lock
 !Gemfile.lock
+!composer.lock
 
 # Always Version .keep and .gitkeep files
-!.keep
 !.gitkeep
+!.keep

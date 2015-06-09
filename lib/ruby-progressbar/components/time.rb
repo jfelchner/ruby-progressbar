@@ -4,14 +4,14 @@
 class   ProgressBar
 module  Components
 class   Time
-  TIME_FORMAT            = '%02d:%02d:%02d'
-  OOB_TIME_FORMATS       = [:unknown, :friendly, nil]
+  TIME_FORMAT            = '%02d:%02d:%02d'.freeze
+  OOB_TIME_FORMATS       = [:unknown, :friendly, nil].freeze
   OOB_LIMIT_IN_HOURS     = 99
-  OOB_UNKNOWN_TIME_TEXT  = '??:??:??'
-  OOB_FRIENDLY_TIME_TEXT = '> 4 Days'
-  NO_TIME_ELAPSED_TEXT   = '--:--:--'
-  ESTIMATED_LABEL        = ' ETA'
-  ELAPSED_LABEL          = 'Time'
+  OOB_UNKNOWN_TIME_TEXT  = '??:??:??'.freeze
+  OOB_FRIENDLY_TIME_TEXT = '> 4 Days'.freeze
+  NO_TIME_ELAPSED_TEXT   = '--:--:--'.freeze
+  ESTIMATED_LABEL        = ' ETA'.freeze
+  ELAPSED_LABEL          = 'Time'.freeze
 
   def initialize(options = {})
     self.out_of_bounds_time_format = options[:out_of_bounds_time_format]

@@ -3,18 +3,28 @@ inherit_from:
 
 # Put your project-specifc Rubocop config here
 
-Style/IndentationWidth:
-  Enabled: false
-
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
-
-Style/SymbolArray:
-  Enabled: false
-
-Style/Lambda:
+Style/ExtraSpacing:
   Enabled: false
 
 Style/FileName:
   Exclude:
     - 'lib/ruby-progressbar.rb'
+
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+Style/IndentationWidth:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/OptionHash:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled:                   true
+  EnforcedStyleForMultiline: 'no_comma'

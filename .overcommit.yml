@@ -1,0 +1,356 @@
+# Where to store hook plugins specific to a repository. These are loaded in
+# addition to the default hooks Overcommit comes with. The location is relative
+# to the root of the repository.
+plugin_directory: '.git-hooks'
+
+# Whether to check if a hook plugin has changed since Overcommit last ran it.
+# This is a defense mechanism when working with repositories which can contain
+# untrusted code (e.g. when you fetch a pull request from a third party).
+# See https://github.com/causes/overcommit#security for more information.
+verify_signatures: true
+
+PreCommit:
+  ALL:
+    problem_on_unmodified_line: report
+    requires_files:           true
+    required:                 false
+    quiet:                    false
+    exclude:
+      - 'bower_components/**/*'
+      - 'node_modules/**/*'
+      - 'vendor/**/*'
+
+  AuthorEmail:
+    enabled:                  true
+
+  AuthorName:
+    enabled:                  true
+
+  BerksfileCheck:
+    enabled:                  true
+
+  Brakeman:
+    enabled:                  true
+
+  BrokenSymlinks:
+    enabled:                  true
+
+  BundleCheck:
+    enabled:                  true
+
+  CaseConflicts:
+    enabled:                  true
+
+  ChamberSecurity:
+    enabled:                  true
+
+  CoffeeLint:
+    enabled:                  true
+
+  CssLint:
+    enabled:                  true
+
+  Dogma:
+    enabled:                  true
+
+  EsLint:
+    enabled:                  true
+
+  ExecutePermissions:
+    enabled:                  true
+    exclude:
+      - 'bin/**/*'
+      - 'script/**/*'
+      - 'scripts/**/*'
+
+  GoLint:
+    enabled:                  true
+
+  GoVet:
+    enabled:                  true
+
+  Hlint:
+    enabled:                  true
+
+  HamlLint:
+    enabled:                  false
+
+  HardTabs:
+    enabled:                  true
+    exclude:
+      - '**/*.svg'
+      - '**/structure.sql'
+
+  HtmlHint:
+    enabled:                  true
+
+  HtmlTidy:
+    enabled:                  false
+
+  ImageOptim:
+    enabled:                  false
+
+  JavaCheckstyle:
+    enabled:                  true
+
+  Jscs:
+    enabled:                  true
+
+  JsHint:
+    enabled:                  false
+
+  JsLint:
+    enabled:                  false
+
+  Jsl:
+    enabled:                  false
+
+  JsonSyntax:
+    enabled:                  true
+
+  LocalPathsInGemfile:
+    enabled:                  true
+
+  MergeConflicts:
+    enabled:                  true
+
+  Minitest:
+    enabled:                  false
+
+  NginxTest:
+    enabled:                  true
+
+  Pep257:
+    enabled:                  false
+
+  Pep8:
+    enabled:                  false
+
+  PuppetLint:
+    enabled:                  true
+
+  Pyflakes:
+    enabled:                  false
+
+  Pylint:
+    enabled:                  false
+
+  PythonFlake8:
+    enabled:                  false
+
+  RailsBestPractices:
+    enabled:                  false
+
+  RailsSchemaUpToDate:
+    enabled:                  true
+    include:
+      - '**/db/migrate/*.rb'
+      - '**/db/schema.rb'
+      - '**/db/structure.sql'
+
+  Reek:
+    enabled:                  true
+
+  RuboCop:
+    enabled:                  true
+
+  RubyLint:
+    enabled:                  false
+
+  Scalariform:
+    enabled:                  false
+
+  Scalastyle:
+    enabled:                  false
+
+  ScssLint:
+    enabled:                  true
+
+  SemiStandard:
+    enabled:                  false
+
+  ShellCheck:
+    enabled:                  true
+    flags:
+      - '--format=gcc'
+      - '-e SC2155'
+    include:
+      - '**/*.sh'
+      - '**/*.bash'
+      - '**/*.zsh'
+      - '**/bash_profile'
+      - '**/bashrc'
+      - '**/zshrc'
+
+  SlimLint:
+    enabled:                  false
+
+  Sqlint:
+    enabled:                  true
+
+  Standard:
+    enabled:                  false
+
+  TrailingWhitespace:
+    enabled:                  true
+    exclude:                  '**/structure.sql'
+
+  TravisLint:
+    enabled:                  true
+
+  Vint:
+    enabled:                  true
+
+  W3cCss:
+    enabled:                  false
+
+  W3cHtml:
+    enabled:                  false
+
+  XmlLint:
+    enabled:                  true
+
+  XmlSyntax:
+    enabled:                  true
+
+  YamlSyntax:
+    enabled:                  true
+
+PrePush:
+  ALL:
+    requires_files:           false
+    required:                 false
+    quiet:                    false
+
+  ProtectedBranches:
+    enabled:                  false
+
+  RSpec:
+    enabled:                  false
+
+PreRebase:
+  ALL:
+    requires_files:           false
+    required:                 false
+    quiet:                    false
+
+  MergedCommits:
+    enabled:                  false
+
+CommitMsg:
+  ALL:
+    requires_files:           false
+    quiet:                    false
+
+  CapitalizedSubject:
+    enabled:                  true
+
+  EmptyMessage:
+    enabled:                  false
+
+  GerritChangeId:
+    enabled:                  false
+
+  HardTabs:
+    enabled:                  true
+
+  RussianNovel:
+    enabled:                  false
+
+  SingleLineSubject:
+    enabled:                  true
+
+  SpellCheck:
+    enabled:                  false
+
+  TextWidth:
+    enabled:                  true
+    max_subject_width:        72
+    max_body_width:           80
+
+  TrailingPeriod:
+    enabled:                  true
+
+PostCheckout:
+  ALL:
+    required:                 false
+    quiet:                    false
+
+  BowerInstall:
+    enabled:                  false
+
+  BundleCheck:
+    enabled:                  true
+
+  IndexTags:
+    enabled:                  false
+
+  NpmInstall:
+    enabled:                  false
+
+  SubmoduleStatus:
+    enabled:                  false
+
+PostCommit:
+  ALL:
+    requires_files:           false
+    required:                 false
+    quiet:                    false
+
+  BowerInstall:
+    enabled:                  false
+
+  BundleInstall:
+    enabled:                  false
+
+  GitGuilt:
+    enabled:                  false
+
+  IndexTags:
+    enabled:                  false
+
+  NpmInstall:
+    enabled:                  false
+
+  SubmoduleStatus:
+    enabled:                  false
+
+PostMerge:
+  ALL:
+    requires_files:           false
+    quiet:                    false
+
+  BowerInstall:
+    enabled:                  false
+
+  BundleInstall:
+    enabled:                  false
+
+  IndexTags:
+    enabled:                  false
+
+  NpmInstall:
+    enabled:                  false
+
+  SubmoduleStatus:
+    enabled:                  true
+
+PostRewrite:
+  ALL:
+    requires_files:           false
+    quiet:                    false
+
+  BowerInstall:
+    enabled:                  false
+
+  BundleInstall:
+    enabled:                  false
+
+  IndexTags:
+    enabled:                  false
+
+  NpmInstall:
+    enabled:                  false
+
+  SubmoduleStatus:
+    enabled:                  false

@@ -23,7 +23,7 @@ class   Progress
   def start(options = {})
     self.running_average   = 0
     self.progress          = \
-    self.starting_position = options[:at] || progress
+      self.starting_position = options[:at] || progress
   end
 
   def finish
@@ -36,16 +36,16 @@ class   Progress
 
   def increment
     warn "WARNING: Your progress bar is currently at #{progress} out of #{total} " \
-         'and cannot be incremented. In v2.0.0 this will become a ' \
-         'ProgressBar::InvalidProgressError.' if progress == total
+         "and cannot be incremented. In v2.0.0 this will become a " \
+         "ProgressBar::InvalidProgressError." if progress == total
 
     self.progress += 1 unless progress == total
   end
 
   def decrement
     warn "WARNING: Your progress bar is currently at #{progress} out of #{total} " \
-         'and cannot be decremented. In v2.0.0 this will become a ' \
-         'ProgressBar::InvalidProgressError.' if progress == 0
+         "and cannot be decremented. In v2.0.0 this will become a " \
+         "ProgressBar::InvalidProgressError." if progress == 0
 
     self.progress -= 1 unless progress == 0
   end

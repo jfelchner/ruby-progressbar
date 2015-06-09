@@ -17,15 +17,14 @@ percentage, bars of various formats, elapsed time and estimated time remaining.
   spec.homepage      = 'https://github.com/jfelchner/ruby-progressbar'
   spec.license       = 'MIT'
 
-  spec.executables   = Dir['{bin}/**/*'].map    {|dir| dir.gsub!(/\Abin\//, '')}.
-                                         reject {|bin| %w{rails rspec rake setup deploy}}
-  spec.files         = Dir['{app,config,db,lib}/**/*'] + %w{Rakefile README.md LICENSE}
+  spec.executables   = []
+  spec.files         = Dir['{app,config,db,lib}/**/*'] + %w{Rakefile README.md LICENSE.txt}
   spec.test_files    = Dir['{test,spec,features}/**/*']
 
 
-  spec.add_development_dependency 'rspec',          ["~> 3.2"]
-  spec.add_development_dependency 'rspectacular',   ["~> 0.62.1"]
-  spec.add_development_dependency 'fuubar',         ["~> 2.0"]
+  spec.add_development_dependency 'rspec', ["~> 3.2"]
+  spec.add_development_dependency 'rspectacular', ["~> 0.62.1"]
+  spec.add_development_dependency 'fuubar', ["~> 2.0"]
   spec.add_development_dependency 'warning_filter', ["~> 0.0.2"]
-  spec.add_development_dependency 'timecop',        ["~> 0.7.4"]
+  spec.add_development_dependency 'timecop', ["~> 0.7.4"]
 end

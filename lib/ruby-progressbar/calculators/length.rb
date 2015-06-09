@@ -46,6 +46,7 @@ class   Length
     80
   end
 
+  # rubocop:disable Lint/DuplicateMethods
   begin
     require 'io/console'
 

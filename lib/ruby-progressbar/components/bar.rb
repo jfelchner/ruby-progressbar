@@ -4,9 +4,9 @@
 class   ProgressBar
 module  Components
 class   Bar
-  DEFAULT_PROGRESS_MARK  = '='
-  DEFAULT_REMAINDER_MARK = ' '
-  DEFAULT_UPA_STEPS      = ['=---', '-=--', '--=-', '---=']
+  DEFAULT_PROGRESS_MARK  = '='.freeze
+  DEFAULT_REMAINDER_MARK = ' '.freeze
+  DEFAULT_UPA_STEPS      = ['=---', '-=--', '--=-', '---='].freeze
 
   attr_accessor :progress_mark,
                 :remainder_mark,

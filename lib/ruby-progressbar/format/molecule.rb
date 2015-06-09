@@ -20,9 +20,9 @@ class   Molecule
     :i => [:bar,          :incomplete_space],
     :r => [:rate,         :rate_of_change],
     :R => [:rate,         :rate_of_change_with_precision],
-  }
+  }.freeze
 
-  BAR_MOLECULES = %w{w B b i}
+  BAR_MOLECULES = %w{w B b i}.freeze
 
   attr_accessor :key,
                 :method_name
@@ -45,12 +45,12 @@ class   Molecule
   end
 
   def lookup_value(environment, length = 0)
-    component = environment.send(method_name[0])
+    component = environment.__send__(method_name[0])
 
     if bar_molecule?
-      component.send(method_name[1], length).to_s
+      component.__send__(method_name[1], length).to_s
     else
-      component.send(method_name[1]).to_s
+      component.__send__(method_name[1]).to_s
     end
   end
 end

@@ -3,9 +3,9 @@ require 'ruby-progressbar/output'
 class   ProgressBar
 module  Outputs
 class   Tty < Output
-  DEFAULT_FORMAT_STRING = '%t: |%B|'
+  DEFAULT_FORMAT_STRING = '%t: |%B|'.freeze
 
-  alias_method :refresh_with_format_change, :with_refresh
+  alias refresh_with_format_change with_refresh
 
   def clear
     stream.print clear_string
