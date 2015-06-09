@@ -1,0 +1,173 @@
+###
+# Directory-Based Configurations
+#
+# UnusedPrivateMethod is disabled in controllers due to apill methods
+#
+'app/controllers':
+  NestedIterators:
+    max_allowed_nesting:    2
+  UnusedPrivateMethod:
+    enabled:                false
+
+# FeatureEnvy is disabled in helpers because they almost always are envious
+# UtilityFunction is disabled in helpers because that's what helpers are
+'app/helpers':
+  FeatureEnvy:
+    enabled:                false
+  UtilityFunction:
+    enabled:                false
+
+# FeatureEnvy is disabled in jobs because they almost always are envious
+# UtilityFunction is disabled in jobs because that's what helpers are
+'app/jobs':
+  FeatureEnvy:
+    enabled:                false
+  UtilityFunction:
+    enabled:                false
+
+# FeatureEnvy is disabled in workers because they almost always are envious
+# UtilityFunction is disabled in workers because that's what helpers are
+'app/workers':
+  FeatureEnvy:
+    enabled:                false
+  UtilityFunction:
+    enabled:                false
+
+# FeatureEnvy is disabled in migrations because they almost always are envious
+# UncommunicativeVariableName is disabled in migrations because we use 't' a lot
+'db/migrate':
+  DuplicateMethodCall:
+    max_calls:              5
+  FeatureEnvy:
+    enabled:                false
+  UncommunicativeVariableName:
+    enabled:                false
+
+# In specs, we want to accept variable names like `thing_1`, `thing_2`, etc
+'spec':
+  UncommunicativeVariableName:
+    accept:
+      - _
+      - !ruby/regexp /[0-9]$/
+    reject:
+      - !ruby/regexp /^.$/
+      - !ruby/regexp /[A-Z]/
+
+###
+# Global Configurations
+#
+Attribute:
+  enabled:                  false
+
+BooleanParameter:
+  enabled:                  true
+
+ClassVariable:
+  enabled:                  true
+
+ControlParameter:
+  enabled:                  true
+
+DataClump:
+  enabled:                  true
+  max_copies:               2
+  min_clump_size:           2
+
+DuplicateMethodCall:
+  enabled:                  true
+  max_calls:                2
+
+FeatureEnvy:
+  enabled:                  true
+
+IrresponsibleModule:
+  enabled:                  false
+
+# This is covered by rubocop Metrics/ParameterLists
+LongParameterList:
+  enabled:                  false
+  max_params:               5
+
+LongYieldList:
+  enabled:                  true
+  max_params:               3
+
+ModuleInitialize:
+  enabled:                  true
+
+NestedIterators:
+  enabled:                  true
+  max_allowed_nesting:      1
+  ignore_iterators:
+    - tap
+
+NilCheck:
+  enabled:                  true
+
+PrimaDonnaMethod:
+  enabled:                  true
+
+RepeatedConditional:
+  enabled:                  true
+  max_ifs:                  2
+
+TooManyInstanceVariables:
+  enabled:                  true
+  max_instance_variables:   4
+
+TooManyMethods:
+  enabled:                  true
+  max_methods:              15
+
+# This is duplicated my the myriad rubocop complexity checks
+TooManyStatements:
+  enabled:                  false
+  max_statements:           5
+  exclude:
+    - initialize
+
+UncommunicativeMethodName:
+  enabled:                  true
+  accept:                   []
+  reject:
+    - !ruby/regexp /^[a-z]$/
+    - !ruby/regexp /[0-9]$/
+    - !ruby/regexp /[A-Z]/
+
+UncommunicativeModuleName:
+  enabled:                  true
+  accept:
+    - Inline::C
+    - !ruby/regexp /^V\d+$/
+  reject:
+    - !ruby/regexp /^.$/
+    - !ruby/regexp /[^V][0-9]$/
+
+UncommunicativeParameterName:
+  enabled:                  true
+  accept: []
+  reject:
+    - !ruby/regexp /^.$/
+    - !ruby/regexp /[0-9]$/
+    - !ruby/regexp /[A-Z]/
+    - !ruby/regexp /^_/
+
+UncommunicativeVariableName:
+  enabled:                  true
+  accept:
+    - _
+  reject:
+    - !ruby/regexp /^.$/
+    - !ruby/regexp /[0-9]$/
+    - !ruby/regexp /[A-Z]/
+
+# This is duplicated by rubocop's Lint/UnusedMethodArgument cop
+UnusedParameters:
+  enabled:                  false
+
+UnusedPrivateMethod:
+  enabled:                  true
+
+UtilityFunction:
+  enabled:                  true
+  max_helper_calls:         1
