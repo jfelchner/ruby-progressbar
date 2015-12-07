@@ -1,6 +1,6 @@
 Ruby/ProgressBar
 ================================
-[![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.png?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar.png)](https://codeclimate.com/github/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar/coverage.png)](https://codeclimate.com/github/jfelchner/ruby-progressbar)
+[![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.svg?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar/coverage.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar)
 
 <img src="https://www.dropbox.com/s/pe9o1yobxtubof8/ruby-progressbar-cage.png?dl=1" align="right" />
 
