@@ -16,6 +16,7 @@ class   Time
 
   def self.time_mocking_library_methods
     [
+      :__simple_stub__now,          # ActiveSupport
       :now_without_mock_time,       # Timecop
       :now_without_delorean,        # Delorean
       :now                          # Actual
