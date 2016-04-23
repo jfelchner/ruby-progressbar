@@ -3,7 +3,7 @@ require 'ruby-progressbar/output'
 class   ProgressBar
 module  Outputs
 class   NonTty < Output
-  DEFAULT_FORMAT_STRING = '%t: |%b|'
+  DEFAULT_FORMAT_STRING = '%t: |%l|'
 
   def clear
     self.last_update_length = 0

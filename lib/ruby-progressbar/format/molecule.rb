@@ -14,15 +14,16 @@ class   Molecule
     :e => [:time,         :estimated_with_unknown_oob],
     :E => [:time,         :estimated_with_friendly_oob],
     :f => [:time,         :estimated_with_no_oob],
-    :B => [:bar,          :complete_bar],
+    :B => [:bar,          :full_bar],
     :b => [:bar,          :bar],
+    :l => [:bar,          :fully_completed_bar],
     :w => [:bar,          :bar_with_percentage],
     :i => [:bar,          :incomplete_space],
     :r => [:rate,         :rate_of_change],
     :R => [:rate,         :rate_of_change_with_precision],
   }
 
-  BAR_MOLECULES = %w{w B b i}
+  BAR_MOLECULES = %w{w B b i l}
 
   attr_accessor :key,
                 :method_name

@@ -65,6 +65,21 @@ describe ProgressBar::Base do
 
         expect(progressbar.to_s('%t%i')).to eql '*********************'
       end
+
+      it 'properly calculates the length of the bar' do
+        progressbar    = ProgressBar::Base.new(:format        => 'Processing... %b%i %p%%',
+                                               :output        => output,
+                                               :length        => 24,
+                                               :starting_at   => 3,
+                                               :total         => 6,
+                                               :throttle_rate => 0.0)
+
+        progressbar.increment
+        progressbar.increment
+
+        output.rewind
+        expect(output.read).to include "Processing... ===    50%\rProcessing... ===-   66%\rProcessing... ====-  83%\r"
+      end
     end
 
     context 'and the full bar length is calculated (but lacks the space to output the entire bar)' do
@@ -218,7 +233,7 @@ describe ProgressBar::Base do
         progressbar.increment
 
         output.rewind
-        expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
+        expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}-#{' ' * 2}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}-#{' ' * 1}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
       end
 
       it 'properly calculates the length of the bar by removing the short version of the ANSI codes from the calculated length' do
@@ -237,7 +252,16 @@ describe ProgressBar::Base do
         progressbar.increment
 
         output.rewind
-        expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
+        expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}-#{' ' * 2}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}-#{' ' * 1}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
+      end
+    end
+
+    context 'when the total cannot be fully displayed by regular progress marks' do
+      it 'can show an intermediate mark' do
+        progressbar = ProgressBar::Base.new(:output => output, :length => 50, :total => 100, :starting_at => 5, :throttle_rate => 0.0)
+
+        output.rewind
+        expect(output.read).to end_with "Progress: |=-#{' ' * 36}|\r"
       end
     end
 
@@ -249,7 +273,7 @@ describe ProgressBar::Base do
         progressbar.increment
 
         output.rewind
-        expect(output.read).to include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
+        expect(output.read).to include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======- |\r"
       end
     end
 
@@ -342,7 +366,7 @@ describe ProgressBar::Base do
         progressbar.finish
 
         output.rewind
-        expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\n"
+        expect(output.read).to end_with "                    \rProgress: |======- |\rProgress: |========|\n"
       end
     end
   end
@@ -386,7 +410,7 @@ describe ProgressBar::Base do
 
         output.rewind
 
-        expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\rProgress: |========|\n"
+        expect(output.read).to end_with "                    \rProgress: |======- |\rProgress: |========|\rProgress: |========|\n"
       end
     end
   end
@@ -428,7 +452,7 @@ describe ProgressBar::Base do
           progressbar.progress_mark = 'x'
 
           output.rewind
-          expect(output.read).to match(/\rProgress: \|xxxxxx#{' ' * 62}\|\r\z/)
+          expect(output.read).to match(/\rProgress: \|xxxxxx-#{' ' * 61}\|\r\z/)
         end
       end
 
@@ -437,7 +461,7 @@ describe ProgressBar::Base do
           progressbar.remainder_mark = 'x'
 
           output.rewind
-          expect(output.read).to match(/\rProgress: \|======#{'x' * 62}\|\r\z/)
+          expect(output.read).to match(/\rProgress: \|======-#{'x' * 61}\|\r\z/)
         end
       end
 
@@ -464,7 +488,7 @@ describe ProgressBar::Base do
 
         it 'forcibly halts the bar wherever it is and cancels it' do
           output.rewind
-          expect(output.read).to match(/\rProgress: \|======#{' ' * 62}\|\n\z/)
+          expect(output.read).to match(/\rProgress: \|======-#{' ' * 61}\|\n\z/)
         end
 
         it 'does not output the bar multiple times if the bar is already stopped' do
@@ -533,7 +557,7 @@ describe ProgressBar::Base do
       progressbar.start(:at => 20)
 
       output.rewind
-      expect(output.read).to match(/Progress: \|=============                                                       \|\r\z/)
+      expect(output.read).to match(/Progress: \|=============-                                                      \|\r\z/)
     end
   end
 
