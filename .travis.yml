@@ -1,0 +1,18 @@
+language: ruby
+rvm:
+  - 1.8.7
+  - 1.9.2
+  - 1.9.3
+  - 2.0
+  - 2.1
+  - 2.2
+  - 2.3.0
+  - jruby-18mode
+  - jruby-19mode
+before_install:
+  - gem update bundler
+script: bundle exec rspec
+notifications:
+  slack:
+    rooms:
+      - thekompanee:p46x27zMG89XW66DgGuutoaW#open-source
