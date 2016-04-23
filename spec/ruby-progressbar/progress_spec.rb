@@ -37,6 +37,12 @@ describe  Progress do
     expect(progress.progress).to eql 10
   end
 
+  it 'knows how to finish itself even if the total is unknown' do
+    progress = Progress.new :total => nil
+
+    expect(progress.finish).to be_nil
+  end
+
   it 'knows the overridden total when the total is passed in' do
     progress = Progress.new(:total          => 12,
                             :progress_mark  => 'x',
