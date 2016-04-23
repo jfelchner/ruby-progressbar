@@ -10,12 +10,8 @@ end
 
 class ProgressBar
 class Time
-  class << self
-    alias old_now now
-
-    def now(time = ::PBTimeTester)
-      old_now(time)
-    end
+  def initialize(time = ::PBTimeTester)
+    self.time = time
   end
 end
 end
