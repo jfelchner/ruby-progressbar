@@ -6,7 +6,7 @@ class   Timer
                 :stopped_at
 
   def initialize(options = {})
-    self.time = options[:time] || Time
+    self.time = options[:time] || Time.new
   end
 
   def start
