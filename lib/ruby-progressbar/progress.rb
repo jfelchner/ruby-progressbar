@@ -27,7 +27,7 @@ class   Progress
   end
 
   def finish
-    self.progress = total
+    self.progress = total unless unknown?
   end
 
   def finished?
