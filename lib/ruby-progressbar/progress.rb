@@ -101,7 +101,7 @@ class   Progress
     return 100.0  if total == 0
     return 0.0    if total.nil?
 
-    '%5.2f' % [(progress.to_f * 100.0 / total * 100.0).floor / 100.0]
+    '%5.2f' % [(progress * 100 / total.to_f * 100).floor / 100.0]
   end
 
   def absolute
