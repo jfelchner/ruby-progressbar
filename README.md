@@ -1,6 +1,6 @@
 Ruby/ProgressBar
 ================================
-[![Build Status](https://secure.travis-ci.org/jfelchner/ruby-progressbar.svg?branch=master)](http://travis-ci.org/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar/coverage.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar)
+[![Gem Version](https://img.shields.io/gem/v/ruby-progressbar.svg)](https://rubygems.org/gems/ruby-progressbar) ![Rubygems Rank Overall](https://img.shields.io/gem/rt/ruby-progressbar.svg) ![Rubygems Rank Daily](https://img.shields.io/gem/rd/ruby-progressbar.svg) ![Rubygems Downloads](https://img.shields.io/gem/dv/ruby-progressbar/stable.svg) [![Build Status](https://img.shields.io/travis/jfelchner/ruby-progressbar/master.svg)](http://travis-ci.org/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar/coverage.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar)
 
 <img src="https://www.dropbox.com/s/pe9o1yobxtubof8/ruby-progressbar-cage.png?dl=1" align="right" />
 
