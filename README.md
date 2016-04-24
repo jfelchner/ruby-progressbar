@@ -15,6 +15,8 @@ Full Reference
 
 There's gotten to be too much awesome to pack into one page.  Visit the [wiki](https://github.com/jfelchner/ruby-progressbar/wiki) for the full documentation.
 
+Here's a [quick link](https://github.com/jfelchner/ruby-progressbar/wiki/Basic-Usage) to the 'Basic Usage' section.
+
 Issues
 --------------------------------
 
