@@ -9,6 +9,7 @@ GEM
     chamber (2.8.0)
       hashie (~> 3.3)
       thor (~> 0.19.1)
+    coderay (1.1.1)
     diff-lcs (1.2.5)
     fuubar (2.0.0)
       rspec (~> 3.0)
@@ -28,7 +29,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
-    rspectacular (0.62.1)
+    rspectacular (0.70.6)
+      coderay (~> 1.1)
       fuubar (~> 2.0)
       rspec (~> 3.1)
     ruby-prof (0.15.8)
@@ -44,7 +46,7 @@ DEPENDENCIES
   fuubar (~> 2.0)
   json
   rspec (~> 3.2)
-  rspectacular (~> 0.62.1)
+  rspectacular (~> 0.70.6)
   ruby-prof (~> 0.15.8)
   ruby-progressbar!
   timecop (~> 0.7.4)
