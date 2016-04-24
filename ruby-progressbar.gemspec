@@ -21,6 +21,8 @@ percentage, bars of various formats, elapsed time and estimated time remaining.
   spec.files         = Dir['{app,config,db,lib}/**/*'] + %w{Rakefile README.md LICENSE.txt}
   spec.test_files    = Dir['{test,spec,features}/**/*']
 
+  spec.cert_chain    = %w{certs/jfelchner.pem}
+  spec.signing_key   = File.expand_path('~/.gem/certs/jfelchner-private_key.pem') if $0 =~ /gem\z/
 
   spec.add_development_dependency 'rspec', ["~> 3.2"]
   spec.add_development_dependency 'rspectacular', ["~> 0.70.6"]
