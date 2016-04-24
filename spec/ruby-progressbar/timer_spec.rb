@@ -1,7 +1,7 @@
 require 'rspectacular'
 require 'ruby-progressbar/timer'
 
-class     ProgressBar
-describe  Timer do
+class           ProgressBar
+RSpec.describe  Timer do
 end
 end

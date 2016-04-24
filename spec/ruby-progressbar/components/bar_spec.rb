@@ -1,9 +1,9 @@
 require 'rspectacular'
 require 'ruby-progressbar/components/bar'
 
-class     ProgressBar
-module    Components
-describe  Bar do
+class           ProgressBar
+module          Components
+RSpec.describe  Bar do
   it 'has a default mark when a new bar is created and no parameters are passed' do
     expect(Bar.new.progress_mark).to eql Bar::DEFAULT_PROGRESS_MARK
   end

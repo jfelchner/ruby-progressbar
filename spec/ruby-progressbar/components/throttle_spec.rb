@@ -1,8 +1,8 @@
 require 'rspectacular'
 require 'ruby-progressbar/progress'
 
-class     ProgressBar
-describe  Throttle do
+class           ProgressBar
+RSpec.describe  Throttle do
   let(:timer) { ProgressBar::Timer.new(:time => ::Time) }
 
   it 'yields the first time if the throttle rate is given and the timer is not started' do

@@ -1,9 +1,9 @@
 require 'rspectacular'
 require 'ruby-progressbar/format/molecule'
 
-class     ProgressBar
-module    Format
-describe  Molecule do
+class           ProgressBar
+module          Format
+RSpec.describe  Molecule do
   it 'sets the key when initialized' do
     molecule = Molecule.new('t')
 
