@@ -27,6 +27,7 @@ test/data
 .rake_tasks
 .sass-cache
 .yardoc
+/variables.tf.json
 _yardoc
 disk_image_for_*.json
 disk_image_settings.json
@@ -41,7 +42,6 @@ tags
 terraform.tfvars
 tmtags
 variables.sls
-variables.tf.json
 
 # Local Compiled Files
 **/public/stylesheets/*.css
