@@ -67,6 +67,10 @@ class   Progress
                                                                  smoothing)
   end
 
+  def formatted_total
+    total || '??'
+  end
+
   def total=(new_total)
     fail ProgressBar::InvalidProgressError,
          "You can't set the item's total value to less than the current progress." \
