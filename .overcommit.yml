@@ -30,7 +30,7 @@ PreCommit:
     enabled:                  true
 
   Brakeman:
-    enabled:                  true
+    enabled:                  false
 
   BrokenSymlinks:
     enabled:                  true
@@ -61,7 +61,6 @@ PreCommit:
     exclude:
       - 'bin/**/*'
       - 'script/**/*'
-      - 'scripts/**/*'
 
   GoLint:
     enabled:                  true
@@ -149,7 +148,7 @@ PreCommit:
       - '**/db/structure.sql'
 
   Reek:
-    enabled:                  true
+    enabled:                  false
 
   RuboCop:
     enabled:                  true

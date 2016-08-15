@@ -38,10 +38,8 @@ Ideally, a bug report should include a pull request with failing specs.
 
 * Please add tests if you changed code. Contributions without tests won't be accepted.
 
-[repo]: https://github.com/thoughtbot/factory_girl/tree/master
 [fork]: https://help.github.com/articles/fork-a-repo/
 [branch]: https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/
 [pr]: https://help.github.com/articles/using-pull-requests/
 
 Inspired by https://github.com/thoughtbot/factory_girl/blob/master/CONTRIBUTING.md
-

@@ -19,7 +19,12 @@ AllCops:
     - '**/spec/dummy/**/*'
     - '**/vendor/**/*'
     - 'bin/rails'
+    - 'bin/rails'
+    - 'bin/rake'
+    - 'bin/spring'
+    - 'dist/**/*'
 
+  DefaultFormatter:              'fuubar'
   DisplayCopNames:               true
 
 ################################################################################
@@ -50,6 +55,7 @@ Style/AlignHash:
 Style/AlignParameters:
   Enabled:                       true
   EnforcedStyle:                 'with_first_parameter'
+  IndentationWidth:              ~
 
 Style/AndOr:
   Enabled:                       true
@@ -168,7 +174,7 @@ Style/Copyright:
 Style/DefWithParentheses:
   Enabled:                       true
 
-Style/DeprecatedHashMethods:
+Style/PreferredHashMethods:
   Enabled:                       true
 
 Style/Documentation:
@@ -181,10 +187,16 @@ Style/DotPosition:
 Style/DoubleNegation:
   Enabled:                       true
 
+Style/EachForSimpleLoop:
+  Enabled:                       true
+
 Style/EachWithObject:
   Enabled:                       true
 
 Style/ElseAlignment:
+  Enabled:                       true
+
+Style/EmptyCaseCondition:
   Enabled:                       true
 
 Style/EmptyElse:
@@ -223,7 +235,8 @@ Style/EmptyLiteral:
   Enabled:                       true
 
 Style/Encoding:
-  Enabled:                       false
+  Enabled:                       true
+  EnforcedStyle:                 'never'
 
 Style/EndBlock:
   Enabled:                       true
@@ -295,6 +308,7 @@ Style/GuardClause:
 Style/HashSyntax:
   Enabled:                       true
   EnforcedStyle:                 'ruby19'
+  PreferHashRocketsForNonAlnumEndingSymbols: true
 
 Style/IdenticalConditionalBranches:
   Enabled:                       true
@@ -310,6 +324,9 @@ Style/IfUnlessModifierOfIfUnless:
   Enabled:                       true
 
 Style/IfWithSemicolon:
+  Enabled:                       true
+
+Style/ImplicitRuntimeError:
   Enabled:                       true
 
 Style/IndentationConsistency:
@@ -356,7 +373,7 @@ Style/LineEndConcatenation:
   Enabled:                       true
 
 Style/MethodCalledOnDoEndBlock:
-  Enabled:                       false
+  Enabled:                       true
 
 Style/MethodCallParentheses:
   Enabled:                       true
@@ -379,9 +396,11 @@ Style/MissingElse:
 
 Style/ModuleFunction:
   Enabled:                       true
+  EnforcedStyle:                 'module_function'
 
 Style/MultilineArrayBraceLayout:
   Enabled:                       true
+  EnforcedStyle:                 'symmetrical'
 
 Style/MultilineAssignmentLayout:
   Enabled:                       true
@@ -397,20 +416,23 @@ Style/MultilineBlockLayout:
 
 Style/MultilineHashBraceLayout:
   Enabled:                       true
+  EnforcedStyle:                 'symmetrical'
 
 Style/MultilineIfThen:
   Enabled:                       true
 
 Style/MultilineMethodCallBraceLayout:
   Enabled:                       true
+  EnforcedStyle:                 'symmetrical'
 
 Style/MultilineMethodCallIndentation:
-  Enabled:                       false
-  EnforcedStyle:                 'aligned'
+  Enabled:                       true
+  EnforcedStyle:                 'indented_relative_to_receiver'
   IndentationWidth:              0
 
 Style/MultilineMethodDefinitionBraceLayout:
   Enabled:                       true
+  EnforcedStyle:                 'symmetrical'
 
 Style/MultilineOperationIndentation:
   Enabled:                       false
@@ -452,6 +474,10 @@ Style/NonNilCheck:
 
 Style/Not:
   Enabled:                       true
+
+Style/NumericLiteralPrefix:
+  Enabled:                       true
+  EnforcedOctalStyle:            'zero_with_o'
 
 Style/NumericLiterals:
   Enabled:                       true
@@ -649,7 +675,13 @@ Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle:                 'space'
   EnforcedStyleForEmptyBraces:   'no_space'
 
+Style/SpaceInsideArrayPercentLiteral:
+  Enabled:                       true
+
 Style/SpaceInsideParens:
+  Enabled:                       true
+
+Style/SpaceInsidePercentLiteralDelimiters:
   Enabled:                       true
 
 Style/SpaceInsideRangeLiteral:
@@ -697,6 +729,7 @@ Style/SymbolProc:
   Enabled:                       true
   IgnoredMethods:
     - 'respond_to'
+    - 'define_method'
 
 Style/Tab:
   Enabled:                       true
@@ -900,6 +933,10 @@ Lint/ImplicitStringConcatenation:
 Lint/IneffectiveAccessModifier:
   Enabled:                       true
 
+Lint/InheritException:
+  Enabled:                       true
+  EnforcedStyle:                 'standard_error'
+
 Lint/InvalidCharacterLiteral:
   Enabled:                       true
 
@@ -921,6 +958,12 @@ Lint/NonLocalExitFromIterator:
 Lint/ParenthesesAsGroupedExpression:
   Enabled:                       true
 
+Lint/PercentStringArray:
+  Enabled:                       true
+
+Lint/PercentSymbolArray:
+  Enabled:                       true
+
 Lint/RandOne:
   Enabled:                       true
 
@@ -928,6 +971,9 @@ Lint/RequireParentheses:
   Enabled:                       true
 
 Lint/RescueException:
+  Enabled:                       true
+
+Lint/ShadowedException:
   Enabled:                       true
 
 Lint/ShadowingOuterLocalVariable:
@@ -944,6 +990,7 @@ Lint/UnneededDisable:
 
 Lint/UnusedBlockArgument:
   Enabled:                       true
+  AllowUnusedKeywordArguments:   true
   IgnoreEmptyBlocks:             true
 
 Lint/UnusedMethodArgument:
@@ -955,6 +1002,9 @@ Lint/UnreachableCode:
   Enabled:                       true
 
 Lint/UselessAccessModifier:
+  Enabled:                       true
+
+Lint/UselessArraySplat:
   Enabled:                       true
 
 Lint/UselessAssignment:
@@ -1004,6 +1054,9 @@ Performance/HashEachMethods:
   Enabled:                       true
 
 Performance/LstripRstrip:
+  Enabled:                       true
+
+Performance/PushSplat:
   Enabled:                       true
 
 Performance/RangeInclude:

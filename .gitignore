@@ -49,6 +49,26 @@ variables.sls
 *.o
 *.rbc
 *.so
+*.xcuserdatad
+**/cordova/platforms/android/CordovaLib/ant-build
+**/cordova/platforms/android/CordovaLib/ant-gen
+**/cordova/platforms/android/CordovaLib/bin
+**/cordova/platforms/android/CordovaLib/gen
+**/cordova/platforms/android/ant-build
+**/cordova/platforms/android/ant-gen
+**/cordova/platforms/android/assets/www
+**/cordova/platforms/android/bin
+**/cordova/platforms/android/gen
+**/cordova/platforms/browser/build
+**/cordova/platforms/browser/www
+**/cordova/platforms/ios/build/
+**/cordova/platforms/ios/www/
+**/cordova/platforms/wp8/*.csproj.user
+**/cordova/platforms/wp8/*.suo
+**/cordova/platforms/wp8/.staging
+**/cordova/platforms/wp8/bin
+**/cordova/platforms/wp8/obj
+**/cordova/platforms/wp8/www
 coverage
 coverage.data
 dist
@@ -72,6 +92,8 @@ rdoc
 .foreman
 .htaccess
 .idea
+.powenv
+.powrc
 .railsrc
 .rspec
 .rvmrc
@@ -82,11 +104,14 @@ Gemfile.local
 config.yml
 config/database.yml
 config/secrets.yml
+**/cordova/platforms/android/CordovaLib/local.properties
+**/cordova/platforms/android/local.properties
 nbproject
 
 # Temporary files
 *.backup
 *.bak
+*.lck
 *.lock
 *.log*
 *.old
@@ -101,6 +126,7 @@ nbproject
 db-sync
 dump.rdb
 log
+solr/*
 sql-dump-*.sql
 tmp
 
