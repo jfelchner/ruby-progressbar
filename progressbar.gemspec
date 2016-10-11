@@ -27,6 +27,6 @@ percentage, bars of various formats, elapsed time and estimated time remaining.
   spec.add_development_dependency 'rspec', ["~> 3.2"]
   spec.add_development_dependency 'rspectacular', ["~> 0.70.6"]
   spec.add_development_dependency 'fuubar', ["~> 2.0"]
-  spec.add_development_dependency 'warning_filter', ["~> 0.0.2"]
+  spec.add_development_dependency 'warning_filter', ["~> 0.0.6"]
   spec.add_development_dependency 'timecop', ["= 0.6.1"]
 end
