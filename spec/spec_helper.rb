@@ -1,5 +1,5 @@
 require 'rspectacular'
-require 'warning_filter' if Kernel.respond_to?(:require_relative)
+require 'warning_filter'
 
 RSpec.configure do |config|
   config.warnings = true
