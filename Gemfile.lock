@@ -36,7 +36,7 @@ GEM
     ruby-prof (0.15.8)
     thor (0.19.1)
     timecop (0.6.1)
-    warning_filter (0.0.5)
+    warning_filter (0.0.6)
 
 PLATFORMS
   ruby
@@ -50,7 +50,7 @@ DEPENDENCIES
   ruby-prof (~> 0.15.8)
   ruby-progressbar!
   timecop (= 0.6.1)
-  warning_filter (~> 0.0.2)
+  warning_filter (~> 0.0.6)
 
 BUNDLED WITH
    1.12.6
