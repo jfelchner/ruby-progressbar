@@ -6,4 +6,4 @@ gem 'chamber'
 gem 'ruby-prof', '~> 0.15.8', :platforms => :mri_20,
                               :group     => :development
 
-gemspec
+gemspec name: 'ruby-progressbar'

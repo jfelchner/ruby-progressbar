@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ruby-progressbar/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'ruby-progressbar'
+  spec.name          = 'progressbar'
   spec.version       = ProgressBar::VERSION
   spec.authors       = ['thekompanee', 'jfelchner']
   spec.email         = 'support@thekompanee.com'
@@ -18,7 +18,7 @@ percentage, bars of various formats, elapsed time and estimated time remaining.
   spec.license       = 'MIT'
 
   spec.executables   = []
-  spec.files         = Dir['{app,config,db,lib/ruby-progressbar}/**/*'] + %w{lib/ruby-progressbar.rb Rakefile README.md LICENSE.txt}
+  spec.files         = Dir['{app,config,db,lib/ruby-progressbar}/**/*'] + %w{lib/progressbar.rb Rakefile README.md LICENSE.txt}
   spec.test_files    = Dir['{test,spec,features}/**/*']
 
   spec.cert_chain    = %w{certs/jfelchner.pem}
