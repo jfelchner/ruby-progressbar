@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-progressbar (1.8.1)
+    ruby-progressbar (1.8.2)
 
 GEM
   remote: https://rubygems.org/
@@ -53,4 +53,4 @@ DEPENDENCIES
   warning_filter (~> 0.0.2)
 
 BUNDLED WITH
-   1.11.2
+   1.12.6
