@@ -100,6 +100,10 @@ class   Progress
     progress.nil? || total.nil?
   end
 
+  def total_with_unknown_indicator
+    total || '??'
+  end
+
   def percentage_completed_with_precision
     return 100.0  if total == 0
     return 0.0    if total.nil?

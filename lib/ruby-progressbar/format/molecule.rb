@@ -6,6 +6,7 @@ class   Molecule
     :T => [:title_comp,   :title],
     :c => [:progressable, :progress],
     :C => [:progressable, :total],
+    :u => [:progressable, :total_with_unknown_indicator],
     :p => [:percentage,   :percentage],
     :P => [:percentage,   :percentage_with_precision],
     :j => [:percentage,   :justified_percentage],
