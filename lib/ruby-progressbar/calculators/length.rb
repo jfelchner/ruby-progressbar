@@ -41,7 +41,7 @@ class   Length
     return 80 unless unix?
 
     result = dynamic_width
-    (result < 20) ? 80 : result
+    result < 20 ? 80 : result
   rescue
     80
   end

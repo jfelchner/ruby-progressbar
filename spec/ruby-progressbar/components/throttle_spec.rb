@@ -27,7 +27,7 @@ RSpec.describe  Throttle do
 
     yielded = false
 
-    (1..9).each do
+    9.times do
       Timecop.freeze(1)
 
       throttle.choke do
@@ -51,7 +51,7 @@ RSpec.describe  Throttle do
 
     yielded = 0
 
-    (1..25).each do
+    25.times do
       Timecop.freeze(1)
 
       throttle.choke(:force_update_if => true) do
@@ -98,7 +98,7 @@ RSpec.describe  Throttle do
 
     yielded = false
 
-    (16..24).each do
+    9.times do
       Timecop.freeze(1)
 
       throttle.choke do
@@ -141,7 +141,7 @@ RSpec.describe  Throttle do
                                :throttle_rate  => nil)
     yield_count = 0
 
-    (1..25).each do
+    25.times do
       Timecop.freeze(1)
 
       throttle.choke do

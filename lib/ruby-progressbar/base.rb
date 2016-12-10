@@ -44,11 +44,13 @@ class   Base
   end
 
   def finish
+    return if finished?
+
     output.with_refresh do
       self.finished = true
       progressable.finish
       timer.stop
-    end unless finished?
+    end
   end
 
   def pause

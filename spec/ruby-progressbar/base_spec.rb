@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'support/time'
 require 'stringio'
 
-# rubocop:disable Metrics/LineLength, Style/UnneededInterpolation, Performance/EndWith
+# rubocop:disable Metrics/LineLength, Style/UnneededInterpolation
 RSpec.describe ProgressBar::Base do
   let(:output) do
     StringIO.new('', 'w+').tap do |io|
@@ -23,12 +23,12 @@ RSpec.describe ProgressBar::Base do
       progressbar = ProgressBar::Base.new(:output => output, :title => 'a' * 25, :format => '%t%B', :throttle_rate => 0.0)
 
       allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
-                                                                   and_return 30
+      and_return 30
 
       progressbar.start
 
       allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
-                                                                   and_return 20
+      and_return 20
 
       progressbar.increment
 
@@ -41,7 +41,7 @@ RSpec.describe ProgressBar::Base do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :starting_at => 5, :total => 10, :autostart => false)
 
         allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
-                                                                     and_return 20
+        and_return 20
 
         expect(progressbar.to_s('%t%w')).to eql '*********************'
       end
@@ -52,7 +52,7 @@ RSpec.describe ProgressBar::Base do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :autostart => false)
 
         allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
-                                                                     and_return 20
+        and_return 20
 
         expect(progressbar.to_s('%t%i')).to eql '*********************'
       end
@@ -61,7 +61,7 @@ RSpec.describe ProgressBar::Base do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 21), :starting_at => 5, :total => 10, :autostart => false)
 
         allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
-                                                                     and_return 20
+        and_return 20
 
         expect(progressbar.to_s('%t%i')).to eql '*********************'
       end
@@ -72,7 +72,7 @@ RSpec.describe ProgressBar::Base do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 19), :starting_at => 5, :total => 10, :autostart => false)
 
         allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
-                                                                     and_return 20
+        and_return 20
 
         expect(progressbar.to_s('%t%B')).to eql '******************* '
       end
@@ -81,7 +81,7 @@ RSpec.describe ProgressBar::Base do
         progressbar = ProgressBar::Base.new(:output => output, :title => ('*' * 19), :starting_at => 5, :total => 10, :autostart => false)
 
         allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).
-                                                                     and_return 20
+        and_return 20
 
         expect(progressbar.to_s('%t%w%i')).to eql '******************* '
       end

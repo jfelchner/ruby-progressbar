@@ -174,11 +174,11 @@ Style/Copyright:
 Style/DefWithParentheses:
   Enabled:                       true
 
-Style/PreferredHashMethods:
-  Enabled:                       true
-
 Style/Documentation:
   Enabled:                       false
+
+Style/DocumentationMethod:
+  RequireForNonPublicMethods:    false
 
 Style/DotPosition:
   Enabled:                       true
@@ -308,7 +308,8 @@ Style/GuardClause:
 Style/HashSyntax:
   Enabled:                       true
   EnforcedStyle:                 'ruby19'
-  PreferHashRocketsForNonAlnumEndingSymbols: true
+  UseHashRocketsWithSymbolValues:             false
+  PreferHashRocketsForNonAlnumEndingSymbols:  true
 
 Style/IdenticalConditionalBranches:
   Enabled:                       true
@@ -418,7 +419,13 @@ Style/MultilineHashBraceLayout:
   Enabled:                       true
   EnforcedStyle:                 'symmetrical'
 
+Style/MultilineIfModifier:
+  Enabled:                       true
+
 Style/MultilineIfThen:
+  Enabled:                       true
+
+Style/MultilineMemoization:
   Enabled:                       true
 
 Style/MultilineMethodCallBraceLayout:
@@ -483,6 +490,11 @@ Style/NumericLiterals:
   Enabled:                       true
   MinDigits:                     5
 
+Style/NumericPredicate:
+  Enabled:                       true
+  Exclude:
+    - '**/spec/**/*_spec.rb'
+
 Style/OneLineConditional:
   Enabled:                       true
 
@@ -545,6 +557,10 @@ Style/PredicateName:
   NameWhitelist:
     - 'is_a?'
 
+Style/PreferredHashMethods:
+  Enabled:                       true
+  EnforcedStyle:                 'verbose'
+
 Style/Proc:
   Enabled:                       true
 
@@ -581,6 +597,10 @@ Style/RescueEnsureAlignment:
 
 Style/RescueModifier:
   Enabled:                       true
+
+Style/SafeNavigation:
+  Enabled:                       true
+  ConvertCodeThatCanStartToReturnNil: false
 
 Style/SelfAssignment:
   Enabled:                       true
@@ -661,6 +681,10 @@ Style/SpaceBeforeFirstArg:
 Style/SpaceBeforeSemicolon:
   Enabled:                       true
 
+Style/SpaceInLambdaLiteral:
+  Enabled:                       true
+  EnforcedStyle:                 'require_no_space'
+
 Style/SpaceInsideBrackets:
   Enabled:                       true
 
@@ -734,6 +758,11 @@ Style/SymbolProc:
 Style/Tab:
   Enabled:                       true
 
+Style/TernaryParentheses:
+  Enabled:                       true
+  AllowSafeAssignment:           true
+  EnforcedStyle:                 'require_no_parentheses'
+
 Style/TrailingBlankLines:
   Enabled:                       true
   EnforcedStyle:                 'final_newline'
@@ -776,6 +805,10 @@ Style/VariableName:
   Enabled:                       true
   EnforcedStyle:                 'snake_case'
 
+Style/VariableNumber:
+  Enabled:                       true
+  EnforcedStyle:                 'snake_case'
+
 Style/WhenThen:
   Enabled:                       true
 
@@ -806,6 +839,16 @@ Metrics/BlockNesting:
   Enabled:                       true
   Max:                           3
 
+Metrics/BlockLength:
+  CountComments: false
+  Max:           25
+  Exclude:
+    - 'Rakefile'
+    - '**/config/routes.rb'
+    - '**/*.rake'
+    - '**/spec/**/factories/*.rb'
+    - '**/spec/**/*_spec.rb'
+
 Metrics/ClassLength:
   Enabled:                       true
   CountComments:                 false
@@ -829,6 +872,7 @@ Metrics/LineLength:
   Max:                           90
   AllowHeredoc:                  true
   AllowURI:                      true
+  IgnoreCopDirectives:           true
   URISchemes:
     - 'http'
     - 'https'
@@ -903,6 +947,9 @@ Lint/EmptyEnsure:
   Enabled:                       true
 
 Lint/EmptyInterpolation:
+  Enabled:                       true
+
+Lint/EmptyWhen:
   Enabled:                       true
 
 Lint/EndAlignment:
@@ -985,7 +1032,16 @@ Lint/StringConversionInInterpolation:
 Lint/UnderscorePrefixedVariableName:
   Enabled:                       true
 
+Lint/UnifiedInteger:
+  Enabled:                       true
+
 Lint/UnneededDisable:
+  Enabled:                       true
+
+Lint/UnneededSplatExpansion:
+  Enabled:                       true
+
+Lint/UnreachableCode:
   Enabled:                       true
 
 Lint/UnusedBlockArgument:
@@ -998,13 +1054,7 @@ Lint/UnusedMethodArgument:
   AllowUnusedKeywordArguments:   true
   IgnoreEmptyMethods:            true
 
-Lint/UnreachableCode:
-  Enabled:                       true
-
 Lint/UselessAccessModifier:
-  Enabled:                       true
-
-Lint/UselessArraySplat:
   Enabled:                       true
 
 Lint/UselessAssignment:
@@ -1056,9 +1106,6 @@ Performance/HashEachMethods:
 Performance/LstripRstrip:
   Enabled:                       true
 
-Performance/PushSplat:
-  Enabled:                       true
-
 Performance/RangeInclude:
   Enabled:                       true
 
@@ -1083,6 +1130,9 @@ Performance/Sample:
 Performance/Size:
   Enabled:                       true
 
+Performance/SortWithBlock:
+  Enabled:                       true
+
 Performance/StartWith:
   Enabled:                       true
 
@@ -1091,3 +1141,12 @@ Performance/StringReplacement:
 
 Performance/TimesMap:
   Enabled:                       true
+
+################################################################################
+#                                  SECURITY
+################################################################################
+
+Security/JSONLoad:
+  Enabled:                       true
+  Exclude:
+    - '**/spec/**/*.rb'

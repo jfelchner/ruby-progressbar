@@ -35,17 +35,21 @@ class   Progress
   end
 
   def increment
-    warn "WARNING: Your progress bar is currently at #{progress} out of #{total} " \
-         "and cannot be incremented. In v2.0.0 this will become a " \
-         "ProgressBar::InvalidProgressError." if progress == total
+    if progress == total
+      warn "WARNING: Your progress bar is currently at #{progress} out of #{total} " \
+           "and cannot be incremented. In v2.0.0 this will become a " \
+           "ProgressBar::InvalidProgressError."
+    end
 
     self.progress += 1 unless progress == total
   end
 
   def decrement
-    warn "WARNING: Your progress bar is currently at #{progress} out of #{total} " \
-         "and cannot be decremented. In v2.0.0 this will become a " \
-         "ProgressBar::InvalidProgressError." if progress == 0
+    if progress == 0
+      warn "WARNING: Your progress bar is currently at #{progress} out of #{total} " \
+           "and cannot be decremented. In v2.0.0 this will become a " \
+           "ProgressBar::InvalidProgressError."
+    end
 
     self.progress -= 1 unless progress == 0
   end
@@ -55,10 +59,10 @@ class   Progress
   end
 
   def progress=(new_progress)
-    fail ProgressBar::InvalidProgressError,
-         "You can't set the item's current value to be greater than the total." \
-    if total &&
-       new_progress > total
+    if total && new_progress > total
+      fail ProgressBar::InvalidProgressError,
+           "You can't set the item's current value to be greater than the total."
+    end
 
     @progress = new_progress
 
@@ -68,18 +72,17 @@ class   Progress
   end
 
   def total=(new_total)
-    fail ProgressBar::InvalidProgressError,
-         "You can't set the item's total value to less than the current progress." \
-    unless progress.nil?  ||
-           new_total.nil? ||
-           new_total >= progress
+    unless progress.nil? || new_total.nil? || new_total >= progress
+      fail ProgressBar::InvalidProgressError,
+           "You can't set the item's total value to less than the current progress."
+    end
 
     @total = new_total
   end
 
   def percentage_completed
     return 0   if total.nil?
-    return 100 if total.zero?
+    return 100 if total == 0
 
     # progress / total * 100
     #

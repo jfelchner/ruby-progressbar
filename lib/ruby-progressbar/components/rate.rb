@@ -18,7 +18,7 @@ class   Rate
   private
 
   def rate_of_change(format_string = '%i')
-    return 0 unless elapsed_seconds > 0
+    return 0 unless elapsed_seconds.positive?
 
     format_string % scaled_rate
   end

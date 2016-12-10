@@ -205,7 +205,7 @@ RSpec.describe  Time do
 
     timer.start
 
-    (1..10).each do
+    10.times do
       Timecop.freeze(now += 0.5)
       progress.increment
 
