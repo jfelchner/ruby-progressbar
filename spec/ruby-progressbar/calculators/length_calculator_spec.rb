@@ -4,7 +4,9 @@ require 'ruby-progressbar/calculators/running_average'
 class           ProgressBar
 module          Calculators
 RSpec.describe  Length do
-  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('1.9.3')
+  if RUBY_PLATFORM != 'java' &&
+     Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('1.9.3')
+
     it 'can properly calculate the length even if IO.console is nil' do
       calculator = Length.new
 
