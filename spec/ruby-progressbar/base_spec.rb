@@ -800,6 +800,12 @@ RSpec.describe ProgressBar::Base do
         expect(progressbar.to_s('%C')).to match(/^100\z/)
       end
 
+      it 'displays ?? when the total is unknown and when passed the "%C" format flag' do
+        progressbar = ProgressBar::Base.new(:total => nil)
+
+        expect(progressbar.to_s('%C')).to match(/^\?\?\z/)
+      end
+
       it 'displays the percentage complete when passed the "%p" format flag' do
         progressbar = ProgressBar::Base.new(:starting_at => 33, :total => 200)
 

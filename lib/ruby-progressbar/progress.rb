@@ -71,6 +71,10 @@ class   Progress
                                                                  smoothing)
   end
 
+  def formatted_total
+    total || '??'
+  end
+
   def total=(new_total)
     unless progress.nil? || new_total.nil? || new_total >= progress
       fail ProgressBar::InvalidProgressError,
