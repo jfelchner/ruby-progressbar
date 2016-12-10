@@ -2,19 +2,19 @@ Ruby/ProgressBar
 ================================
 [![Gem Version](https://img.shields.io/gem/v/ruby-progressbar.svg)](https://rubygems.org/gems/ruby-progressbar) ![Rubygems Rank Overall](https://img.shields.io/gem/rt/ruby-progressbar.svg) ![Rubygems Rank Daily](https://img.shields.io/gem/rd/ruby-progressbar.svg) ![Rubygems Downloads](https://img.shields.io/gem/dv/ruby-progressbar/stable.svg) [![Build Status](https://img.shields.io/travis/jfelchner/ruby-progressbar/master.svg)](http://travis-ci.org/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar/coverage.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar)
 
-`progressbar` has been merged into `ruby-progressbar`!!
---------------------------------
-As of 1.8.2 onwards, `ruby-progressbar` and `progressbar` will remain in
-lock-step on version numbers. *Huge* thanks to @peleteiro for giving me access
-to the `progressbar` rubygem.
-
 <img src="https://www.dropbox.com/s/pe9o1yobxtubof8/ruby-progressbar-cage.png?dl=1" align="right" />
 
 The **ultimate** text progress bar library for Ruby!  It'll **SMASH YOU OVER THE HEAD** with a **PURE RUSH** of progress bar excitement!
 
 Don't miss out on what all the kids are talking about!  If you want everyone to know that your gem or app can survive _in the cage_ then YOU WANT **RUBY-PROGRESSBAR**!
 
-&nbsp;
+<br><br><br>
+
+`progressbar` has been merged into `ruby-progressbar`!!
+--------------------------------
+As of 1.8.2 onwards, `ruby-progressbar` and `progressbar` will remain in
+lock-step on version numbers. *Huge* thanks to @peleteiro for giving me access
+to the `progressbar` rubygem.
 
 Full Reference
 --------------------------------
