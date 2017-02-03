@@ -14,7 +14,6 @@ Thumbs.db
 *.gemfile.lock
 capybara*
 pickle-email-*.html
-public/assets
 public/uploads
 rerun.txt
 site/web/app/uploads
@@ -44,12 +43,6 @@ tmtags
 variables.sls
 
 # Local Compiled Files
-**/public/stylesheets/*.css
-*.a
-*.o
-*.rbc
-*.so
-*.xcuserdatad
 **/cordova/platforms/android/CordovaLib/ant-build
 **/cordova/platforms/android/CordovaLib/ant-gen
 **/cordova/platforms/android/CordovaLib/bin
@@ -69,6 +62,13 @@ variables.sls
 **/cordova/platforms/wp8/bin
 **/cordova/platforms/wp8/obj
 **/cordova/platforms/wp8/www
+**/public/stylesheets/*.css
+*.a
+*.o
+*.rbc
+*.so
+*.xcuserdatad
+build
 coverage
 coverage.data
 dist
@@ -76,13 +76,23 @@ docs
 files/scripts/**/*.js
 files/scripts/**/*.py
 files/scripts/**/*.zip
+out
+pillars/files
 pkg
 rdoc
+target
 
 # Local Configuration Files
 !.env.example
+**/cordova/platforms/android/CordovaLib/local.properties
+**/cordova/platforms/android/local.properties
 *.bundle
+*.iml
+*.ipr
+*.iws
 *.project
+*.sublime-project
+*.sublime-workspace
 *.tmproj
 .bundle
 .chamber.pem
@@ -92,8 +102,10 @@ rdoc
 .foreman
 .htaccess
 .idea
+.idea_modules
 .powenv
 .powrc
+.pryrc
 .railsrc
 .rspec
 .rvmrc
@@ -101,11 +113,14 @@ rdoc
 .shellwreck.sh
 .terraform
 Gemfile.local
+Procfile.local
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
 config.yml
 config/database.yml
 config/secrets.yml
-**/cordova/platforms/android/CordovaLib/local.properties
-**/cordova/platforms/android/local.properties
+crashlytics-build.properties
+crashlytics.properties
 nbproject
 
 # Temporary files
@@ -133,8 +148,10 @@ tmp
 # Vagrant
 .vagrant
 
-# Always keep Gemfile.lock
+# Always keep lock files
+!yarn.lock
 !Gemfile.lock
+!Cargo.lock
 !composer.lock
 
 # Always Version .keep and .gitkeep files
