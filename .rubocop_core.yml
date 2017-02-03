@@ -1,3 +1,5 @@
+# Last updated to rubocop 0.47.1
+
 AllCops:
   Include:
     - '**/Rakefile'
@@ -104,7 +106,7 @@ Style/CaseEquality:
 
 Style/CaseIndentation:
   Enabled:                       true
-  IndentWhenRelativeTo:          'end'
+  EnforcedStyle:                 'end'
   IndentOneStep:                 false
   IndentationWidth:              ~
 
@@ -163,6 +165,7 @@ Style/CommentIndentation:
 Style/ConditionalAssignment:
   Enabled:                       true
   EnforcedStyle:                 'assign_to_condition'
+  IncludeTernaryExpressions:     true
   SingleLineConditionsOnly:      false
 
 Style/ConstantName:
@@ -233,6 +236,10 @@ Style/EmptyLinesAroundModuleBody:
 
 Style/EmptyLiteral:
   Enabled:                       true
+
+Style/EmptyMethod:
+  Enabled:                       true
+  EnforcedStyle:                 'compact'
 
 Style/Encoding:
   Enabled:                       true
@@ -376,7 +383,11 @@ Style/LineEndConcatenation:
 Style/MethodCalledOnDoEndBlock:
   Enabled:                       true
 
-Style/MethodCallParentheses:
+Style/MethodCallWithArgsParentheses:
+  Enabled:                       false
+  IgnoredMethods:                []
+
+Style/MethodCallWithoutArgsParentheses:
   Enabled:                       true
 
 Style/MethodDefParentheses:
@@ -761,7 +772,7 @@ Style/Tab:
 Style/TernaryParentheses:
   Enabled:                       true
   AllowSafeAssignment:           true
-  EnforcedStyle:                 'require_no_parentheses'
+  EnforcedStyle:                 'require_parentheses_when_complex'
 
 Style/TrailingBlankLines:
   Enabled:                       true
@@ -837,6 +848,7 @@ Metrics/AbcSize:
 
 Metrics/BlockNesting:
   Enabled:                       true
+  CountBlocks:                   true
   Max:                           3
 
 Metrics/BlockLength:
@@ -845,9 +857,18 @@ Metrics/BlockLength:
   Exclude:
     - 'Rakefile'
     - '**/config/routes.rb'
+    - '**/config/environments/*.rb'
     - '**/*.rake'
+    - '**/spec/factories.rb'
     - '**/spec/**/factories/*.rb'
     - '**/spec/**/*_spec.rb'
+  ExcludedMethods:
+    - 'namespace'
+    - 'draw'
+    - 'context'
+    - 'describe'
+    - 'shared_examples'
+    - 'shared_examples_for'
 
 Metrics/ClassLength:
   Enabled:                       true
@@ -873,6 +894,23 @@ Metrics/LineLength:
   AllowHeredoc:                  true
   AllowURI:                      true
   IgnoreCopDirectives:           true
+  IgnoredPatterns:
+    - "^\\s*require\\s+'[^']+'$"                                              # require 'some_really_long_path_name'
+    - "^\\s*(fail|raise)\\s+"                                                 # fail or raise an exception
+    - '^\s+expose\(:[\w_]+\)\s+\{.*'                                          # Controller exposures
+    - '^\s+factory\s+.*'                                                      # FactoryGirl factory definitions
+    - '^\s+has_many\s+.*'                                                     # Rails has_many relationships
+    - '^\s+has_one\s+.*'                                                      # Rails has_one relationships
+    - '^\s+belongs_to\s+.*'                                                   # Rails belongs_to relationships
+    - '^\s+let\(:[\w_]+\)\s+\{.*'                                             # RSpec lets on single line
+    - '^\s+it\s+.*'                                                           # RSpec it lines
+    - '^\s+describe\s+.*'                                                     # RSpec describe lines
+    - "^\\s+expect\\([^\\)]+\\)\\.(not_)?to\\s+[^\\s]+\\s+'[^']+'$"           # RSpec expectation line for a string
+    - "^\\s+expect\\([^\\)]+\\)\\.(not_)?to\\s+[^\\s]+\\s+Time\\.(new|utc).*" # RSpec expectation line for a Time
+    - "^(\\s+|.*\\()'[^']+'\\s+=\\>\\s+match\\(.*\\),"                        # 'foo' => match(/really_long_regex/),
+    - "^(\\s+|.*\\()'[^']+'\\s+=\\>\\s+'[^']+',$"                             # 'foo' => 'really_long_string',
+    - "^(\\s+|.*\\()[\\w_]+:\\s+'[^']+',$"                                    # foo: 'really_long_string',
+    - "^(\\s+|.*\\():[\\w_]+\\s+=\\>\\s+'[^']+',$"                            # :foo => 'really_long_string',
   URISchemes:
     - 'http'
     - 'https'
@@ -926,7 +964,7 @@ Lint/Debugger:
 
 Lint/DefEndAlignment:
   Enabled:                       true
-  AlignWith:                     'start_of_line'
+  EnforcedStyleAlignWith:        'start_of_line'
 
 Lint/DeprecatedClassMethods:
   Enabled:                       true
@@ -954,15 +992,12 @@ Lint/EmptyWhen:
 
 Lint/EndAlignment:
   Enabled:                       true
-  AlignWith:                     'keyword'
+  EnforcedStyleAlignWith:        'keyword'
 
 Lint/EndInMethod:
   Enabled:                       true
 
 Lint/EnsureReturn:
-  Enabled:                       true
-
-Lint/Eval:
   Enabled:                       true
 
 Lint/FloatOutOfRange:
@@ -996,6 +1031,9 @@ Lint/LiteralInInterpolation:
 Lint/Loop:
   Enabled:                       true
 
+Lint/MultipleCompare:
+  Enabled:                       true
+
 Lint/NestedMethodDefinition:
   Enabled:                       true
 
@@ -1018,6 +1056,9 @@ Lint/RequireParentheses:
   Enabled:                       true
 
 Lint/RescueException:
+  Enabled:                       true
+
+Lint/SafeNavigationChain:
   Enabled:                       true
 
 Lint/ShadowedException:
@@ -1082,6 +1123,9 @@ Performance/Casecmp:
 Performance/CaseWhenSplat:
   Enabled:                       true
 
+Performance/CompareWithBlock:
+  Enabled:                       true
+
 Performance/Count:
   Enabled:                       true
 
@@ -1121,6 +1165,9 @@ Performance/RedundantMerge:
 Performance/RedundantSortBy:
   Enabled:                       true
 
+Performance/RegexpMatch:
+  Enabled:                       true
+
 Performance/ReverseEach:
   Enabled:                       true
 
@@ -1128,9 +1175,6 @@ Performance/Sample:
   Enabled:                       true
 
 Performance/Size:
-  Enabled:                       true
-
-Performance/SortWithBlock:
   Enabled:                       true
 
 Performance/StartWith:
@@ -1146,7 +1190,30 @@ Performance/TimesMap:
 #                                  SECURITY
 ################################################################################
 
+Security/Eval:
+  Enabled:                       true
+
 Security/JSONLoad:
   Enabled:                       true
   Exclude:
     - '**/spec/**/*.rb'
+
+Security/YAMLLoad:
+  Enabled:                       true
+  Exclude:
+    - '**/spec/**/*.rb'
+
+Security/MarshalLoad:
+  Enabled:                       true
+  Exclude:
+    - '**/spec/**/*.rb'
+
+################################################################################
+#                                 BUNDLER
+################################################################################
+
+Bundler/DuplicatedGem:
+  Enabled:                       true
+
+Bundler/OrderedGems:
+  Enabled:                       true

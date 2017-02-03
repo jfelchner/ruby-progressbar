@@ -1,0 +1,106 @@
+# Last updated to 1.10
+
+require:
+  - 'rubocop-rspec'
+
+RSpec/AnyInstance:
+  Enabled:                        true
+
+RSpec/BeEql:
+  Enabled:                        true
+
+RSpec/DescribeClass:
+  Enabled:                        true
+
+RSpec/DescribeMethod:
+  Enabled:                        true
+
+RSpec/DescribedClass:
+  Enabled:                        false
+
+RSpec/EmptyExampleGroup:
+  Enabled:                        false
+  CustomIncludeMethods:           []
+
+RSpec/ExampleLength:
+  Enabled:                        true
+  Max:                            30
+
+RSpec/ExampleWording:
+  Enabled:                        true
+
+RSpec/ExpectActual:
+  Enabled:                        true
+
+RSpec/ExpectOutput:
+  Enabled:                        true
+
+RSpec/FilePath:
+  Enabled:                        false
+
+RSpec/Focus:
+  Enabled:                        true
+
+RSpec/HookArgument:
+  Enabled:                        true
+  EnforcedStyle:                  'each'
+
+RSpec/ImplicitExpect:
+  Enabled:                        true
+  EnforcedStyle:                  'is_expected'
+
+RSpec/InstanceVariable:
+  Enabled:                        true
+
+RSpec/LeadingSubject:
+  Enabled:                        true
+
+RSpec/LetSetup:
+  Enabled:                        true
+
+RSpec/MessageChain:
+  Enabled:                        true
+
+RSpec/MessageExpectation:
+  Enabled:                        true
+  EnforcedStyle:                  'allow'
+
+RSpec/MessageSpies:
+  Enabled:                        true
+  EnforcedStyle:                  'have_received'
+
+RSpec/MultipleDescribes:
+  Enabled:                        true
+
+RSpec/MultipleExpectations:
+  Enabled:                        false
+  Max:                            5
+
+RSpec/NamedSubject:
+  Enabled:                        true
+
+RSpec/NestedGroups:
+  Enabled:                        true
+  Max:                            1
+
+RSpec/NotToNot:
+  Enabled:                        true
+  EnforcedStyle:                  'not_to'
+
+RSpec/RepeatedDescription:
+  Enabled:                        true
+
+RSpec/RepeatedExample:
+  Enabled:                        true
+
+RSpec/ScatteredSetup:
+  Enabled:                        true
+
+RSpec/SingleArgumentMessageChain:
+  Enabled:                        true
+
+RSpec/SubjectStub:
+  Enabled:                        true
+
+RSpec/VerifiedDoubles:
+  Enabled:                        true
