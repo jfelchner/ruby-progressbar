@@ -1,3 +1,4 @@
+require 'ruby-progressbar/enumerator'
 require 'ruby-progressbar/output'
 require 'ruby-progressbar/outputs/tty'
 require 'ruby-progressbar/outputs/non_tty'
