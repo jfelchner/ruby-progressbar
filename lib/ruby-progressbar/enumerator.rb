@@ -1,7 +1,7 @@
 class ::Enumerator
-  def with_progressbar(**args, &block)
+  def with_progressbar(options={}, &block)
     chain = Enumerator.new do |y|
-      progressBar = ProgressBar.create(**{total:size}.merge(args))
+      progressBar = ProgressBar.create({:total => size}.merge(options))
       each do |*args|
         (y.yield *args).tap { progressBar.increment }
       end
@@ -12,4 +12,4 @@ class ::Enumerator
       chain
     end
   end
-end
+end if defined? Enumerator and Enumerator.method_defined? :size

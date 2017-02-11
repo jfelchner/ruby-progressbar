@@ -8,14 +8,14 @@ RSpec.describe Enumerator do
   let(:func) { lambda { |i| 10*i } }
 
   it 'creates a progress bar with the Enumerable size' do
-    expect(ProgressBar).to receive(:create).with(hash_including(total: n)).and_call_original
+    expect(ProgressBar).to receive(:create).with(hash_including(:total => n)).and_call_original
     a.each.with_progressbar { |_| }
   end
 
   it 'passes arguments to create' do
     title = "This is a test"
-    expect(ProgressBar).to receive(:create).with(hash_including(title: title)).and_call_original
-    a.each.with_progressbar(title: title) { |_| }
+    expect(ProgressBar).to receive(:create).with(hash_including(:title => title)).and_call_original
+    a.each.with_progressbar(:title => title) { |_| }
   end
 
   it 'calls progressbar.increment the right number of times' do
@@ -37,4 +37,4 @@ RSpec.describe Enumerator do
     e = a.each.with_progressbar
     expect(e.map(&func)).to eq a.map(&func)
   end
-end
+end if defined? Enumerator and Enumerator.method_defined? :size
