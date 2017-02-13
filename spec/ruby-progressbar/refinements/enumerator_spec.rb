@@ -1,0 +1,62 @@
+require 'spec_helper'
+require 'ruby-progressbar/refinements/enumerator'
+
+return if RUBY_VERSION.start_with?('1.')
+
+class    ProgressBar
+module   Refinements
+describe Enumerator do
+  using ProgressBar::Refinements::Enumerator
+
+  it 'creates a progress bar with the Enumerable size' do
+    expect(ProgressBar).to receive(:create).
+                           with(hash_including(:total => 10)).
+                           and_call_original
+
+    (0...10).each.with_progressbar { |_| }
+  end
+
+  it 'passes arguments to create' do
+    expect(ProgressBar).to receive(:create).
+                           with(hash_including(:title => 'We All Float')).
+                           and_call_original
+
+    (0...10).each.with_progressbar(:title => 'We All Float') { |_| }
+  end
+
+  it 'calls progressbar.increment the right number of times' do
+    mock = instance_double(ProgressBar::Progress)
+
+    expect(ProgressBar).to receive(:create).and_return(mock)
+    expect(mock).to receive(:increment).exactly(10).times
+
+    (0...10).each.with_progressbar { |_| }
+  end
+
+  it 'chains return values properly' do
+    transform = lambda { |i| 10 * i }
+
+    chained_progress_transform = (0...10).map.with_progressbar(&transform)
+    direct_transform           = (0...10).map(&transform)
+
+    expect(chained_progress_transform).to eql direct_transform
+  end
+
+  it 'chains properly in the middle ' do
+    transform = lambda { |i| 10 * i }
+
+    chained_progress_transform = (0...10).each.with_progressbar.map(&transform)
+    direct_transform           = (0...10).each.map(&transform)
+
+    expect(chained_progress_transform).to eql direct_transform
+  end
+
+  it 'returns an enumerator' do
+    transform  = lambda { |i| 10 * i }
+    enumerator = (0...10).each.with_progressbar
+
+    expect(enumerator.map(&transform)).to eql((0...10).map(&transform))
+  end
+end
+end
+end

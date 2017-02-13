@@ -28,6 +28,9 @@ Style/IndentationWidth:
 Style/Lambda:
   Enabled: false
 
+Style/MultilineMethodCallIndentation:
+  Enabled: false
+
 Style/NumericPredicate:
   Enabled: false
 
