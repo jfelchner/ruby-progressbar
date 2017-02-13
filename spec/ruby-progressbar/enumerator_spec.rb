@@ -1,8 +1,9 @@
 require 'ruby-progressbar/progress'
 require 'ruby-progressbar/enumerator'
 
+using ProgressBar::Enumerator if defined? ProgressBar::Enumerator
+
 RSpec.describe Enumerator do
-  using ProgressBar::Enumerator
 
   let(:n) { 10 }
   let(:a) { 0...n }
@@ -38,4 +39,5 @@ RSpec.describe Enumerator do
     e = a.each.with_progressbar
     expect(e.map(&func)).to eq a.map(&func)
   end
-end if (eval "module Test ; refine Object do ; end ; end" rescue nil)
+
+end if defined? ProgressBar::Enumerator
