@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2037
+
+###
+# Install Bundler Source Credentials
+#
+  declare private_url="$(command chamber show --as-env --files="config/settings/**/*.yml" | grep 'GEMFURY_URL' | perl -p -e 's/GEMFURY_URL="(.*)"/\1/')"
+  declare private_token="$(command chamber show --as-env --files="config/settings/**/*.yml" | grep 'GEMFURY_TOKEN' | perl -p -e 's/GEMFURY_TOKEN="(.*)"/\1/')"
+
+  if [ -n "${private_url}" ] && [ -n "${private_token}" ]; then
+    bundle config --local "${private_url}" "${private_token}"
+  else
+    bundle config --delete "${private_url}"
+  fi
+
+###
+# Install Dependencies
+#
+  echo 'Installing Ruby Packages...'
+  gem install bundler --conservative
+  bundle check || bundle install
+
+  gem install rubocop --conservative
+
+  echo 'Installing NPM Packages...'
+  command npm install -g "jsonlint" 2> /dev/null
+  command npm update  -g "jsonlint" 2> /dev/null
+
+  nodenv rehash 2> /dev/null
+
+###
+# Install Project bin Executables
+#
+  echo 'Installing project binaries...'
+  if ! [ -d ".git/shellwreck-verification-dir" ]; then
+    mkdir .git/shellwreck-verification-dir
+  fi
+
+###
+# Add Project Information to the Git Repository
+#
+  echo 'Installing project configuration into git repo...'
+  command git config --replace-all --local project.application-name         'ruby-progressbar'
+
+  command git config --replace-all --local deployment.pipeline              'rubygems'
+  command git config --replace-all --local deployment.profile               'jfelchner'
+
+  command git config --replace-all --local workflow.issue-tracker           'github'
+
+###
+# Setup Git Hook Templates
+#
+  gem install overcommit --conservative
+
+  if [ -d "${HOME}/.shellwreck/plugins/git/symlinks/hooks" ]; then
+    rm --recursive --force .git/hooks
+    ln -s "${HOME}/.shellwreck/plugins/git/symlinks/hooks" .git/hooks
+  fi

@@ -94,6 +94,7 @@ target
 *.sublime-project
 *.sublime-workspace
 *.tmproj
+.Rhistory
 .bundle
 .chamber.pem
 .chamber.pem.enc
