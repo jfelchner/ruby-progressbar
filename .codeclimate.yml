@@ -1,0 +1,89 @@
+engines:
+  brakeman:
+    enabled: false
+
+  bundler-audit:
+    enabled: true
+
+  csslint:
+    enabled: false
+
+  duplication:
+    enabled: true
+
+    config:
+      languages:
+        - 'ruby'
+        - 'javascript'
+
+  eslint:
+    enabled: true
+
+    config:
+      extensions:
+        - '.es6'
+        - '.js'
+
+  fixme:
+    enabled: true
+
+    config:
+      strings:
+        - 'BUG'
+        - 'FIXME'
+        - 'HACK'
+        - 'XXX'
+
+  flog:
+    enabled: false
+
+  markdownlint:
+    enabled: true
+
+  rubocop:
+    enabled: false
+
+  scss-lint:
+    enabled: true
+
+  shellcheck:
+    enabled: true
+
+  stylelint:
+    enabled: false
+
+  tailor:
+    enabled: false
+
+  vint:
+    enabled: true
+
+ratings:
+  paths:
+    - '**.md'
+    - '**.rake'
+    - '**.rb'
+    - '**.scss'
+    - '**.swift'
+    - '**.vim'
+    - '**.bash'
+    - '**.sh'
+    - '**.zsh'
+    - '**.es6'
+    - '**.js'
+
+exclude_paths:
+  - '**/.github/**/*'
+  - '**/bin/deploy'
+  - '**/bin/setup'
+  - '**/db/migrate/**/*'
+  - '**/db/schema.rb'
+  - '**/db/structure.sql'
+  - '**/public/**/*'
+  - '**/scripts/**/*'
+  - '**/vendor/**/*'
+  - '.overcommit.yml'
+  - '.rubocop.yml'
+  - '.rubocop_core.yml'
+  - '.rubocop_rails.yml'
+  - 'spec/**/*'
