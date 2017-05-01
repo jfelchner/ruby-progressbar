@@ -12,7 +12,7 @@ class   Output
   end
 
   def self.detect(options = {})
-    if (options[:output] || DEFAULT_OUTPUT_STREAM).tty?
+    if (options[:output] || DEFAULT_OUTPUT_STREAM).tty? || (ENV['TERM'] =~ /^xterm.*$/ && ENV['SHELL'])
       Outputs::Tty.new(options)
     else
       Outputs::NonTty.new(options)
