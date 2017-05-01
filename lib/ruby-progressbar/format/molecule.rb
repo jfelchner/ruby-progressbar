@@ -21,6 +21,7 @@ class   Molecule
     :i => [:bar,          :incomplete_space],
     :r => [:rate,         :rate_of_change],
     :R => [:rate,         :rate_of_change_with_precision],
+    :S => [:spinner,      :spin],
   }.freeze
 
   BAR_MOLECULES = %w{w B b i}.freeze

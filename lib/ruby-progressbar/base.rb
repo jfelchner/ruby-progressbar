@@ -29,6 +29,7 @@ class   Base
     self.percentage   = Components::Percentage.new(options)
     self.rate         = Components::Rate.new(options)
     self.time         = Components::Time.new(options)
+    self.spinner      = Components::Spinner.new(options)
 
     self.output       = Output.detect(options.merge(:bar => self))
     @format           = Format::String.new(output.resolve_format(options[:format]))
@@ -147,6 +148,7 @@ class   Base
                 :percentage,
                 :rate,
                 :time,
+                :spinner,
                 :autostart,
                 :autofinish,
                 :finished
