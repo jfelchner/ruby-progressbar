@@ -29,8 +29,7 @@ class   Molecule
                 :method_name
 
   def initialize(letter)
-    self.key         = letter
-    self.method_name = MOLECULES.fetch(key.to_sym)
+    @key, @method_name = letter, MOLECULES.fetch(key.to_sym)
   end
 
   def bar_molecule?
