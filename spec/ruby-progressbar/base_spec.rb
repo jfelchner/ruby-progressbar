@@ -262,7 +262,19 @@ RSpec.describe ProgressBar::Base do
         progressbar.finish
 
         non_tty_output.rewind
-        expect(non_tty_output.read).to include "We All Float\nProgress: |========|\n"
+        expect(non_tty_output.read).to eq "\nWe All Float\n\nProgress: |========|\n"
+      end
+
+      it 'does not re-draw incomplete bar on each log message' do
+        progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 2, :total => 6, :throttle_rate => 0.0)
+        progressbar.increment
+        progressbar.log 'We All Float'
+        progressbar.increment
+        progressbar.log 'My hovercraft is full of eels'
+        progressbar.finish
+
+        non_tty_output.rewind
+        expect(non_tty_output.read).to eq "\nWe All Float\nMy hovercraft is full of eels\n\nProgress: |========|\n"
       end
 
       it 'can output the bar properly so that it does not spam the screen' do
