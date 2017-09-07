@@ -39,6 +39,16 @@ class   NonTty < Output
     bar.stopped? ? "\n" : ''
   end
 
+  def refresh(options = {})
+    super if bar.stopped?
+  end
+
+  def log(string)
+    stream.puts string
+
+    refresh(:force => true) unless bar.stopped?
+  end
+
   protected
 
   attr_writer :last_update_length
