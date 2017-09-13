@@ -13,7 +13,7 @@ class   Formatter
     bar_length         = max_length -
                          processed_string.displayable_length +
                          format_string.bar_molecule_placeholder_length
-    bar_length         = bar_length < 0 ? 0 : bar_length
+    bar_length         = (bar_length < 0) ? 0 : bar_length
 
     format_string.bar_molecules.each do |molecule|
       processed_string.gsub!(molecule.full_key,
