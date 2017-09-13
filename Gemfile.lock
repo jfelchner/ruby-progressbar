@@ -6,6 +6,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    awesome_print (1.8.0)
     chamber (2.8.0)
       hashie (~> 3.3)
       thor (~> 0.19.1)
@@ -39,6 +40,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print (~> 1.6)
   chamber
   fuubar (~> 2.0)
   rspec (~> 3.2)
@@ -49,4 +51,4 @@ DEPENDENCIES
   warning_filter (~> 0.0.6)
 
 BUNDLED WITH
-   1.14.3
+   1.14.6
