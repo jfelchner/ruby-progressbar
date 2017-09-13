@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-progressbar (1.8.2)
+    ruby-progressbar (1.8.3)
 
 GEM
   remote: https://rubygems.org/
