@@ -3,6 +3,9 @@ inherit_from:
 
 # Put your project-specifc Rubocop config here
 
+Style/ClosingParenthesisIndentation:
+  Enabled: false
+
 Style/ExtraSpacing:
   Enabled: false
 
