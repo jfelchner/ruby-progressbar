@@ -725,6 +725,40 @@ describe Formatter do
       expect(Formatter.process(format, 100, progressbar)).to eql "= 5 =#{' ' * 95}"
     end
   end
+
+  context 'when format contains ANSI SGR codes' do
+    it 'ignores their long versions when calculating bar length' do
+      color_code    = "\e[0m\e[32m\e[7m\e[1m"
+      reset_code    = "\e[0m"
+      progress_mark = "#{color_code} #{reset_code}"
+      format        = Format::String.new("#{color_code}Processing... %b%i#{reset_code}" \
+                                         "#{color_code} %p%%#{reset_code}")
+      progressbar   = ProgressBar::Base.new(:progress_mark => progress_mark)
+
+      progressbar.progress = 75
+
+      expect(Formatter.process(format, 24, progressbar)).to eql \
+        "#{color_code}Processing... " \
+        "#{progress_mark * 4}#{' ' * 2}#{reset_code}" \
+        "#{color_code} 75%#{reset_code}"
+    end
+
+    it 'ignores their short versions when calculating bar length' do
+      color_code    = "\e[0;32;7;1m"
+      reset_code    = "\e[0m"
+      progress_mark = "#{color_code} #{reset_code}"
+      format        = Format::String.new("#{color_code}Processing... %b%i#{reset_code}" \
+                                         "#{color_code} %p%%#{reset_code}")
+      progressbar   = ProgressBar::Base.new(:progress_mark => progress_mark)
+
+      progressbar.progress = 75
+
+      expect(Formatter.process(format, 24, progressbar)).to eql \
+        "#{color_code}Processing... " \
+        "#{progress_mark * 4}#{' ' * 2}#{reset_code}" \
+        "#{color_code} 75%#{reset_code}"
+    end
+  end
 end
 end
 end

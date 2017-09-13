@@ -54,44 +54,6 @@ describe Base do
     expect(output.read).to match(/Progress: \|#{'=' * 68}\|\n/)
   end
 
-  it 'which includes ANSI SGR codes in the format string it properly calculates the length of the bar by removing the long version of the ANSI codes from the calculated length' do
-    @color_code    = "\e[0m\e[32m\e[7m\e[1m"
-    @reset_code    = "\e[0m"
-    @progress_mark = "#{@color_code} #{@reset_code}"
-    progressbar    = ProgressBar::Base.new(:format        => "#{@color_code}Processing... %b%i#{@reset_code}#{@color_code} %p%%#{@reset_code}",
-                                           :progress_mark => @progress_mark,
-                                           :output        => output,
-                                           :length        => 24,
-                                           :starting_at   => 3,
-                                           :total         => 6,
-                                           :throttle_rate => 0.0)
-
-    progressbar.increment
-    progressbar.increment
-
-    output.rewind
-    expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
-  end
-
-  it 'which includes ANSI SGR codes in the format string it properly calculates the length of the bar by removing the short version of the ANSI codes from the calculated length' do
-    @color_code    = "\e[0;32;7;1m"
-    @reset_code    = "\e[0m"
-    @progress_mark = "#{@color_code} #{@reset_code}"
-    progressbar    = ProgressBar::Base.new(:format        => "#{@color_code}Processing... %b%i#{@reset_code}#{@color_code} %p%%#{@reset_code}",
-                                           :progress_mark => @progress_mark,
-                                           :output        => output,
-                                           :length        => 24,
-                                           :starting_at   => 3,
-                                           :total         => 6,
-                                           :throttle_rate => 0.0)
-
-    progressbar.increment
-    progressbar.increment
-
-    output.rewind
-    expect(output.read).to include "#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 50%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 3}#{' ' * 3}#{@reset_code}#{@color_code} 66%#{@reset_code}\r#{@color_code}Processing... #{@progress_mark * 4}#{' ' * 2}#{@reset_code}#{@color_code} 83%#{@reset_code}\r"
-  end
-
   it 'for a TTY enabled device it can log messages' do
     progressbar = ProgressBar::Base.new(:output => output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
     progressbar.increment
