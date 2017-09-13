@@ -1,7 +1,7 @@
 require 'rspectacular'
 require 'ruby-progressbar/output'
 
-class           ProgressBar
-RSpec.describe  Output do
+class    ProgressBar
+describe Output do
 end
 end

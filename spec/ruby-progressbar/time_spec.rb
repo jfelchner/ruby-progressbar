@@ -16,8 +16,8 @@ class UnmockedTime
   def self.now; end
 end
 
-class           ProgressBar
-RSpec.describe  Time do
+class    ProgressBar
+describe Time do
   it 'when Time is being mocked by Timecop retrieves the unmocked Timecop time' do
     expect(TimeMockedWithTimecop).to receive(:now_without_mock_time).once
 

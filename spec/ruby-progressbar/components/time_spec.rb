@@ -1,9 +1,9 @@
 require 'rspectacular'
 require 'ruby-progressbar/components/time'
 
-class           ProgressBar
-module          Components
-RSpec.describe  Time do
+class    ProgressBar
+module   Components
+describe Time do
   let(:timer) { Timer.new(:time => ::Time) }
 
   it 'displays an unknown estimated time remaining when the timer has been started ' \

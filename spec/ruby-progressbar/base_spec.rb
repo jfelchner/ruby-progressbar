@@ -3,7 +3,8 @@ require 'support/time'
 require 'stringio'
 
 # rubocop:disable Metrics/LineLength, Style/UnneededInterpolation
-RSpec.describe ProgressBar::Base do
+class    ProgressBar
+describe Base do
   let(:output) do
     StringIO.new('', 'w+').tap do |io|
       allow(io).to receive(:tty?).and_return true
@@ -957,5 +958,6 @@ RSpec.describe ProgressBar::Base do
       end
     end
   end
+end
 end
 # rubocop:enable Metrics/LineLength

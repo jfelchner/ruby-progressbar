@@ -1,8 +1,8 @@
 require 'rspectacular'
 require 'ruby-progressbar/progress'
 
-class           ProgressBar
-RSpec.describe  Progress do
+class    ProgressBar
+describe Progress do
   it 'knows the default total when no parameters are passed' do
     progress = Progress.new
 

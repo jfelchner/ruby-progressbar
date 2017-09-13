@@ -1,9 +1,9 @@
 require 'rspectacular'
 require 'ruby-progressbar/calculators/running_average'
 
-class           ProgressBar
-module          Calculators
-RSpec.describe  RunningAverage do
+class    ProgressBar
+module   Calculators
+describe RunningAverage do
   it 'can properly calculate a running average' do
     first_average = RunningAverage.calculate(4.5,  12,  0.1)
     expect(first_average).to be_within(0.001).of 11.25

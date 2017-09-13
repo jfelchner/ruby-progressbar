@@ -1,9 +1,9 @@
 require 'rspectacular'
 require 'ruby-progressbar/calculators/running_average'
 
-class           ProgressBar
-module          Calculators
-RSpec.describe  Length do
+class    ProgressBar
+module   Calculators
+describe Length do
   if RUBY_PLATFORM != 'java' &&
      Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('1.9.3')
 
