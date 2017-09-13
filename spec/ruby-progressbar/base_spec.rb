@@ -34,58 +34,6 @@ describe Base do
     expect(output.read).to match(/\raaaaaaaaaaaaaaaaaaaaaaaaa     \r\s+\raaaaaaaaaaaaaaaaaaaaaaaaa\r\z/)
   end
 
-  context 'when a new bar is created and the RUBY_PROGRESS_BAR_LENGTH environment variable exists' do
-    before  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = '44' }
-    after   { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
-
-    it 'returns the length of the environment variable as an integer' do
-      progressbar = ProgressBar::Base.new
-      expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 44
-    end
-  end
-
-  context 'when a new bar is created and the RUBY_PROGRESS_BAR_LENGTH environment variable does not exist' do
-    before  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
-
-    it 'but the length option was passed in it returns the length specified in the option' do
-      progressbar = ProgressBar::Base.new(:length => 88)
-      expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 88
-    end
-
-    it 'and no length option was passed in it returns the width of the terminal if it is a Unix environment' do
-      progressbar = ProgressBar::Base.new
-      allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width).and_return(99)
-      progressbar.send(:output).send(:length_calculator).send(:reset_length)
-      expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 99
-    end
-
-    it 'and no length option was passed in it returns 80 if it is not a Unix environment' do
-      progressbar = ProgressBar::Base.new(:output => output, :length => 80, :throttle_rate => 0.0)
-
-      allow(progressbar.send(:output).send(:length_calculator)).to receive(:unix?).and_return(false)
-      progressbar.send(:output).send(:length_calculator).send(:reset_length)
-      expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 80
-    end
-  end
-
-  it 'and options are passed it returns the overridden title' do
-    progressbar = ProgressBar::Base.new(:title => 'We All Float', :total => 12, :output => STDOUT, :progress_mark => 'x', :length => 88, :starting_at => 5)
-
-    expect(progressbar.send(:title).to_s).to eql 'We All Float'
-  end
-
-  it 'and options are passed it returns the overridden output stream' do
-    progressbar = ProgressBar::Base.new(:title => 'We All Float', :total => 12, :output => STDOUT, :progress_mark => 'x', :length => 88, :starting_at => 5)
-
-    expect(progressbar.send(:output).send(:stream)).to eql STDOUT
-  end
-
-  it 'and options are passed it returns the overridden length' do
-    progressbar = ProgressBar::Base.new(:title => 'We All Float', :total => 12, :output => STDOUT, :progress_mark => 'x', :length => 88, :starting_at => 5)
-
-    expect(progressbar.send(:output).send(:length_calculator).send(:length)).to eql 88
-  end
-
   it 'if the bar was started 4 minutes ago and within 2 minutes it was halfway done completes the bar' do
     progressbar = ProgressBar::Base.new(:output => output, :length => 80, :throttle_rate => 0.0)
 
