@@ -63,9 +63,11 @@ class   Time
   private
 
   def estimated
-    return OOB_UNKNOWN_TIME_TEXT if progress.unknown? || progress.none? || timer.stopped?
+    memo_estimated_seconds_remaining = estimated_seconds_remaining
 
-    hours, minutes, seconds = timer.divide_seconds(estimated_seconds_remaining)
+    return OOB_UNKNOWN_TIME_TEXT unless memo_estimated_seconds_remaining
+
+    hours, minutes, seconds = timer.divide_seconds(memo_estimated_seconds_remaining)
 
     if hours > OOB_LIMIT_IN_HOURS && out_of_bounds_time_format
       out_of_bounds_time
@@ -87,6 +89,8 @@ class   Time
   end
 
   def estimated_seconds_remaining
+    return nil if progress.unknown? || progress.none? || timer.stopped?
+
     (timer.elapsed_seconds * (progress.total / progress.running_average - 1)).round
   end
 
