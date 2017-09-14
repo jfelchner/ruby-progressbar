@@ -49,15 +49,17 @@ class   Output
     end
   end
 
-  def print_and_flush
-    stream.print bar_update_string + eol
-    stream.flush
-  end
-
   protected
 
   attr_accessor :length_calculator,
                 :throttle,
                 :bar
+
+  private
+
+  def print_and_flush
+    stream.print bar_update_string + eol
+    stream.flush
+  end
 end
 end
