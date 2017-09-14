@@ -12,7 +12,9 @@ class   Output
   end
 
   def self.detect(options = {})
-    if (options[:output] || DEFAULT_OUTPUT_STREAM).tty?
+    if options[:output].is_a?(Class) && options[:output] <= ProgressBar::Output
+      options[:output].new(options)
+    elsif (options[:output] || DEFAULT_OUTPUT_STREAM).tty?
       Outputs::Tty.new(options)
     else
       Outputs::NonTty.new(options)
