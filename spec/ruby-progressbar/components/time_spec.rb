@@ -225,8 +225,8 @@ describe Time do
         ' ETA: 00:00:02',
         ' ETA: 00:00:01',
         ' ETA: 00:00:01',
-        ' ETA: 00:00:00',
-      ],
+        ' ETA: 00:00:00'
+      ]
     )
   end
 
@@ -298,9 +298,10 @@ describe Time do
   end
 
   it 'raises an exception when an invalid out of bounds time format is specified' do
-    expect { Time.new(:out_of_bounds_time_format => :foo) }
-      .to raise_error 'Invalid Out Of Bounds time format.  Valid formats are ' \
-                   '[:unknown, :friendly, nil]'
+    expect { Time.new(:out_of_bounds_time_format => :foo) }.to(
+      raise_error 'Invalid Out Of Bounds time format.  Valid formats are ' \
+                  '[:unknown, :friendly, nil]'
+    )
   end
 end
 end

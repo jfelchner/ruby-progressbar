@@ -144,7 +144,7 @@ class   Base
       'throttle_rate'                       => output.__send__(:throttle).rate,
       'started?'                            => started?,
       'stopped?'                            => stopped?,
-      'finished?'                           => finished?,
+      'finished?'                           => finished?
     }
   end
   # rubocop:enable Metrics/AbcSize, Metrics/LineLength

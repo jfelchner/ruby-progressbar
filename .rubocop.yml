@@ -6,6 +6,9 @@ inherit_from:
 Style/ClosingParenthesisIndentation:
   Enabled: false
 
+Style/DotPosition:
+  EnforcedStyle: 'trailing'
+
 Style/ExtraSpacing:
   Enabled: false
 
@@ -33,3 +36,9 @@ Style/OptionHash:
 
 Style/SymbolArray:
   Enabled: false
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: 'no_comma'
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: 'no_comma'

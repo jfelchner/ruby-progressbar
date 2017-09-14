@@ -323,7 +323,7 @@ describe Formatter do
                                                                       *--
                                                                       -*-
                                                                       --*
-                                                                    },
+                                                                    }
                              )
       progressbar.progress = 2
 
