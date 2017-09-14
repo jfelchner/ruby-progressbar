@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'support/time'
 require 'stringio'
 
-# rubocop:disable Metrics/LineLength, Style/UnneededInterpolation
 class    ProgressBar
 describe Base do
   let(:output) do
@@ -11,341 +10,479 @@ describe Base do
     end
   end
 
+  let(:output_string) do
+    output.rewind
+    output.read
+  end
+
   let(:non_tty_output) do
     StringIO.new('', 'w+').tap do |io|
       allow(io).to receive(:tty?).and_return false
     end
   end
 
-  it 'when the terminal width is shorter than the string being output can properly handle outputting the bar when the length changes on the fly to less than the minimum width' do
-    progressbar = ProgressBar::Base.new(:output => output, :title => 'a' * 25, :format => '%t%B', :throttle_rate => 0.0)
-
-    allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width)
-                                                                   .and_return 30
-
-    progressbar.start
-
-    allow(progressbar.send(:output).send(:length_calculator)).to receive(:terminal_width)
-                                                                   .and_return 20
-
-    progressbar.increment
-
-    output.rewind
-    expect(output.read).to match(/\raaaaaaaaaaaaaaaaaaaaaaaaa     \r\s+\raaaaaaaaaaaaaaaaaaaaaaaaa\r\z/)
+  let(:non_tty_output_string) do
+    non_tty_output.rewind
+    non_tty_output.read
   end
 
-  it 'if the bar was started 4 minutes ago and within 2 minutes it was halfway done completes the bar' do
-    progressbar = ProgressBar::Base.new(:output => output, :length => 80, :throttle_rate => 0.0)
+  context 'the title' do
+    it 'has a default' do
+      progressbar = ProgressBar::Base.new
 
-    Timecop.travel(-240) do
+      expect(progressbar.send(:title)).to eql \
+        ProgressBar::Components::Title::DEFAULT_TITLE
+    end
+
+    it 'is able to be overridden on creation' do
+      progressbar = ProgressBar::Base.new(:title => 'We All Float')
+
+      expect(progressbar.send(:title).to_s).to eql 'We All Float'
+    end
+
+    it 'allows title updates even after the bar is started' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 20,
+                                          :throttle_rate => 0.0)
+
+      progressbar.progress = 50
+      progressbar.title    = 'Items'
+
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |        |\r" \
+                                   "Progress: |====    |\r" \
+                                   "Items: |=====      |\r" \
+    end
+
+    it 'ignores title changes for a non-TTY enabled devices' do
+      progressbar = ProgressBar::Base.new(:output      => non_tty_output,
+                                          :length      => 80,
+                                          :starting_at => 10)
+
+      progressbar.title = 'Testing'
+
+      expect(non_tty_output_string).to eql "\n\nProgress: |======"
+    end
+
+    it 'allows for custom title for a non-TTY enabled devices on creation' do
+      _progressbar = ProgressBar::Base.new(:output      => non_tty_output,
+                                           :title       => 'Custom',
+                                           :length      => 80,
+                                           :starting_at => 10)
+
+      expect(non_tty_output_string).to eql "\n\nCustom: |======="
+    end
+  end
+
+  context 'the progress_mark' do
+    it 'can be changed even after the bar is started' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 20,
+                                          :throttle_rate => 0.0)
+
+      progressbar.progress      = 30
+      progressbar.progress_mark = 'x'
+
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |        |\r" \
+                                   "Progress: |==      |\r" \
+                                   "Progress: |xx      |\r"
+    end
+  end
+
+  context 'the remainder_mark' do
+    it 'can be changed even after the bar is started' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 20,
+                                          :throttle_rate => 0.0)
+
+      progressbar.progress       = 30
+      progressbar.remainder_mark = 'x'
+
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |        |\r" \
+                                   "Progress: |==      |\r" \
+                                   "Progress: |==xxxxxx|\r"
+    end
+  end
+
+  context 'the output stream' do
+    it 'has a default' do
+      progressbar    = ProgressBar::Base.new
+      default_stream = progressbar.send(:output).send(:stream)
+
+      expect(default_stream).to eql ProgressBar::Output::DEFAULT_OUTPUT_STREAM
+    end
+
+    it 'is able to be overridden on creation' do
+      progressbar   = ProgressBar::Base.new(:output => STDERR)
+      output_stream = progressbar.send(:output).send(:stream)
+
+      expect(output_stream).to eql STDERR
+    end
+  end
+
+  context 'the bar length' do
+    it 'is able to be overridden on creation' do
+      progressbar       = ProgressBar::Base.new(:length => 88)
+      length_calculator = progressbar.send(:output).send(:length_calculator)
+
+      expect(length_calculator.send(:length)).to eql 88
+    end
+
+    it 'can handle the terminal width changing on the fly' do
+      progressbar       = ProgressBar::Base.new(:output        => output,
+                                                :title         => 'a' * 25,
+                                                :format        => '%t|%B|',
+                                                :throttle_rate => 0.0)
+      length_calculator = progressbar.send(:output).send(:length_calculator)
+
+      allow(length_calculator).to receive(:terminal_width).and_return 30
+
       progressbar.start
+
+      allow(length_calculator).to receive(:terminal_width).and_return 20
+
+      progressbar.increment
+
+      expect(output_string).to end_with "                              \r" \
+                                        "aaaaaaaaaaaaaaaaaaaaaaaaa|   |\r" \
+                                        "                    \r" \
+                                        "aaaaaaaaaaaaaaaaaaaaaaaaa||\r"
+    end
+  end
+
+  context 'starting the bar' do
+    it 'clears the current terminal line' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 20,
+                                          :throttle_rate => 0.0)
+
+      progressbar.start
+
+      expect(output_string).to start_with("                    \r")
     end
 
-    Timecop.travel(-120) do
-      50.times { progressbar.increment }
+    it 'prints the bar for the first time' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 40,
+                                          :throttle_rate => 0.0)
+
+      progressbar.start
+
+      expect(output_string).to end_with("Progress: |                            |\r")
     end
 
-    Timecop.travel(-120) do
+    it 'prints correctly when a position to start at is specified' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 40,
+                                          :throttle_rate => 0.0)
+
+      progressbar.start(:at => 20)
+
+      expect(output_string).to end_with("Progress: |=====                       |\r")
+    end
+
+    it 'does not blow up if there is a total of zero' do
+      progressbar       = ProgressBar::Base.new(:output => output, :autostart => false)
+      progressbar.total = 0
+
+      expect { progressbar.start }.not_to raise_error
+    end
+  end
+
+  context 'stopping the bar' do
+    it 'forcibly halts the bar wherever it is and cancels further progress' do
+      progressbar = ProgressBar::Base.new(:output => output, :length => 20)
+
+      progressbar.progress = 33
+      progressbar.stop
+
+      expect(output_string).to end_with("\rProgress: |==      |\n")
+    end
+
+    it 'forcibly halts the bar wherever it is for a non-TTY enabled devices' do
+      progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20)
+
+      progressbar.progress = 33
+      progressbar.stop
+
+      expect(non_tty_output_string).to eql "\n\nProgress: |==\n"
+    end
+
+    it 'does not output multiple bars if stopped multiple times in a row' do
+      progressbar = ProgressBar::Base.new(:output => output, :length => 20)
+
+      progressbar.progress = 10
+      progressbar.stop
+      progressbar.stop
+
+      expect(output_string).to start_with("                    \r")
+    end
+
+    it 'does not error if there is nothing to do and it has not been started' do
+      progressbar = ProgressBar::Base.new(:started_at => 0,
+                                          :total      => 0,
+                                          :autostart  => false,
+                                          :format     => ' %c/%C |%w>%i| %e ',
+                                          :output     => output)
+
+      expect { progressbar.stop }.not_to raise_error
+    end
+
+    it 'appends proper ending to string for non-TTY devices' do
+      progressbar = ProgressBar::Base.new(:output => non_tty_output)
+
+      progressbar.stop
+
+      expect(non_tty_output_string).to end_with("\n")
+    end
+  end
+
+  context 'finishing the bar' do
+    it 'does not spam the screen for a non-TTY enabled devices' do
+      progressbar = ProgressBar::Base.new(:output      => non_tty_output,
+                                          :length      => 20,
+                                          :starting_at => 0,
+                                          :total       => 6)
+
+      6.times { progressbar.increment }
+
+      expect(non_tty_output_string).to eql "\n\nProgress: |========|\n"
+    end
+
+    it 'can finish a bar in the middle of progress for a non-TTY enabled devices' do
+      progressbar = ProgressBar::Base.new(:output      => non_tty_output,
+                                          :length      => 20,
+                                          :starting_at => 0,
+                                          :total       => 6)
+
+      progressbar.progress = 3
       progressbar.finish
+
+      expect(non_tty_output_string).to eql "\n\nProgress: |========|\n"
     end
 
-    output.rewind
+    it 'properly prints a newline when incremented to its total' do
+      progressbar = ProgressBar::Base.new(:output      => output,
+                                          :starting_at => 5,
+                                          :total       => 6,
+                                          :length      => 20)
 
-    expect(output.read).to match(/Progress: \|#{'=' * 68}\|\n/)
+      progressbar.increment
+
+      expect(progressbar).to   be_finished
+      expect(output_string).to end_with("\n")
+    end
+
+    it 'does not spam the screen if the bar is autofinished and finish is called' do
+      progressbar = ProgressBar::Base.new(:output      => output,
+                                          :starting_at => 5,
+                                          :total       => 6,
+                                          :length      => 20)
+
+      progressbar.increment
+      progressbar.finish
+
+      expect(progressbar).to   be_finished
+      expect(output_string).to end_with "                    \r" \
+                                        "Progress: |======  |\r" \
+                                        "Progress: |========|\n"
+    end
+
+    it 'does not autofinish if autofinish is disabled' do
+      progressbar = ProgressBar::Base.new(:output      => output,
+                                          :starting_at => 5,
+                                          :total       => 6,
+                                          :length      => 20,
+                                          :autofinish  => false)
+
+      progressbar.increment
+
+      expect(progressbar).not_to be_finished
+    end
+
+    it 'does not print a newline if incremented to total and autofinish is disabled' do
+      progressbar = ProgressBar::Base.new(:output      => output,
+                                          :starting_at => 5,
+                                          :total       => 6,
+                                          :length      => 20,
+                                          :autofinish  => false)
+
+      progressbar.increment
+
+      expect(output_string).not_to end_with("\n")
+    end
+
+    it 'still allows the bar to be reset if autofinish is disabled' do
+      progressbar = ProgressBar::Base.new(:output      => output,
+                                          :starting_at => 5,
+                                          :total       => 6,
+                                          :length      => 20,
+                                          :autofinish  => false)
+
+      progressbar.increment
+      progressbar.finish
+
+      expect(progressbar).to be_finished
+
+      progressbar.reset
+
+      expect(progressbar).not_to be_finished
+    end
+
+    it 'still able to be manually finished even if autofinish is disabled' do
+      progressbar = ProgressBar::Base.new(:output      => output,
+                                          :starting_at => 5,
+                                          :total       => 6,
+                                          :length      => 20,
+                                          :autofinish  => false)
+
+      progressbar.increment
+      progressbar.finish
+
+      expect(progressbar).to   be_finished
+      expect(output_string).to end_with("\n")
+    end
+
+    it 'does not spam the screen on multiple manual calls when autofinish is disabled' do
+      progressbar = ProgressBar::Base.new(:output      => output,
+                                          :starting_at => 5,
+                                          :total       => 6,
+                                          :length      => 20,
+                                          :autofinish  => false)
+
+      progressbar.increment
+      progressbar.finish
+
+      expect(progressbar).to   be_finished
+      expect(output_string).to end_with "                    \r" \
+                                        "Progress: |======  |\r" \
+                                        "Progress: |========|\n"
+    end
   end
 
-  it 'for a TTY enabled device it can log messages' do
-    progressbar = ProgressBar::Base.new(:output => output, :length => 20, :starting_at => 3, :total => 6, :throttle_rate => 0.0)
-    progressbar.increment
-    progressbar.log 'We All Float'
-    progressbar.increment
+  context 'resetting the bar' do
+    it 'sets the bar back to the starting value' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 20,
+                                          :throttle_rate => 0.0)
 
-    output.rewind
-    expect(output.read).to include "Progress: |====    |\rProgress: |=====   |\r                    \rWe All Float\nProgress: |=====   |\rProgress: |======  |\r"
+      progressbar.progress = 33
+      progressbar.reset
+
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |        |\r" \
+                                   "Progress: |==      |\r" \
+                                   "Progress: |        |\r"
+    end
+
+    it 'sets the bar back to its starting value set during creation' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :starting_at   => 33,
+                                          :total         => 100,
+                                          :length        => 20,
+                                          :throttle_rate => 0.0)
+
+      progressbar.progress += 10
+      progressbar.reset
+
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |==      |\r" \
+                                   "Progress: |===     |\r" \
+                                   "Progress: |==      |\r"
+    end
   end
 
-  it 'for a non-TTY enabled device it can log messages' do
-    progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 4, :total => 6, :throttle_rate => 0.0)
-    progressbar.increment
-    progressbar.log 'We All Float'
-    progressbar.increment
-    progressbar.finish
+  context 'logging messages' do
+    it 'for a TTY enabled device it can log messages' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 20,
+                                          :starting_at   => 3,
+                                          :total         => 6,
+                                          :throttle_rate => 0.0)
 
-    non_tty_output.rewind
-    expect(non_tty_output.read).to include "We All Float\nProgress: |========|\n"
+      progressbar.increment
+      progressbar.log 'We All Float'
+      progressbar.increment
+
+      expect(output_string).to include "Progress: |====    |\r" \
+                                       "Progress: |=====   |\r" \
+                                       "                    \r" \
+                                       "We All Float\n" \
+                                       "Progress: |=====   |\r" \
+                                       "Progress: |======  |\r"
+    end
+
+    it 'for a non-TTY enabled device it can log messages' do
+      progressbar = ProgressBar::Base.new(:output      => non_tty_output,
+                                          :length      => 20,
+                                          :starting_at => 4,
+                                          :total       => 6)
+
+      progressbar.increment
+      progressbar.log 'We All Float'
+      progressbar.increment
+      progressbar.finish
+
+      expect(non_tty_output_string).to include "We All Float\n" \
+                                              "Progress: |========|\n"
+    end
   end
 
-  it 'for a non-TTY enabled device it can output the bar properly so that it does not spam the screen' do
-    progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
+  context 'formatting the bar' do
+    it 'allows the bar format to be updated dynamically after it is started' do
+      progressbar = ProgressBar::Base.new(:format => '%B %p%%',
+                                          :length => 20)
 
-    6.times { progressbar.increment }
+      expect(progressbar.to_s).to eql "#{' ' * 18}0%"
 
-    non_tty_output.rewind
-    expect(non_tty_output.read).to eql "\n\nProgress: |========|\n"
+      progressbar.format = '%t'
+
+      expect(progressbar.to_s).to eql 'Progress'
+    end
+
+    it 'allows the bar to be reset back to the default format' do
+      progressbar = ProgressBar::Base.new(:format => '%B %p%%',
+                                          :length => 100)
+
+      expect(progressbar.to_s).to eql "#{' ' * 98}0%"
+
+      progressbar.format = nil
+
+      expect(progressbar.to_s).to eql "Progress: |#{' ' * 88}|"
+    end
   end
 
-  it 'for a non-TTY enabled device it can output the bar properly if finished in the middle of its progress' do
-    progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
+  context 'clearing the bar' do
+    it 'clears the current terminal line and/or bar text' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :starting_at   => 40,
+                                          :length        => 20,
+                                          :throttle_rate => 0.0)
 
-    3.times { progressbar.increment }
+      progressbar.clear
 
-    progressbar.finish
-
-    non_tty_output.rewind
-    expect(non_tty_output.read).to eql "\n\nProgress: |========|\n"
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |===     |\r" \
+                                   "                    \r"
+    end
   end
 
-  it 'for a non-TTY enabled device it can output the bar properly if stopped in the middle of its progress' do
-    progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
-
-    3.times { progressbar.increment }
-
-    progressbar.stop
-
-    non_tty_output.rewind
-    expect(non_tty_output.read).to eql "\n\nProgress: |====\n"
-  end
-
-  it 'for a non-TTY enabled device it ignores changes to the title due to the fact that the bar length cannot change' do
-    progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
-
-    3.times { progressbar.increment }
-
-    progressbar.title = 'Testing'
-    progressbar.stop
-
-    non_tty_output.rewind
-
-    expect(non_tty_output.read).to eql "\n\nProgress: |====\n"
-  end
-
-  it 'for a non-TTY enabled device it allows the title to be customized when the bar is created' do
-    progressbar = ProgressBar::Base.new(:output => non_tty_output, :title => 'Custom', :length => 20, :starting_at => 0, :total => 6, :throttle_rate => 0.0)
-
-    3.times { progressbar.increment }
-
-    progressbar.stop
-
-    non_tty_output.rewind
-
-    expect(non_tty_output.read).to eql "\n\nCustom: |=====\n"
-  end
-
-  it 'when a bar is about to be completed and it is incremented it registers as being "finished"' do
-    progressbar = ProgressBar::Base.new(:starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0)
-    progressbar.increment
-
-    expect(progressbar).to be_finished
-  end
-
-  it 'when a bar is about to be completed and it is incremented it prints a new line' do
-    progressbar = ProgressBar::Base.new(:starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0)
-    progressbar.increment
-
-    output.rewind
-    expect(output.read.end_with?("\n")).to eql true
-  end
-
-  it 'when a bar is about to be completed and it is incremented it does not continue to print bars if finish is subsequently called' do
-    progressbar = ProgressBar::Base.new(:starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0)
-    progressbar.increment
-    progressbar.finish
-
-    output.rewind
-    expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\n"
-  end
-
-  it 'and it is incremented it does not automatically finish' do
-    progressbar = ProgressBar::Base.new(:autofinish => false, :starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0)
-    progressbar.increment
-
-    expect(progressbar).not_to be_finished
-  end
-
-  it 'and it is incremented it does not prints a new line' do
-    progressbar = ProgressBar::Base.new(:autofinish => false, :starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0)
-    progressbar.increment
-
-    output.rewind
-
-    expect(output.read.end_with?("\n")).to eql false
-  end
-
-  it 'and it is incremented it allows reset' do
-    progressbar = ProgressBar::Base.new(:autofinish => false, :starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0)
-    progressbar.increment
-    progressbar.finish
-    expect(progressbar).to be_finished
-
-    progressbar.reset
-
-    expect(progressbar).not_to be_finished
-  end
-
-  it 'and it is incremented it does prints a new line when manually finished' do
-    progressbar = ProgressBar::Base.new(:autofinish => false, :starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0)
-    progressbar.increment
-    progressbar.finish
-    expect(progressbar).to be_finished
-
-    output.rewind
-
-    expect(output.read.end_with?("\n")).to eql true
-  end
-
-  it 'and it is incremented it does not continue to print bars if finish is subsequently called' do
-    progressbar = ProgressBar::Base.new(:autofinish => false, :starting_at => 5, :total => 6, :output => output, :length => 20, :throttle_rate => 0.0)
-    progressbar.increment
-    progressbar.finish
-
-    output.rewind
-
-    expect(output.read).to end_with "                    \rProgress: |======  |\rProgress: |========|\rProgress: |========|\n"
-  end
-
-  it 'when a bar is started and it is incremented any number of times changes the progress mark used to represent progress and updates the output' do
-    progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate => 0.0)
-    10.times { progressbar.increment }
-    progressbar.progress_mark = 'x'
-
-    output.rewind
-    expect(output.read).to match(/\rProgress: \|xxxxxx#{' ' * 62}\|\r\z/)
-  end
-
-  it 'when a bar is started and it is incremented any number of times changes the remainder mark used to represent the remaining part of the bar and updates the output' do
-    progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate => 0.0)
-    10.times { progressbar.increment }
-    progressbar.remainder_mark = 'x'
-
-    output.rewind
-    expect(output.read).to match(/\rProgress: \|======#{'x' * 62}\|\r\z/)
-  end
-
-  it 'when a bar is started and it is incremented any number of times changes the title used to represent the items being progressed and updates the output' do
-    progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate => 0.0)
-    10.times { progressbar.increment }
-    progressbar.title = 'Items'
-
-    output.rewind
-    expect(output.read).to match(/\rItems: \|=======#{' ' * 64}\|\r\z/)
-  end
-
-  it 'when a bar is started and it is incremented any number of times resets the bar back to the starting value' do
-    progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate => 0.0)
-    10.times { progressbar.increment }
-    progressbar.reset
-    output.rewind
-    expect(output.read).to match(/\rProgress: \|#{' ' * 68}\|\r\z/)
-  end
-
-  it 'when a bar is started and it is incremented any number of times forcibly halts the bar wherever it is and cancels it' do
-    progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate => 0.0)
-    10.times { progressbar.increment }
-    progressbar.stop
-    output.rewind
-    expect(output.read).to match(/\rProgress: \|======#{' ' * 62}\|\n\z/)
-  end
-
-  it 'when a bar is started and it is incremented any number of times does not output the bar multiple times if the bar is already stopped' do
-    progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate => 0.0)
-    10.times { progressbar.increment }
-    progressbar.stop
-    output.rewind
-    progressbar.stop
-    output.rewind
-
-    expect(output.read).to start_with "#{' ' * 80}"
-  end
-
-  it 'when a bar is started and it is incremented any number of times does not output the bar multiple times' do
-    progressbar = ProgressBar::Base.new(:starting_at => 0, :total => 100, :output => output, :length => 80, :throttle_rate => 0.0)
-    10.times { progressbar.increment }
-    output.rewind
-    progressbar.resume
-    output.rewind
-
-    expect(output.read).to start_with "#{' ' * 80}"
-  end
-
-  it 'when a bar is started from 10/100 and it is incremented any number of times resets the bar back to the starting value' do
-    progressbar = ProgressBar::Base.new(:starting_at => 10, :total => 100, :output => output, :length => 112)
-    10.times { progressbar.increment }
-    progressbar.reset
-    output.rewind
-    expect(output.read).to match(/\rProgress: \|==========#{' ' * 90}\|\r\z/)
-  end
-
-  it 'clears the current terminal line and/or bar text' do
-    progressbar = ProgressBar::Base.new(:output => output, :length => 80, :throttle_rate => 0.0)
-
-    progressbar.clear
-
-    output.rewind
-    expect(output.read).to match(/^#{progressbar.send(:output).send(:clear_string)}/)
-  end
-
-  it 'starting the bar clears the current terminal line' do
-    progressbar = ProgressBar::Base.new(:output => output, :length => 80, :throttle_rate => 0.0)
-
-    progressbar.start
-
-    output.rewind
-    expect(output.read).to match(/^#{progressbar.send(:output).send(:clear_string)}/)
-  end
-
-  it 'starting the bar prints the bar for the first time' do
-    progressbar = ProgressBar::Base.new(:output => output, :length => 80, :throttle_rate => 0.0)
-
-    progressbar.start
-
-    output.rewind
-    expect(output.read).to match(/Progress: \|                                                                    \|\r\z/)
-  end
-
-  it 'starting the bar prints correctly if passed a position to start at' do
-    progressbar = ProgressBar::Base.new(:output => output, :length => 80, :throttle_rate => 0.0)
-
-    progressbar.start(:at => 20)
-
-    output.rewind
-    expect(output.read).to match(/Progress: \|=============                                                       \|\r\z/)
-  end
-
-  it 'when the bar has not been completed incrementing displays the bar with the correct formatting' do
-    progressbar = ProgressBar::Base.new(:length => 112, :starting_at => 0, :total => 50, :output => output, :throttle_rate => 0.0)
-    progressbar.increment
-
-    output.rewind
-    expect(output.read).to match(/Progress: \|==                                                                                                  \|\r\z/)
-  end
-
-  it 'when a new bar is created with a specific format #format if called with no arguments resets the format back to the default' do
-    progressbar = ProgressBar::Base.new(:format => '%B %p%%')
-    progressbar.format = nil
-
-    expect(progressbar.to_s).to match(/^Progress: \|\s+\|\z/)
-  end
-
-  it 'when a new bar is created with a specific format #format if called with a specific format string sets it as the new format for the bar' do
-    progressbar = ProgressBar::Base.new(:format => '%B %p%%')
-    progressbar.format = '%t'
-
-    expect(progressbar.to_s).to match(/^Progress\z/)
-  end
-
-  it 'when the bar is started after having total set to 0 does not throw an error' do
-    progressbar = ProgressBar::Base.new(:output => output, :autostart => false)
-    progressbar.total = 0
-
-    expect { progressbar.start }.not_to raise_error
-  end
-
-  it 'when the bar has no items to process and it has not been started does not throw an error if told to stop' do
-    progressbar = ProgressBar::Base.new(:started_at => 0, :total => 0, :autostart => false, :smoothing => 0.0, :format => ' %c/%C |%w>%i| %e ', :output => output)
-    progressbar.stop
-
-    expect { progressbar.start }.not_to raise_error
+  context 'incrementing the bar' do
+    it 'displays the bar with the correct progress' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 20,
+                                          :starting_at   => 0,
+                                          :total         => 6,
+                                          :throttle_rate => 0.0)
+
+      progressbar.increment
+
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |        |\r" \
+                                   "Progress: |=       |\r"
+    end
   end
 end
 end
-# rubocop:enable Metrics/LineLength
