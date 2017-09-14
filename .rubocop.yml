@@ -33,7 +33,3 @@ Style/OptionHash:
 
 Style/SymbolArray:
   Enabled: false
-
-Style/TrailingCommaInArguments:
-  Enabled:                   true
-  EnforcedStyleForMultiline: 'no_comma'

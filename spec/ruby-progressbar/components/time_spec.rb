@@ -226,7 +226,7 @@ describe Time do
         ' ETA: 00:00:01',
         ' ETA: 00:00:01',
         ' ETA: 00:00:00',
-      ]
+      ],
     )
   end
 
