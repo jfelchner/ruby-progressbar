@@ -43,7 +43,7 @@ DEPENDENCIES
   awesome_print (~> 1.6)
   chamber
   fuubar (~> 2.0)
-  rspec (~> 3.2)
+  rspec (~> 3.6)
   rspectacular (~> 0.70.6)
   ruby-prof (~> 0.15.8)
   ruby-progressbar!

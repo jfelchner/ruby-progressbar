@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 
-  spec.add_development_dependency 'rspec', ["~> 3.2"]
+  spec.add_development_dependency 'rspec', ["~> 3.6"]
   spec.add_development_dependency 'rspectacular', ["~> 0.70.6"]
   spec.add_development_dependency 'fuubar', ["~> 2.0"]
   spec.add_development_dependency 'warning_filter', ["~> 0.0.6"]
