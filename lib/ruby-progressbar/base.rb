@@ -125,6 +125,30 @@ class   Base
     Format::Formatter.process(@format, output.length, self)
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/LineLength
+  def to_h
+    {
+      'output_stream'                       => output.__send__(:stream),
+      'length'                              => output.length,
+      'title'                               => title_comp.title,
+      'progress_mark'                       => bar.progress_mark,
+      'remainder_mark'                      => bar.remainder_mark,
+      'progress'                            => progressable.progress,
+      'total'                               => progressable.total,
+      'percentage'                          => progressable.percentage_completed_with_precision.to_f,
+      'elapsed_time_in_seconds'             => time.__send__(:timer).elapsed_seconds,
+      'estimated_time_remaining_in_seconds' => time.__send__(:estimated_seconds_remaining),
+      'base_rate_of_change'                 => rate.__send__(:base_rate),
+      'scaled_rate_of_change'               => rate.__send__(:scaled_rate),
+      'unknown_progress_animation_steps'    => bar.upa_steps,
+      'throttle_rate'                       => output.__send__(:throttle).rate,
+      'started?'                            => started?,
+      'stopped?'                            => stopped?,
+      'finished?'                           => finished?,
+    }
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/LineLength
+
   def inspect
     "#<ProgressBar:#{progress}/#{total || 'unknown'}>"
   end

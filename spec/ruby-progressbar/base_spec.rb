@@ -484,5 +484,42 @@ describe Base do
                                    "Progress: |=       |\r"
     end
   end
+
+  it 'can be converted into a hash', :time_mock => true do
+    progressbar = ProgressBar::Base.new(:output         => output,
+                                        :total          => 33,
+                                        :title          => 'My Title',
+                                        :format         => '%t|%B|',
+                                        :progress_mark  => 'x',
+                                        :remainder_mark => '-',
+                                        :length         => 92,
+                                        :rate_scale     => lambda { |rate| rate * 200 },
+                                        :throttle_rate  => 12.3)
+
+    Timecop.travel(-600) do
+      progressbar.start
+      progressbar.progress += 22
+    end
+
+    expect(progressbar.to_h).to include(
+      'output_stream'                       => be_a(StringIO),
+      'length'                              => 92,
+      'elapsed_time_in_seconds'             => be_within(0.0001).of(600),
+      'estimated_time_remaining_in_seconds' => 400,
+      'percentage'                          => 66.66,
+      'progress'                            => 22,
+      'progress_mark'                       => 'x',
+      'base_rate_of_change'                 => 0.03672787979966611,
+      'scaled_rate_of_change'               => 7.345575959933222,
+      'remainder_mark'                      => '-',
+      'throttle_rate'                       => 12.3,
+      'title'                               => 'My Title',
+      'total'                               => 33,
+      'unknown_progress_animation_steps'    => ['=---', '-=--', '--=-', '---='],
+      'started?'                            => be_within(1).of(::Time.now.utc - 600),
+      'stopped?'                            => false,
+      'finished?'                           => false,
+    )
+  end
 end
 end
