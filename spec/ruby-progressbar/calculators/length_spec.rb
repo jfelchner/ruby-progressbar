@@ -49,7 +49,7 @@ describe  Length do
     expect(stream).to receive(:winsize).and_return [123, 456]
     expect(IO).not_to receive(:console)
 
-    length_calculator = Calculators::Length.new(output: stream)
+    length_calculator = Calculators::Length.new(:output => stream)
     allow(length_calculator).to receive(:unix?).and_return(true)
     expect(length_calculator.length).to eql 456
   end
@@ -73,7 +73,7 @@ describe  Length do
     expect(IO).to receive(:console).and_return(console).at_least(:once)
     expect(console).to receive(:winsize).and_return [123, 456]
 
-    length_calculator = Calculators::Length.new(output: stream)
+    length_calculator = Calculators::Length.new(:output => stream)
     allow(length_calculator).to receive(:unix?).and_return(true)
     expect(length_calculator.length).to eql 456
   end
