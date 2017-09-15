@@ -416,7 +416,8 @@ describe Base do
       progressbar.log 'We All Float'
       progressbar.increment
 
-      expect(output_string).to include "Progress: |====    |\r" \
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |====    |\r" \
                                    "Progress: |=====   |\r" \
                                    "                    \r" \
                                    "We All Float\n" \
@@ -436,7 +437,9 @@ describe Base do
       progressbar.increment
       progressbar.finish
 
-      expect(non_tty_output_string).to include "We All Float\n" \
+      expect(non_tty_output_string).to eql "\n" \
+                                           "Progress: |======\n" \
+                                           "We All Float\n" \
                                            "Progress: |========|\n"
     end
   end
