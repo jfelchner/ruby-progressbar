@@ -11,7 +11,7 @@ require 'ruby-progressbar/calculators/running_average'
 require 'ruby-progressbar/components'
 require 'ruby-progressbar/format'
 require 'ruby-progressbar/base'
-require 'ruby-progressbar/enumerator'
+require 'ruby-progressbar/refinements' unless RUBY_VERSION.start_with?('1.')
 
 class ProgressBar
   def self.create(*args)
