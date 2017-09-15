@@ -16,6 +16,22 @@ describe Enumerator do
     (0...10).each.with_progressbar { |_| }
   end
 
+  it 'does not allow the user to override the progress bar total' do
+    expect(ProgressBar).to receive(:create).
+                           with(hash_including(:total => 10)).
+                           and_call_original
+
+    (0...10).each.with_progressbar(:total => 20) { |_| }
+  end
+
+  it 'does not allow the user to override the progress bar starting position' do
+    expect(ProgressBar).to receive(:create).
+                           with(hash_including(:starting_at => 0)).
+                           and_call_original
+
+    (0...10).each.with_progressbar(:starting_at => 20) { |_| }
+  end
+
   it 'passes arguments to create' do
     expect(ProgressBar).to receive(:create).
                            with(hash_including(:title => 'We All Float')).
