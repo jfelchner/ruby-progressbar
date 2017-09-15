@@ -57,7 +57,8 @@ describe Base do
     it 'ignores title changes for a non-TTY enabled devices' do
       progressbar = ProgressBar::Base.new(:output        => non_tty_output,
                                           :length        => 80,
-                                          :starting_at   => 10)
+                                          :starting_at   => 10,
+                                          :throttle_rate => 0.0)
 
       progressbar.title = 'Testing'
 
@@ -205,7 +206,8 @@ describe Base do
 
     it 'forcibly halts the bar wherever it is for a non-TTY enabled devices' do
       progressbar = ProgressBar::Base.new(:output        => non_tty_output,
-                                          :length        => 20)
+                                          :length        => 20,
+                                          :throttle_rate => 0.0)
 
       progressbar.progress = 33
       progressbar.stop
@@ -248,7 +250,8 @@ describe Base do
       progressbar = ProgressBar::Base.new(:output        => non_tty_output,
                                           :length        => 20,
                                           :starting_at   => 0,
-                                          :total         => 6)
+                                          :total         => 6,
+                                          :throttle_rate => 0.0)
 
       6.times { progressbar.increment }
 
@@ -260,7 +263,8 @@ describe Base do
       progressbar = ProgressBar::Base.new(:output        => non_tty_output,
                                           :length        => 20,
                                           :starting_at   => 0,
-                                          :total         => 6)
+                                          :total         => 6,
+                                          :throttle_rate => 0.0)
 
       progressbar.progress = 3
       progressbar.finish
@@ -424,7 +428,8 @@ describe Base do
       progressbar = ProgressBar::Base.new(:output        => non_tty_output,
                                           :length        => 20,
                                           :starting_at   => 4,
-                                          :total         => 6)
+                                          :total         => 6,
+                                          :throttle_rate => 0.0)
 
       progressbar.increment
       progressbar.log 'We All Float'
