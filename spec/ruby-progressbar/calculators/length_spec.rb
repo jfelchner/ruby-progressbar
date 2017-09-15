@@ -43,6 +43,41 @@ describe  Length do
     expect(length_calculator.length).to eql 99
   end
 
+  it 'if output is a tty, uses it to calculate length in unix environments' do
+    stream = instance_double('IO')
+    expect(stream).to receive(:tty?).and_return true
+    expect(stream).to receive(:winsize).and_return [123, 456]
+    expect(IO).not_to receive(:console)
+
+    length_calculator = Calculators::Length.new(:output => stream)
+    allow(length_calculator).to receive(:unix?).and_return(true)
+    expect(length_calculator.length).to eql 456
+  end
+
+  it 'if output is null, falls back on IO.console to calculate length in unix environments' do
+    console = instance_double('IO')
+    expect(IO).to receive(:console).and_return(console).at_least(:once)
+    expect(console).to receive(:winsize).and_return [123, 456]
+
+    length_calculator = Calculators::Length.new
+    allow(length_calculator).to receive(:unix?).and_return(true)
+    expect(length_calculator.length).to eql 456
+  end
+
+  it 'if output is not a tty, falls back on IO.console to calculate length in unix environments' do
+    stream = instance_double('IO')
+    expect(stream).to receive(:tty?).and_return false
+    expect(stream).not_to receive(:winsize)
+
+    console = instance_double('IO')
+    expect(IO).to receive(:console).and_return(console).at_least(:once)
+    expect(console).to receive(:winsize).and_return [123, 456]
+
+    length_calculator = Calculators::Length.new(:output => stream)
+    allow(length_calculator).to receive(:unix?).and_return(true)
+    expect(length_calculator.length).to eql 456
+  end
+
   it 'defaults to 80 if it is not a Unix environment' do
     length_calculator = Calculators::Length.new
 
