@@ -61,7 +61,8 @@ describe Base do
 
       progressbar.title = 'Testing'
 
-      expect(non_tty_output_string).to eql "\n\nProgress: |======"
+      expect(non_tty_output_string).to eql "\n" \
+                                           "Progress: |======"
     end
 
     it 'allows for custom title for a non-TTY enabled devices on creation' do
@@ -70,7 +71,8 @@ describe Base do
                                            :length      => 80,
                                            :starting_at => 10)
 
-      expect(non_tty_output_string).to eql "\n\nCustom: |======="
+      expect(non_tty_output_string).to eql "\n" \
+                                           "Custom: |======="
     end
   end
 
@@ -207,7 +209,8 @@ describe Base do
       progressbar.progress = 33
       progressbar.stop
 
-      expect(non_tty_output_string).to eql "\n\nProgress: |==\n"
+      expect(non_tty_output_string).to eql "\n" \
+                                           "Progress: |==\n"
     end
 
     it 'does not output multiple bars if stopped multiple times in a row' do
@@ -248,7 +251,8 @@ describe Base do
 
       6.times { progressbar.increment }
 
-      expect(non_tty_output_string).to eql "\n\nProgress: |========|\n"
+      expect(non_tty_output_string).to eql "\n" \
+                                           "Progress: |========|\n"
     end
 
     it 'can finish a bar in the middle of progress for a non-TTY enabled devices' do
@@ -260,7 +264,8 @@ describe Base do
       progressbar.progress = 3
       progressbar.finish
 
-      expect(non_tty_output_string).to eql "\n\nProgress: |========|\n"
+      expect(non_tty_output_string).to eql "\n" \
+                                           "Progress: |========|\n"
     end
 
     it 'properly prints a newline when incremented to its total' do

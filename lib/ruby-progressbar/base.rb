@@ -37,8 +37,6 @@ class   Base
   end
 
   def start(options = {})
-    clear
-
     timer.start
     update_progress(:start, options)
   end
