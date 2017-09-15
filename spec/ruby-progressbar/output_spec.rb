@@ -37,5 +37,29 @@ describe Output do
     expect(output_io.read).to eql "Progress |         |\r" \
                                   "We All Float\n"
   end
+
+  it 'passes the output stream to the length calculator' do
+    allow(Calculators::Length).to receive(:new).and_call_original
+
+    ProgressBar::Output.new(:output => output_io)
+
+    expect(Calculators::Length).to have_received(:new).
+                                   with(
+                                     :length => nil,
+                                     :output => output_io
+                                   )
+  end
+
+  it 'passes stdout to the length calculator if output is not specified' do
+    allow(Calculators::Length).to receive(:new).and_call_original
+
+    ProgressBar::Output.new
+
+    expect(Calculators::Length).to have_received(:new).
+                                   with(
+                                     :length => nil,
+                                     :output => $stdout
+                                   )
+  end
 end
 end

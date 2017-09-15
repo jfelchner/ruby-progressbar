@@ -4,6 +4,18 @@ require 'ruby-progressbar/calculators/length'
 class     ProgressBar
 module    Calculators
 describe  Length do
+  let(:tty_output) do
+    IO.new(IO.sysopen('/dev/tty', 'w')).tap do |io|
+      allow(io).to receive(:tty?).and_return true
+    end
+  end
+
+  let(:non_tty_output) do
+    IO.new(IO.sysopen('/dev/null', 'w')).tap do |io|
+      allow(io).to receive(:tty?).and_return false
+    end
+  end
+
   context 'when the RUBY_PROGRESS_BAR_LENGTH environment variable exists' do
     before  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = '44' }
     after   { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
@@ -41,6 +53,37 @@ describe  Length do
     allow(length_calculator).to receive(:dynamic_width).and_return(99)
 
     expect(length_calculator.length).to eql 99
+  end
+
+  it 'asks stream for length if it is a TTY' do
+    allow(tty_output).to receive(:winsize).and_return [123, 456]
+    allow(IO).to         receive(:console).and_call_original
+
+    length_calculator = Calculators::Length.new(:output => tty_output)
+
+    expect(IO).not_to                   have_received :console
+    expect(length_calculator.length).to eql           456
+  end
+
+  it 'asks IO.console to calculate length if the output is null' do
+    allow(tty_output).to receive(:winsize).and_return [123, 456]
+    allow(IO).to         receive(:console).and_return(tty_output)
+
+    length_calculator = Calculators::Length.new
+
+    expect(length_calculator.length).to eql 456
+    expect(IO).to                       have_received(:console).
+                                        at_least(:once)
+  end
+
+  it 'asks IO.console to calculate length if the output is not a TTY' do
+    allow(non_tty_output).to receive(:winsize).and_return [654, 321]
+    allow(tty_output).to     receive(:winsize).and_return [123, 456]
+    allow(IO).to             receive(:console).and_return(tty_output)
+
+    length_calculator = Calculators::Length.new(:output => non_tty_output)
+
+    expect(length_calculator.length).to eql 456
   end
 
   it 'defaults to 80 if it is not a Unix environment' do
