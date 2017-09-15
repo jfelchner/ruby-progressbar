@@ -2,10 +2,12 @@ class   ProgressBar
 module  Calculators
 class   Length
   attr_reader   :length_override
-  attr_accessor :current_length
+  attr_accessor :current_length,
+                :output
 
   def initialize(options = {})
     self.length_override = options[:length]
+    self.output = options[:output]
     self.current_length  = nil
   end
 
@@ -51,7 +53,9 @@ class   Length
     require 'io/console'
 
     def dynamic_width
-      if IO.console
+      if output && output.tty?
+        dynamic_width_via_output
+      elsif IO.console
         dynamic_width_via_io_object
       else
         dynamic_width_via_system_calls
@@ -61,6 +65,11 @@ class   Length
     def dynamic_width
       dynamic_width_via_system_calls
     end
+  end
+
+  def dynamic_width_via_output
+    _rows, columns = output.winsize
+    columns
   end
 
   def dynamic_width_via_io_object
