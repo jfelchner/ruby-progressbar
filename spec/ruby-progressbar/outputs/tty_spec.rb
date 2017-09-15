@@ -1,4 +1,4 @@
-require 'rspectacular'
+require 'spec_helper'
 require 'ruby-progressbar/outputs/tty'
 
 class    ProgressBar
