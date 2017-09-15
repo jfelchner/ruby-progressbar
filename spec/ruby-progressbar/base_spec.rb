@@ -55,9 +55,9 @@ describe Base do
     end
 
     it 'ignores title changes for a non-TTY enabled devices' do
-      progressbar = ProgressBar::Base.new(:output      => non_tty_output,
-                                          :length      => 80,
-                                          :starting_at => 10)
+      progressbar = ProgressBar::Base.new(:output        => non_tty_output,
+                                          :length        => 80,
+                                          :starting_at   => 10)
 
       progressbar.title = 'Testing'
 
@@ -204,7 +204,8 @@ describe Base do
     end
 
     it 'forcibly halts the bar wherever it is for a non-TTY enabled devices' do
-      progressbar = ProgressBar::Base.new(:output => non_tty_output, :length => 20)
+      progressbar = ProgressBar::Base.new(:output        => non_tty_output,
+                                          :length        => 20)
 
       progressbar.progress = 33
       progressbar.stop
@@ -244,10 +245,10 @@ describe Base do
 
   context 'finishing the bar' do
     it 'does not spam the screen for a non-TTY enabled devices' do
-      progressbar = ProgressBar::Base.new(:output      => non_tty_output,
-                                          :length      => 20,
-                                          :starting_at => 0,
-                                          :total       => 6)
+      progressbar = ProgressBar::Base.new(:output        => non_tty_output,
+                                          :length        => 20,
+                                          :starting_at   => 0,
+                                          :total         => 6)
 
       6.times { progressbar.increment }
 
@@ -256,10 +257,10 @@ describe Base do
     end
 
     it 'can finish a bar in the middle of progress for a non-TTY enabled devices' do
-      progressbar = ProgressBar::Base.new(:output      => non_tty_output,
-                                          :length      => 20,
-                                          :starting_at => 0,
-                                          :total       => 6)
+      progressbar = ProgressBar::Base.new(:output        => non_tty_output,
+                                          :length        => 20,
+                                          :starting_at   => 0,
+                                          :total         => 6)
 
       progressbar.progress = 3
       progressbar.finish
@@ -400,7 +401,7 @@ describe Base do
   end
 
   context 'logging messages' do
-    it 'for a TTY enabled device it can log messages' do
+    it 'it can log messages for a TTY enabled device' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :length        => 20,
                                           :starting_at   => 3,
@@ -412,18 +413,18 @@ describe Base do
       progressbar.increment
 
       expect(output_string).to include "Progress: |====    |\r" \
-                                       "Progress: |=====   |\r" \
-                                       "                    \r" \
-                                       "We All Float\n" \
-                                       "Progress: |=====   |\r" \
-                                       "Progress: |======  |\r"
+                                   "Progress: |=====   |\r" \
+                                   "                    \r" \
+                                   "We All Float\n" \
+                                   "Progress: |=====   |\r" \
+                                   "Progress: |======  |\r"
     end
 
-    it 'for a non-TTY enabled device it can log messages' do
-      progressbar = ProgressBar::Base.new(:output      => non_tty_output,
-                                          :length      => 20,
-                                          :starting_at => 4,
-                                          :total       => 6)
+    it 'it can log messages for a non-TTY enabled device' do
+      progressbar = ProgressBar::Base.new(:output        => non_tty_output,
+                                          :length        => 20,
+                                          :starting_at   => 4,
+                                          :total         => 6)
 
       progressbar.increment
       progressbar.log 'We All Float'
@@ -431,7 +432,7 @@ describe Base do
       progressbar.finish
 
       expect(non_tty_output_string).to include "We All Float\n" \
-                                              "Progress: |========|\n"
+                                           "Progress: |========|\n"
     end
   end
 
