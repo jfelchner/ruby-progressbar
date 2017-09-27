@@ -1,3 +1,34 @@
+Version v1.9.0 - September 27, 2017
+================================================================================
+
+Performance
+--------------------------------------------------------------------------------
+  * don't shell out when it's avoidable.
+
+Change
+--------------------------------------------------------------------------------
+  * Don't allow user to override total or starting_at in Enumerator
+  * print_and_flush to be explicitly a private method
+
+Uncategorized
+--------------------------------------------------------------------------------
+  * Enumerator#to_progressbar as a refinement
+
+Remove
+--------------------------------------------------------------------------------
+  * Explicit clear on start
+
+Fix
+--------------------------------------------------------------------------------
+  * Components::Time to allow #estimated_seconds_remaining to be called
+
+Add
+--------------------------------------------------------------------------------
+  * Base#to_h to expose all of the data about the current bar state
+  * Outputs::Null for users who don't want the bar sent anywhere
+  * Ability to specify a completely custom output stream
+  * %u format flag to show ?? if total is unknown
+
 Version v1.8.3 - September 13, 2017
 ================================================================================
 
