@@ -7,8 +7,11 @@ class   Output
   def initialize(options = {})
     self.bar               = options[:bar]
     self.stream            = options[:output] || DEFAULT_OUTPUT_STREAM
-    self.length_calculator = Calculators::Length.new(options)
     self.throttle          = Throttle.new(options)
+    self.length_calculator = Calculators::Length.new(
+                               :length => options[:length],
+                               :output => stream
+                             )
   end
 
   def self.detect(options = {})
