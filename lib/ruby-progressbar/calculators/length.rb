@@ -39,6 +39,7 @@ class   Length
 
   # This code was copied and modified from Rake, available under MIT-LICENSE
   # Copyright (c) 2003, 2004 Jim Weirich
+  # rubocop:disable Lint/RescueWithoutErrorClass
   def terminal_width
     return 80 unless unix?
 
@@ -47,6 +48,7 @@ class   Length
   rescue
     80
   end
+  # rubocop:enable Lint/RescueWithoutErrorClass
 
   # rubocop:disable Lint/DuplicateMethods
   begin
