@@ -1,4 +1,5 @@
 # Vendored Dependencies
+Pods
 bower_components
 node_modules
 site/web/app/mu-plugins
@@ -64,10 +65,14 @@ variables.sls
 **/cordova/platforms/wp8/www
 **/public/stylesheets/*.css
 *.a
+*.hmap
+*.ipa
 *.o
 *.rbc
 *.so
+*.xccheckout
 *.xcuserdatad
+DerivedData
 build
 coverage
 coverage.data
@@ -79,25 +84,38 @@ files/scripts/**/*.zip
 out
 pillars/files
 pkg
+profile
 rdoc
 target
 
 # Local Configuration Files
 !.env.example
+!default.mode1v3
+!default.mode2v3
+!default.pbxuser
+!default.perspectivev3
 **/cordova/platforms/android/CordovaLib/local.properties
 **/cordova/platforms/android/local.properties
+**/settings-local.yml
+**/settings/*-local.yml
 *.bundle
 *.iml
 *.ipr
 *.iws
+*.mode1v3
+*.mode2v3
+*.pbxuser
+*.perspectivev3
 *.project
 *.sublime-project
 *.sublime-workspace
 *.tmproj
 .Rhistory
+.build
 .bundle
-.chamber.pem
-.chamber.pem.enc
+.chamber*.enc
+.chamber*.enc.pass
+.chamber*.pem
 .env
 .env.yml
 .foreman
@@ -113,16 +131,21 @@ target
 .secrets
 .shellwreck.sh
 .terraform
+.tern-port
 Gemfile.local
 Procfile.local
 atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 config.yml
+config/application.yml
 config/database.yml
 config/secrets.yml
 crashlytics-build.properties
 crashlytics.properties
 nbproject
+xcuserdata
+
+!.circleci/config.yml
 
 # Temporary files
 *.backup
@@ -130,6 +153,7 @@ nbproject
 *.lck
 *.lock
 *.log*
+*.moved-aside
 *.old
 *.orig
 *.sqlite3
@@ -148,6 +172,9 @@ tmp
 
 # Vagrant
 .vagrant
+
+# Always keep chamber public keys
+!.chamber*.pub.pem
 
 # Always keep lock files
 !yarn.lock

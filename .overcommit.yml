@@ -130,7 +130,7 @@ PreCommit:
     exclude:
       - 'Rakefile'
       - 'bin/**/*'
-      - 'script/**/*'
+      - 'scripts/**/*'
 
   Fasterer:
     enabled:                  false
@@ -174,7 +174,10 @@ PreCommit:
     enabled:                  true
     exclude:
       - '**/*.svg'
+      - '**/Info.plist'
+      - '**/project.pbxproj'
       - '**/structure.sql'
+      - '**/xcschememanagement.plist'
 
   HtmlHint:
     enabled:                  true

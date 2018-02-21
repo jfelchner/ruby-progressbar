@@ -24,7 +24,7 @@ RSpec/EmptyExampleGroup:
 
 RSpec/ExampleLength:
   Enabled:                        true
-  Max:                            30
+  Max:                            50
 
 RSpec/ExampleWording:
   Enabled:                        true
