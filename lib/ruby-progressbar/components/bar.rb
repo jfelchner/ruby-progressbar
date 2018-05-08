@@ -60,6 +60,12 @@ class   Bar
     to_s
   end
 
+  def complete_bar_with_percentage(length)
+    self.length = length
+
+    to_s(:format => :integrated_percentage)
+  end
+
   def unknown_string
     unknown_frame_string = unknown_progress_frame * ((length / upa_steps.size) + 2)
 

@@ -619,6 +619,27 @@ describe Formatter do
     end
   end
 
+  context 'the %W flag' do
+    let(:format) { Format::String.new('%W') }
+
+    it 'is the bar with percentage (including incomplete space)' do
+      progressbar = ProgressBar::Base.new(:length => 100)
+
+      expect(Formatter.process(format, 100, progressbar)).to eql ' ' * 100
+      4.times { progressbar.increment }
+      expect(Formatter.process(format, 100, progressbar)).to eql "====#{' ' * 96}"
+      progressbar.increment
+      expect(Formatter.process(format, 100, progressbar)).to eql "= 5 =#{' ' * 95}"
+      5.times { progressbar.increment }
+      expect(Formatter.process(format, 100, progressbar)).to eql "=== 10 ===#{' ' * 90}"
+      progressbar.decrement
+      expect(Formatter.process(format, 100, progressbar)).to eql "=== 9 ===#{' ' * 91}"
+      91.times { progressbar.increment }
+      expect(Formatter.process(format, 100, progressbar)).to eql \
+        "#{'=' * 47} 100 #{'=' * 48}"
+    end
+  end
+
   context 'the %w flag' do
     let(:format) { Format::String.new('%w') }
 
