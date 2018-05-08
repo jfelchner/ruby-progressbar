@@ -76,6 +76,12 @@ class   Bar
     end
   end
 
+  def complete_bar_with_percentage(length)
+    self.length = length
+
+    to_s(:format => :integrated_percentage)
+  end
+
   def bar_with_percentage(length)
     self.length = length
 
