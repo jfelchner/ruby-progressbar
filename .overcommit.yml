@@ -39,7 +39,7 @@ plugin_directory: '.git-hooks'
 
 # Whether to hide hook output by default. This results in completely silent hook
 # runs except in the case of warning or failure.
-quiet: true
+quiet: false
 
 # Number of hooks that can be run concurrently. Typically this won't need to be
 # adjusted, but if you know that some of your hooks themselves use multiple
@@ -59,7 +59,6 @@ PreCommit:
     problem_on_unmodified_line: 'report'
     requires_files:             true
     required:                   false
-    quiet:                      false
     exclude:
       - 'bower_components/**/*'
       - 'node_modules/**/*'
@@ -130,7 +129,7 @@ PreCommit:
     exclude:
       - 'Rakefile'
       - 'bin/**/*'
-      - 'script/**/*'
+      - 'scripts/**/*'
 
   Fasterer:
     enabled:                  false
@@ -174,7 +173,10 @@ PreCommit:
     enabled:                  true
     exclude:
       - '**/*.svg'
+      - '**/Info.plist'
+      - '**/project.pbxproj'
       - '**/structure.sql'
+      - '**/xcschememanagement.plist'
 
   HtmlHint:
     enabled:                  true
@@ -283,7 +285,11 @@ PreCommit:
     enabled:                  true
     flags:
       - '--format=gcc'
+      - '-e SC1090'
+      - '-e SC1117'
+      - '-e SC2148'
       - '-e SC2155'
+      - '-e SC2181'
     include:
       - '**/*.sh'
       - '**/*.bash'
@@ -341,7 +347,6 @@ PrePush:
   ALL:
     requires_files:           false
     required:                 false
-    quiet:                    true
 
   Minitest:
     enabled:                  false
@@ -356,7 +361,6 @@ PreRebase:
   ALL:
     requires_files:           false
     required:                 false
-    quiet:                    true
 
   MergedCommits:
     enabled:                  false
@@ -364,7 +368,6 @@ PreRebase:
 CommitMsg:
   ALL:
     requires_files:           false
-    quiet:                    true
 
   CapitalizedSubject:
     enabled:                  true
@@ -401,7 +404,6 @@ CommitMsg:
 PostCheckout:
   ALL:
     required:                 false
-    quiet:                    true
     skip_file_checkout:       true
 
   BowerInstall:
@@ -423,7 +425,6 @@ PostCommit:
   ALL:
     requires_files:           false
     required:                 false
-    quiet:                    true
 
   BowerInstall:
     enabled:                  false
@@ -445,8 +446,8 @@ PostCommit:
 
 PostMerge:
   ALL:
+    enabled:                  false
     requires_files:           false
-    quiet:                    true
 
   BowerInstall:
     enabled:                  false
@@ -461,12 +462,11 @@ PostMerge:
     enabled:                  false
 
   SubmoduleStatus:
-    enabled:                  true
+    enabled:                  false
 
 PostRewrite:
   ALL:
     requires_files:           false
-    quiet:                    true
 
   BowerInstall:
     enabled:                  false

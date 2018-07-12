@@ -19,7 +19,15 @@ Gem::Specification.new do |spec|
   spec.executables   = []
   spec.files         = Dir['{app,config,db,lib/ruby-progressbar}/**/*'] + %w{lib/ruby-progressbar.rb Rakefile README.md LICENSE.txt}
 
-  spec.metadata['allowed_push_host'] = 'https://rubygems.org'
+  spec.metadata      = {
+    'allowed_push_host' => 'https://rubygems.org',
+    'bug_tracker_uri'   => 'https://github.com/jfelchner/ruby-progressbar/issues',
+    'changelog_uri'     => 'https://github.com/jfelchner/ruby-progressbar/CHANGELOG.md',
+    'documentation_uri' => "https://github.com/jfelchner/ruby-progressbar/tree/releases/v#{ProgressBar::VERSION}",
+    'homepage_uri'      => 'https://github.com/jfelchner/ruby-progressbar',
+    'source_code_uri'   => 'https://github.com/jfelchner/ruby-progressbar',
+    'wiki_uri'          => 'https://github.com/jfelchner/ruby-progressbar/wiki',
+  }
 
   spec.add_development_dependency 'rspec', ["~> 3.6"]
   spec.add_development_dependency 'rspectacular', ["~> 0.70.6"]

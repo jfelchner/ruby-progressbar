@@ -1,35 +1,119 @@
-# Last updated to 1.10
+# Last updated to 1.27.0
 
 require:
   - 'rubocop-rspec'
 
+Capybara/FeatureMethods:
+  Enabled:                        true
+
+Capybara/CurrentPathExpectation:
+  Enabled:                        true
+
+FactoryBot/CreateList:
+  Enabled:                        true
+
+FactoryBot/DynamicAttributeDefinedStatically:
+  Enabled:                        true
+
+FactoryBot/StaticAttributeDefinedDynamically:
+  Enabled:                        false
+
+Rails/HttpStatus:
+  Enabled:                        true
+  EnforcedStyle:                  'numeric'
+
+RSpec/AlignLeftLetBrace:
+  Enabled:                        true
+
+RSpec/AlignRightLetBrace:
+  Enabled:                        false
+
 RSpec/AnyInstance:
+  Enabled:                        true
+
+RSpec/AroundBlock:
+  Enabled:                        true
+
+RSpec/Be:
   Enabled:                        true
 
 RSpec/BeEql:
   Enabled:                        true
 
+RSpec/BeforeAfterAll:
+  Enabled:                        true
+  Exclude:
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'spec/support/**/*.rb'
+
+RSpec/ContextWording:
+  Enabled:                        true
+  Prefixes:
+    - 'administrators'
+    - 'anyone'
+    - 'regular users'
+    - 'when'
+    - 'with'
+    - 'without'
+
 RSpec/DescribeClass:
   Enabled:                        true
+
+RSpec/DescribedClass:
+  Enabled:                        true
+  EnforcedStyle:                  'described_class'
+  SkipBlocks:                     false
 
 RSpec/DescribeMethod:
   Enabled:                        true
 
+RSpec/DescribeSymbol:
+  Enabled:                        true
+
 RSpec/DescribedClass:
-  Enabled:                        false
+  Enabled:                        true
+  SkipBlocks:                     false
+  EnforcedStyle:                  'explicit'
 
 RSpec/EmptyExampleGroup:
   Enabled:                        false
   CustomIncludeMethods:           []
 
-RSpec/ExampleLength:
+RSpec/EmptyLineAfterExampleGroup:
   Enabled:                        true
-  Max:                            30
+
+RSpec/EmptyLineAfterFinalLet:
+  Enabled:                        true
+
+RSpec/EmptyLineAfterHook:
+  Enabled:                        true
+
+RSpec/EmptyLineAfterSubject:
+  Enabled:                        true
+
+RSpec/ExampleLength:
+  Enabled:                        false
+  Max:                            50
+
+RSpec/ExampleWithoutDescription:
+  Enabled:                        true
+  EnforcedStyle:                  'single_line_only'
 
 RSpec/ExampleWording:
   Enabled:                        true
+  IgnoredWords:                   []
 
 RSpec/ExpectActual:
+  Enabled:                        true
+  Exclude:
+    - 'spec/routing/**/*'
+
+RSpec/ExpectChange:
+  Enabled:                        true
+  EnforcedStyle:                  'method_call'
+
+RSpec/ExpectInHook:
   Enabled:                        true
 
 RSpec/ExpectOutput:
@@ -37,6 +121,10 @@ RSpec/ExpectOutput:
 
 RSpec/FilePath:
   Enabled:                        false
+  IgnoreMethods:                  false
+  CustomTransform:
+    RuboCop: 'rubocop'
+    RSpec:   'rspec'
 
 RSpec/Focus:
   Enabled:                        true
@@ -49,10 +137,26 @@ RSpec/ImplicitExpect:
   Enabled:                        true
   EnforcedStyle:                  'is_expected'
 
+RSpec/InstanceSpy:
+  Enabled:                        true
+
 RSpec/InstanceVariable:
   Enabled:                        true
 
+RSpec/InvalidPredicateMatcher:
+  Enabled:                        true
+
+RSpec/ItBehavesLike:
+  Enabled:                        true
+  EnforcedStyle:                  'it_behaves_like'
+
+RSpec/IteratedExpectation:
+  Enabled:                        true
+
 RSpec/LeadingSubject:
+  Enabled:                        true
+
+RSpec/LetBeforeExamples:
   Enabled:                        true
 
 RSpec/LetSetup:
@@ -74,7 +178,11 @@ RSpec/MultipleDescribes:
 
 RSpec/MultipleExpectations:
   Enabled:                        false
+  AggregateFailuresByDefault:     true
   Max:                            5
+
+RSpec/MultipleSubjects:
+  Enabled:                        true
 
 RSpec/NamedSubject:
   Enabled:                        true
@@ -87,13 +195,40 @@ RSpec/NotToNot:
   Enabled:                        true
   EnforcedStyle:                  'not_to'
 
+RSpec/OverwritingSetup:
+  Enabled:                        true
+
+RSpec/Pending:
+  Enabled:                        false
+
+RSpec/PredicateMatcher:
+  Enabled:                        true
+  Strict:                         true
+  EnforcedStyle:                  'inflected'
+
+RSpec/ReceiveCounts:
+  Enabled:                        true
+
 RSpec/RepeatedDescription:
   Enabled:                        true
 
 RSpec/RepeatedExample:
   Enabled:                        true
 
+RSpec/ReturnFromStub:
+  Enabled:                        true
+  EnforcedStyle:                  'and_return'
+
+RSpec/ScatteredLet:
+  Enabled:                        true
+
 RSpec/ScatteredSetup:
+  Enabled:                        true
+
+RSpec/SharedContext:
+  Enabled:                        true
+
+RSpec/SharedExamples:
   Enabled:                        true
 
 RSpec/SingleArgumentMessageChain:
@@ -103,4 +238,8 @@ RSpec/SubjectStub:
   Enabled:                        true
 
 RSpec/VerifiedDoubles:
+  Enabled:                        true
+  IgnoreSymbolicNames:            false
+
+RSpec/VoidExpect:
   Enabled:                        true
