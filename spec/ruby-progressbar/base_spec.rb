@@ -499,6 +499,36 @@ describe Base do
     end
   end
 
+  context 'decrementing the bar' do
+    it 'displays the bar with the correct progress' do
+      progressbar = ProgressBar::Base.new(:output        => output,
+                                          :length        => 20,
+                                          :starting_at   => 1,
+                                          :total         => 6,
+                                          :throttle_rate => 0.0)
+
+      progressbar.decrement
+
+      expect(output_string).to eql "                    \r" \
+                                   "Progress: |=       |\r" \
+                                   "Progress: |        |\r"
+    end
+
+    context 'for non-TTY enabled devices' do
+      it 'does nothing' do
+        progressbar = ProgressBar::Base.new(:output        => non_tty_output,
+                                            :length        => 20,
+                                            :starting_at   => 2,
+                                            :total         => 6,
+                                            :throttle_rate => 0.0)
+        progressbar.decrement
+
+        expect(non_tty_output_string).to eql "\n" \
+                                           "Progress: |=="
+      end
+    end
+  end
+
   it 'can be converted into a hash' do
     Timecop.freeze(::Time.utc(2012, 7, 26, 18, 0, 0))
 
