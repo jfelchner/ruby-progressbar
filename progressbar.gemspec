@@ -11,9 +11,9 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Ruby/ProgressBar is a flexible text progress bar library for Ruby.}
   spec.description   = %q{Ruby/ProgressBar is an extremely flexible text progress bar library for Ruby. The output can be customized with a flexible formatting system including: percentage, bars of various formats, elapsed time and estimated time remaining.}
   spec.homepage      = 'https://github.com/jfelchner/ruby-progressbar'
-  spec.license       = 'MIT'
+  spec.licenses      = ['MIT']
 
-  spec.cert_chain    = %w{certs/jfelchner.pem}
+  spec.cert_chain    = ['certs/jfelchner.pem']
   spec.signing_key   = File.expand_path('~/.gem/certs/jfelchner-private_key.pem') if $0 =~ /gem\z/
 
   spec.executables   = []
@@ -29,9 +29,9 @@ Gem::Specification.new do |spec|
     'wiki_uri'          => 'https://github.com/jfelchner/ruby-progressbar/wiki',
   }
 
-  spec.add_development_dependency 'rspec', ["~> 3.2"]
-  spec.add_development_dependency 'rspectacular', ["~> 0.70.6"]
-  spec.add_development_dependency 'fuubar', ["~> 2.0"]
+  spec.add_development_dependency 'rspec',          ["~> 3.7"]
+  spec.add_development_dependency 'rspectacular',   ["~> 0.70.6"]
+  spec.add_development_dependency 'fuubar',         ["~> 2.3"]
   spec.add_development_dependency 'warning_filter', ["~> 0.0.6"]
-  spec.add_development_dependency 'timecop', ["= 0.6.1"]
+  spec.add_development_dependency 'timecop',        ["= 0.6.0"]
 end
