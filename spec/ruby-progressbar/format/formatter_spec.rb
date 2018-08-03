@@ -26,7 +26,7 @@ describe Formatter do
     it 'is "--:--:--" when displayed after starting the bar and then resetting the bar' do
       progressbar = ProgressBar::Base.new
 
-      Timecop.travel(to_the_past) do
+      Timecop.freeze(to_the_past) do
         progressbar.start
       end
 
@@ -38,7 +38,7 @@ describe Formatter do
     it 'is the time elapsed when displayed after starting the bar' do
       progressbar = ProgressBar::Base.new(:throttle_rate => 0.0)
 
-      Timecop.travel(to_the_past) do
+      Timecop.freeze(to_the_past) do
         progressbar.start
       end
 
@@ -48,11 +48,11 @@ describe Formatter do
     it 'is the total amount of time elapsed once the bar finishes' do
       progressbar = ProgressBar::Base.new(:throttle_rate => 0.0)
 
-      Timecop.travel(four_minutes_ago) do
+      Timecop.freeze(four_minutes_ago) do
         progressbar.start
       end
 
-      Timecop.travel(one_minute_ago) do
+      Timecop.freeze(one_minute_ago) do
         progressbar.finish
       end
 
@@ -127,7 +127,7 @@ describe Formatter do
     it 'is "??:??:??" when called after the bar is started makes progress and reset' do
       progressbar = ProgressBar::Base.new
 
-      Timecop.travel(to_the_past) do
+      Timecop.freeze(to_the_past) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -140,7 +140,7 @@ describe Formatter do
     it 'is the estimated time remaining when called after the bar is started' do
       progressbar = ProgressBar::Base.new(:smoothing => 0.0)
 
-      Timecop.travel(to_the_past) do
+      Timecop.freeze(to_the_past) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -151,7 +151,7 @@ describe Formatter do
     it 'is "??:??:??" when it could take 100 hours or longer to finish' do
       progressbar = ProgressBar::Base.new(:total => 100, :smoothing => 0.0)
 
-      Timecop.travel(one_hundred_hours_ago) do
+      Timecop.freeze(one_hundred_hours_ago) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -162,11 +162,11 @@ describe Formatter do
     it 'is the total amount of time elapsed once the bar finishes' do
       progressbar = ProgressBar::Base.new(:throttle_rate => 0.0)
 
-      Timecop.travel(four_minutes_ago) do
+      Timecop.freeze(four_minutes_ago) do
         progressbar.start
       end
 
-      Timecop.travel(one_minute_ago) do
+      Timecop.freeze(one_minute_ago) do
         progressbar.finish
       end
 
@@ -192,7 +192,7 @@ describe Formatter do
     it 'is "??:??:??" when called after the bar is started makes progress and reset' do
       progressbar = ProgressBar::Base.new
 
-      Timecop.travel(to_the_past) do
+      Timecop.freeze(to_the_past) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -205,7 +205,7 @@ describe Formatter do
     it 'is the estimated time remaining when called after the bar is started' do
       progressbar = ProgressBar::Base.new(:smoothing => 0.0)
 
-      Timecop.travel(to_the_past) do
+      Timecop.freeze(to_the_past) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -216,11 +216,11 @@ describe Formatter do
     it 'is the total amount of time elapsed once the bar finishes' do
       progressbar = ProgressBar::Base.new(:throttle_rate => 0.0)
 
-      Timecop.travel(four_minutes_ago) do
+      Timecop.freeze(four_minutes_ago) do
         progressbar.start
       end
 
-      Timecop.travel(one_minute_ago) do
+      Timecop.freeze(one_minute_ago) do
         progressbar.finish
       end
 
@@ -230,7 +230,7 @@ describe Formatter do
     it 'is "> 4 Days" when it could take 100 hours or longer to finish' do
       progressbar = ProgressBar::Base.new(:total => 100, :smoothing => 0.0)
 
-      Timecop.travel(one_hundred_hours_ago) do
+      Timecop.freeze(one_hundred_hours_ago) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -257,7 +257,7 @@ describe Formatter do
     it 'is "??:??:??" when called after the bar is started makes progress and reset' do
       progressbar = ProgressBar::Base.new
 
-      Timecop.travel(to_the_past) do
+      Timecop.freeze(to_the_past) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -270,7 +270,7 @@ describe Formatter do
     it 'is the estimated time remaining when called after the bar is started' do
       progressbar = ProgressBar::Base.new(:smoothing => 0.0)
 
-      Timecop.travel(to_the_past) do
+      Timecop.freeze(to_the_past) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -281,7 +281,7 @@ describe Formatter do
     it 'is the exact estimated time when it could take 100 hours or longer to finish' do
       progressbar = ProgressBar::Base.new(:total => 100, :smoothing => 0.0)
 
-      Timecop.travel(one_hundred_hours_ago) do
+      Timecop.freeze(one_hundred_hours_ago) do
         progressbar.start
         progressbar.progress = 50
       end
@@ -435,7 +435,7 @@ describe Formatter do
         progressbar.start
         progressbar.progress += 20
 
-        Timecop.travel(2) do
+        Timecop.freeze(2) do
           expect(Formatter.process(format, 100, progressbar)).to eql '10'
         end
       end
@@ -452,7 +452,7 @@ describe Formatter do
     it 'is zero when no progress has been made' do
       progressbar = ProgressBar::Base.new(:starting_at => 20)
 
-      Timecop.travel(2) do
+      Timecop.freeze(2) do
         expect(Formatter.process(format, 100, progressbar)).to eql '0'
       end
     end
@@ -464,7 +464,7 @@ describe Formatter do
         progressbar.start
         progressbar.progress += 20
 
-        Timecop.travel(2) do
+        Timecop.freeze(2) do
           expect(Formatter.process(format, 100, progressbar)).to eql '10'
         end
       end
@@ -477,7 +477,7 @@ describe Formatter do
         progressbar.start
         progressbar.progress += 20
 
-        Timecop.travel(2) do
+        Timecop.freeze(2) do
           expect(Formatter.process(format, 100, progressbar)).to eql '5'
         end
       end
@@ -487,7 +487,7 @@ describe Formatter do
       progressbar = ProgressBar::Base.new(:starting_at => 20,
                                           :rate_scale  => lambda { |rate| rate / 2 })
 
-      Timecop.travel(2) do
+      Timecop.freeze(2) do
         expect(Formatter.process(format, 100, progressbar)).to eql '0'
       end
     end
@@ -500,7 +500,7 @@ describe Formatter do
         progressbar.start
         progressbar.progress += 20
 
-        Timecop.travel(2) do
+        Timecop.freeze(2) do
           expect(Formatter.process(format, 100, progressbar)).to eql '5'
         end
       end
@@ -517,7 +517,7 @@ describe Formatter do
         progressbar.start
         progressbar.progress += 10
 
-        Timecop.travel(6) do
+        Timecop.freeze(6) do
           expect(Formatter.process(format, 100, progressbar)).to eql '1.67'
         end
       end
@@ -534,7 +534,7 @@ describe Formatter do
     it 'is zero when no progress has been made' do
       progressbar = ProgressBar::Base.new(:starting_at => 20)
 
-      Timecop.travel(2) do
+      Timecop.freeze(2) do
         expect(Formatter.process(format, 100, progressbar)).to eql '0.00'
       end
     end
@@ -546,7 +546,7 @@ describe Formatter do
         progressbar.start
         progressbar.progress += 13
 
-        Timecop.travel(2) do
+        Timecop.freeze(2) do
           expect(Formatter.process(format, 100, progressbar)).to eql '6.50'
         end
       end
@@ -559,7 +559,7 @@ describe Formatter do
         progressbar.start
         progressbar.progress += 10
 
-        Timecop.travel(6) do
+        Timecop.freeze(6) do
           expect(Formatter.process(format, 100, progressbar)).to eql '0.83'
         end
       end
@@ -569,7 +569,7 @@ describe Formatter do
       progressbar = ProgressBar::Base.new(:starting_at => 20,
                                           :rate_scale  => lambda { |rate| rate / 2 })
 
-      Timecop.travel(2) do
+      Timecop.freeze(2) do
         expect(Formatter.process(format, 100, progressbar)).to eql '0.00'
       end
     end
@@ -582,7 +582,7 @@ describe Formatter do
         progressbar.start
         progressbar.progress += 13
 
-        Timecop.travel(2) do
+        Timecop.freeze(2) do
           expect(Formatter.process(format, 100, progressbar)).to eql '3.25'
         end
       end
