@@ -2,7 +2,6 @@ class  ProgressBar
 module Refinements
 module Enumerator
 refine ::Enumerator do
-  # rubocop:disable Metrics/BlockNesting
   def with_progressbar(options = {}, &block)
     chain = ::Enumerator.new do |yielder|
       progress_bar = ProgressBar.create(options.merge(:starting_at => 0, :total => size))
@@ -18,7 +17,6 @@ refine ::Enumerator do
 
     chain.each(&block)
   end
-  # rubocop:enable Metrics/BlockNesting
 end
 end
 end
