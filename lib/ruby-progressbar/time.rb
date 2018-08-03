@@ -1,3 +1,4 @@
+# rubocop:disable Style/InlineComment
 class   ProgressBar
 class   Time
   TIME_MOCKING_LIBRARY_METHODS = [
@@ -28,3 +29,4 @@ class   Time
   attr_accessor :time
 end
 end
+# rubocop:enable Style/InlineComment

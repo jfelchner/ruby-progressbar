@@ -22,7 +22,7 @@ class   NonTty < Output
     output_string           = formatted_string[last_update_length..-1]
     self.last_update_length = formatted_string.length
 
-    output_string
+    output_string.to_s
   end
 
   def default_format
