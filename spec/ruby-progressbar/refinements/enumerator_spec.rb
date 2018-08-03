@@ -1,7 +1,7 @@
+unless RUBY_VERSION.start_with?('1.')
+
 require 'spec_helper'
 require 'ruby-progressbar/refinements/enumerator'
-
-return if RUBY_VERSION.start_with?('1.')
 
 class    ProgressBar
 module   Refinements
@@ -75,4 +75,6 @@ describe Enumerator do
   end
 end
 end
+end
+
 end
