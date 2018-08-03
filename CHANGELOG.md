@@ -1,3 +1,23 @@
+Version v1.10.0 - August 3, 2018
+================================================================================
+
+Add
+--------------------------------------------------------------------------------
+  * %W flag for complete_bar_with_percentage
+  * %W Flag for complete_bar_with_percentage
+
+Change
+--------------------------------------------------------------------------------
+  * Don't rely on default when building complete bar
+
+Fix
+--------------------------------------------------------------------------------
+  * NoMethodError on decrement when output is non-TTY
+
+Uncategorized
+--------------------------------------------------------------------------------
+  * Fix no method error on decrement when output is not TTY enabled
+
 Version v1.9.0 - September 27, 2017
 ================================================================================
 
