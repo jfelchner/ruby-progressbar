@@ -57,7 +57,13 @@ class   Bar
   def complete_bar(length)
     self.length = length
 
-    to_s
+    to_s(:format => :standard)
+  end
+
+  def complete_bar_with_percentage(length)
+    self.length = length
+
+    to_s(:format => :integrated_percentage)
   end
 
   def unknown_string

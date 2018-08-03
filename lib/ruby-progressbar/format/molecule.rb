@@ -17,13 +17,14 @@ class   Molecule
     :f => [:time,         :estimated_with_no_oob],
     :B => [:bar,          :complete_bar],
     :b => [:bar,          :bar],
+    :W => [:bar,          :complete_bar_with_percentage],
     :w => [:bar,          :bar_with_percentage],
     :i => [:bar,          :incomplete_space],
     :r => [:rate,         :rate_of_change],
     :R => [:rate,         :rate_of_change_with_precision]
   }.freeze
 
-  BAR_MOLECULES = %w{w B b i}.freeze
+  BAR_MOLECULES = %w{W w B b i}.freeze
 
   attr_accessor :key,
                 :method_name
