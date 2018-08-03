@@ -446,7 +446,8 @@ describe Base do
 
   context 'formatting the bar' do
     it 'allows the bar format to be updated dynamically after it is started' do
-      progressbar = ProgressBar::Base.new(:format => '%B %p%%',
+      progressbar = ProgressBar::Base.new(:output => output,
+                                          :format => '%B %p%%',
                                           :length => 20)
 
       expect(progressbar.to_s).to eql "#{' ' * 18}0%"
@@ -457,7 +458,8 @@ describe Base do
     end
 
     it 'allows the bar to be reset back to the default format' do
-      progressbar = ProgressBar::Base.new(:format => '%B %p%%',
+      progressbar = ProgressBar::Base.new(:output => output,
+                                          :format => '%B %p%%',
                                           :length => 100)
 
       expect(progressbar.to_s).to eql "#{' ' * 98}0%"
