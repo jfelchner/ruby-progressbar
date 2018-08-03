@@ -55,7 +55,7 @@ class   Length
     require 'io/console'
 
     def dynamic_width
-      if output && output.tty?
+      if output && output.tty? && output.respond_to?(:winsize)
         dynamic_width_via_output_stream_object
       elsif IO.console
         dynamic_width_via_io_object

@@ -1,4 +1,4 @@
-unless RUBY_VERSION.start_with?('1.')
+if Module.private_instance_methods.include?(:using)
 
 require 'spec_helper'
 require 'ruby-progressbar/refinements/enumerator'

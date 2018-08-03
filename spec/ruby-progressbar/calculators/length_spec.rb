@@ -55,35 +55,37 @@ describe  Length do
     expect(length_calculator.length).to eql 99
   end
 
-  it 'asks stream for length if it is a TTY' do
-    allow(tty_output).to receive(:winsize).and_return [123, 456]
-    allow(IO).to         receive(:console).and_call_original
+  unless RUBY_VERSION.start_with?('1.')
+    it 'asks stream for length if it is a TTY' do
+      allow(tty_output).to receive(:winsize).and_return [123, 456]
+      allow(IO).to         receive(:console).and_call_original
 
-    length_calculator = Calculators::Length.new(:output => tty_output)
+      length_calculator = Calculators::Length.new(:output => tty_output)
 
-    expect(IO).not_to                   have_received :console
-    expect(length_calculator.length).to eql           456
-  end
+      expect(IO).not_to                   have_received :console
+      expect(length_calculator.length).to eql           456
+    end
 
-  it 'asks IO.console to calculate length if the output is null' do
-    allow(tty_output).to receive(:winsize).and_return [123, 456]
-    allow(IO).to         receive(:console).and_return(tty_output)
+    it 'asks IO.console to calculate length if the output is null' do
+      allow(tty_output).to receive(:winsize).and_return [123, 456]
+      allow(IO).to         receive(:console).and_return(tty_output)
 
-    length_calculator = Calculators::Length.new
+      length_calculator = Calculators::Length.new
 
-    expect(length_calculator.length).to eql 456
-    expect(IO).to                       have_received(:console).
-                                        at_least(:once)
-  end
+      expect(length_calculator.length).to eql 456
+      expect(IO).to                       have_received(:console).
+                                          at_least(:once)
+    end
 
-  it 'asks IO.console to calculate length if the output is not a TTY' do
-    allow(non_tty_output).to receive(:winsize).and_return [654, 321]
-    allow(tty_output).to     receive(:winsize).and_return [123, 456]
-    allow(IO).to             receive(:console).and_return(tty_output)
+    it 'asks IO.console to calculate length if the output is not a TTY' do
+      allow(non_tty_output).to receive(:winsize).and_return [654, 321]
+      allow(tty_output).to     receive(:winsize).and_return [123, 456]
+      allow(IO).to             receive(:console).and_return(tty_output)
 
-    length_calculator = Calculators::Length.new(:output => non_tty_output)
+      length_calculator = Calculators::Length.new(:output => non_tty_output)
 
-    expect(length_calculator.length).to eql 456
+      expect(length_calculator.length).to eql 456
+    end
   end
 
   it 'defaults to 80 if it is not a Unix environment' do
