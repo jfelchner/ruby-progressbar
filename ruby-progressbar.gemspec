@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata      = {
     'bug_tracker_uri'   => 'https://github.com/jfelchner/ruby-progressbar/issues',
-    'changelog_uri'     => 'https://github.com/jfelchner/ruby-progressbar/CHANGELOG.md',
+    'changelog_uri'     => 'https://github.com/jfelchner/ruby-progressbar/blob/master/CHANGELOG.md',
     'documentation_uri' => "https://github.com/jfelchner/ruby-progressbar/tree/releases/v#{ProgressBar::VERSION}",
     'homepage_uri'      => 'https://github.com/jfelchner/ruby-progressbar',
     'source_code_uri'   => 'https://github.com/jfelchner/ruby-progressbar',
