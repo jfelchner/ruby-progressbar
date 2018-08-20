@@ -4,7 +4,6 @@ Version v1.10.0 - August 3, 2018
 Add
 --------------------------------------------------------------------------------
   * %W flag for complete_bar_with_percentage
-  * %W Flag for complete_bar_with_percentage
 
 Change
 --------------------------------------------------------------------------------
