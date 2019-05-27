@@ -2,10 +2,10 @@
 class   ProgressBar
 class   Time
   TIME_MOCKING_LIBRARY_METHODS = [
-                                   :__simple_stub__now,          # ActiveSupport
-                                   :now_without_mock_time,       # Timecop
-                                   :now_without_delorean,        # Delorean
-                                   :now                          # Actual
+                                   :__simple_stub__now,     # ActiveSupport
+                                   :now_without_mock_time,  # Timecop
+                                   :now_without_delorean,   # Delorean
+                                   :now                     # Unmocked
                                  ].freeze
 
   def initialize(time = ::Time)
@@ -13,7 +13,7 @@ class   Time
   end
 
   def now
-    time.__send__ unmocked_time_method
+    time.__send__(unmocked_time_method)
   end
 
   def unmocked_time_method
