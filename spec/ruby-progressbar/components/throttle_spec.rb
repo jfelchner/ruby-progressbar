@@ -61,7 +61,7 @@ describe Throttle do
 
     Timecop.return
 
-    expect(yielded).to eql 25
+    expect(yielded).to be 25
   end
 
   it 'yields if the period has passed, even after the initial yield' do
@@ -81,7 +81,7 @@ describe Throttle do
 
     Timecop.return
 
-    expect(yielded).to eql true
+    expect(yielded).to be true
   end
 
   it 'does not yield after a previous yield if the period has not passed yet' do
@@ -105,7 +105,7 @@ describe Throttle do
         yielded = true
       end
 
-      expect(yielded).to eql false
+      expect(yielded).to be false
     end
 
     Timecop.return
@@ -133,7 +133,7 @@ describe Throttle do
 
     Timecop.return
 
-    expect(yielded).to eql true
+    expect(yielded).to be true
   end
 
   it 'does not throttle if no throttle rate is given' do
@@ -151,7 +151,7 @@ describe Throttle do
 
     Timecop.return
 
-    expect(yield_count).to eql 25
+    expect(yield_count).to be 25
   end
 end
 end

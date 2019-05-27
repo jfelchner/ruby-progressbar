@@ -34,7 +34,7 @@ describe Progress do
 
     progress.start :at => 10
 
-    expect(progress.progress).to eql 10
+    expect(progress.progress).to be 10
   end
 
   it 'knows how to finish itself even if the total is unknown' do
@@ -48,7 +48,7 @@ describe Progress do
                             :progress_mark  => 'x',
                             :remainder_mark => '.')
 
-    expect(progress.total).to eql 12
+    expect(progress.total).to be 12
   end
 
   it 'knows the percentage completed when begun with no progress' do
@@ -56,7 +56,7 @@ describe Progress do
 
     progress.start
 
-    expect(progress.percentage_completed).to eql 0
+    expect(progress.percentage_completed).to be 0
   end
 
   it 'knows the progress after it has been incremented' do
@@ -65,7 +65,7 @@ describe Progress do
     progress.start
     progress.increment
 
-    expect(progress.progress).to eql 1
+    expect(progress.progress).to be 1
   end
 
   it 'knows the percentage completed after it has been incremented' do
@@ -74,7 +74,7 @@ describe Progress do
     progress.start
     progress.increment
 
-    expect(progress.percentage_completed).to eql 2
+    expect(progress.percentage_completed).to be 2
   end
 
   it 'knows to always round down the percentage completed' do
@@ -82,7 +82,7 @@ describe Progress do
 
     progress.start :at => 1
 
-    expect(progress.percentage_completed).to eql 0
+    expect(progress.percentage_completed).to be 0
   end
 
   it 'cannot increment past the total' do
@@ -91,8 +91,8 @@ describe Progress do
     progress.start :at => 50
     progress.increment
 
-    expect(progress.progress).to eql 50
-    expect(progress.percentage_completed).to eql 100
+    expect(progress.progress).to be 50
+    expect(progress.percentage_completed).to be 100
   end
 
   it 'allow progress to be decremented once it is finished' do
@@ -101,10 +101,11 @@ describe Progress do
     progress.start :at => 50
     progress.decrement
 
-    expect(progress.progress).to eql 49
-    expect(progress.percentage_completed).to eql 98
+    expect(progress.progress).to be 49
+    expect(progress.percentage_completed).to be 98
   end
 
+  # rubocop:disable RSpec/BeEql
   it 'knows the running average even when progress has been made' do
     progress = Progress.new(:total => 50)
 
@@ -138,11 +139,12 @@ describe Progress do
   it 'has a default smoothing value' do
     expect(Progress.new.smoothing).to eql 0.1
   end
+  # rubocop:enable RSpec/BeEql
 
   it 'knows the percentage completed is 100% if the total is zero' do
     progress = Progress.new(:total => 0)
 
-    expect(progress.percentage_completed).to eql 100
+    expect(progress.percentage_completed).to be 100
   end
 
   it 'raises an error when passed a number larger than the total' do

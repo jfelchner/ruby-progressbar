@@ -26,7 +26,7 @@ describe Base do
     non_tty_output.read
   end
 
-  context 'the title' do
+  context 'with the title' do
     it 'has a default' do
       progressbar = ProgressBar::Base.new
 
@@ -77,7 +77,7 @@ describe Base do
     end
   end
 
-  context 'the progress_mark' do
+  context 'with the progress_mark' do
     it 'can be changed even after the bar is started' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :length        => 20,
@@ -93,7 +93,7 @@ describe Base do
     end
   end
 
-  context 'the remainder_mark' do
+  context 'with the remainder_mark' do
     it 'can be changed even after the bar is started' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :length        => 20,
@@ -109,7 +109,7 @@ describe Base do
     end
   end
 
-  context 'the output stream' do
+  context 'with the output stream' do
     it 'has a default' do
       progressbar    = ProgressBar::Base.new
       default_stream = progressbar.send(:output).send(:stream)
@@ -125,12 +125,12 @@ describe Base do
     end
   end
 
-  context 'the bar length' do
+  context 'with the bar length' do
     it 'is able to be overridden on creation' do
       progressbar       = ProgressBar::Base.new(:length => 88)
       length_calculator = progressbar.send(:output).send(:length_calculator)
 
-      expect(length_calculator.send(:length)).to eql 88
+      expect(length_calculator.send(:length)).to be 88
     end
 
     it 'can handle the terminal width changing on the fly' do
@@ -155,7 +155,7 @@ describe Base do
     end
   end
 
-  context 'starting the bar' do
+  context 'when starting the bar' do
     it 'clears the current terminal line' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :length        => 20,
@@ -194,7 +194,7 @@ describe Base do
     end
   end
 
-  context 'stopping the bar' do
+  context 'when stopping the bar' do
     it 'forcibly halts the bar wherever it is and cancels further progress' do
       progressbar = ProgressBar::Base.new(:output => output, :length => 20)
 
@@ -245,7 +245,7 @@ describe Base do
     end
   end
 
-  context 'finishing the bar' do
+  context 'when finishing the bar' do
     it 'does not spam the screen for a non-TTY enabled devices' do
       progressbar = ProgressBar::Base.new(:output        => non_tty_output,
                                           :length        => 20,
@@ -372,7 +372,7 @@ describe Base do
     end
   end
 
-  context 'resetting the bar' do
+  context 'when resetting the bar' do
     it 'sets the bar back to the starting value' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :length        => 20,
@@ -404,8 +404,8 @@ describe Base do
     end
   end
 
-  context 'logging messages' do
-    it 'it can log messages for a TTY enabled device' do
+  context 'when logging messages' do
+    it 'can log messages for a TTY enabled device' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :length        => 20,
                                           :starting_at   => 3,
@@ -425,7 +425,7 @@ describe Base do
                                    "Progress: |======  |\r"
     end
 
-    it 'it can log messages for a non-TTY enabled device' do
+    it 'can log messages for a non-TTY enabled device' do
       progressbar = ProgressBar::Base.new(:output        => non_tty_output,
                                           :length        => 20,
                                           :starting_at   => 4,
@@ -444,7 +444,7 @@ describe Base do
     end
   end
 
-  context 'formatting the bar' do
+  context 'when formatting the bar' do
     it 'allows the bar format to be updated dynamically after it is started' do
       progressbar = ProgressBar::Base.new(:output => output,
                                           :format => '%B %p%%',
@@ -470,7 +470,7 @@ describe Base do
     end
   end
 
-  context 'clearing the bar' do
+  context 'when clearing the bar' do
     it 'clears the current terminal line and/or bar text' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :starting_at   => 40,
@@ -485,7 +485,7 @@ describe Base do
     end
   end
 
-  context 'incrementing the bar' do
+  context 'when incrementing the bar' do
     it 'displays the bar with the correct progress' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :length        => 20,
@@ -501,7 +501,7 @@ describe Base do
     end
   end
 
-  context 'decrementing the bar' do
+  context 'when decrementing the bar' do
     it 'displays the bar with the correct progress' do
       progressbar = ProgressBar::Base.new(:output        => output,
                                           :length        => 20,
@@ -516,7 +516,7 @@ describe Base do
                                    "Progress: |        |\r"
     end
 
-    context 'for non-TTY enabled devices' do
+    context 'with non-TTY enabled devices' do
       it 'does nothing' do
         progressbar = ProgressBar::Base.new(:output        => non_tty_output,
                                             :length        => 20,

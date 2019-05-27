@@ -17,13 +17,14 @@ describe  Length do
   end
 
   context 'when the RUBY_PROGRESS_BAR_LENGTH environment variable exists' do
-    before  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = '44' }
-    after   { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
+    before(:each)  { ENV['RUBY_PROGRESS_BAR_LENGTH'] = '44' }
+
+    after(:each)   { ENV['RUBY_PROGRESS_BAR_LENGTH'] = nil }
 
     it 'calculates the length as the value of the environment variable as an integer' do
       length_calculator = Calculators::Length.new
 
-      expect(length_calculator.length).to eql 44
+      expect(length_calculator.length).to be 44
     end
   end
 
@@ -33,17 +34,17 @@ describe  Length do
     it 'can properly calculate the length even if IO.console is nil' do
       calculator = Length.new
 
-      expect(IO).to         receive(:console).and_return nil
-      expect(calculator).to receive(:dynamic_width_via_system_calls).and_return 123_456
+      allow(IO).to         receive(:console).and_return nil
+      allow(calculator).to receive(:dynamic_width_via_system_calls).and_return 123_456
 
-      expect(calculator.calculate_length).to eql 123_456
+      expect(calculator.calculate_length).to be 123_456
     end
   end
 
   it 'allows the length to be overridden on creation' do
     length_calculator = Calculators::Length.new(:length => 88)
 
-    expect(length_calculator.length).to eql 88
+    expect(length_calculator.length).to be 88
   end
 
   it 'can calculate the width of the terminal in Unix environments' do
@@ -52,7 +53,7 @@ describe  Length do
     allow(length_calculator).to receive(:unix?).and_return(true)
     allow(length_calculator).to receive(:dynamic_width).and_return(99)
 
-    expect(length_calculator.length).to eql 99
+    expect(length_calculator.length).to be 99
   end
 
   unless RUBY_VERSION.start_with?('1.')
@@ -63,7 +64,7 @@ describe  Length do
       length_calculator = Calculators::Length.new(:output => tty_output)
 
       expect(IO).not_to                   have_received :console
-      expect(length_calculator.length).to eql           456
+      expect(length_calculator.length).to be 456
     end
 
     it 'asks IO.console to calculate length if the output is null' do
@@ -72,7 +73,7 @@ describe  Length do
 
       length_calculator = Calculators::Length.new
 
-      expect(length_calculator.length).to eql 456
+      expect(length_calculator.length).to be 456
       expect(IO).to                       have_received(:console).
                                           at_least(:once)
     end
@@ -84,7 +85,7 @@ describe  Length do
 
       length_calculator = Calculators::Length.new(:output => non_tty_output)
 
-      expect(length_calculator.length).to eql 456
+      expect(length_calculator.length).to be 456
     end
   end
 
@@ -93,7 +94,7 @@ describe  Length do
 
     allow(length_calculator).to receive(:unix?).and_return(false)
 
-    expect(length_calculator.length).to eql 80
+    expect(length_calculator.length).to be 80
   end
 
   it 'defaults to 80 if the width is less than 20' do
@@ -102,7 +103,7 @@ describe  Length do
     allow(length_calculator).to receive(:unix?).and_return(true)
     allow(length_calculator).to receive(:dynamic_width).and_return(19)
 
-    expect(length_calculator.length).to eql 80
+    expect(length_calculator.length).to be 80
   end
 end
 end

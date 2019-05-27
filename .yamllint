@@ -1,0 +1,53 @@
+rules:
+  braces:
+    min-spaces-inside:                   1
+    max-spaces-inside:                   1
+    min-spaces-inside-empty:             0
+    max-spaces-inside-empty:             0
+  brackets:
+    min-spaces-inside:                   0
+    max-spaces-inside:                   0
+    min-spaces-inside-empty:             0
+    max-spaces-inside-empty:             0
+  colons:
+    max-spaces-before:                   0
+    max-spaces-after:                    -1
+  commas:
+    max-spaces-before:                   0
+    min-spaces-after:                    1
+    max-spaces-after:                    1
+  comments:
+    require-starting-space:              true
+    min-spaces-from-content:             1
+  comments-indentation:                  "enable"
+  document-end:
+    present:                             false
+  document-start:
+    present:                             false
+  empty-lines:
+    max:                                 1
+    max-start:                           0
+    max-end:                             0
+  empty-values:
+    forbid-in-block-mappings:            true
+    forbid-in-flow-mappings:             true
+  hyphens:
+    max-spaces-after:                    1
+  indentation:
+    spaces:                              2
+    indent-sequences:                    true
+    check-multi-line-strings:            false
+  key-duplicates:                        "enable"
+  key-ordering:                          "disable"
+  line-length:
+    max:                                 90
+    allow-non-breakable-words:           true
+    allow-non-breakable-inline-mappings: true
+  new-line-at-end-of-file:               "enable"
+  new-lines:
+    type:                                "unix"
+  octal-values:
+    forbid-implicit-octal:               true
+    forbid-explicit-octal:               true
+  trailing-spaces:                       "enable"
+  truthy:                                "enable"

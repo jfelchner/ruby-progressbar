@@ -10,7 +10,7 @@ describe Formatter do
   let(:four_minutes_ago)      { -240 }
   let(:one_minute_ago)        { -60 }
 
-  context 'the %% flag' do
+  context 'with the %% flag' do
     let(:format) { Format::String.new('%%') }
 
     it 'displays a literal percent sign' do
@@ -20,7 +20,7 @@ describe Formatter do
     end
   end
 
-  context 'the %a flag' do
+  context 'with the %a flag' do
     let(:format) { Format::String.new('%a') }
 
     it 'is "--:--:--" when displayed after starting the bar and then resetting the bar' do
@@ -60,7 +60,7 @@ describe Formatter do
     end
   end
 
-  context 'the %b flag' do
+  context 'with the %b flag' do
     let(:format) { Format::String.new('%b') }
 
     it 'is the bar (excluding incomplete space)' do
@@ -69,7 +69,7 @@ describe Formatter do
     end
   end
 
-  context 'the %B flag' do
+  context 'with the %B flag' do
     let(:format) { Format::String.new('%B') }
 
     it 'is the bar (including incomplete space)' do
@@ -79,7 +79,7 @@ describe Formatter do
     end
   end
 
-  context 'the %c flag' do
+  context 'with the %c flag' do
     let(:format) { Format::String.new('%c') }
 
     it 'is the current capacity/progress' do
@@ -93,7 +93,7 @@ describe Formatter do
     end
   end
 
-  context 'the %C flag' do
+  context 'with the %C flag' do
     let(:format) { Format::String.new('%C') }
 
     it 'is the total capacity/progress' do
@@ -109,7 +109,7 @@ describe Formatter do
     end
   end
 
-  context 'the %e flag' do
+  context 'with the %e flag' do
     let(:format) { Format::String.new('%e') }
 
     it 'is unknown estimated time when called before the bar is started' do
@@ -174,7 +174,7 @@ describe Formatter do
     end
   end
 
-  context 'the %E flag' do
+  context 'with the %E flag' do
     let(:format) { Format::String.new('%E') }
 
     it 'is unknown estimated time when called before the bar is started' do
@@ -239,7 +239,7 @@ describe Formatter do
     end
   end
 
-  context 'the %f flag' do
+  context 'with the %f flag' do
     let(:format) { Format::String.new('%f') }
 
     it 'is unknown estimated time when called before the bar is started' do
@@ -290,7 +290,7 @@ describe Formatter do
     end
   end
 
-  context 'the %i flag' do
+  context 'with the %i flag' do
     let(:format) { Format::String.new('%i') }
 
     it 'is the incomplete space' do
@@ -331,7 +331,7 @@ describe Formatter do
     end
   end
 
-  context 'the %j flag' do
+  context 'with the %j flag' do
     let(:format) { Format::String.new('%j') }
 
     it 'is the justified percentage complete floored to the nearest whole number' do
@@ -353,7 +353,7 @@ describe Formatter do
     end
   end
 
-  context 'the %J flag' do
+  context 'with the %J flag' do
     let(:format) { Format::String.new('%J') }
 
     it 'is the justified percentage complete floored to two decimal places' do
@@ -375,7 +375,7 @@ describe Formatter do
     end
   end
 
-  context 'the %p flag' do
+  context 'with the %p flag' do
     let(:format) { Format::String.new('%p') }
 
     it 'is the percentage complete floored to the nearest whole number' do
@@ -397,7 +397,7 @@ describe Formatter do
     end
   end
 
-  context 'the %P flag' do
+  context 'with the %P flag' do
     let(:format) { Format::String.new('%P') }
 
     it 'is the percentage complete floored to two decimal places' do
@@ -425,7 +425,7 @@ describe Formatter do
     end
   end
 
-  context 'the %r flag' do
+  context 'with the %r flag' do
     let(:format) { Format::String.new('%r') }
 
     it 'is the rate' do
@@ -507,7 +507,7 @@ describe Formatter do
     end
   end
 
-  context 'the %R flag' do
+  context 'with the %R flag' do
     let(:format) { Format::String.new('%R') }
 
     it 'is the rate' do
@@ -589,7 +589,7 @@ describe Formatter do
     end
   end
 
-  context 'the %t flag' do
+  context 'with the %t flag' do
     let(:format) { Format::String.new('%t') }
 
     it 'is the title' do
@@ -599,7 +599,7 @@ describe Formatter do
     end
   end
 
-  context 'the %T flag' do
+  context 'with the %T flag' do
     let(:format) { Format::String.new('%T') }
 
     it 'is the title' do
@@ -609,7 +609,7 @@ describe Formatter do
     end
   end
 
-  context 'the %u flag' do
+  context 'with the %u flag' do
     let(:format) { Format::String.new('%u') }
 
     it 'is "??" when the total is unknown' do
@@ -619,7 +619,7 @@ describe Formatter do
     end
   end
 
-  context 'the %W flag' do
+  context 'with the %W flag' do
     let(:format) { Format::String.new('%W') }
 
     it 'is the bar with percentage (including incomplete space)' do
@@ -640,7 +640,7 @@ describe Formatter do
     end
   end
 
-  context 'the %w flag' do
+  context 'with the %w flag' do
     let(:format) { Format::String.new('%w') }
 
     it 'is the bar with the percentage' do
@@ -661,7 +661,7 @@ describe Formatter do
     end
   end
 
-  context 'combined flags' do
+  context 'with combined flags' do
     it 'is the whole bar when combining both the bar and incomplete space flags' do
       format      = Format::String.new('%b%i')
       progressbar = ProgressBar::Base.new(:length => 100)

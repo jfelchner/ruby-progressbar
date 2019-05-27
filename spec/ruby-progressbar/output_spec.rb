@@ -26,7 +26,7 @@ describe Output do
   let(:output_io) { StringIO.new }
 
   it 'uses the passed in output class if it is a ProgressBar::Output' do
-    allow_any_instance_of(MyTestOutput).to receive(:stream).and_return(output_io)
+    allow_any_instance_of(MyTestOutput).to receive(:stream).and_return(output_io) # rubocop:disable RSpec/AnyInstance
 
     progressbar = ProgressBar::Base.new(:length => 20, :output => MyTestOutput)
 

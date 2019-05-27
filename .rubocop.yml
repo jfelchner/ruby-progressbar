@@ -1,56 +1,6 @@
 inherit_from:
   - '.rubocop_core.yml'
+  - '.rubocop_rspec.yml'
+  - '.rubocop_local.yml'
 
-# Put your project-specifc Rubocop config here
-
-Layout/ClassStructure:
-  Enabled: false
-
-Layout/ClosingParenthesisIndentation:
-  Enabled: false
-
-Layout/DotPosition:
-  EnforcedStyle: 'trailing'
-
-Layout/ExtraSpacing:
-  Enabled: false
-
-Layout/IndentationWidth:
-  Enabled: false
-
-Layout/MultilineMethodCallIndentation:
-  Enabled: false
-
-Naming/FileName:
-  Exclude:
-    - 'lib/ruby-progressbar.rb'
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
-
-Style/Lambda:
-  Enabled: false
-
-Style/NumericPredicate:
-  Enabled: false
-
-Style/OptionHash:
-  Enabled: false
-
-Style/SafeNavigation:
-  Enabled: false
-
-Style/SymbolArray:
-  Enabled: false
-
-Style/TrailingCommaInArguments:
-  EnforcedStyleForMultiline: 'no_comma'
-
-Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: 'no_comma'
-
-Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: 'no_comma'
+# Put your project-specific Rubocop configuration in .rubocop_local.yml

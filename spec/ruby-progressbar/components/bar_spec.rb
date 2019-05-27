@@ -47,16 +47,6 @@ describe Bar do
     expect(progressbar.to_s).to eql '==' + (' ' * 98)
   end
 
-  it 'displays the bar with no indication of progress when nothing has been ' \
-     'completed and the bar is incremented' do
-
-    progress    = Progress.new :total    => 50
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-
-    expect(progressbar.to_s).to eql ' ' * 100
-  end
-
   it 'displays the bar with no indication of progress when a fraction of a percentage ' \
      'has been completed' do
 
@@ -69,16 +59,6 @@ describe Bar do
   end
 
   it 'displays the bar as 100% complete when completed' do
-    progress    = Progress.new :total    => 50
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-    progress.start :at => 50
-    progress.increment
-
-    expect(progressbar.to_s).to eql '=' * 100
-  end
-
-  it 'displays the bar as 100% complete when completed and the bar is incremented' do
     progress    = Progress.new :total    => 50
     progressbar = Bar.new      :progress => progress,
                                :length   => 100

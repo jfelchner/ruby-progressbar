@@ -1,8 +1,8 @@
 class   ProgressBar
 module  Format
 class   String < ::String
-  MOLECULE_PATTERN = /%[a-zA-Z]/
-  ANSI_SGR_PATTERN = /\e\[[\d;]+m/
+  MOLECULE_PATTERN = /%[a-zA-Z]/.freeze
+  ANSI_SGR_PATTERN = /\e\[[\d;]+m/.freeze
 
   def displayable_length
     gsub(ANSI_SGR_PATTERN, '').length

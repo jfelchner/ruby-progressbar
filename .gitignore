@@ -2,13 +2,20 @@
 Pods
 bower_components
 node_modules
-site/web/app/mu-plugins
-site/web/app/plugins
-site/web/wp
+web/app/mu-plugins
+web/app/plugins
+web/app/upgrade
+web/app/uploads
+web/wp
 vendor
 
 # OS Files
+.AppleDB
+.AppleDesktop
+.AppleDouble
 .DS_Store
+.LSOverride
+.apdisk
 Thumbs.db
 
 # Testing Files
@@ -21,13 +28,23 @@ site/web/app/uploads
 test/data
 
 # Cache Files
+*.stTheme.cache
 *.tfstate
+*.tmPreferences.cache
+*.tmlanguage.cache
+.TAGS
 .byebug_history
 .divshot-cache
+.dropbox
+.dropbox.attr
+.dropbox.cache
 .rake_tasks
+.repl_history
 .sass-cache
+.tags
 .yardoc
 /variables.tf.json
+TAGS
 _yardoc
 disk_image_for_*.json
 disk_image_settings.json
@@ -35,13 +52,19 @@ lambdas/*.js
 lambdas/*.py
 lambdas/*.zip
 packer_cache
+public/packs*
 public/system
 site/web/app/upgrade
 spec/reports
 tags
 terraform.tfvars
+test/tmp
+test/version_tmp
 tmtags
 variables.sls
+
+!TAGS/
+!tags/
 
 # Local Compiled Files
 **/cordova/platforms/android/CordovaLib/ant-build
@@ -65,19 +88,25 @@ variables.sls
 **/cordova/platforms/wp8/www
 **/public/stylesheets/*.css
 *.a
+*.css.map
+*.elc
+*.gem
 *.hmap
 *.ipa
 *.o
 *.rbc
+*.sass.map
+*.scss.map
 *.so
 *.xccheckout
 *.xcuserdatad
 DerivedData
 build
+build-iPhoneOS
+build-iPhoneSimulator
 coverage
 coverage.data
 dist
-docs/**/*.*
 files/scripts/**/*.js
 files/scripts/**/*.py
 files/scripts/**/*.zip
@@ -88,16 +117,7 @@ profile
 rdoc
 target
 
-# Documentation Code Is Used to Generate Static Files
-!docs/**/*.rb
-!docs/**/header.md
-
 # Local Configuration Files
-!.env.example
-!default.mode1v3
-!default.mode2v3
-!default.pbxuser
-!default.perspectivev3
 **/cordova/platforms/android/CordovaLib/local.properties
 **/cordova/platforms/android/local.properties
 **/settings-local.yml
@@ -112,6 +132,7 @@ target
 *.perspectivev3
 *.project
 *.sublime-project
+*.sublime-settings
 *.sublime-workspace
 *.tmproj
 .Rhistory
@@ -120,7 +141,12 @@ target
 .chamber*.enc
 .chamber*.enc.pass
 .chamber*.pem
+.emacs.desktop
+.emacs.desktop.lock
 .env
+.env.*
+.env.*.local
+.env.local
 .env.yml
 .foreman
 .htaccess
@@ -134,8 +160,8 @@ target
 .rvmrc
 .secrets
 .shellwreck.sh
-.terraform
 .tern-port
+.terraform
 Gemfile.local
 Procfile.local
 atlassian-ide-plugin.xml
@@ -143,6 +169,8 @@ com_crashlytics_export_strings.xml
 config.yml
 config/application.yml
 config/database.yml
+config/initializers/secret_token.rb
+config/master.key
 config/secrets.yml
 crashlytics-build.properties
 crashlytics.properties
@@ -150,27 +178,38 @@ nbproject
 xcuserdata
 
 !.circleci/config.yml
+!.env.example
+!default.mode1v3
+!default.mode2v3
+!default.pbxuser
+!default.perspectivev3
 
 # Temporary files
 *.backup
 *.bak
+*.gho
 *.lck
 *.lock
 *.log*
 *.moved-aside
 *.old
+*.ori
 *.orig
+*.rs.bk
 *.sqlite3
 *.sqlite3-journal
 *.swo
 *.swp
+*.tmp
 *~
 .\#*
+.netrwhist
 \#*
 db-sync
 dump.rdb
 log
 solr/*
+spec/examples.txt
 sql-dump-*.sql
 tmp
 
