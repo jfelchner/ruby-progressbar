@@ -34,5 +34,5 @@ The names and logos for The Kompanee are trademarks of The Kompanee, Ltd.
 License
 --------------------------------
 
-ruby-progressbar 1.0 is Copyright &copy; 2011-2018 The Kompanee. It is free software, and may be redistributed under the terms specified in the LICENSE file.
+ruby-progressbar 1.0 is Copyright &copy; 2011-2019 The Kompanee. It is free software, and may be redistributed under the terms specified in the LICENSE file.
 ruby-progressbar 0.9.0 is Copyright &copy; 2008 [Satoru Takabayashi](http://0xcc.net)
