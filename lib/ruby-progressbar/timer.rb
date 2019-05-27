@@ -6,7 +6,7 @@ class   Timer
                 :stopped_at
 
   def initialize(options = {})
-    self.time = options[:time] || Time.new
+    self.time = options[:time] || ::ProgressBar::Time.new
   end
 
   def start
