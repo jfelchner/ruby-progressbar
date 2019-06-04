@@ -20,7 +20,3 @@ rvm:
 before_install:
   - gem update bundler
 script: bundle exec rspec
-notifications:
-  slack:
-    rooms:
-      - thekompanee:p46x27zMG89XW66DgGuutoaW#open-source
