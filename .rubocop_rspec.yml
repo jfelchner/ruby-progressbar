@@ -1,7 +1,11 @@
-# Last updated to 1.31.0
+# Last updated to 1.36.0
 
 require:
   - 'rubocop-rspec'
+
+################################################################################
+#                                  RSPEC
+################################################################################
 
 Capybara/FeatureMethods:
   Enabled:                        true
@@ -44,11 +48,17 @@ RSpec/BeforeAfterAll:
     - 'spec/rails_helper.rb'
     - 'spec/support/**/*.rb'
 
+RSpec/ContextMethod:
+  Enabled:                        true
+
 RSpec/ContextWording:
   Enabled:                        true
   Prefixes:
     - 'administrators'
+    - 'and'
     - 'anyone'
+    - 'but'
+    - 'or'
     - 'regular users'
     - 'when'
     - 'with'
@@ -68,9 +78,17 @@ RSpec/DescribedClass:
   SkipBlocks:                     false
   EnforcedStyle:                  'explicit'
 
+RSpec/Dialect:
+  Enabled:                        true
+  PreferredMethods:               {}
+
 RSpec/EmptyExampleGroup:
   Enabled:                        false
   CustomIncludeMethods:           []
+
+RSpec/EmptyLineAfterExample:
+  Enabled:                        true
+  AllowConsecutiveOneLiners:      true
 
 RSpec/EmptyLineAfterExampleGroup:
   Enabled:                        true
@@ -130,6 +148,9 @@ RSpec/HookArgument:
 RSpec/HooksBeforeExamples:
   Enabled:                        true
 
+RSpec/ImplicitBlockExpectation:
+  Enabled:                        true
+
 RSpec/ImplicitExpect:
   Enabled:                        true
   EnforcedStyle:                  'is_expected'
@@ -157,6 +178,9 @@ RSpec/IteratedExpectation:
 RSpec/LeadingSubject:
   Enabled:                        true
 
+RSpec/LeakyConstantDeclaration:
+  Enabled:                        true
+
 RSpec/LetBeforeExamples:
   Enabled:                        true
 
@@ -182,7 +206,6 @@ RSpec/MultipleDescribes:
 
 RSpec/MultipleExpectations:
   Enabled:                        false
-  AggregateFailuresByDefault:     true
   Max:                            5
 
 RSpec/MultipleSubjects:
@@ -194,7 +217,7 @@ RSpec/NamedSubject:
 
 RSpec/NestedGroups:
   Enabled:                        true
-  Max:                            1
+  Max:                            2
 
 RSpec/NotToNot:
   Enabled:                        true

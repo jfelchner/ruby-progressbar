@@ -1,4 +1,4 @@
-# Last updated to rubocop 0.67.2
+# Last updated to rubocop 0.76.0
 
 AllCops:
   Include:
@@ -105,6 +105,9 @@ Gemspec/OrderedDependencies:
 Gemspec/RequiredRubyVersion:
   Enabled:                                    true
 
+Gemspec/RubyVersionGlobalsUsage:
+  Enabled:                                    true
+
 ################################################################################
 #                                  LAYOUT
 ################################################################################
@@ -113,6 +116,12 @@ Layout/AccessModifierIndentation:
   Enabled:                                    true
   EnforcedStyle:                              'indent'
   IndentationWidth:                           ~
+
+Layout/AlignArguments:
+  Enabled:                                    true
+  EnforcedStyle:                              'with_first_argument'
+  Exclude:
+    - '**/Gemfile'
 
 Layout/AlignArray:
   Enabled:                                    true
@@ -201,8 +210,6 @@ Layout/ClosingHeredocIndentation:
 
 Layout/ClosingParenthesisIndentation:
   Enabled:                                    true
-  Exclude:
-    - '**/spec/**/*_spec.rb'
 
 Layout/CommentIndentation:
   Enabled:                                    true
@@ -242,6 +249,7 @@ Layout/EmptyLineBetweenDefs:
 
 Layout/EmptyLinesAroundAccessModifier:
   Enabled:                                    true
+  EnforcedStyle:                              'around'
 
 Layout/EmptyLinesAroundArguments:
   Enabled:                                    true
@@ -308,12 +316,8 @@ Layout/FirstMethodParameterLineBreak:
   #                          bar)
   Enabled:                                    false
 
-Layout/FirstParameterIndentation:
+Layout/HeredocArgumentClosingParenthesis:
   Enabled:                                    true
-  EnforcedStyle:                              'consistent_relative_to_receiver'
-  IndentationWidth:                           ~
-  Exclude:
-    - '**/spec/**/*_spec.rb'
 
 Layout/IndentationConsistency:
   Enabled:                                    true
@@ -325,19 +329,28 @@ Layout/IndentationWidth:
   IgnoredPatterns:
     - '^\s*(module|class)'
 
-Layout/IndentArray:
-  Enabled:                                    true
-  EnforcedStyle:                              'align_brackets'
-  IndentationWidth:                           ~
-
 Layout/IndentAssignment:
   Enabled:                                    true
   IndentationWidth:                           ~
 
-Layout/IndentHash:
+Layout/IndentFirstArgument:
+  Enabled:                                    true
+  EnforcedStyle:                              'consistent_relative_to_receiver'
+  IndentationWidth:                           ~
+
+Layout/IndentFirstArrayElement:
+  Enabled:                                    true
+  EnforcedStyle:                              'align_brackets'
+  IndentationWidth:                           ~
+
+Layout/IndentFirstHashElement:
   Enabled:                                    true
   EnforcedStyle:                              'special_inside_parentheses'
   IndentationWidth:                           ~
+
+Layout/IndentFirstParameter:
+  Enabled:                                    true
+  EnforcedStyle:                              'align_parentheses'
 
 Layout/IndentHeredoc:
   Enabled:                                    true
@@ -373,9 +386,8 @@ Layout/MultilineHashBraceLayout:
 Layout/MultilineHashKeyLineBreaks:
   Enabled:                                    true
 
-# https://github.com/rubocop-hq/rubocop/issues/6936
 Layout/MultilineMethodArgumentLineBreaks:
-  Enabled:                                    false
+  Enabled:                                    true
   Exclude:
     - 'Gemfile'
     - 'config/routes.rb'
@@ -584,6 +596,10 @@ Lint/FormatParameterMismatch:
 
 Lint/HandleExceptions:
   Enabled:                                    true
+  AllowComments:                              true
+
+Lint/HeredocMethodCallPosition:
+  Enabled:                                    true
 
 Lint/ImplicitStringConcatenation:
   Enabled:                                    true
@@ -664,6 +680,9 @@ Lint/SafeNavigationWithEmpty:
 Lint/ScriptPermission:
   Enabled:                                    true
 
+Lint/SendWithMixinArgument:
+  Enabled:                                    true
+
 Lint/ShadowedArgument:
   Enabled:                                    true
   IgnoreImplicitReferences:                   false
@@ -686,16 +705,16 @@ Lint/UnderscorePrefixedVariableName:
 Lint/UnifiedInteger:
   Enabled:                                    true
 
-Lint/UnneededCopDisableDirective:
+Lint/RedundantCopDisableDirective:
   Enabled:                                    true
 
-Lint/UnneededCopEnableDirective:
+Lint/RedundantCopEnableDirective:
   Enabled:                                    true
 
-Lint/UnneededRequireStatement:
+Lint/RedundantRequireStatement:
   Enabled:                                    true
 
-Lint/UnneededSplatExpansion:
+Lint/RedundantSplatExpansion:
   Enabled:                                    true
 
 Lint/UnreachableCode:
@@ -825,6 +844,7 @@ Metrics/LineLength:
     - "^\\s+expect\\([^\\)]+\\)+\\.(not_)?to\\s+[^\\s]+\\s+'[^']+'$"            # RSpec expectation line for a single-quoted string
     - "^\\s+expect\\([^\\)]+\\)+\\.(not_)?to\\s+[^\\s]+\\s+Time\\.(new|utc).*"  # RSpec expectation line for a Time
     - "^\\s+expect\\([^\\)]+\\)+\\.(not_)?to\\s+[^\\s]+\\s+\\\"[^\\\"]+\\\"$"   # RSpec expectation line for a double-quoted string
+    - "^\\s+expect\\([^\\)]+\\)+\\.(not_)?to\\s+match\\(/[^/]+/\\)$"            # RSpec expectation line for a regex
     - "^\\s+return\\s+.*(if|unless)"                                            # Short circuiting returns
     - '^\s*((private|public|protected)\s+)?def\s+[\w\._]+\(?'                   # Method definitions
     - '^\s+belongs_to\s+.*'                                                     # Rails belongs_to relationships
@@ -920,6 +940,7 @@ Naming/MemoizedInstanceVariableName:
 Naming/MethodName:
   Enabled:                                    true
   EnforcedStyle:                              'snake_case'
+  IgnoredPatterns:                            []
 
 Naming/PredicateName:
   Enabled:                                    true
@@ -964,6 +985,7 @@ Naming/UncommunicativeMethodParamName:
     - 'io'
     - 'ip'
     - 'on'
+    - 'os'
     - 'to'
   ForbiddenNames:                             []
 
@@ -974,89 +996,6 @@ Naming/VariableName:
 Naming/VariableNumber:
   Enabled:                                    true
   EnforcedStyle:                              'snake_case'
-
-################################################################################
-#                                PERFORMANCE
-################################################################################
-
-Performance/Caller:
-  Enabled:                                    true
-
-Performance/Casecmp:
-  Enabled:                                    true
-
-Performance/CaseWhenSplat:
-  Enabled:                                    true
-
-Performance/ChainArrayAllocation:
-  Enabled:                                    true
-
-Performance/CompareWithBlock:
-  Enabled:                                    true
-
-Performance/Count:
-  Enabled:                                    true
-
-Performance/Detect:
-  Enabled:                                    true
-
-Performance/DoubleStartEndWith:
-  Enabled:                                    true
-  IncludeActiveSupportAliases:                true
-
-Performance/EndWith:
-  Enabled:                                    true
-
-Performance/FixedSize:
-  Enabled:                                    true
-
-Performance/FlatMap:
-  Enabled:                                    true
-
-Performance/InefficientHashSearch:
-  Enabled:                                    true
-
-Performance/OpenStruct:
-  Enabled:                                    true
-  Exclude:
-    - '**/spec/**/*.rb'
-
-Performance/RangeInclude:
-  Enabled:                                    true
-
-Performance/RedundantBlockCall:
-  Enabled:                                    true
-
-Performance/RedundantMatch:
-  Enabled:                                    true
-
-Performance/RedundantMerge:
-  Enabled:                                    true
-
-Performance/RegexpMatch:
-  Enabled:                                    true
-
-Performance/ReverseEach:
-  Enabled:                                    true
-
-Performance/Size:
-  Enabled:                                    true
-
-Performance/StartWith:
-  Enabled:                                    true
-
-Performance/StringReplacement:
-  Enabled:                                    true
-
-Performance/TimesMap:
-  Enabled:                                    true
-  AutoCorrect:                                true
-
-Performance/UnfreezeString:
-  Enabled:                                    true
-
-Performance/UriDefaultParser:
-  Enabled:                                    true
 
 ################################################################################
 #                                  SECURITY
@@ -1196,7 +1135,8 @@ Style/ConditionalAssignment:
   SingleLineConditionsOnly:                   false
 
 Style/ConstantVisibility:
-  Enabled:                                    true
+  # This seems broken
+  Enabled:                                    false
 
 Style/Copyright:
   # Copyrights at the Top of Files are Noisy
@@ -1259,6 +1199,10 @@ Style/EvalWithLocation:
 Style/EvenOdd:
   Enabled:                                    true
 
+Style/FloatDivision:
+  Enabled:                                    true
+  EnforcedStyle:                              'right_coerce'
+
 Style/For:
   Enabled:                                    true
   EnforcedStyle:                              'each'
@@ -1273,6 +1217,7 @@ Style/FormatStringToken:
 
 Style/FrozenStringLiteralComment:
   Enabled:                                    true
+  EnforcedStyle:                              'always'
 
 Style/GlobalVars:
   Enabled:                                    true
@@ -1293,9 +1238,11 @@ Style/IdenticalConditionalBranches:
 
 Style/IfInsideElse:
   Enabled:                                    true
+  AllowIfModifier:                            false
 
 Style/IfUnlessModifier:
-  Enabled:                                    true
+  # Disabled Until https://github.com/rubocop-hq/rubocop/issues/3534 Is Addressed
+  Enabled:                                    false
   Exclude:
     - '**/config/initializers/*.rb'
 
@@ -1358,12 +1305,14 @@ Style/MethodCalledOnDoEndBlock:
 Style/MethodCallWithArgsParentheses:
   # Would Require a *lot* of Effort Adding Ignored Methods
   Enabled:                                    false
-  AllowParenthesesInMultilineCall:            true
-  AllowParenthesesInChaining:                 true
   AllowParenthesesInCamelCaseMethod:          true
+  AllowParenthesesInChaining:                 true
+  AllowParenthesesInMultilineCall:            true
   IgnoreMacros:                               true
   IgnoredMethods:
     - 'puts'
+  IgnoredPatterns:                            []
+  IncludedMacros:                             []
 
 Style/MethodCallWithoutArgsParentheses:
   Enabled:                                    true
@@ -1427,6 +1376,9 @@ Style/MultilineMethodSignature:
 Style/MultilineTernaryOperator:
   Enabled:                                    true
 
+Style/MultilineWhenThen:
+  Enabled:                                    true
+
 Style/MultipleComparison:
   Enabled:                                    true
 
@@ -1434,6 +1386,10 @@ Style/MutableConstant:
   Enabled:                                    true
 
 Style/NegatedIf:
+  Enabled:                                    true
+  EnforcedStyle:                              'both'
+
+Style/NegatedUnless:
   Enabled:                                    true
   EnforcedStyle:                              'both'
 
@@ -1494,10 +1450,8 @@ Style/NumericLiterals:
 
 Style/NumericPredicate:
   Enabled:                                    true
-  EnforcedStyle:                              'predicate'
+  EnforcedStyle:                              'comparison'
   IgnoredMethods:                             []
-  Exclude:
-    - '**/spec/**/*_spec.rb'
 
 Style/OneLineConditional:
   Enabled:                                    true
@@ -1735,16 +1689,16 @@ Style/TrivialAccessors:
 Style/UnlessElse:
   Enabled:                                    true
 
-Style/UnneededCapitalW:
+Style/RedundantCapitalW:
   Enabled:                                    true
 
-Style/UnneededCondition:
+Style/RedundantCondition:
   Enabled:                                    true
 
-Style/UnneededInterpolation:
+Style/RedundantInterpolation:
   Enabled:                                    true
 
-Style/UnneededPercentQ:
+Style/RedundantPercentQ:
   Enabled:                                    true
 
 Style/UnpackFirst:

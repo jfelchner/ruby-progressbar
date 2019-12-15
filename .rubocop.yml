@@ -1,5 +1,7 @@
 inherit_from:
   - '.rubocop_core.yml'
+  - '.rubocop_performance.yml'
+  - '.rubocop_rails.yml'
   - '.rubocop_rspec.yml'
   - '.rubocop_local.yml'
 

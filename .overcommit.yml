@@ -1,6 +1,6 @@
 # This is an opinionated list of which hooks are valuable to run and what their
 # out-of-the-box settings should be.
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 # Loads Bundler context from a Gemfile. If false, does nothing (default).
 #
@@ -109,6 +109,9 @@ PreCommit:
   CoffeeLint:
     enabled:                  true
 
+  CookStyle:
+    enabled:                  false
+
   Credo:
     enabled:                  true
     include:
@@ -116,7 +119,7 @@ PreCommit:
       - '**/*.exs'
 
   CssLint:
-    enabled:                  true
+    enabled:                  false
 
   Dogma:
     enabled:                  true
@@ -136,8 +139,19 @@ PreCommit:
     include:
       - '**/*.rb'
 
+  FileSize:
+    enabled:                  true
+    size_limit_bytes:         1_000_000
+    exclude:
+      - 'db/structure.sql'
+      - 'db/schema.rb'
+
   FixMe:
     enabled:                  true
+    exclude:
+      - '.overcommit.yml'
+      - '.rubocop_core.yml'
+      - 'bin/deploy'
     keywords:
       - 'BROKEN'
       - 'BUG'
@@ -151,6 +165,9 @@ PreCommit:
       - 'WTF'
       - 'XXX'
 
+  Flay:
+    enabled:                  false
+
   Foodcritic:
     enabled:                  false
 
@@ -163,8 +180,8 @@ PreCommit:
   GoVet:
     enabled:                  true
 
-  Hlint:
-    enabled:                  true
+  Hadolint:
+    enabled:                  false
 
   HamlLint:
     enabled:                  false
@@ -177,6 +194,9 @@ PreCommit:
       - '**/project.pbxproj'
       - '**/structure.sql'
       - '**/xcschememanagement.plist'
+
+  Hlint:
+    enabled:                  true
 
   HtmlHint:
     enabled:                  true
@@ -205,6 +225,12 @@ PreCommit:
   JsonSyntax:
     enabled:                  true
 
+  KtLint:
+    enabled:                  false
+
+  LicenseFinder:
+    enabled:                  false
+
   LicenseHeader:
     enabled:                  false
     licence_file:             'LICENSE.txt'
@@ -216,18 +242,12 @@ PreCommit:
     enabled:                  true
 
   Mdl:
-    enabled:                  true
+    enabled:                  false
     include:
       - '**/*.md'
 
   MergeConflicts:
     enabled:                  true
-
-  MessageFormat:
-    enabled:                  true
-    pattern:                  '(Add|Fix|Change|Remove|Deprecate|Security|Docs|Style|Tests|Chore|WIP):\s'
-    expected_pattern_message: '<Change Type>: <Commit Message Description>'
-    sample_message:           'Chore: Refactor onboarding flow'
 
   NginxTest:
     enabled:                  true
@@ -238,7 +258,22 @@ PreCommit:
   Pep8:
     enabled:                  false
 
+  PhpCs:
+    enabled:                  true
+
+  PhpLint:
+    enabled:                  false
+
+  PhpStan:
+    enabled:                  true
+
+  Pronto:
+    enabled:                  false
+
   PuppetLint:
+    enabled:                  true
+
+  PuppetMetadataJsonLint:
     enabled:                  true
 
   Pyflakes:
@@ -260,7 +295,13 @@ PreCommit:
       - '**/db/schema.rb'
       - '**/db/structure.sql'
 
+  RakeTarget:
+    enabled:                  false
+
   Reek:
+    enabled:                  false
+
+  RstLint:
     enabled:                  false
 
   RuboCop:
@@ -276,7 +317,7 @@ PreCommit:
     enabled:                  false
 
   ScssLint:
-    enabled:                  true
+    enabled:                  false
 
   SemiStandard:
     enabled:                  false
@@ -307,6 +348,15 @@ PreCommit:
   Standard:
     enabled:                  false
 
+  Stylelint:
+    enabled:                  true
+
+  SwiftLint:
+    enabled:                  true
+
+  TerraformFormat:
+    enabled:                  true
+
   TrailingWhitespace:
     enabled:                  true
     exclude:                  '**/structure.sql'
@@ -335,18 +385,33 @@ PreCommit:
     enabled:                  true
 
   YamlLint:
-    enabled:                  false
+    enabled:                  true
     include:
       - '**/*.yaml'
       - '**/*.yml'
+    on_warn:                  'fail'
 
   YamlSyntax:
+    enabled:                  true
+
+  YardCoverage:
+    enabled:                  false
+
+  YarnCheck:
     enabled:                  true
 
 PrePush:
   ALL:
     requires_files:           false
     required:                 false
+
+  CargoTest:
+    enabled:                  false
+
+  GitLfs:
+    enabled:                  true
+    flags:
+      - 'pre-push'
 
   Minitest:
     enabled:                  false
@@ -384,6 +449,12 @@ CommitMsg:
   HardTabs:
     enabled:                  true
 
+  MessageFormat:
+    enabled:                  true
+    pattern:                  '(Add|Fix|Change|Remove|Deprecate|Security|Docs|Style|Tests|Chore|WIP):\s'
+    expected_pattern_message: '<Change Type>: <Commit Message Description>'
+    sample_message:           'Chore: Refactor onboarding flow'
+
   RussianNovel:
     enabled:                  false
 
@@ -412,6 +483,11 @@ PostCheckout:
   BundleCheck:
     enabled:                  true
 
+  GitLfs:
+    enabled:                  false
+    flags:
+      - 'post-checkout'
+
   IndexTags:
     enabled:                  false
 
@@ -419,7 +495,7 @@ PostCheckout:
     enabled:                  false
 
   SubmoduleStatus:
-    enabled:                  false
+    enabled:                  true
 
 PostCommit:
   ALL:
@@ -435,6 +511,11 @@ PostCommit:
   GitGuilt:
     enabled:                  false
 
+  GitLfs:
+    enabled:                  false
+    flags:
+      - 'post-commit'
+
   IndexTags:
     enabled:                  false
 
@@ -442,6 +523,9 @@ PostCommit:
     enabled:                  false
 
   SubmoduleStatus:
+    enabled:                  true
+
+  YarnInstall:
     enabled:                  false
 
 PostMerge:
@@ -455,6 +539,11 @@ PostMerge:
   BundleInstall:
     enabled:                  false
 
+  GitLfs:
+    enabled:                  false
+    flags:
+      - 'post-merge'
+
   IndexTags:
     enabled:                  false
 
@@ -462,6 +551,9 @@ PostMerge:
     enabled:                  false
 
   SubmoduleStatus:
+    enabled:                  false
+
+  YarnInstall:
     enabled:                  false
 
 PostRewrite:
@@ -481,4 +573,7 @@ PostRewrite:
     enabled:                  false
 
   SubmoduleStatus:
+    enabled:                  false
+
+  YarnInstall:
     enabled:                  false
