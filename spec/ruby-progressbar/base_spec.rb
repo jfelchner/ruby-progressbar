@@ -402,6 +402,18 @@ describe Base do
                                    "Progress: |===     |\r" \
                                    "Progress: |==      |\r"
     end
+
+    it 'displays the unknown estimated time' do
+      progressbar = ProgressBar::Base.new(:output => output,
+                                          :total  => 100,
+                                          :format => '%e')
+
+      progressbar.progress += 10
+      progressbar.reset
+      progressbar.progress += 10
+
+      expect(progressbar.to_s).to eql ' ETA: ??:??:??'
+    end
   end
 
   context 'when logging messages' do
