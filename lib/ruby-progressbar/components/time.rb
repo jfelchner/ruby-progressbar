@@ -12,6 +12,10 @@ class   Time
   NO_TIME_ELAPSED_TEXT   = '--:--:--'.freeze
   ESTIMATED_LABEL        = ' ETA'.freeze
   ELAPSED_LABEL          = 'Time'.freeze
+  OOB_TEXT_TO_FORMAT     = {
+    :unknown  => OOB_UNKNOWN_TIME_TEXT,
+    :friendly => OOB_FRIENDLY_TIME_TEXT
+  }.freeze
 
   def initialize(options = {})
     self.out_of_bounds_time_format = options[:out_of_bounds_time_format]
@@ -53,8 +57,7 @@ class   Time
 
   def out_of_bounds_time_format=(format)
     unless OOB_TIME_FORMATS.include? format
-      fail 'Invalid Out Of Bounds time format.  Valid formats are ' +
-        OOB_TIME_FORMATS.inspect
+      fail StandardError, "Invalid Out Of Bounds time format.  Valid formats are #{OOB_TIME_FORMATS.inspect}"
     end
 
     @out_of_bounds_time_format = format
@@ -70,7 +73,7 @@ class   Time
     hours, minutes, seconds = timer.divide_seconds(memo_estimated_seconds_remaining)
 
     if hours > OOB_LIMIT_IN_HOURS && out_of_bounds_time_format
-      out_of_bounds_time
+      OOB_TEXT_TO_FORMAT[out_of_bounds_time_format]
     else
       TIME_FORMAT % [hours, minutes, seconds]
     end
@@ -92,15 +95,6 @@ class   Time
     return if progress.unknown? || progress.none? || timer.stopped?
 
     (timer.elapsed_seconds * (progress.total / progress.running_average - 1)).round
-  end
-
-  def out_of_bounds_time
-    case out_of_bounds_time_format
-    when :unknown
-      OOB_UNKNOWN_TIME_TEXT
-    when :friendly
-      OOB_FRIENDLY_TIME_TEXT
-    end
   end
 end
 end

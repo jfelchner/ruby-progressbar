@@ -13,7 +13,7 @@ describe Enumerator do
                           with(hash_including(:total => 10)).
                           and_call_original
 
-    (0...10).each.with_progressbar { |_| }
+    (0...10).each.with_progressbar { |_x| nil }
   end
 
   it 'does not allow the user to override the progress bar total' do
@@ -21,7 +21,7 @@ describe Enumerator do
                           with(hash_including(:total => 10)).
                           and_call_original
 
-    (0...10).each.with_progressbar(:total => 20) { |_| }
+    (0...10).each.with_progressbar(:total => 20) { |_x| nil }
   end
 
   it 'does not allow the user to override the progress bar starting position' do
@@ -29,7 +29,7 @@ describe Enumerator do
                           with(hash_including(:starting_at => 0)).
                           and_call_original
 
-    (0...10).each.with_progressbar(:starting_at => 20) { |_| }
+    (0...10).each.with_progressbar(:starting_at => 20) { |_x| nil }
   end
 
   it 'passes arguments to create' do
@@ -37,7 +37,7 @@ describe Enumerator do
                           with(hash_including(:title => 'We All Float')).
                           and_call_original
 
-    (0...10).each.with_progressbar(:title => 'We All Float') { |_| }
+    (0...10).each.with_progressbar(:title => 'We All Float') { |_x| nil }
   end
 
   it 'calls progressbar.increment the right number of times' do
@@ -46,7 +46,7 @@ describe Enumerator do
     allow(ProgressBar).to receive(:create).and_return(mock)
     allow(mock).to        receive(:increment).exactly(10).times
 
-    (0...10).each.with_progressbar { |_| }
+    (0...10).each.with_progressbar { |_x| nil }
   end
 
   it 'chains return values properly' do

@@ -5,7 +5,7 @@ class     ProgressBar
 module    Calculators
 describe  Length do
   let(:tty_output) do
-    IO.new(IO.sysopen('/dev/tty', 'w')).tap do |io|
+    IO.new(IO.sysopen('/dev/null', 'w')).tap do |io|
       allow(io).to receive(:tty?).and_return true
     end
   end

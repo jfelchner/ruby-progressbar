@@ -1,3 +1,5 @@
+---
+
 Layout/ClassStructure:
   Enabled: false
 
@@ -16,9 +18,15 @@ Layout/IndentationWidth:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
+Lint/NumberConversion:
+  Enabled: false
+
 Naming/FileName:
   Exclude:
     - 'lib/ruby-progressbar.rb'
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
 
 Style/ConstantVisibility:
   Enabled: false
@@ -39,6 +47,9 @@ Style/OptionHash:
   Enabled: false
 
 Style/SafeNavigation:
+  Enabled: false
+
+Style/SlicingWithRange:
   Enabled: false
 
 Style/SymbolArray:

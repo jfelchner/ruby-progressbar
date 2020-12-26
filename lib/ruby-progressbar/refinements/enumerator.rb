@@ -13,7 +13,7 @@ refine ::Enumerator do
       end
     end
 
-    return chain unless block_given?
+    return chain unless block
 
     chain.each(&block)
   end

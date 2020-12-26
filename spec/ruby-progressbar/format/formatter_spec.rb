@@ -635,8 +635,9 @@ describe Formatter do
       progressbar.decrement
       expect(Formatter.process(format, 100, progressbar)).to eql "=== 9 ===#{' ' * 91}"
       91.times { progressbar.increment }
-      expect(Formatter.process(format, 100, progressbar)).to eql \
-        "#{'=' * 47} 100 #{'=' * 48}"
+      expect(Formatter.process(format, 100, progressbar)).to \
+        eql \
+          "#{'=' * 47} 100 #{'=' * 48}"
     end
   end
 
@@ -656,8 +657,9 @@ describe Formatter do
       progressbar.decrement
       expect(Formatter.process(format, 100, progressbar)).to eql '=== 9 ==='
       91.times { progressbar.increment }
-      expect(Formatter.process(format, 100, progressbar)).to eql \
-        "#{'=' * 47} 100 #{'=' * 48}"
+      expect(Formatter.process(format, 100, progressbar)).to \
+        eql \
+          "#{'=' * 47} 100 #{'=' * 48}"
     end
   end
 
@@ -695,7 +697,6 @@ describe Formatter do
 
     it 'is the truncated string when the terminal width is shorter than the string ' \
        'being output and the bar length is calculated' do
-
       format            = Format::String.new('%t%w')
       progressbar       = ProgressBar::Base.new(:title     => ('*' * 21),
                                                 :autostart => false)
@@ -705,7 +706,6 @@ describe Formatter do
 
     it 'is the truncated string when the terminal width is shorter than the string ' \
        'being output and the incomplete bar length is calculated' do
-
       format      = Format::String.new('%t%i')
       progressbar = ProgressBar::Base.new(:title     => ('*' * 21),
                                           :autostart => false)
@@ -716,7 +716,6 @@ describe Formatter do
     it 'is an empty bar when the terminal width is shorter than the string ' \
         'being output and the full bar length is calculated (but lacks the ' \
         'space to output the entire bar)' do
-
       format      = Format::String.new('%t%B')
       progressbar = ProgressBar::Base.new(:title     => ('*' * 19),
                                           :autostart => false)
@@ -727,7 +726,6 @@ describe Formatter do
     it 'is an empty bar when the terminal width is shorter than the string ' \
         'being output and the combination of bar and incomplete length is ' \
         'calculated (but lacks the space to output the entire bar)' do
-
       format      = Format::String.new('%t%w%i')
       progressbar = ProgressBar::Base.new(:title     => ('*' * 19),
                                           :autostart => false)
@@ -758,10 +756,11 @@ describe Formatter do
 
       progressbar.progress = 75
 
-      expect(Formatter.process(format, 24, progressbar)).to eql \
-        "#{color_code}Processing... " \
-        "#{progress_mark * 4}#{' ' * 2}#{reset_code}" \
-        "#{color_code} 75%#{reset_code}"
+      expect(Formatter.process(format, 24, progressbar)).to \
+        eql \
+          "#{color_code}Processing... " \
+          "#{progress_mark * 4}#{' ' * 2}#{reset_code}" \
+          "#{color_code} 75%#{reset_code}"
     end
 
     it 'ignores their short versions when calculating bar length' do
@@ -774,10 +773,11 @@ describe Formatter do
 
       progressbar.progress = 75
 
-      expect(Formatter.process(format, 24, progressbar)).to eql \
-        "#{color_code}Processing... " \
-        "#{progress_mark * 4}#{' ' * 2}#{reset_code}" \
-        "#{color_code} 75%#{reset_code}"
+      expect(Formatter.process(format, 24, progressbar)).to \
+        eql \
+          "#{color_code}Processing... " \
+          "#{progress_mark * 4}#{' ' * 2}#{reset_code}" \
+          "#{color_code} 75%#{reset_code}"
     end
   end
 end

@@ -13,7 +13,7 @@ class   Base
                  :progress,
                  :total
 
-  def initialize(options = {})
+  def initialize(options = {}) # rubocop:disable Metrics/AbcSize
     self.autostart    = options.fetch(:autostart,  true)
     self.autofinish   = options.fetch(:autofinish, true)
     self.finished     = false
@@ -123,7 +123,7 @@ class   Base
     Format::Formatter.process(@format, output.length, self)
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/LineLength
+  # rubocop:disable Metrics/AbcSize, Layout/LineLength
   def to_h
     {
       'output_stream'                       => output.__send__(:stream),
@@ -145,7 +145,7 @@ class   Base
       'finished?'                           => finished?
     }
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/LineLength
+  # rubocop:enable Metrics/AbcSize, Layout/LineLength
 
   def inspect
     "#<ProgressBar:#{progress}/#{total || 'unknown'}>"

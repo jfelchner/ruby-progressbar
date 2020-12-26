@@ -1,4 +1,6 @@
-# Last updated to 1.5.0
+---
+
+# Last updated to 1.9.1
 
 require:
   - 'rubocop-performance'
@@ -6,6 +8,22 @@ require:
 ################################################################################
 #                                PERFORMANCE
 ################################################################################
+
+Performance/AncestorsInclude:
+  Enabled:                                    true
+
+# Mistakenly created: https://github.com/rubocop-hq/rubocop-performance/pull/199/files
+Performance/ArraySemiInfiniteRangeSlice:
+  Enabled:                                    false
+
+Performance/BigDecimalWithNumericArgument:
+  Enabled:                                    true
+
+Performance/BindCall:
+  Enabled:                                    true
+
+Performance/BlockGivenWithExplicitBlock:
+  Enabled:                                    true
 
 Performance/Caller:
   Enabled:                                    true
@@ -19,10 +37,25 @@ Performance/CaseWhenSplat:
 Performance/ChainArrayAllocation:
   Enabled:                                    true
 
+Performance/CollectionLiteralInLoop:
+  Enabled:                                    true
+  MinSize:                                    1
+  Exclude:
+    - '**/spec/**/*.rb'
+
 Performance/CompareWithBlock:
   Enabled:                                    true
 
+Performance/ConstantRegexp:
+  Enabled:                                    true
+
 Performance/Count:
+  Enabled:                                    true
+
+Performance/DeletePrefix:
+  Enabled:                                    true
+
+Performance/DeleteSuffix:
   Enabled:                                    true
 
 Performance/Detect:
@@ -44,6 +77,12 @@ Performance/FlatMap:
 Performance/InefficientHashSearch:
   Enabled:                                    true
 
+Performance/IoReadlines:
+  Enabled:                                    true
+
+Performance/MethodObjectAsBlock:
+  Enabled:                                    true
+
 Performance/OpenStruct:
   Enabled:                                    true
   Exclude:
@@ -61,19 +100,40 @@ Performance/RedundantMatch:
 Performance/RedundantMerge:
   Enabled:                                    true
 
+Performance/RedundantSortBlock:
+  Enabled:                                    true
+
+Performance/RedundantStringChars:
+  Enabled:                                    true
+
 Performance/RegexpMatch:
   Enabled:                                    true
 
 Performance/ReverseEach:
   Enabled:                                    true
 
+Performance/ReverseFirst:
+  Enabled:                                    true
+
 Performance/Size:
+  Enabled:                                    true
+
+Performance/SortReverse:
+  Enabled:                                    true
+
+Performance/Squeeze:
   Enabled:                                    true
 
 Performance/StartWith:
   Enabled:                                    true
 
+Performance/StringInclude:
+  Enabled:                                    true
+
 Performance/StringReplacement:
+  Enabled:                                    true
+
+Performance/Sum:
   Enabled:                                    true
 
 Performance/TimesMap:
