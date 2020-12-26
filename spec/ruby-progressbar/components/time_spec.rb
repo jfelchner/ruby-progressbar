@@ -8,7 +8,6 @@ describe Time do
 
   it 'displays an unknown estimated time remaining when the timer has been started ' \
      'but no progress has been made' do
-
     progress = Progress.new(:total => 100)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
@@ -20,7 +19,6 @@ describe Time do
 
   it 'does not display unknown time remaining when the timer has been started and ' \
      'it is incremented' do
-
     progress = Progress.new(:total => 100)
     time = Time.new(:timer    => timer,
                     :progress => progress)
@@ -48,7 +46,6 @@ describe Time do
 
   it 'displays unknown time remaining when progress has been made and then progress ' \
      'is reset' do
-
     progress = Progress.new(:total => 100)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
@@ -67,7 +64,6 @@ describe Time do
 
   it 'displays unsmoothed time remaining when progress has been made even after the ' \
      'bar is decremented' do
-
     progress = Progress.new(:total => 100, :smoothing => 0.0)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
@@ -86,7 +82,6 @@ describe Time do
 
   it 'displays estimated time of "> 4 Days" when estimated time is out of bounds ' \
      'and the out of bounds format is set to "friendly"' do
-
     progress = Progress.new(:total => 100, :smoothing => 0.0)
     time     = Time.new(:out_of_bounds_time_format => :friendly,
                         :timer                     => timer,
@@ -104,7 +99,6 @@ describe Time do
 
   it 'displays estimated time of "??:??:??" when estimated time is out of bounds ' \
      'and the out of bounds format is set to "unknown"' do
-
     progress = Progress.new(:total => 100, :smoothing => 0.0)
     time     = Time.new(:out_of_bounds_time_format => :unknown,
                         :timer                     => timer,
@@ -122,7 +116,6 @@ describe Time do
 
   it 'displays actual estimated time when estimated time is out of bounds and the ' \
      'out of bounds format is unset' do
-
     progress = Progress.new(:total => 100, :smoothing => 0.0)
     time     = Time.new(:out_of_bounds_time_format => nil,
                         :timer                     => timer,
@@ -140,7 +133,6 @@ describe Time do
 
   it 'displays smoothed estimated time properly even when taking decrements into ' \
      'account' do
-
     progress = Progress.new(:total => 100, :smoothing => 0.5)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
@@ -159,7 +151,6 @@ describe Time do
 
   it 'displays smoothed unknown estimated time when reset is called after progress ' \
      'is made' do
-
     progress = Progress.new(:total => 100, :smoothing => 0.5)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
@@ -193,7 +184,6 @@ describe Time do
 
   it 'displays the estimated time remaining properly even for progress increments ' \
      'very short intervals' do
-
     progress = Progress.new(:total => 10, :smoothing => 0.1)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
@@ -214,20 +204,21 @@ describe Time do
 
     Timecop.return
 
-    expect(estimated_time_results).to eql(
-      [
-        ' ETA: 00:00:05',
-        ' ETA: 00:00:04',
-        ' ETA: 00:00:04',
-        ' ETA: 00:00:03',
-        ' ETA: 00:00:03',
-        ' ETA: 00:00:02',
-        ' ETA: 00:00:02',
-        ' ETA: 00:00:01',
-        ' ETA: 00:00:01',
-        ' ETA: 00:00:00'
-      ]
-    )
+    expect(estimated_time_results).to \
+      eql(
+        [
+          ' ETA: 00:00:05',
+          ' ETA: 00:00:04',
+          ' ETA: 00:00:04',
+          ' ETA: 00:00:03',
+          ' ETA: 00:00:03',
+          ' ETA: 00:00:02',
+          ' ETA: 00:00:02',
+          ' ETA: 00:00:01',
+          ' ETA: 00:00:01',
+          ' ETA: 00:00:00'
+        ]
+      )
   end
 
   it 'displays unknown elapsed time when the timer has not been started' do

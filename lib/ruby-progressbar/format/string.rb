@@ -29,7 +29,7 @@ class   String < ::String
                       end
 
                       molecules
-                    end
+                   end
   end
 end
 end

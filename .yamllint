@@ -1,3 +1,5 @@
+---
+
 rules:
   braces:
     min-spaces-inside:                   1
@@ -23,7 +25,7 @@ rules:
   document-end:
     present:                             false
   document-start:
-    present:                             false
+    present:                             true
   empty-lines:
     max:                                 1
     max-start:                           0
@@ -50,4 +52,3 @@ rules:
     forbid-implicit-octal:               true
     forbid-explicit-octal:               true
   trailing-spaces:                       "enable"
-  truthy:                                "enable"

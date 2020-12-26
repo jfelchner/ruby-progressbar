@@ -30,8 +30,8 @@ describe Base do
     it 'has a default' do
       progressbar = ProgressBar::Base.new
 
-      expect(progressbar.send(:title)).to eql \
-        ProgressBar::Components::Title::DEFAULT_TITLE
+      expect(progressbar.send(:title)).to \
+        eql ProgressBar::Components::Title::DEFAULT_TITLE
     end
 
     it 'is able to be overridden on creation' do
@@ -118,10 +118,10 @@ describe Base do
     end
 
     it 'is able to be overridden on creation' do
-      progressbar   = ProgressBar::Base.new(:output => STDERR)
+      progressbar   = ProgressBar::Base.new(:output => $stderr)
       output_stream = progressbar.send(:output).send(:stream)
 
-      expect(output_stream).to eql STDERR
+      expect(output_stream).to eql $stderr
     end
   end
 
@@ -526,14 +526,12 @@ describe Base do
         progressbar.decrement
 
         expect(non_tty_output_string).to eql "\n" \
-                                           "Progress: |=="
+                                             "Progress: |=="
       end
     end
   end
 
-  it 'can be converted into a hash' do
-    Timecop.freeze(::Time.utc(2012, 7, 26, 18, 0, 0))
-
+  it 'can be converted into a hash', :time_mock => ::Time.utc(2012, 7, 26, 18, 0, 0) do
     progressbar = ProgressBar::Base.new(:output         => output,
                                         :total          => 33,
                                         :title          => 'My Title',
@@ -549,24 +547,30 @@ describe Base do
       progressbar.progress += 22
     end
 
-    expect(progressbar.to_h).to include(
-      'output_stream'                       => be_a(StringIO),
-      'length'                              => 92,
-      'elapsed_time_in_seconds'             => be_within(0.001).of(600),
-      'estimated_time_remaining_in_seconds' => 400,
-      'percentage'                          => 66.66,
-      'progress'                            => 22,
-      'progress_mark'                       => 'x',
-      'base_rate_of_change'                 => 0.03672787979966611,
-      'scaled_rate_of_change'               => 7.345575959933222,
-      'remainder_mark'                      => '-',
-      'throttle_rate'                       => 12.3,
-      'title'                               => 'My Title',
-      'total'                               => 33,
-      'unknown_progress_animation_steps'    => ['=---', '-=--', '--=-', '---='],
-      'started?'                            => be_within(1).of(::Time.now.utc - 600),
-      'stopped?'                            => false,
-      'finished?'                           => false
+    expect(progressbar.to_h).to \
+      include(
+        'output_stream'                       => be_a(StringIO),
+        'length'                              => 92,
+        'elapsed_time_in_seconds'             => be_within(0.001).of(600),
+        'estimated_time_remaining_in_seconds' => 400,
+        'percentage'                          => 66.66,
+        'progress'                            => 22,
+        'progress_mark'                       => 'x',
+        'base_rate_of_change'                 => 0.03672787979966611,
+        'scaled_rate_of_change'               => 7.345575959933222,
+        'remainder_mark'                      => '-',
+        'throttle_rate'                       => 12.3,
+        'title'                               => 'My Title',
+        'total'                               => 33,
+        'unknown_progress_animation_steps'    => [
+                                                   '=---',
+                                                   '-=--',
+                                                   '--=-',
+                                                   '---='
+                                                 ],
+        'started?'                            => be_within(1).of(::Time.now.utc - 600),
+        'stopped?'                            => false,
+        'finished?'                           => false
     )
   end
 end

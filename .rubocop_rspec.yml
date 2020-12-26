@@ -1,4 +1,6 @@
-# Last updated to 1.36.0
+---
+
+# Last updated to 2.1.0
 
 require:
   - 'rubocop-rspec'
@@ -6,22 +8,6 @@ require:
 ################################################################################
 #                                  RSPEC
 ################################################################################
-
-Capybara/FeatureMethods:
-  Enabled:                        true
-
-Capybara/CurrentPathExpectation:
-  Enabled:                        true
-
-FactoryBot/CreateList:
-  Enabled:                        true
-
-FactoryBot/AttributeDefinedStatically:
-  Enabled:                        true
-
-Rails/HttpStatus:
-  Enabled:                        true
-  EnforcedStyle:                  'numeric'
 
 RSpec/AlignLeftLetBrace:
   Enabled:                        true
@@ -48,6 +34,15 @@ RSpec/BeforeAfterAll:
     - 'spec/rails_helper.rb'
     - 'spec/support/**/*.rb'
 
+RSpec/Capybara/CurrentPathExpectation:
+  Enabled:                        true
+
+RSpec/Capybara/FeatureMethods:
+  Enabled:                        true
+
+RSpec/Capybara/VisibilityMatcher:
+  Enabled:                        true
+
 RSpec/ContextMethod:
   Enabled:                        true
 
@@ -67,6 +62,15 @@ RSpec/ContextWording:
 RSpec/DescribeClass:
   Enabled:                        true
 
+# Doesn't allow:
+#
+# module Foo
+#   describe Bar do
+#   end
+# end
+RSpec/DescribedClassModuleWrapping:
+  Enabled:                        false
+
 RSpec/DescribeMethod:
   Enabled:                        true
 
@@ -84,7 +88,9 @@ RSpec/Dialect:
 
 RSpec/EmptyExampleGroup:
   Enabled:                        false
-  CustomIncludeMethods:           []
+
+RSpec/EmptyHook:
+  Enabled:                        true
 
 RSpec/EmptyLineAfterExample:
   Enabled:                        true
@@ -131,9 +137,19 @@ RSpec/ExpectInHook:
 RSpec/ExpectOutput:
   Enabled:                        true
 
+RSpec/FactoryBot/AttributeDefinedStatically:
+  Enabled:                        true
+
+RSpec/FactoryBot/CreateList:
+  Enabled:                        true
+
+RSpec/FactoryBot/FactoryClassName:
+  Enabled:                        true
+
 RSpec/FilePath:
-  Enabled:                        false
+  Enabled:                        true
   IgnoreMethods:                  false
+  SpecSuffixOnly:                 true
   CustomTransform:
     RuboCop: 'rubocop'
     RSpec:   'rspec'
@@ -163,9 +179,6 @@ RSpec/InstanceSpy:
   Enabled:                        true
 
 RSpec/InstanceVariable:
-  Enabled:                        true
-
-RSpec/InvalidPredicateMatcher:
   Enabled:                        true
 
 RSpec/ItBehavesLike:
@@ -208,6 +221,11 @@ RSpec/MultipleExpectations:
   Enabled:                        false
   Max:                            5
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled:                        true
+  AllowSubject:                   false
+  Max:                            2
+
 RSpec/MultipleSubjects:
   Enabled:                        true
 
@@ -233,6 +251,11 @@ RSpec/PredicateMatcher:
   Enabled:                        true
   Strict:                         true
   EnforcedStyle:                  'inflected'
+  AllowedExplicitMatchers:        []
+
+RSpec/Rails/HttpStatus:
+  Enabled:                        true
+  EnforcedStyle:                  'numeric'
 
 RSpec/ReceiveCounts:
   Enabled:                        true
@@ -244,6 +267,15 @@ RSpec/RepeatedDescription:
   Enabled:                        true
 
 RSpec/RepeatedExample:
+  Enabled:                        true
+
+RSpec/RepeatedExampleGroupBody:
+  Enabled:                        true
+
+RSpec/RepeatedExampleGroupDescription:
+  Enabled:                        true
+
+RSpec/RepeatedIncludeExample:
   Enabled:                        true
 
 RSpec/ReturnFromStub:
@@ -265,11 +297,23 @@ RSpec/SharedExamples:
 RSpec/SingleArgumentMessageChain:
   Enabled:                        true
 
+RSpec/StubbedMock:
+  Enabled:                        true
+
 RSpec/SubjectStub:
   Enabled:                        true
 
 RSpec/UnspecifiedException:
   Enabled:                        true
+
+RSpec/VariableDefinition:
+  Enabled:                        true
+  EnforcedStyle:                  'symbols'
+
+RSpec/VariableName:
+  Enabled:                        true
+  EnforcedStyle:                  'snake_case'
+  IgnoredPatterns:                []
 
 RSpec/VerifiedDoubles:
   Enabled:                        true
