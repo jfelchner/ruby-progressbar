@@ -1,9 +1,10 @@
-# Contributing
+Contributing
+================================================================================
 
 We love pull requests from everyone. By participating in this project, you
 agree to abide by the code of conduct.
 
-Here are some ways *you* can contribute:
+Here are some ways **you** can contribute:
 
 * by using alpha, beta, and prerelease versions
 * by reporting bugs
@@ -16,17 +17,17 @@ Here are some ways *you* can contribute:
 * by closing issues
 * by reviewing patches
 
-## Submitting an Issue
+Submitting an Issue
+--------------------------------------------------------------------------------
 
 We use the GitHub issue tracker to track bugs and features. Before submitting
 a bug report or feature request, check to make sure it hasn't already been
-submitted. When submitting a bug report, please include a [Gist][] that includes
-a stack trace and any details that may be necessary to reproduce the bug.
-Ideally, a bug report should include a pull request with failing specs.
+submitted. When submitting a bug report, please include a [Gist][gist] that
+includes a stack trace and any details that may be necessary to reproduce the
+bug. Ideally, a bug report should include a pull request with failing specs.
 
-[gist]: https://gist.github.com/
-
-## Submitting a Pull Request
+Submitting a Pull Request
+--------------------------------------------------------------------------------
 
 1. [Fork][fork] the official repository.
 2. [Create a topic branch.][branch]
@@ -34,12 +35,15 @@ Ideally, a bug report should include a pull request with failing specs.
 4. Add, commit, and push your changes.
 5. [Submit a pull request.][pr]
 
-## Notes
+Notes
+--------------------------------------------------------------------------------
 
-* Please add tests if you changed code. Contributions without tests won't be accepted.
+* Please add tests if you changed code. Contributions without tests won't be
+  accepted.
 
-[fork]: https://help.github.com/articles/fork-a-repo/
+Inspired by <https://github.com/thoughtbot/factory_bot/blob/master/CONTRIBUTING.md>
+
 [branch]: https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/
-[pr]: https://help.github.com/articles/using-pull-requests/
-
-Inspired by https://github.com/thoughtbot/factory_bot/blob/master/CONTRIBUTING.md
+[fork]:   https://help.github.com/articles/fork-a-repo/
+[gist]:   https://gist.github.com/
+[pr]:     https://help.github.com/articles/using-pull-requests/
