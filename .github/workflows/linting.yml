@@ -1,0 +1,179 @@
+---
+
+name:                             "Build"
+
+on:
+  - "push"
+
+jobs:
+  lint:
+    name:                         "Linting"
+    runs-on:                      "ubuntu-latest"
+
+    steps:
+      - name:                     "Cache Ruby"
+        uses:                     "actions/cache@v2"
+        with:
+          path:                   "vendor/bundle"
+          key:                    |
+            ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys:           |
+            ${{ runner.os }}-gems-
+
+      - name:                     "Cache NodeJS"
+        uses:                     "actions/cache@v2"
+        with:
+          path:                   "~/.npm"
+          key:                    |
+            ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys:           |
+            ${{ runner.os }}-node-
+
+      - name:                     "Cache Python"
+        uses:                     "actions/cache@v2"
+        with:
+          path:                   "~/.cache/pip"
+          key:                    |
+            ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys:           |
+            ${{ runner.os }}-pip-
+
+      - name:                     "Checkout Code"
+        uses:                     "actions/checkout@v2"
+        timeout-minutes:          5
+        with:
+          fetch-depth:            0
+
+      - name:                     "Build Ruby"
+        uses:                     "actions/setup-ruby@v1"
+        with:
+          ruby-version:           2.7
+
+      - name:                     "Build Node"
+
+        uses:                     "actions/setup-node@v2"
+        with:
+          node-version:           14
+
+      - name:                     "Install Ruby Gems"
+        run:                      >
+          gem install --no-document
+          rubocop
+          rubocop-rspec
+          rubocop-rails
+          rubocop-performance
+
+      - name:                     "Install Node Modules"
+        run:                      >
+          npm install -g
+          @prantlf/jsonlint
+          babel-eslint
+          eslint
+          htmlhint
+          remark-cli
+          remark-lint-blockquote-indentation
+          remark-lint-checkbox-character-style
+          remark-lint-code-block-style
+          remark-lint-definition-case
+          remark-lint-definition-spacing
+          remark-lint-emphasis-marker
+          remark-lint-fenced-code-flag
+          remark-lint-fenced-code-marker
+          remark-lint-file-extension
+          remark-lint-final-definition
+          remark-lint-final-newline
+          remark-lint-first-heading-level
+          remark-lint-hard-break-spaces
+          remark-lint-heading-increment
+          remark-lint-heading-style
+          remark-lint-heading-whitespace
+          remark-lint-linebreak-style
+          remark-lint-link-title-style
+          remark-lint-list-item-bullet-indent
+          remark-lint-list-item-content-indent
+          remark-lint-list-item-indent
+          remark-lint-list-item-spacing
+          remark-lint-maximum-line-length
+          remark-lint-no-auto-link-without-protocol
+          remark-lint-no-blockquote-without-marker
+          remark-lint-no-blockquote-without-marker
+          remark-lint-no-consecutive-blank-lines
+          remark-lint-no-duplicate-definitions
+          remark-lint-no-duplicate-headings
+          remark-lint-no-duplicate-headings-in-section
+          remark-lint-no-duplicate-headings-in-section
+          remark-lint-no-emphasis-as-heading
+          remark-lint-no-empty-sections
+          remark-lint-no-empty-sections
+          remark-lint-no-empty-url
+          remark-lint-no-empty-url
+          remark-lint-no-file-name-articles
+          remark-lint-no-file-name-consecutive-dashes
+          remark-lint-no-file-name-irregular-characters
+          remark-lint-no-file-name-mixed-case
+          remark-lint-no-file-name-outer-dashes
+          remark-lint-no-heading-content-indent
+          remark-lint-no-heading-indent
+          remark-lint-no-heading-indent
+          remark-lint-no-heading-like-paragraph
+          remark-lint-no-heading-like-paragraph
+          remark-lint-no-heading-punctuation
+          remark-lint-no-html
+          remark-lint-no-inline-padding
+          remark-lint-no-literal-urls
+          remark-lint-no-missing-blank-lines
+          remark-lint-no-missing-blank-lines
+          remark-lint-no-multiple-toplevel-headings
+          remark-lint-no-paragraph-content-indent
+          remark-lint-no-paragraph-content-indent
+          remark-lint-no-reference-like-url
+          remark-lint-no-reference-like-url
+          remark-lint-no-shell-dollars
+          remark-lint-no-shortcut-reference-image
+          remark-lint-no-shortcut-reference-link
+          remark-lint-no-table-indentation
+          remark-lint-no-tabs
+          remark-lint-no-tabs
+          remark-lint-no-undefined-references
+          remark-lint-no-unused-definitions
+          remark-lint-no-url-trailing-slash
+          remark-lint-no-url-trailing-slash
+          remark-lint-ordered-list-marker-style
+          remark-lint-ordered-list-marker-value
+          remark-lint-rule-style
+          remark-lint-strong-marker
+          remark-lint-table-cell-padding
+          remark-lint-table-pipe-alignment
+          remark-lint-table-pipes
+          remark-lint-unordered-list-marker-style
+          remark-message-control
+          remark-preset-lint-consistent
+          remark-preset-lint-markdown-style-guide
+          remark-preset-lint-recommended
+          stylelint
+          stylelint-order
+          stylelint-scss
+
+      - name:                     "Install Python Eggs"
+        run:                      >
+          pip install --user
+          vim-vint
+
+      - name:                     "Install Packages"
+        run:                      >
+          sudo apt install -y
+          shellcheck
+          tidy
+          yamllint
+
+      - name:                     "Run Rubocop"
+        run:                      |
+          rubocop --force-exclusion
+
+      - name:                     "Run YAMLLint"
+        run:                      |
+          yamllint -f "github" -d ".yamllint" .
+
+      - name:                     "Run Remark"
+        run:                      |
+          remark --ignore-path .markdownlintignore --silently-ignore **/*.md .**/*.md
