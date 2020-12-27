@@ -1,0 +1,95 @@
+---
+
+# Problem
+
+- name:        "bug"
+  color:       "cb2431"
+  description: "Problem - Bug"
+
+- name:        "security"
+  color:       "86181d"
+  description: "Problem - Security"
+
+# Miscellaneous
+
+- name:        "chore"
+  color:       "fff5b1"
+  description: "Miscellaneous - Chore"
+
+- name:        "legal"
+  color:       "fff5b1"
+  description: "Miscellaneous - Legal"
+
+# Experience
+
+- name:        "copy"
+  color:       "ffab70"
+  description: "Experience - Copy"
+
+- name:        "design"
+  color:       "fb8532"
+  description: "Experience - Design"
+
+- name:        "ux"
+  color:       "f66a0a"
+  description: "Experience - UX"
+
+# Environment
+
+- name:        "test"
+  color:       "d1bcf9"
+  description: "Environment - Test"
+
+- name:        "staging"
+  color:       "8a63d2"
+  description: "Environment - Staging"
+
+- name:        "production"
+  color:       "4c2889"
+  description: "Environment - Production"
+
+# Improvements
+
+- name:        "enhancement"
+  color:       "bef5cb"
+  description: "Improvements - Enhancement"
+
+- name:        "optimization"
+  color:       "34d058"
+  description: "Improvements - Optimization"
+
+- name:        "feature"
+  color:       "176f2c"
+  description: "Improvements - Feature"
+
+# Pending
+
+- name:        "in-progress"
+  color:       "79b8ff"
+  description: "Pending - In-Progress"
+
+- name:        "watchlist"
+  color:       "0366d6"
+  description: "Pending - Watchlist"
+
+# Inactive
+
+- name:        "invalid"
+  color:       "f6f8fa"
+  description: "Inactive - Invalid"
+
+- name:        "wontfix"
+  color:       "e1e4e8"
+  description: "Inactive - Won't Fix"
+
+- name:        "duplicate"
+  color:       "959da5"
+  description: "Inactive - Duplicate"
+
+- name:        "on-hold"
+  color:       "586069"
+  description: "Inactive - On Hold"
+
+- name:        "outdated"
+  color:       "2f363d"
+  description: "Inactive - Outdated"

@@ -1,0 +1,25 @@
+---
+
+on:
+  - "issues"
+  - "label"
+  - "workflow_dispatch"
+
+name:                             "Labels"
+jobs:
+  synchronize-labels:
+    name:                         "Synchronize Labels"
+    runs-on:                      "ubuntu-latest"
+    steps:
+      - name:                     "Checkout Code"
+        uses:                     "actions/checkout@v2"
+        timeout-minutes:          5
+        with:
+          fetch-depth:            0
+
+      - name:                     "Synchronize Labels"
+        uses:                     "micnncim/action-label-syncer@v1"
+        with:
+          manifest:               ".github/labels.yml"
+        env:
+          GITHUB_TOKEN:           "${{ secrets.GITHUB_TOKEN }}"
