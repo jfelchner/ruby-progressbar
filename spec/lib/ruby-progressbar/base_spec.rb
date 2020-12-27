@@ -574,7 +574,7 @@ describe Base do
       include(
         'output_stream'                       => be_a(StringIO),
         'length'                              => 92,
-        'elapsed_time_in_seconds'             => be_within(0.001).of(600),
+        'elapsed_time_in_seconds'             => be_within(0.01).of(600),
         'estimated_time_remaining_in_seconds' => 400,
         'percentage'                          => 66.66,
         'progress'                            => 22,
