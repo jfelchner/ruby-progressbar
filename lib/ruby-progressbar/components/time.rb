@@ -92,7 +92,7 @@ class   Time
   end
 
   def estimated_seconds_remaining
-    return if progress.unknown? || progress.none? || timer.stopped?
+    return if progress.unknown? || progress.none? || timer.stopped? || timer.reset?
 
     (timer.elapsed_seconds * (progress.total / progress.running_average - 1)).round
   end
