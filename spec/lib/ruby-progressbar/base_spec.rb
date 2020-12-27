@@ -564,7 +564,7 @@ describe Base do
         'output_stream'                       => be_a(StringIO),
         'length'                              => 92,
         'elapsed_time_in_seconds'             => be_within(0.001).of(600),
-        'estimated_time_remaining_in_seconds' => 400,
+        'estimated_time_remaining_in_seconds' => 333,
         'percentage'                          => 66.66,
         'progress'                            => 22,
         'progress_mark'                       => 'x',

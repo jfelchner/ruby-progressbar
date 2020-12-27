@@ -23,7 +23,8 @@ class   Progress
   def start(options = {})
     self.running_average   = 0
     self.progress          = \
-      self.starting_position = options[:at] || progress
+      self.starting_position = \
+        options[:at] || progress
   end
 
   def finish
@@ -78,6 +79,10 @@ class   Progress
     end
 
     @total = new_total
+  end
+
+  def remaining
+    total - progress
   end
 
   def percentage_completed

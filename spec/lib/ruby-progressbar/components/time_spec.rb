@@ -146,7 +146,7 @@ describe Time do
 
     20.times { progress.decrement }
 
-    expect(time.estimated_with_label).to eql ' ETA: 08:14:34'
+    expect(time.estimated_with_label).to eql ' ETA: 08:21:45'
   end
 
   it 'displays smoothed unknown estimated time when reset is called after progress ' \
@@ -179,7 +179,7 @@ describe Time do
 
     Timecop.return
 
-    expect(time.estimated_with_label).to eql ' ETA: 03:51:16'
+    expect(time.estimated_with_label).to eql ' ETA: 03:46:44'
   end
 
   it 'displays the estimated time remaining properly even for progress increments ' \
@@ -270,6 +270,45 @@ describe Time do
     Timecop.return
 
     expect(time.elapsed_with_label).to eql 'Time: 04:27:41'
+  end
+
+  it 'estimates the time properly if starting at a non-zero progress' do
+    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    progress.start(:at => 90)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    estimated_time_results = []
+    now                    = ::Time.now
+
+    Timecop.freeze(now)
+
+    timer.start
+
+    10.times do
+      Timecop.freeze(now += 1)
+      progress.increment
+
+      estimated_time_results << time.estimated_with_label
+    end
+
+    Timecop.return
+
+    expect(estimated_time_results).to \
+      eql(
+        [
+          ' ETA: 00:00:09',
+          ' ETA: 00:00:08',
+          ' ETA: 00:00:07',
+          ' ETA: 00:00:06',
+          ' ETA: 00:00:05',
+          ' ETA: 00:00:04',
+          ' ETA: 00:00:03',
+          ' ETA: 00:00:02',
+          ' ETA: 00:00:01',
+          ' ETA: 00:00:00'
+        ]
+      )
   end
 
   it 'displays unknown elapsed time after reset has been called' do
