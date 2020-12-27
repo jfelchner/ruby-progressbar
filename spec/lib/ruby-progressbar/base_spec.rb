@@ -480,6 +480,17 @@ describe Base do
 
       expect(progressbar.to_s).to eql "Progress: |#{' ' * 88}|"
     end
+
+    it 'allows for the format to be loaded from an environment variable' do
+      ENV['RUBY_PROGRESS_BAR_FORMAT'] = ' %c/%C |%w>%i| %e '
+
+      progressbar = ProgressBar::Base.new(:output => output,
+                                          :length => 10)
+
+      expect(progressbar.to_s).to eql ' 0/100 |>|  ETA: ??:??:?? '
+
+      ENV['RUBY_PROGRESS_BAR_FORMAT'] = nil
+    end
   end
 
   context 'when clearing the bar' do

@@ -17,7 +17,7 @@ class   Tty < Output
   end
 
   def default_format
-    DEFAULT_FORMAT_STRING
+    ENV['RUBY_PROGRESS_BAR_FORMAT'] || DEFAULT_FORMAT_STRING
   end
 
   def resolve_format(other_format)
