@@ -1,7 +1,33 @@
 Ruby/ProgressBar
 ================================================================================
 
-[![Gem Version](https://img.shields.io/gem/v/ruby-progressbar.svg)](https://rubygems.org/gems/ruby-progressbar) ![Rubygems Rank Overall](https://img.shields.io/gem/rt/ruby-progressbar.svg) ![Rubygems Rank Daily](https://img.shields.io/gem/rd/ruby-progressbar.svg) ![Rubygems Downloads](https://img.shields.io/gem/dt/ruby-progressbar.svg) [![Build Status](https://github.com/thekompanee/fuubar/workflows/Build/badge.svg)](http://travis-ci.org/jfelchner/ruby-progressbar) [![Code Climate](https://codeclimate.com/github/jfelchner/ruby-progressbar.svg)](https://codeclimate.com/github/jfelchner/ruby-progressbar)
+<div align="center">
+  <a href="https://rubygems.org/gems/ruby-progressbar" alt="RubyGems Version">
+    <img src="https://img.shields.io/gem/v/ruby-progressbar.svg?style=flat-square&label=current-version" alt="RubyGems Version" />
+  </a>
+
+  <a href="https://rubygems.org/gems/ruby-progressbar" alt="RubyGems Rank Overall">
+    <img src="https://img.shields.io/gem/rt/ruby-progressbar.svg?style=flat-square&label=total-rank" alt="RubyGems Rank Overall" />
+  </a>
+
+  <a href="https://rubygems.org/gems/ruby-progressbar" alt="RubyGems Rank Daily">
+    <img src="https://img.shields.io/gem/rd/ruby-progressbar.svg?style=flat-square&label=daily-rank" alt="RubyGems Rank Daily" />
+  </a>
+
+  <a href="https://rubygems.org/gems/ruby-progressbar" alt="RubyGems Downloads">
+    <img src="https://img.shields.io/gem/dt/ruby-progressbar.svg?style=flat-square&label=total-downloads" alt="RubyGems Downloads" />
+  </a>
+
+  <a href="https://github.com/jfelchner/ruby-progressbar/actions?query=workflow%3ABuild" alt="Build Status">
+    <img src="https://img.shields.io/github/workflow/status/jfelchner/ruby-progressbar/Build?label=CI&style=flat-square&logo=github" alt="Build Status" />
+  </a>
+
+  <a href="#" alt="Maintainability">
+    <img src="https://img.shields.io/codeclimate/maintainability/jfelchner/ruby-progressbar?style=flat-square&label=grade" alt="Maintainability" />
+  </a>
+</div>
+
+<br>
 
 <img src="https://kompanee-public-assets.s3.amazonaws.com/readmes/ruby-progressbar-cage.png" align="right" />
 
@@ -12,7 +38,7 @@ Don't miss out on what all the kids are talking about!  If you want everyone to
 know that your gem or app can survive _in the cage_ then YOU WANT
 **RUBY-PROGRESSBAR**!
 
-<br><br><br>
+<br>
 
 It's Better Than The Other 186,312 Progress Bar Libraries Because
 --------------------------------------------------------------------------------
