@@ -1,7 +1,7 @@
 if Module.private_instance_methods.include?(:using)
 
 require 'spec_helper'
-require 'ruby-progressbar/refinements/enumerator'
+require 'ruby-progressbar/refinements/progress_enumerator'
 
 class    ProgressBar
 module   Refinements
