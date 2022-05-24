@@ -1,12 +1,12 @@
 if Module.private_instance_methods.include?(:using)
 
 require 'spec_helper'
-require 'ruby-progressbar/refinements/enumerator'
+require 'ruby-progressbar/refinements/progress_enumerator'
 
 class    ProgressBar
 module   Refinements
-describe Enumerator do
-  using ProgressBar::Refinements::Enumerator
+describe ProgressEnumerator do
+  using ProgressBar::Refinements::ProgressEnumerator
 
   it 'creates a progress bar with the Enumerable size' do
     allow(ProgressBar).to receive(:create).
