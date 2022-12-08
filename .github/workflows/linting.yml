@@ -45,7 +45,7 @@ jobs:
           fetch-depth:            0
 
       - name:                     "Build Ruby"
-        uses:                     "actions/setup-ruby@v1"
+        uses:                     "ruby/setup-ruby@v1"
         with:
           ruby-version:           2.7
 
