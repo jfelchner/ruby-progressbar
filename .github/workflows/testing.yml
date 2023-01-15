@@ -22,6 +22,7 @@ jobs:
           - 2.7
           - 3.0
           - ruby-head
+          - truffleruby-head
         include:
           - ruby:                 2.1
             bundler:              1
