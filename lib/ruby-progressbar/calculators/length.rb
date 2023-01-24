@@ -50,7 +50,6 @@ class   Length
   end
   # rubocop:enable Style/RescueStandardError
 
-  # rubocop:disable Lint/DuplicateMethods
   begin
     require 'io/console'
 
@@ -68,7 +67,6 @@ class   Length
       dynamic_width_via_system_calls
     end
   end
-  # rubocop:enable Lint/DuplicateMethods
 
   def dynamic_width_via_output_stream_object
     _rows, columns = output.winsize
