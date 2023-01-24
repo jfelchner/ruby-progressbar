@@ -17,11 +17,9 @@ class   Time
   end
 
   def unmocked_time_method
-    @unmocked_time_method ||= begin
-                                TIME_MOCKING_LIBRARY_METHODS.find do |method|
-                                  time.respond_to? method
-                                end
-                              end
+    @unmocked_time_method ||= TIME_MOCKING_LIBRARY_METHODS.find do |method|
+      time.respond_to? method
+    end
   end
 
   protected
