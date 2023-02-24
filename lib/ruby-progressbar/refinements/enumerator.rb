@@ -5,10 +5,13 @@ refine ::Enumerator do
   def with_progressbar(options = {}, &block)
     progress_bar = ProgressBar.create(options.merge(:starting_at => 0, :total => size))
 
-    each do |*yielded_args|
+    each do |item|
       progress_bar.increment
 
       next unless block
+
+      yielded_args = []
+      yielded_args << item
 
       yield(*yielded_args)
     end
