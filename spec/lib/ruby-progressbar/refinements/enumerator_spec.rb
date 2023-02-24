@@ -84,6 +84,16 @@ describe Enumerator do
 
     expect(enumerator.map(&transform)).to eql((0...10).map(&transform))
   end
+
+  it 'passes the progressbar instance to the block when two arguments are requested for the block' do
+    progress     = 0
+    current_item = -1
+
+    (0...10).each.with_progressbar do |item, progress_bar|
+      expect(progress_bar.progress).to be(progress += 1)
+      expect(item).to be(current_item += 1)
+    end
+  end
 end
 end
 end
