@@ -3,19 +3,15 @@ module Refinements
 module Enumerator
 refine ::Enumerator do
   def with_progressbar(options = {}, &block)
-    chain = ::Enumerator.new do |yielder|
-      progress_bar = ProgressBar.create(options.merge(:starting_at => 0, :total => size))
+    progress_bar = ProgressBar.create(options.merge(:starting_at => 0, :total => size))
 
-      each do |*args|
-        yielder.yield(*args).tap do
-          progress_bar.increment
-        end
-      end
+    each do |*yielded_args|
+      progress_bar.increment
+
+      next unless block
+
+      yield(*yielded_args)
     end
-
-    return chain unless block
-
-    chain.each(&block)
   end
 end
 end
