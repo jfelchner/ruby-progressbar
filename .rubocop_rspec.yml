@@ -1,6 +1,6 @@
 ---
 
-# Last updated to 2.1.0
+# Last updated to 2.12.1
 
 require:
   - 'rubocop-rspec'
@@ -24,8 +24,15 @@ RSpec/AroundBlock:
 RSpec/Be:
   Enabled:                        true
 
+RSpec/BeEq:
+  Enabled:                        true
+
 RSpec/BeEql:
   Enabled:                        true
+
+RSpec/BeNil:
+  Enabled:                        true
+  EnforcedStyle:                  'be'
 
 RSpec/BeforeAfterAll:
   Enabled:                        true
@@ -40,7 +47,13 @@ RSpec/Capybara/CurrentPathExpectation:
 RSpec/Capybara/FeatureMethods:
   Enabled:                        true
 
+RSpec/Capybara/SpecificMatcher:
+  Enabled:                        true
+
 RSpec/Capybara/VisibilityMatcher:
+  Enabled:                        true
+
+RSpec/ChangeByZero:
   Enabled:                        true
 
 RSpec/ContextMethod:
@@ -111,8 +124,12 @@ RSpec/EmptyLineAfterSubject:
     - '**/factories/*.rb'
 
 RSpec/ExampleLength:
-  Enabled:                        false
-  Max:                            50
+  Enabled:                        true
+  CountAsOne:
+    - 'array'
+    - 'hash'
+    - 'heredoc'
+  Max:                            25
 
 RSpec/ExampleWithoutDescription:
   Enabled:                        true
@@ -121,6 +138,9 @@ RSpec/ExampleWithoutDescription:
 RSpec/ExampleWording:
   Enabled:                        true
   IgnoredWords:                   []
+
+RSpec/ExcessiveDocstringSpacing:
+  Enabled:                        true
 
 RSpec/ExpectActual:
   Enabled:                        true
@@ -146,6 +166,9 @@ RSpec/FactoryBot/CreateList:
 RSpec/FactoryBot/FactoryClassName:
   Enabled:                        true
 
+RSpec/FactoryBot/SyntaxMethods:
+  Enabled:                        true
+
 RSpec/FilePath:
   Enabled:                        true
   IgnoreMethods:                  false
@@ -162,6 +185,9 @@ RSpec/HookArgument:
   EnforcedStyle:                  'each'
 
 RSpec/HooksBeforeExamples:
+  Enabled:                        true
+
+RSpec/IdenticalEqualityAssertion:
   Enabled:                        true
 
 RSpec/ImplicitBlockExpectation:
@@ -253,6 +279,12 @@ RSpec/PredicateMatcher:
   EnforcedStyle:                  'inflected'
   AllowedExplicitMatchers:        []
 
+RSpec/Rails/AvoidSetupHook:
+  Enabled:                        true
+
+RSpec/Rails/HaveHttpStatus:
+  Enabled:                        true
+
 RSpec/Rails/HttpStatus:
   Enabled:                        true
   EnforcedStyle:                  'numeric'
@@ -300,6 +332,9 @@ RSpec/SingleArgumentMessageChain:
 RSpec/StubbedMock:
   Enabled:                        true
 
+RSpec/SubjectDeclaration:
+  Enabled:                        true
+
 RSpec/SubjectStub:
   Enabled:                        true
 
@@ -314,6 +349,10 @@ RSpec/VariableName:
   Enabled:                        true
   EnforcedStyle:                  'snake_case'
   IgnoredPatterns:                []
+
+RSpec/VerifiedDoubleReference:
+  Enabled:                        true
+  EnforcedStyle:                  'string'
 
 RSpec/VerifiedDoubles:
   Enabled:                        true

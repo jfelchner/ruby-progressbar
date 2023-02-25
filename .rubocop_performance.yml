@@ -1,6 +1,6 @@
 ---
 
-# Last updated to 1.9.1
+# Last updated to 1.13.2
 
 require:
   - 'rubocop-performance'
@@ -35,7 +35,8 @@ Performance/CaseWhenSplat:
   Enabled:                                    true
 
 Performance/ChainArrayAllocation:
-  Enabled:                                    true
+  # Disallows: Most compact chaining where performance impact is minimal
+  Enabled:                                    false
 
 Performance/CollectionLiteralInLoop:
   Enabled:                                    true
@@ -44,6 +45,9 @@ Performance/CollectionLiteralInLoop:
     - '**/spec/**/*.rb'
 
 Performance/CompareWithBlock:
+  Enabled:                                    true
+
+Performance/ConcurrentMonotonicTime:
   Enabled:                                    true
 
 Performance/ConstantRegexp:
@@ -80,6 +84,9 @@ Performance/InefficientHashSearch:
 Performance/IoReadlines:
   Enabled:                                    true
 
+Performance/MapCompact:
+  Enabled:                                    true
+
 Performance/MethodObjectAsBlock:
   Enabled:                                    true
 
@@ -94,6 +101,9 @@ Performance/RangeInclude:
 Performance/RedundantBlockCall:
   Enabled:                                    true
 
+Performance/RedundantEqualityComparisonBlock:
+  Enabled:                                    true
+
 Performance/RedundantMatch:
   Enabled:                                    true
 
@@ -101,6 +111,9 @@ Performance/RedundantMerge:
   Enabled:                                    true
 
 Performance/RedundantSortBlock:
+  Enabled:                                    true
+
+Performance/RedundantSplitRegexpArgument:
   Enabled:                                    true
 
 Performance/RedundantStringChars:
@@ -115,6 +128,10 @@ Performance/ReverseEach:
 Performance/ReverseFirst:
   Enabled:                                    true
 
+# filter_map excludes `false` unlike `compact` which does not.
+Performance/SelectMap:
+  Enabled:                                    false
+
 Performance/Size:
   Enabled:                                    true
 
@@ -127,6 +144,9 @@ Performance/Squeeze:
 Performance/StartWith:
   Enabled:                                    true
 
+Performance/StringIdentifierArgument:
+  Enabled:                                    true
+
 Performance/StringInclude:
   Enabled:                                    true
 
@@ -135,6 +155,7 @@ Performance/StringReplacement:
 
 Performance/Sum:
   Enabled:                                    true
+  OnlySumOrWithInitialValue:                  false
 
 Performance/TimesMap:
   Enabled:                                    true
