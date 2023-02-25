@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name:                     "Cache Ruby"
-        uses:                     "actions/cache@v2"
+        uses:                     "actions/cache@v3"
         with:
           path:                   "vendor/bundle"
           key:                    |
@@ -21,7 +21,7 @@ jobs:
             ${{ runner.os }}-gems-
 
       - name:                     "Cache NodeJS"
-        uses:                     "actions/cache@v2"
+        uses:                     "actions/cache@v3"
         with:
           path:                   "~/.npm"
           key:                    |
@@ -30,7 +30,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name:                     "Cache Python"
-        uses:                     "actions/cache@v2"
+        uses:                     "actions/cache@v3"
         with:
           path:                   "~/.cache/pip"
           key:                    |
@@ -39,7 +39,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name:                     "Checkout Code"
-        uses:                     "actions/checkout@v2"
+        uses:                     "actions/checkout@v3"
         timeout-minutes:          5
         with:
           fetch-depth:            0
@@ -51,7 +51,7 @@ jobs:
 
       - name:                     "Build Node"
 
-        uses:                     "actions/setup-node@v2"
+        uses:                     "actions/setup-node@v3"
         with:
           node-version:           14
 

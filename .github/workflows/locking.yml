@@ -11,7 +11,7 @@ jobs:
     runs-on:                            "ubuntu-latest"
     steps:
       - name:                           "Lock Issues"
-        uses:                           "dessant/lock-threads@v2"
+        uses:                           "dessant/lock-threads@v4"
         with:
           github-token:                 "${{ secrets.GITHUB_TOKEN }}"
           issue-lock-inactive-days:     "180"
@@ -29,7 +29,7 @@ jobs:
     runs-on:                            "ubuntu-latest"
     steps:
       - name:                           "Lock Pull Requests"
-        uses:                           "dessant/lock-threads@v2"
+        uses:                           "dessant/lock-threads@v4"
         with:
           github-token:                 "${{ secrets.GITHUB_TOKEN }}"
           pr-lock-inactive-days:        "180"
