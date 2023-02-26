@@ -38,7 +38,7 @@ class   Base
 
     self.title_comp   = Components::Title.new(options)
     self.bar          = Components::Bar.new(options)
-    self.percentage   = Components::Percentage.new(options)
+    self.percentage_component = Components::Percentage.new(options)
     self.rate_component       = Components::Rate.new(options)
     self.time         = Components::Time.new(options)
 
@@ -178,7 +178,7 @@ class   Base
                 :progressable,
                 :title_comp,
                 :bar,
-                :percentage,
+                :percentage_component,
                 :rate_component,
                 :time,
                 :autostart,
