@@ -14,7 +14,7 @@ describe Time do
 
     timer.start
 
-    expect(time.estimated_with_label).to eql ' ETA: ??:??:??'
+    expect(time.estimated_with_label(:unknown)).to eql ' ETA: ??:??:??'
   end
 
   it 'does not display unknown time remaining when the timer has been started and ' \
@@ -59,7 +59,7 @@ describe Time do
 
     progress.reset
 
-    expect(time.estimated_with_label).to eql ' ETA: ??:??:??'
+    expect(time.estimated_with_label(:unknown)).to eql ' ETA: ??:??:??'
   end
 
   it 'displays unsmoothed time remaining when progress has been made even after the ' \
@@ -94,7 +94,7 @@ describe Time do
 
     Timecop.return
 
-    expect(time.estimated_with_label).to eql ' ETA: > 4 Days'
+    expect(time.estimated_with_label(:friendly)).to eql ' ETA: > 4 Days'
   end
 
   it 'displays estimated time of "??:??:??" when estimated time is out of bounds ' \
@@ -111,7 +111,7 @@ describe Time do
 
     Timecop.return
 
-    expect(time.estimated_with_label).to eql ' ETA: ??:??:??'
+    expect(time.estimated_with_label(:unknown)).to eql ' ETA: ??:??:??'
   end
 
   it 'displays actual estimated time when estimated time is out of bounds and the ' \
@@ -128,7 +128,7 @@ describe Time do
 
     Timecop.return
 
-    expect(time.estimated_with_label).to eql ' ETA: 100:00:00'
+    expect(time.estimated_with_label(nil)).to eql ' ETA: 100:00:00'
   end
 
   it 'displays smoothed estimated time properly even when taking decrements into ' \
@@ -164,7 +164,7 @@ describe Time do
 
     progress.reset
 
-    expect(time.estimated_with_label).to eql ' ETA: ??:??:??'
+    expect(time.estimated_with_label(:unknown)).to eql ' ETA: ??:??:??'
   end
 
   it 'displays smoothed estimated time after progress has been made' do
@@ -286,13 +286,6 @@ describe Time do
     timer.reset
 
     expect(time.elapsed_with_label).to eql 'Time: --:--:--'
-  end
-
-  it 'raises an exception when an invalid out of bounds time format is specified' do
-    expect { Time.new(:out_of_bounds_time_format => :foo) }.
-      to \
-        raise_error 'Invalid Out Of Bounds time format.  Valid formats are ' \
-                    '[:unknown, :friendly, nil]'
   end
 
   it 'displays the wall clock time as unknown when the timer has been reset' do

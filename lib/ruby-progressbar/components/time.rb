@@ -19,13 +19,12 @@ class   Time
   }.freeze
 
   def initialize(options = {})
-    self.out_of_bounds_time_format = options[:out_of_bounds_time_format]
-    self.timer                     = options[:timer]
-    self.progress                  = options[:progress]
+    self.timer    = options[:timer]
+    self.progress = options[:progress]
   end
 
-  def estimated_with_label
-    "#{ESTIMATED_LABEL}: #{estimated}"
+  def estimated_with_label(out_of_bounds_time_format = nil)
+    "#{ESTIMATED_LABEL}: #{estimated(out_of_bounds_time_format)}"
   end
 
   def elapsed_with_label
@@ -35,21 +34,15 @@ class   Time
   protected
 
   def estimated_with_no_oob
-    self.out_of_bounds_time_format = nil
-
-    estimated_with_elapsed_fallback
+    estimated_with_elapsed_fallback(nil)
   end
 
   def estimated_with_unknown_oob
-    self.out_of_bounds_time_format = :unknown
-
-    estimated_with_elapsed_fallback
+    estimated_with_elapsed_fallback(:unknown)
   end
 
   def estimated_with_friendly_oob
-    self.out_of_bounds_time_format = :friendly
-
-    estimated_with_elapsed_fallback
+    estimated_with_elapsed_fallback(:friendly)
   end
 
   def estimated_wall_clock
@@ -63,21 +56,12 @@ class   Time
       strftime(WALL_CLOCK_FORMAT)
   end
 
-  attr_reader   :out_of_bounds_time_format
   attr_accessor :timer,
                 :progress
 
-  def out_of_bounds_time_format=(format)
-    unless OOB_TIME_FORMATS.include? format
-      fail StandardError, "Invalid Out Of Bounds time format.  Valid formats are #{OOB_TIME_FORMATS.inspect}"
-    end
-
-    @out_of_bounds_time_format = format
-  end
-
   private
 
-  def estimated
+  def estimated(out_of_bounds_time_format)
     memo_estimated_seconds_remaining = estimated_seconds_remaining
 
     return OOB_UNKNOWN_TIME_TEXT unless memo_estimated_seconds_remaining
@@ -85,7 +69,7 @@ class   Time
     hours, minutes, seconds = timer.divide_seconds(memo_estimated_seconds_remaining)
 
     if hours > OOB_LIMIT_IN_HOURS && out_of_bounds_time_format
-      OOB_TEXT_TO_FORMAT[out_of_bounds_time_format]
+      OOB_TEXT_TO_FORMAT.fetch(out_of_bounds_time_format)
     else
       TIME_FORMAT % [hours, minutes, seconds]
     end
@@ -99,8 +83,8 @@ class   Time
     TIME_FORMAT % [hours, minutes, seconds]
   end
 
-  def estimated_with_elapsed_fallback
-    progress.finished? ? elapsed_with_label : estimated_with_label
+  def estimated_with_elapsed_fallback(out_of_bounds_time_format)
+    progress.finished? ? elapsed_with_label : estimated_with_label(out_of_bounds_time_format)
   end
 
   def estimated_seconds_remaining
