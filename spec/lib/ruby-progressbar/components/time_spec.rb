@@ -4,7 +4,7 @@ require 'ruby-progressbar/components/time'
 class    ProgressBar
 module   Components
 describe Time do
-  let(:timer) { Timer.new(:time => ::Time) }
+  let(:timer) { Timer.new }
 
   it 'displays an unknown estimated time remaining when the timer has been started ' \
      'but no progress has been made' do
@@ -293,6 +293,74 @@ describe Time do
       to \
         raise_error 'Invalid Out Of Bounds time format.  Valid formats are ' \
                     '[:unknown, :friendly, nil]'
+  end
+
+  it 'displays the wall clock time as unknown when the timer has been reset' do
+    progress = Progress.new
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    Timecop.freeze(-16_093)
+
+    timer.start
+
+    Timecop.return
+
+    timer.reset
+
+    expect(time.send(:estimated_wall_clock)).to eql '--:--:--'
+  end
+
+  it 'displays the wall clock time as unknown when the progress has not begun' do
+    progress = Progress.new
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    Timecop.freeze(-16_093)
+
+    timer.start
+
+    Timecop.return
+
+    expect(time.send(:estimated_wall_clock)).to eql '--:--:--'
+  end
+
+  it 'displays the completed wall clock time if the progress is finished' do
+    progress = Progress.new
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
+
+    timer.start
+
+    Timecop.freeze(::Time.utc(2020, 1, 1, 0, 30, 0))
+
+    timer.stop
+    progress.finish
+
+    Timecop.return
+
+    expect(time.send(:estimated_wall_clock)).to eql '00:30:00'
+  end
+
+  it 'displays the estimated wall clock time if the progress is ongoing' do
+    Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
+
+    progress = Progress.new(:smoothing => 0.0)
+    time     = Time.new(:timer    => timer,
+                        :progress => progress)
+
+    timer.start
+    progress.progress = 50
+
+    Timecop.freeze(::Time.utc(2020, 1, 1, 0, 15, 0))
+
+    wall_clock = time.send(:estimated_wall_clock)
+
+    Timecop.return
+
+    expect(wall_clock).to eql '00:30:00'
   end
 end
 end

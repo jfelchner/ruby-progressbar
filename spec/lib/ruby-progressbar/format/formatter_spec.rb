@@ -174,6 +174,64 @@ describe Formatter do
     end
   end
 
+  context 'with the %l flag' do
+    let(:format) { Format::String.new('%l') }
+
+    it 'is unknown estimated time when called before the bar is started' do
+      progressbar = ProgressBar::Base.new
+
+      expect(Formatter.process(format, 100, progressbar)).to eql '--:--:--'
+    end
+
+    it 'is unknown estimated time when the bar is started with any progress' do
+      progressbar = ProgressBar::Base.new(:starting_at =>  1)
+
+      expect(Formatter.process(format, 100, progressbar)).to eql '--:--:--'
+    end
+
+    it 'is "--:--:--" when called after the bar is started makes progress and reset' do
+      progressbar = ProgressBar::Base.new
+
+      Timecop.freeze(to_the_past) do
+        progressbar.start
+        progressbar.progress = 50
+      end
+
+      progressbar.reset
+
+      expect(Formatter.process(format, 100, progressbar)).to eql '--:--:--'
+    end
+
+    it 'is the estimated wall clock time when called after the bar is started' do
+      progressbar = nil
+
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0)) do
+        progressbar = ProgressBar::Base.new(:running_average_rate => 0.0)
+
+        progressbar.start
+        progressbar.progress = 50
+      end
+
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 10, 0)) do
+        expect(Formatter.process(format, 100, progressbar)).to eql '00:20:00'
+      end
+    end
+
+    it 'is completed wall clock time once the bar finishes' do
+      progressbar = ProgressBar::Base.new(:throttle_rate => 0.0)
+
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 10, 0)) do
+        progressbar.start
+      end
+
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 7, 0)) do
+        progressbar.finish
+      end
+
+      expect(Formatter.process(format, 100, progressbar)).to eql '00:07:00'
+    end
+  end
+
   context 'with the %E flag' do
     let(:format) { Format::String.new('%E') }
 

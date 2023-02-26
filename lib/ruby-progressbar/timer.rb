@@ -28,6 +28,10 @@ class   Timer
     start
   end
 
+  def now
+    time.now
+  end
+
   def started?
     started_at
   end

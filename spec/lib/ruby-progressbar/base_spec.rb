@@ -228,6 +228,42 @@ describe Base do
       expect(output_string).to start_with("                    \r")
     end
 
+    it 'displays the completed wall clock time if the progress is finished' do
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
+
+      progressbar = ProgressBar::Base.new(:output    => output,
+                                          :smoothing => 0.0,
+                                          :total     => 100,
+                                          :format    => '%l')
+
+      progressbar.progress += 50
+
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 30, 0))
+
+      progressbar.finish
+
+      Timecop.return
+
+      expect(progressbar.to_s).to eql '00:30:00'
+    end
+
+    it 'displays the estimated wall clock time if the progress is ongoing' do
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
+
+      progressbar = ProgressBar::Base.new(:output    => output,
+                                          :smoothing => 0.0,
+                                          :total     => 100,
+                                          :format    => '%l')
+
+      progressbar.progress += 50
+
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 30, 0))
+
+      expect(progressbar.to_s).to eql '01:00:00'
+
+      Timecop.return
+    end
+
     it 'does not error if there is nothing to do and it has not been started' do
       progressbar = ProgressBar::Base.new(:started_at => 0,
                                           :total      => 0,
@@ -416,6 +452,18 @@ describe Base do
       progressbar.progress += 10
 
       expect(progressbar.to_s).to eql ' ETA: ??:??:??'
+    end
+
+    it 'displays the unknown wall clock time' do
+      progressbar = ProgressBar::Base.new(:output => output,
+                                          :total  => 100,
+                                          :format => '%l')
+
+      progressbar.progress += 10
+      progressbar.reset
+      progressbar.progress += 10
+
+      expect(progressbar.to_s).to eql '--:--:--'
     end
   end
 
