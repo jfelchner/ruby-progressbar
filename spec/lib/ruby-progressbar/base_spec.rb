@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'support/time'
 require 'stringio'
 
+# rubocop:disable Layout/LineContinuationLeadingSpace
 class    ProgressBar
 describe Base do
   let(:output) do
@@ -190,7 +191,8 @@ describe Base do
       progressbar       = ProgressBar::Base.new(:output => output, :autostart => false)
       progressbar.total = 0
 
-      expect { progressbar.start }.not_to raise_error
+      expect { progressbar.start }.
+        not_to raise_error
     end
   end
 
@@ -233,7 +235,8 @@ describe Base do
                                           :format     => ' %c/%C |%w>%i| %e ',
                                           :output     => output)
 
-      expect { progressbar.stop }.not_to raise_error
+      expect { progressbar.stop }.
+        not_to raise_error
     end
 
     it 'appends proper ending to string for non-TTY devices' do
@@ -598,3 +601,4 @@ describe Base do
   end
 end
 end
+# rubocop:enable Layout/LineContinuationLeadingSpace

@@ -1,9 +1,34 @@
 ---
 
-# Last updated to 2.12.1
+# Last updated to 2.18.1
 
 require:
   - 'rubocop-rspec'
+
+################################################################################
+#                                CAPYBARA
+################################################################################
+
+Capybara/CurrentPathExpectation:
+  Enabled:                        true
+
+Capybara/MatchStyle:
+  Enabled:                        true
+
+Capybara/NegationMatcher:
+  Enabled:                        true
+
+Capybara/SpecificActions:
+  Enabled:                        true
+
+Capybara/SpecificFinders:
+  Enabled:                        true
+
+Capybara/SpecificMatcher:
+  Enabled:                        true
+
+Capybara/VisibilityMatcher:
+  Enabled:                        true
 
 ################################################################################
 #                                  RSPEC
@@ -41,19 +66,14 @@ RSpec/BeforeAfterAll:
     - 'spec/rails_helper.rb'
     - 'spec/support/**/*.rb'
 
-RSpec/Capybara/CurrentPathExpectation:
-  Enabled:                        true
-
 RSpec/Capybara/FeatureMethods:
   Enabled:                        true
 
-RSpec/Capybara/SpecificMatcher:
-  Enabled:                        true
-
-RSpec/Capybara/VisibilityMatcher:
-  Enabled:                        true
-
 RSpec/ChangeByZero:
+  Enabled:                        true
+  NegatedMatcher:                 ~
+
+RSpec/ClassCheck:
   Enabled:                        true
 
 RSpec/ContextMethod:
@@ -61,6 +81,7 @@ RSpec/ContextMethod:
 
 RSpec/ContextWording:
   Enabled:                        true
+  AllowedPatterns:                []
   Prefixes:
     - 'administrators'
     - 'and'
@@ -99,6 +120,9 @@ RSpec/Dialect:
   Enabled:                        true
   PreferredMethods:               {}
 
+RSpec/DuplicatedMetadata:
+  Enabled:                        true
+
 RSpec/EmptyExampleGroup:
   Enabled:                        false
 
@@ -117,6 +141,7 @@ RSpec/EmptyLineAfterFinalLet:
 
 RSpec/EmptyLineAfterHook:
   Enabled:                        true
+  AllowConsecutiveOneLiners:      true
 
 RSpec/EmptyLineAfterSubject:
   Enabled:                        true
@@ -160,10 +185,16 @@ RSpec/ExpectOutput:
 RSpec/FactoryBot/AttributeDefinedStatically:
   Enabled:                        true
 
+RSpec/FactoryBot/ConsistentParenthesesStyle:
+  Enabled:                        true
+
 RSpec/FactoryBot/CreateList:
   Enabled:                        true
 
 RSpec/FactoryBot/FactoryClassName:
+  Enabled:                        true
+
+RSpec/FactoryBot/FactoryNameStyle:
   Enabled:                        true
 
 RSpec/FactoryBot/SyntaxMethods:
@@ -258,10 +289,16 @@ RSpec/MultipleSubjects:
 RSpec/NamedSubject:
   Enabled:                        true
   IgnoreSharedExamples:           true
+  EnforcedStyle:                  "always"
 
 RSpec/NestedGroups:
   Enabled:                        true
   Max:                            2
+  AllowedGroups:                  []
+
+RSpec/NoExpectationExample:
+  Enabled:                        true
+  AllowedPatterns:                []
 
 RSpec/NotToNot:
   Enabled:                        true
@@ -272,6 +309,9 @@ RSpec/OverwritingSetup:
 
 RSpec/Pending:
   Enabled:                        false
+
+RSpec/PendingWithoutReason:
+  Enabled:                        true
 
 RSpec/PredicateMatcher:
   Enabled:                        true
@@ -288,6 +328,12 @@ RSpec/Rails/HaveHttpStatus:
 RSpec/Rails/HttpStatus:
   Enabled:                        true
   EnforcedStyle:                  'numeric'
+
+RSpec/Rails/InferredSpecType:
+  Enabled:                        true
+
+RSpec/Rails/MinitestAssertions:
+  Enabled:                        true
 
 RSpec/ReceiveCounts:
   Enabled:                        true
@@ -329,6 +375,9 @@ RSpec/SharedExamples:
 RSpec/SingleArgumentMessageChain:
   Enabled:                        true
 
+RSpec/SortMetadata:
+  Enabled:                        true
+
 RSpec/StubbedMock:
   Enabled:                        true
 
@@ -348,7 +397,7 @@ RSpec/VariableDefinition:
 RSpec/VariableName:
   Enabled:                        true
   EnforcedStyle:                  'snake_case'
-  IgnoredPatterns:                []
+  AllowedPatterns:                []
 
 RSpec/VerifiedDoubleReference:
   Enabled:                        true

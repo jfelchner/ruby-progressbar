@@ -1,6 +1,6 @@
 ---
 
-# Last updated to 1.13.2
+# Last updated to 1.16.0
 
 require:
   - 'rubocop-performance'

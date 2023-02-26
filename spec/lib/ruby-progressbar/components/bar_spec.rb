@@ -193,9 +193,11 @@ describe Bar do
     progress     = Progress.new :total    => 10
     _progressbar = Bar.new      :progress => progress
 
-    expect { progress.start :at => 11 }.to \
-      raise_error(InvalidProgressError,
-                  "You can't set the item's current value to be greater than the total.")
+    expect { progress.start :at => 11 }.
+      to \
+        raise_error(InvalidProgressError,
+                    "You can't set the item's current value to be greater " \
+                    "than the total.")
   end
 end
 end

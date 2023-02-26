@@ -1,6 +1,6 @@
 ---
 
-# Last updated to rubocop 1.32.0
+# Last updated to rubocop 1.45.1
 
 AllCops:
   Include:
@@ -133,6 +133,16 @@ Gemspec/DeprecatedAttributeAssignment:
   Enabled:                                    true
   Include:
     - '/**/*.gemspec'
+
+Gemspec/DevelopmentDependencies:
+  Enabled:                                    true
+  EnforcedStyle:                              "gemspec"
+  AllowedGems:
+    - "bundler"
+  Include:
+    - "**/*.gemspec"
+    - "**/Gemfile"
+    - "**/gems.rb"
 
 Gemspec/DuplicatedAssignment:
   Enabled:                                    true
@@ -382,6 +392,7 @@ Layout/FirstArrayElementIndentation:
 
 Layout/FirstArrayElementLineBreak:
   Enabled:                                    true
+  AllowMultilineFinalElement:                 false
 
 Layout/FirstHashElementIndentation:
   Enabled:                                    true
@@ -390,16 +401,19 @@ Layout/FirstHashElementIndentation:
 
 Layout/FirstHashElementLineBreak:
   Enabled:                                    true
+  AllowMultilineFinalElement:                 false
 
 Layout/FirstMethodArgumentLineBreak:
   # Disallows: my_method(foo,
   #                      bar)
   Enabled:                                    false
+  AllowMultilineFinalElement:                 false
 
 Layout/FirstMethodParameterLineBreak:
   # Disallows: def my_method(foo,
   #                          bar)
   Enabled:                                    false
+  AllowMultilineFinalElement:                 false
 
 Layout/FirstParameterIndentation:
   Enabled:                                    true
@@ -514,6 +528,7 @@ Layout/MultilineArrayBraceLayout:
 
 Layout/MultilineArrayLineBreaks:
   Enabled:                                    true
+  AllowMultilineFinalElement:                 false
 
 Layout/MultilineAssignmentLayout:
   Enabled:                                    true
@@ -528,9 +543,11 @@ Layout/MultilineHashBraceLayout:
 
 Layout/MultilineHashKeyLineBreaks:
   Enabled:                                    true
+  AllowMultilineFinalElement:                 false
 
 Layout/MultilineMethodArgumentLineBreaks:
   Enabled:                                    true
+  AllowMultilineFinalElement:                 false
   Exclude:
     - '/**/Gemfile'
     - '/**/config/routes.rb'
@@ -550,6 +567,7 @@ Layout/MultilineMethodDefinitionBraceLayout:
 
 Layout/MultilineMethodParameterLineBreaks:
   Enabled:                                    true
+  AllowMultilineFinalElement:                 false
 
 Layout/MultilineOperationIndentation:
   # Disallows: @expires_at ||= Time.now.utc +
@@ -693,7 +711,7 @@ Lint/AmbiguousAssignment:
 
 Lint/AmbiguousBlockAssociation:
   Enabled:                                    true
-  IgnoredMethods:                             []
+  AllowedMethods:                             []
   Exclude:
     - '/**/app/models/**/*.rb'
     - '/**/spec/**/*_spec.rb'
@@ -765,6 +783,9 @@ Lint/DuplicateElsifCondition:
   Enabled:                                    true
 
 Lint/DuplicateHashKey:
+  Enabled:                                    true
+
+Lint/DuplicateMagicComment:
   Enabled:                                    true
 
 Lint/DuplicateMethods:
@@ -891,7 +912,7 @@ Lint/NoReturnInBeginEndBlocks:
 
 Lint/NumberConversion:
   Enabled:                                    false
-  IgnoredMethods:
+  AllowedMethods:
     - 'ago'
     - 'from_now'
     - 'second'
@@ -1109,6 +1130,9 @@ Lint/UselessElseWithoutRescue:
 Lint/UselessMethodDefinition:
   Enabled:                                    true
 
+Lint/UselessRescue:
+  Enabled:                                    true
+
 Lint/UselessRuby2Keywords:
   Enabled:                                    true
 
@@ -1129,7 +1153,7 @@ Metrics/AbcSize:
   Enabled:                                    true
   CountRepeatedAttributes:                    false
   Max:                                        17.0
-  IgnoredMethods:                             []
+  AllowedMethods:                             []
   Exclude:
     - '/**/db/sample.rb'
 
@@ -1167,7 +1191,7 @@ Metrics/BlockLength:
     - '/**/spec/shared/**/*.rb'
     - '/**/spec/support/**/*.rb'
     - '/**/Rakefile'
-  IgnoredMethods:
+  AllowedMethods:
     - 'namespace'
     - 'draw'
     - 'context'
@@ -1206,7 +1230,7 @@ Metrics/MethodLength:
   Enabled:                                    true
   CountComments:                              false
   Max:                                        30
-  IgnoredMethods:                             []
+  AllowedMethods:                             []
   CountAsOne:
     - 'array'
     - 'hash'
@@ -1306,10 +1330,13 @@ Naming/MethodParameterName:
   MinNameLength:                              3
   AllowNamesEndingInNumbers:                  true
   AllowedNames:
+    - 'as'
     - 'at'
     - 'by'
+    - 'cc'
     - 'db'
     - 'id'
+    - 'if'
     - 'in'
     - 'io'
     - 'ip'
@@ -1432,6 +1459,9 @@ Style/ArrayCoercion:
 Style/ArrayJoin:
   Enabled:                                    true
 
+Style/ArrayIntersect:
+  Enabled:                                    true
+
 Style/AsciiComments:
   Enabled:                                    true
   AllowedChars:
@@ -1468,6 +1498,7 @@ Style/BlockDelimiters:
 Style/CaseEquality:
   Enabled:                                    true
   AllowOnConstant:                            true
+  AllowOnSelfClass:                           true
 
 Style/CaseLikeIf:
   Enabled:                                    true
@@ -1485,7 +1516,7 @@ Style/ClassCheck:
 
 Style/ClassEqualityComparison:
   Enabled:                                    true
-  IgnoredMethods:
+  AllowedMethods:
     - '=='
     - 'equal?'
     - 'eql?'
@@ -1541,6 +1572,12 @@ Style/CommentedKeyword:
   Enabled:                                    true
   Exclude:
     - '/**/Gemfile'
+
+Style/ComparableClamp:
+  Enabled:                                    true
+
+Style/ConcatArrayLiterals:
+  Enabled:                                    true
 
 Style/ConditionalAssignment:
   Enabled:                                    true
@@ -1677,7 +1714,7 @@ Style/FormatStringToken:
   Enabled:                                    true
   EnforcedStyle:                              'annotated'
   MaxUnannotatedPlaceholdersAllowed:          1
-  IgnoredMethods:                             []
+  AllowedMethods:                             []
 
 Style/FrozenStringLiteralComment:
   Enabled:                                    true
@@ -1785,6 +1822,22 @@ Style/InverseMethods:
     :select:   :reject
     :select!:  :reject!
 
+Style/InvertibleUnlessCondition:
+  Enabled:                                    true
+  InverseMethods:
+    :!=:       :==
+    :>:        :<=
+    :<=:       :>
+    :<:        :>=
+    :>=:       :<
+    :!~:       :=~
+    :zero?:    :nonzero?
+    :nonzero?: :zero?
+    :any?:     :none?
+    :none?:    :any?
+    :even?:    :odd?
+    :odd?:     :even?
+
 Style/IpAddresses:
   Enabled:                                    true
   AllowedAddresses:
@@ -1812,37 +1865,49 @@ Style/LambdaCall:
 Style/LineEndConcatenation:
   Enabled:                                    true
 
+Style/MagicCommentFormat:
+  Enabled:                                    true
+  EnforcedStyle:                              "snake_case"
+  DirectiveCapitalization:                    "lowercase"
+  ValueCapitalization:                        ~
+
 Style/MapCompactWithConditionalBlock:
   Enabled:                                    true
 
 Style/MapToHash:
   Enabled:                                    true
 
+Style/MapToSet:
+  Enabled:                                    true
+
 Style/MethodCalledOnDoEndBlock:
   Enabled:                                    true
 
 Style/MethodCallWithArgsParentheses:
-  # Would Require a *lot* of Effort Adding Ignored Methods
+  # Would Require a *lot* of Effort Adding Allowed Methods
   Enabled:                                    false
   AllowParenthesesInCamelCaseMethod:          true
   AllowParenthesesInChaining:                 true
   AllowParenthesesInMultilineCall:            true
   AllowParenthesesInStringInterpolation:      true
   IgnoreMacros:                               true
-  IgnoredMethods:
+  AllowedMethods:
     - 'puts'
   AllowedPatterns:                            []
   IncludedMacros:                             []
 
 Style/MethodCallWithoutArgsParentheses:
   Enabled:                                    true
-  IgnoredMethods:                             []
+  AllowedMethods:                             []
 
 Style/MethodDefParentheses:
   Enabled:                                    true
   EnforcedStyle:                              'require_parentheses'
 
 Style/MinMax:
+  Enabled:                                    true
+
+Style/MinMaxComparison:
   Enabled:                                    true
 
 Style/MissingElse:
@@ -1989,7 +2054,7 @@ Style/NumericLiterals:
 Style/NumericPredicate:
   Enabled:                                    true
   EnforcedStyle:                              'comparison'
-  IgnoredMethods:                             []
+  AllowedMethods:                             []
 
 Style/ObjectThen:
   Enabled:                                    true
@@ -1999,6 +2064,9 @@ Style/OneLineConditional:
   Enabled:                                    true
 
 Style/OpenStructUse:
+  Enabled:                                    true
+
+Style/OperatorMethodCall:
   Enabled:                                    true
 
 Style/OptionalArguments:
@@ -2093,6 +2161,15 @@ Style/RedundantCondition:
 Style/RedundantConditional:
   Enabled:                                    true
 
+Style/RedundantConstantBase:
+  Enabled:                                    true
+
+Style/RedundantDoubleSplatHashBraces:
+  Enabled:                                    true
+
+Style/RedundantEach:
+  Enabled:                                    true
+
 Style/RedundantException:
   Enabled:                                    true
 
@@ -2103,6 +2180,9 @@ Style/RedundantFileExtensionInRequire:
   Enabled:                                    true
 
 Style/RedundantFreeze:
+  Enabled:                                    true
+
+Style/RedundantHeredocDelimiterQuotes:
   Enabled:                                    true
 
 Style/RedundantInitialize:
@@ -2140,10 +2220,16 @@ Style/RedundantSelfAssignmentBranch:
 Style/RedundantSortBy:
   Enabled:                                    true
 
+Style/RedundantStringEscape:
+  Enabled:                                    true
+
 Style/RegexpLiteral:
   Enabled:                                    true
   EnforcedStyle:                              'slashes'
   AllowInnerSlashes:                          false
+
+Style/RequireOrder:
+  Enabled:                                    false
 
 Style/RescueModifier:
   Enabled:                                    true
@@ -2273,8 +2359,7 @@ Style/SymbolProc:
   Enabled:                                    true
   AllowMethodsWithArguments:                  false
   AllowComments:                              false
-  IgnoredMethods:
-    - 'respond_to'
+  AllowedMethods:
     - 'define_method'
 
 Style/TernaryParentheses:
@@ -2352,6 +2437,15 @@ Style/WordArray:
 Style/YodaCondition:
   Enabled:                                    true
   EnforcedStyle:                              'forbid_for_all_comparison_operators'
+
+Style/YodaExpression:
+  Enabled:                                    false
+  SupportedOperators:
+    - '*'
+    - '+'
+    - '&'
+    - '|'
+    - '^'
 
 Style/ZeroLengthPredicate:
   Enabled:                                    true

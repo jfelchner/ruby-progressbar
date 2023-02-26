@@ -714,8 +714,8 @@ describe Formatter do
     end
 
     it 'is an empty bar when the terminal width is shorter than the string ' \
-        'being output and the full bar length is calculated (but lacks the ' \
-        'space to output the entire bar)' do
+       'being output and the full bar length is calculated (but lacks the ' \
+       'space to output the entire bar)' do
       format      = Format::String.new('%t%B')
       progressbar = ProgressBar::Base.new(:title     => ('*' * 19),
                                           :autostart => false)
@@ -724,8 +724,8 @@ describe Formatter do
     end
 
     it 'is an empty bar when the terminal width is shorter than the string ' \
-        'being output and the combination of bar and incomplete length is ' \
-        'calculated (but lacks the space to output the entire bar)' do
+       'being output and the combination of bar and incomplete length is ' \
+       'calculated (but lacks the space to output the entire bar)' do
       format      = Format::String.new('%t%w%i')
       progressbar = ProgressBar::Base.new(:title     => ('*' * 19),
                                           :autostart => false)

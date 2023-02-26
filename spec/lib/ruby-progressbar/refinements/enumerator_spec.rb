@@ -10,43 +10,54 @@ describe Enumerator do
 
   it 'creates a progress bar with the Enumerable size' do
     allow(ProgressBar).to receive(:create).
-                          with(hash_including(:total => 10)).
                           and_call_original
 
     (0...10).each.with_progressbar { |_x| nil }
+
+    expect(ProgressBar).to have_received(:create).
+                           with(hash_including(:total => 10))
   end
 
   it 'does not allow the user to override the progress bar total' do
     allow(ProgressBar).to receive(:create).
-                          with(hash_including(:total => 10)).
                           and_call_original
 
     (0...10).each.with_progressbar(:total => 20) { |_x| nil }
+
+    expect(ProgressBar).to have_received(:create).
+                           with(hash_including(:total => 10))
   end
 
   it 'does not allow the user to override the progress bar starting position' do
     allow(ProgressBar).to receive(:create).
-                          with(hash_including(:starting_at => 0)).
                           and_call_original
 
     (0...10).each.with_progressbar(:starting_at => 20) { |_x| nil }
+
+    expect(ProgressBar).to have_received(:create).
+                           with(hash_including(:starting_at => 0))
   end
 
   it 'passes arguments to create' do
     allow(ProgressBar).to receive(:create).
-                          with(hash_including(:title => 'We All Float')).
                           and_call_original
 
     (0...10).each.with_progressbar(:title => 'We All Float') { |_x| nil }
+
+    expect(ProgressBar).to have_received(:create).
+                           with(hash_including(:title => 'We All Float'))
   end
 
   it 'calls progressbar.increment the right number of times' do
-    mock = instance_double(ProgressBar::Progress)
+    mock = instance_double('ProgressBar::Progress')
 
     allow(ProgressBar).to receive(:create).and_return(mock)
-    allow(mock).to        receive(:increment).exactly(10).times
+    allow(mock).to        receive(:increment)
 
     (0...10).each.with_progressbar { |_x| nil }
+
+    expect(ProgressBar).to have_received(:create)
+    expect(mock).to        have_received(:increment).exactly(10).times
   end
 
   it 'chains return values properly' do
@@ -58,7 +69,7 @@ describe Enumerator do
     expect(chained_progress_transform).to eql direct_transform
   end
 
-  it 'chains properly in the middle ' do
+  it 'chains properly in the middle' do
     transform = lambda { |i| 10 * i }
 
     chained_progress_transform = (0...10).each.with_progressbar.map(&transform)
@@ -76,5 +87,4 @@ describe Enumerator do
 end
 end
 end
-
 end

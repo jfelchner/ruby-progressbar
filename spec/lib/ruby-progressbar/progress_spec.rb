@@ -40,7 +40,7 @@ describe Progress do
   it 'knows how to finish itself even if the total is unknown' do
     progress = Progress.new :total => nil
 
-    expect(progress.finish).to be_nil
+    expect(progress.finish).to be(nil)
   end
 
   it 'knows the overridden total when the total is passed in' do
@@ -150,9 +150,11 @@ describe Progress do
   it 'raises an error when passed a number larger than the total' do
     progress = Progress.new(:total => 100)
 
-    expect { progress.progress = 101 }.to \
-      raise_error(InvalidProgressError,
-                  "You can't set the item's current value to be greater than the total.")
+    expect { progress.progress = 101 }.
+      to \
+        raise_error(InvalidProgressError,
+                    "You can't set the item's current value to be greater " \
+                    "than the total.")
   end
 end
 end

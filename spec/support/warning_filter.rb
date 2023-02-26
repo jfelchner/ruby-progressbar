@@ -28,4 +28,4 @@ module WarningFilter
   end
 end
 
-$stderr = ::WarningFilter::Filter.new($stderr)
+$stderr = WarningFilter::Filter.new($stderr)
