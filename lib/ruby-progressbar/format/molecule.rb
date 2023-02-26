@@ -15,6 +15,7 @@ class   Molecule
     :e => [:time,         :estimated_with_unknown_oob],
     :E => [:time,         :estimated_with_friendly_oob],
     :f => [:time,         :estimated_with_no_oob],
+    :l => [:time,         :estimated_wall_clock],
     :B => [:bar,          :complete_bar],
     :b => [:bar,          :bar],
     :W => [:bar,          :complete_bar_with_percentage],

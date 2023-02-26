@@ -4,7 +4,7 @@
 #
 class PBTimeTester
   def self.now
-    ::Time.now
+    ::Time.now.utc
   end
 end
 

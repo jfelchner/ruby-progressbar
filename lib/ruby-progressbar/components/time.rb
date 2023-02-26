@@ -12,6 +12,7 @@ class   Time
   NO_TIME_ELAPSED_TEXT   = '--:--:--'.freeze
   ESTIMATED_LABEL        = ' ETA'.freeze
   ELAPSED_LABEL          = 'Time'.freeze
+  WALL_CLOCK_FORMAT      = '%H:%M:%S'.freeze
   OOB_TEXT_TO_FORMAT     = {
     :unknown  => OOB_UNKNOWN_TIME_TEXT,
     :friendly => OOB_FRIENDLY_TIME_TEXT
@@ -49,6 +50,17 @@ class   Time
     self.out_of_bounds_time_format = :friendly
 
     estimated_with_elapsed_fallback
+  end
+
+  def estimated_wall_clock
+    return timer.stopped_at.strftime(WALL_CLOCK_FORMAT) if progress.finished?
+    return NO_TIME_ELAPSED_TEXT unless timer.started?
+
+    memo_estimated_seconds_remaining = estimated_seconds_remaining
+    return NO_TIME_ELAPSED_TEXT unless memo_estimated_seconds_remaining
+
+    (timer.started_at + memo_estimated_seconds_remaining).
+      strftime(WALL_CLOCK_FORMAT)
   end
 
   attr_reader   :out_of_bounds_time_format
