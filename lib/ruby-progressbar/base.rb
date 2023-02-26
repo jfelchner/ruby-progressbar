@@ -39,7 +39,7 @@ class   Base
     self.title_comp   = Components::Title.new(options)
     self.bar          = Components::Bar.new(options)
     self.percentage   = Components::Percentage.new(options)
-    self.rate         = Components::Rate.new(options)
+    self.rate_component       = Components::Rate.new(options)
     self.time         = Components::Time.new(options)
 
     self.output       = Output.detect(options.merge(:bar => self))
@@ -148,8 +148,8 @@ class   Base
       'percentage'                          => progressable.percentage_completed_with_precision.to_f,
       'elapsed_time_in_seconds'             => time.__send__(:timer).elapsed_seconds,
       'estimated_time_remaining_in_seconds' => time.__send__(:estimated_seconds_remaining),
-      'base_rate_of_change'                 => rate.__send__(:base_rate),
-      'scaled_rate_of_change'               => rate.__send__(:scaled_rate),
+      'base_rate_of_change'                 => rate_component.__send__(:base_rate),
+      'scaled_rate_of_change'               => rate_component.__send__(:scaled_rate),
       'unknown_progress_animation_steps'    => bar.upa_steps,
       'throttle_rate'                       => output.__send__(:throttle).rate,
       'started?'                            => started?,
@@ -179,7 +179,7 @@ class   Base
                 :title_comp,
                 :bar,
                 :percentage,
-                :rate,
+                :rate_component,
                 :time,
                 :autostart,
                 :autofinish,
