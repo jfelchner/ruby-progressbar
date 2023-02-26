@@ -37,7 +37,7 @@ class   Base
                                       :progress => progressable)
 
     self.title_comp   = Components::Title.new(options)
-    self.bar          = Components::Bar.new(options)
+    self.bar_component        = Components::Bar.new(options)
     self.percentage_component = Components::Percentage.new(options)
     self.rate_component       = Components::Rate.new(options)
     self.time         = Components::Time.new(options)
@@ -114,11 +114,11 @@ class   Base
   end
 
   def progress_mark=(mark)
-    output.refresh_with_format_change { bar.progress_mark = mark }
+    output.refresh_with_format_change { bar_component.progress_mark = mark }
   end
 
   def remainder_mark=(mark)
-    output.refresh_with_format_change { bar.remainder_mark = mark }
+    output.refresh_with_format_change { bar_component.remainder_mark = mark }
   end
 
   def title
@@ -141,8 +141,8 @@ class   Base
       'output_stream'                       => output.__send__(:stream),
       'length'                              => output.length,
       'title'                               => title_comp.title,
-      'progress_mark'                       => bar.progress_mark,
-      'remainder_mark'                      => bar.remainder_mark,
+      'progress_mark'                       => bar_component.progress_mark,
+      'remainder_mark'                      => bar_component.remainder_mark,
       'progress'                            => progressable.progress,
       'total'                               => progressable.total,
       'percentage'                          => progressable.percentage_completed_with_precision.to_f,
@@ -150,7 +150,7 @@ class   Base
       'estimated_time_remaining_in_seconds' => time.__send__(:estimated_seconds_remaining),
       'base_rate_of_change'                 => rate_component.__send__(:base_rate),
       'scaled_rate_of_change'               => rate_component.__send__(:scaled_rate),
-      'unknown_progress_animation_steps'    => bar.upa_steps,
+      'unknown_progress_animation_steps'    => bar_component.upa_steps,
       'throttle_rate'                       => output.__send__(:throttle).rate,
       'started?'                            => started?,
       'stopped?'                            => stopped?,
@@ -177,7 +177,7 @@ class   Base
                 :timer,
                 :progressable,
                 :title_comp,
-                :bar,
+                :bar_component,
                 :percentage_component,
                 :rate_component,
                 :time,

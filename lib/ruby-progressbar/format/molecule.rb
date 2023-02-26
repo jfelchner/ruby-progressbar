@@ -16,11 +16,11 @@ class   Molecule
     :E => [:time,         :estimated_with_friendly_oob],
     :f => [:time,         :estimated_with_no_oob],
     :l => [:time,         :estimated_wall_clock],
-    :B => [:bar,          :complete_bar],
-    :b => [:bar,          :bar],
-    :W => [:bar,          :complete_bar_with_percentage],
-    :w => [:bar,          :bar_with_percentage],
-    :i => [:bar,          :incomplete_space],
+    :B => [:bar_component,        :complete_bar],
+    :b => [:bar_component,        :bar],
+    :W => [:bar_component,        :complete_bar_with_percentage],
+    :w => [:bar_component,        :bar_with_percentage],
+    :i => [:bar_component,        :incomplete_space],
     :r => [:rate_component,       :rate_of_change],
     :R => [:rate_component,       :rate_of_change_with_precision]
   }.freeze
