@@ -36,7 +36,7 @@ class   Base
     options           = options.merge(:timer    => timer,
                                       :progress => progressable)
 
-    self.title_comp   = Components::Title.new(options)
+    self.title_component      = Components::Title.new(options)
     self.bar_component        = Components::Bar.new(options)
     self.percentage_component = Components::Percentage.new(options)
     self.rate_component       = Components::Rate.new(options)
@@ -122,11 +122,11 @@ class   Base
   end
 
   def title
-    title_comp.title
+    title_component.title
   end
 
   def title=(title)
-    output.refresh_with_format_change { title_comp.title = title }
+    output.refresh_with_format_change { title_component.title = title }
   end
 
   def to_s(new_format = nil)
@@ -140,7 +140,7 @@ class   Base
     {
       'output_stream'                       => output.__send__(:stream),
       'length'                              => output.length,
-      'title'                               => title_comp.title,
+      'title'                               => title_component.title,
       'progress_mark'                       => bar_component.progress_mark,
       'remainder_mark'                      => bar_component.remainder_mark,
       'progress'                            => progressable.progress,
@@ -176,7 +176,7 @@ class   Base
   attr_accessor :output,
                 :timer,
                 :progressable,
-                :title_comp,
+                :title_component,
                 :bar_component,
                 :percentage_component,
                 :rate_component,

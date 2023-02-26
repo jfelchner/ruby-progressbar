@@ -13,7 +13,7 @@ describe Molecule do
   it 'sets the method name when initialized' do
     molecule = Molecule.new('t')
 
-    expect(molecule.method_name).to eql [:title_comp, :title]
+    expect(molecule.method_name).to eql [:title_component, :title]
   end
 
   it 'can retrieve the full key for itself' do

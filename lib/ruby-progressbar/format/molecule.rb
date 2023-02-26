@@ -2,11 +2,11 @@ class   ProgressBar
 module  Format
 class   Molecule
   MOLECULES = {
-    :t => [:title_comp,   :title],
-    :T => [:title_comp,   :title],
-    :c => [:progressable, :progress],
-    :C => [:progressable, :total],
-    :u => [:progressable, :total_with_unknown_indicator],
+    :t => [:title_component,      :title],
+    :T => [:title_component,      :title],
+    :c => [:progressable,         :progress],
+    :C => [:progressable,         :total],
+    :u => [:progressable,         :total_with_unknown_indicator],
     :p => [:percentage_component, :percentage],
     :P => [:percentage_component, :percentage_with_precision],
     :j => [:percentage_component, :justified_percentage],
