@@ -140,7 +140,6 @@ jobs:
           remark-lint-no-url-trailing-slash
           remark-lint-ordered-list-marker-style
           remark-lint-ordered-list-marker-value
-          remark-lint-rule-style
           remark-lint-strong-marker
           remark-lint-table-cell-padding
           remark-lint-table-pipe-alignment

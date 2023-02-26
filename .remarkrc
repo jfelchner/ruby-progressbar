@@ -65,11 +65,6 @@
     "lint-no-url-trailing-slash":             ["error", true],
     "lint-ordered-list-marker-style":         ["error", "."],
     "lint-ordered-list-marker-value":         ["error", "ordered"],
-    "lint-rule-style":                        ["error", {
-      "rule":           "-",
-      "ruleRepetition": 80,
-      "ruleSpaces":     false
-    }],
     "lint-strong-marker":                     ["error", "*"],
     "lint-table-cell-padding":                ["error", "padded"],
     "lint-table-pipe-alignment":              ["error", true],
