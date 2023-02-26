@@ -1,17 +1,17 @@
 require 'spec_helper'
-require 'ruby-progressbar/calculators/running_average'
+require 'ruby-progressbar/calculators/smoothed_average'
 
 class    ProgressBar
 module   Calculators
-describe RunningAverage do
+describe SmoothedAverage do
   it 'can properly calculate a running average' do
-    first_average = RunningAverage.calculate(4.5,  12,  0.1)
+    first_average = SmoothedAverage.calculate(4.5,  12,  0.1)
     expect(first_average).to be_within(0.001).of 11.25
 
-    second_average = RunningAverage.calculate(8.2,  51,  0.7)
+    second_average = SmoothedAverage.calculate(8.2,  51,  0.7)
     expect(second_average).to be_within(0.001).of 21.04
 
-    third_average = RunningAverage.calculate(41.8, 100, 0.59)
+    third_average = SmoothedAverage.calculate(41.8, 100, 0.59)
     expect(third_average).to be_within(0.001).of 65.662
   end
 end

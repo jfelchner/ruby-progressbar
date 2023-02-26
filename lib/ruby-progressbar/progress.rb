@@ -1,21 +1,33 @@
 require 'ruby-progressbar/errors/invalid_progress_error'
+require 'ruby-progressbar/calculators/smoothed_average'
 
 class   ProgressBar
 class   Progress
-  DEFAULT_TOTAL              = 100
-  DEFAULT_BEGINNING_POSITION = 0
-  DEFAULT_SMOOTHING          = 0.1
+  DEFAULT_TOTAL                      = 100
+  DEFAULT_BEGINNING_POSITION         = 0
+  DEFAULT_RUNNING_AVERAGE_RATE       = 0.1
+  DEFAULT_RUNNING_AVERAGE_CALCULATOR = ProgressBar::Calculators::SmoothedAverage
+
+  RUNNING_AVERAGE_CALCULATOR_MAP     = {
+    'smoothing' => ProgressBar::Calculators::SmoothedAverage
+  }.freeze
 
   attr_reader               :total,
                             :progress
 
   attr_accessor             :starting_position,
                             :running_average,
-                            :smoothing
+                            :running_average_calculator,
+                            :running_average_rate
 
   def initialize(options = {})
-    self.total     = options.fetch(:total, DEFAULT_TOTAL)
-    self.smoothing = options[:smoothing] || DEFAULT_SMOOTHING
+    self.total                      = options.fetch(:total, DEFAULT_TOTAL)
+    self.running_average_rate       = options[:smoothing] ||
+                                      options[:running_average_rate] ||
+                                      DEFAULT_RUNNING_AVERAGE_RATE
+    self.running_average_calculator = RUNNING_AVERAGE_CALCULATOR_MAP.
+                                        fetch(options[:running_average_calculator],
+                                              DEFAULT_RUNNING_AVERAGE_CALCULATOR)
 
     start :at => DEFAULT_BEGINNING_POSITION
   end
@@ -66,9 +78,9 @@ class   Progress
 
     @progress = new_progress
 
-    self.running_average = Calculators::RunningAverage.calculate(running_average,
-                                                                 absolute,
-                                                                 smoothing)
+    self.running_average = running_average_calculator.calculate(running_average,
+                                                                absolute,
+                                                                running_average_rate)
   end
 
   def total=(new_total)
