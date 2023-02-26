@@ -33,14 +33,14 @@ class   Base
     self.timer        = Timer.new(options)
     self.progressable = Progress.new(options)
 
-    options           = options.merge(:timer    => timer,
-                                      :progress => progressable)
+    options           = options.merge(:progress => progressable,
+                                      :timer    => timer)
 
     self.title_component      = Components::Title.new(options)
     self.bar_component        = Components::Bar.new(options)
     self.percentage_component = Components::Percentage.new(options)
     self.rate_component       = Components::Rate.new(options)
-    self.time         = Components::Time.new(options)
+    self.time_component       = Components::Time.new(options)
 
     self.output       = Output.detect(options.merge(:bar => self))
     @format           = Format::String.new(output.resolve_format(options[:format]))
@@ -146,8 +146,8 @@ class   Base
       'progress'                            => progressable.progress,
       'total'                               => progressable.total,
       'percentage'                          => progressable.percentage_completed_with_precision.to_f,
-      'elapsed_time_in_seconds'             => time.__send__(:timer).elapsed_seconds,
-      'estimated_time_remaining_in_seconds' => time.__send__(:estimated_seconds_remaining),
+      'elapsed_time_in_seconds'             => time_component.__send__(:timer).elapsed_seconds,
+      'estimated_time_remaining_in_seconds' => time_component.__send__(:estimated_seconds_remaining),
       'base_rate_of_change'                 => rate_component.__send__(:base_rate),
       'scaled_rate_of_change'               => rate_component.__send__(:scaled_rate),
       'unknown_progress_animation_steps'    => bar_component.upa_steps,
@@ -180,7 +180,7 @@ class   Base
                 :bar_component,
                 :percentage_component,
                 :rate_component,
-                :time,
+                :time_component,
                 :autostart,
                 :autofinish,
                 :finished
