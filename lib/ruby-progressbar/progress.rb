@@ -16,6 +16,7 @@ class   Progress
   def initialize(options = {})
     self.total                      = options.fetch(:total, DEFAULT_TOTAL)
     self.running_average_rate       = options[:smoothing] ||
+                                      options[:running_average_rate] ||
                                       DEFAULT_RUNNING_AVERAGE_RATE
 
     start :at => DEFAULT_BEGINNING_POSITION

@@ -30,7 +30,7 @@ describe Time do
   end
 
   it 'displays unsmoothed time remaining when progress has been made' do
-    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    progress = Progress.new(:total => 100, :running_average_rate => 0.0)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
 
@@ -64,7 +64,7 @@ describe Time do
 
   it 'displays unsmoothed time remaining when progress has been made even after the ' \
      'bar is decremented' do
-    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    progress = Progress.new(:total => 100, :running_average_rate => 0.0)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
 
@@ -82,7 +82,7 @@ describe Time do
 
   it 'displays estimated time of "> 4 Days" when estimated time is out of bounds ' \
      'and the out of bounds format is set to "friendly"' do
-    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    progress = Progress.new(:total => 100, :running_average_rate => 0.0)
     time     = Time.new(:out_of_bounds_time_format => :friendly,
                         :timer                     => timer,
                         :progress                  => progress)
@@ -99,7 +99,7 @@ describe Time do
 
   it 'displays estimated time of "??:??:??" when estimated time is out of bounds ' \
      'and the out of bounds format is set to "unknown"' do
-    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    progress = Progress.new(:total => 100, :running_average_rate => 0.0)
     time     = Time.new(:out_of_bounds_time_format => :unknown,
                         :timer                     => timer,
                         :progress                  => progress)
@@ -116,7 +116,7 @@ describe Time do
 
   it 'displays actual estimated time when estimated time is out of bounds and the ' \
      'out of bounds format is unset' do
-    progress = Progress.new(:total => 100, :smoothing => 0.0)
+    progress = Progress.new(:total => 100, :running_average_rate => 0.0)
     time     = Time.new(:out_of_bounds_time_format => nil,
                         :timer                     => timer,
                         :progress                  => progress)
@@ -133,7 +133,7 @@ describe Time do
 
   it 'displays smoothed estimated time properly even when taking decrements into ' \
      'account' do
-    progress = Progress.new(:total => 100, :smoothing => 0.5)
+    progress = Progress.new(:total => 100, :running_average_rate => 0.5)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
 
@@ -151,7 +151,7 @@ describe Time do
 
   it 'displays smoothed unknown estimated time when reset is called after progress ' \
      'is made' do
-    progress = Progress.new(:total => 100, :smoothing => 0.5)
+    progress = Progress.new(:total => 100, :running_average_rate => 0.5)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
 
@@ -168,7 +168,7 @@ describe Time do
   end
 
   it 'displays smoothed estimated time after progress has been made' do
-    progress = Progress.new(:total => 100, :smoothing => 0.5)
+    progress = Progress.new(:total => 100, :running_average_rate => 0.5)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
 
@@ -184,7 +184,7 @@ describe Time do
 
   it 'displays the estimated time remaining properly even for progress increments ' \
      'very short intervals' do
-    progress = Progress.new(:total => 10, :smoothing => 0.1)
+    progress = Progress.new(:total => 10, :running_average_rate => 0.1)
     time     = Time.new(:timer    => timer,
                         :progress => progress)
 
