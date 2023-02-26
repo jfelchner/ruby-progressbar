@@ -1,3 +1,5 @@
+require 'ruby-progressbar/format/molecule'
+
 class   ProgressBar
 module  Format
 class   String < ::String

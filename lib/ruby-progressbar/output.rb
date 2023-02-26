@@ -1,3 +1,6 @@
+require 'ruby-progressbar/calculators/length'
+require 'ruby-progressbar/throttle'
+
 class   ProgressBar
 class   Output
   DEFAULT_OUTPUT_STREAM = $stdout

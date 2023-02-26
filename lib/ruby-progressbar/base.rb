@@ -1,5 +1,17 @@
 require 'forwardable'
 
+require 'ruby-progressbar/components/bar'
+require 'ruby-progressbar/components/percentage'
+require 'ruby-progressbar/components/rate'
+require 'ruby-progressbar/components/time'
+require 'ruby-progressbar/components/title'
+require 'ruby-progressbar/format/formatter'
+require 'ruby-progressbar/format/string'
+require 'ruby-progressbar/outputs/non_tty'
+require 'ruby-progressbar/outputs/tty'
+require 'ruby-progressbar/progress'
+require 'ruby-progressbar/timer'
+
 class   ProgressBar
 class   Base
   extend Forwardable
