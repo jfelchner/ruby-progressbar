@@ -133,7 +133,7 @@ describe Progress do
   end
 
   it 'allows the default running average rate to be overridden' do
-    expect(Progress.new(:smoothing => 0.3).running_average_rate).to eql 0.3
+    expect(Progress.new(:running_average_rate => 0.3).running_average_rate).to eql 0.3
   end
 
   it 'has a default running average rate' do

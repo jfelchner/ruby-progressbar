@@ -138,7 +138,7 @@ describe Formatter do
     end
 
     it 'is the estimated time remaining when called after the bar is started' do
-      progressbar = ProgressBar::Base.new(:smoothing => 0.0)
+      progressbar = ProgressBar::Base.new(:running_average_rate => 0.0)
 
       Timecop.freeze(to_the_past) do
         progressbar.start
@@ -149,7 +149,7 @@ describe Formatter do
     end
 
     it 'is "??:??:??" when it could take 100 hours or longer to finish' do
-      progressbar = ProgressBar::Base.new(:total => 100, :smoothing => 0.0)
+      progressbar = ProgressBar::Base.new(:total => 100, :running_average_rate => 0.0)
 
       Timecop.freeze(one_hundred_hours_ago) do
         progressbar.start
@@ -261,7 +261,7 @@ describe Formatter do
     end
 
     it 'is the estimated time remaining when called after the bar is started' do
-      progressbar = ProgressBar::Base.new(:smoothing => 0.0)
+      progressbar = ProgressBar::Base.new(:running_average_rate => 0.0)
 
       Timecop.freeze(to_the_past) do
         progressbar.start
@@ -286,7 +286,7 @@ describe Formatter do
     end
 
     it 'is "> 4 Days" when it could take 100 hours or longer to finish' do
-      progressbar = ProgressBar::Base.new(:total => 100, :smoothing => 0.0)
+      progressbar = ProgressBar::Base.new(:total => 100, :running_average_rate => 0.0)
 
       Timecop.freeze(one_hundred_hours_ago) do
         progressbar.start
@@ -326,7 +326,7 @@ describe Formatter do
     end
 
     it 'is the estimated time remaining when called after the bar is started' do
-      progressbar = ProgressBar::Base.new(:smoothing => 0.0)
+      progressbar = ProgressBar::Base.new(:running_average_rate => 0.0)
 
       Timecop.freeze(to_the_past) do
         progressbar.start
@@ -337,7 +337,7 @@ describe Formatter do
     end
 
     it 'is the exact estimated time when it could take 100 hours or longer to finish' do
-      progressbar = ProgressBar::Base.new(:total => 100, :smoothing => 0.0)
+      progressbar = ProgressBar::Base.new(:total => 100, :running_average_rate => 0.0)
 
       Timecop.freeze(one_hundred_hours_ago) do
         progressbar.start
