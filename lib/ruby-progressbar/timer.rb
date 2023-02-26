@@ -51,6 +51,8 @@ class   Timer
   end
 
   def elapsed_seconds
+    return 0 unless started?
+
     ((stopped_at || time.now) - started_at)
   end
 
