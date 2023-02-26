@@ -132,12 +132,12 @@ describe Progress do
     expect(progress.running_average).to eql 0.0
   end
 
-  it 'allows the default smoothing to be overridden' do
-    expect(Progress.new(:smoothing => 0.3).smoothing).to eql 0.3
+  it 'allows the default running average rate to be overridden' do
+    expect(Progress.new(:smoothing => 0.3).running_average_rate).to eql 0.3
   end
 
-  it 'has a default smoothing value' do
-    expect(Progress.new.smoothing).to eql 0.1
+  it 'has a default running average rate' do
+    expect(Progress.new.running_average_rate).to eql 0.1
   end
   # rubocop:enable RSpec/BeEql
 
