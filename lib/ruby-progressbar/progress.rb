@@ -68,9 +68,9 @@ class   Progress
 
     @progress = new_progress
 
-    self.running_average = Calculators::RunningAverage.calculate(running_average,
-                                                                 absolute,
-                                                                 running_average_rate)
+    self.running_average = Calculators::SmoothedAverage.calculate(running_average,
+                                                                  absolute,
+                                                                  running_average_rate)
   end
 
   def total=(new_total)
