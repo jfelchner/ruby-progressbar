@@ -605,7 +605,9 @@ describe Base do
     end
   end
 
-  it 'can be converted into a hash', :time_mock => ::Time.utc(2012, 7, 26, 18, 0, 0) do
+  it 'can be converted into a hash' do
+    ::Timecop.freeze(::Time.utc(2012, 7, 26, 18, 0, 0))
+
     progressbar = ProgressBar::Base.new(:output         => output,
                                         :total          => 33,
                                         :title          => 'My Title',
@@ -646,6 +648,8 @@ describe Base do
         'stopped?'                            => false,
         'finished?'                           => false
     )
+
+    ::Timecop.return
   end
 end
 end

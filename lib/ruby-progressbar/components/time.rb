@@ -31,8 +31,6 @@ class   Time
     "#{ELAPSED_LABEL}: #{elapsed}"
   end
 
-  protected
-
   def estimated_with_no_oob
     estimated_with_elapsed_fallback(nil)
   end
@@ -55,6 +53,8 @@ class   Time
     (timer.now + memo_estimated_seconds_remaining).
       strftime(WALL_CLOCK_FORMAT)
   end
+
+  protected
 
   attr_accessor :timer,
                 :progress
@@ -84,7 +84,9 @@ class   Time
   end
 
   def estimated_with_elapsed_fallback(out_of_bounds_time_format)
-    progress.finished? ? elapsed_with_label : estimated_with_label(out_of_bounds_time_format)
+    return elapsed_with_label if progress.finished?
+
+    estimated_with_label(out_of_bounds_time_format)
   end
 
   def estimated_seconds_remaining

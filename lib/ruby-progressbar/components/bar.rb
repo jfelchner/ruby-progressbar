@@ -32,22 +32,6 @@ class   Bar
     end
   end
 
-  private
-
-  def integrated_percentage_complete_string
-    return standard_complete_string if completed_length < 5
-
-    " #{progress.percentage_completed} ".to_s.center(completed_length, progress_mark)
-  end
-
-  def standard_complete_string
-    progress_mark * completed_length
-  end
-
-  def incomplete_string
-    remainder_mark * (length - completed_length)
-  end
-
   def bar(length)
     self.length = length
 
@@ -66,12 +50,6 @@ class   Bar
     to_s(:format => :integrated_percentage)
   end
 
-  def unknown_string
-    unknown_frame_string = unknown_progress_frame * ((length / upa_steps.size) + 2)
-
-    unknown_frame_string[0, length]
-  end
-
   def incomplete_space(length)
     self.length = length
 
@@ -86,6 +64,28 @@ class   Bar
     self.length = length
 
     integrated_percentage_complete_string
+  end
+
+  private
+
+  def integrated_percentage_complete_string
+    return standard_complete_string if completed_length < 5
+
+    " #{progress.percentage_completed} ".to_s.center(completed_length, progress_mark)
+  end
+
+  def standard_complete_string
+    progress_mark * completed_length
+  end
+
+  def incomplete_string
+    remainder_mark * (length - completed_length)
+  end
+
+  def unknown_string
+    unknown_frame_string = unknown_progress_frame * ((length / upa_steps.size) + 2)
+
+    unknown_frame_string[0, length]
   end
 
   def completed_length

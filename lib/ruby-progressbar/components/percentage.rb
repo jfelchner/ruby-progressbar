@@ -7,10 +7,8 @@ class   Percentage
     self.progress = options[:progress]
   end
 
-  private
-
   def percentage
-    progress.percentage_completed
+    progress.percentage_completed.to_s
   end
 
   def justified_percentage

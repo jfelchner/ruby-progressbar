@@ -33,8 +33,8 @@ class   Base
     self.timer        = Timer.new(options)
     self.progressable = Progress.new(options)
 
-    options           = options.merge(:progress => progressable,
-                                      :timer    => timer)
+    options = options.merge(:progress => progressable,
+                            :timer    => timer)
 
     self.title_component      = Components::Title.new(options)
     self.bar_component        = Components::Bar.new(options)

@@ -3,7 +3,7 @@ module WarningFilter
     def initialize(io)
       @io = io
 
-      super(File::RDONLY|File::WRONLY)
+      super(File::RDONLY | File::WRONLY)
     end
 
     def write(line)

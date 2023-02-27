@@ -4,188 +4,284 @@ require 'ruby-progressbar/components/bar'
 class    ProgressBar
 module   Components
 describe Bar do
-  it 'has a default mark when a new bar is created and no parameters are passed' do
-    expect(Bar.new.progress_mark).to eql Bar::DEFAULT_PROGRESS_MARK
+  describe '#initialize' do
+    it 'has a default mark when a new bar is created and no parameters are passed' do
+      expect(Bar.new.progress_mark).to eql Bar::DEFAULT_PROGRESS_MARK
+    end
+
+    it 'has a default remainder mark when a new bar is created and no parameters ' \
+       'are passed' do
+      expect(Bar.new.remainder_mark).to eql Bar::DEFAULT_REMAINDER_MARK
+    end
+
+    it 'returns the overridden mark when a new bar is created and options are passed' do
+      progressbar = Bar.new(:progress_mark => 'x')
+
+      expect(progressbar.progress_mark).to eql 'x'
+    end
+
+    it 'returns the overridden remainder mark when a new bar is created and options ' \
+       'are passed' do
+      progressbar = Bar.new(:remainder_mark => 'o')
+
+      expect(progressbar.remainder_mark).to eql 'o'
+    end
   end
 
-  it 'has a default remainder mark when a new bar is created and no parameters ' \
-     'are passed' do
-    expect(Bar.new.remainder_mark).to eql Bar::DEFAULT_REMAINDER_MARK
+  describe '#bar' do
+    it 'displays the bar with no indication of progress when just begun' do
+      progress    = Progress.new(:total => 50)
+      progressbar = Bar.new(:progress => progress,
+                            :length   => 100)
+
+      bar_text = progressbar.bar(100)
+      expect(bar_text).to eql ''
+    end
+
+    it 'displays the bar with an indication of progress when nothing has been ' \
+       'completed and the bar is incremented' do
+      progress    = Progress.new :total    => 50
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+      progress.increment
+
+      bar_text = progressbar.bar(100)
+      expect(bar_text).to eql '=='
+    end
+
+    it 'displays the bar with no indication of progress when a fraction of a percentage ' \
+       'has been completed' do
+      progress    = Progress.new :total    => 200
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+      progress.start :at => 1
+
+      bar_text = progressbar.bar(100)
+      expect(bar_text).to eql ''
+    end
+
+    it 'displays the bar as 100% complete when completed' do
+      progress    = Progress.new :total    => 50
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+      progress.start :at => 50
+      progress.increment
+
+      bar_text = progressbar.bar(100)
+      expect(bar_text).to eql('=' * 100)
+    end
+
+    it 'displays the bar as 98% complete when completed and the bar is decremented' do
+      progress    = Progress.new :total    => 50
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+      progress.start :at => 50
+      progress.decrement
+
+      bar_text = progressbar.bar(100)
+      expect(bar_text).to eql('=' * 98)
+    end
   end
 
-  it 'returns the overridden mark when a new bar is created and options are passed' do
-    progressbar = Bar.new(:progress_mark => 'x')
+  describe '#bar_with_percentage' do
+    it 'displays the bar with an integrated percentage properly when empty' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
 
-    expect(progressbar.progress_mark).to eql 'x'
+      bar_text = progressbar.bar_with_percentage(100)
+      expect(bar_text).to eql ''
+    end
+
+    it 'displays the bar with an integrated percentage properly just before' \
+       'the percentage is displayed' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+
+      4.times { progress.increment }
+
+      bar_text = progressbar.bar_with_percentage(100)
+      expect(bar_text).to eql '===='
+    end
+
+    it 'displays the bar with an integrated percentage properly immediately after' \
+       'the percentage is displayed' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+
+      5.times { progress.increment }
+
+      bar_text = progressbar.bar_with_percentage(100)
+      expect(bar_text).to eql '= 5 ='
+    end
+
+    it 'displays the bar with an integrated percentage properly on double digit' \
+       'percentage' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+
+      10.times { progress.increment }
+
+      bar_text = progressbar.bar_with_percentage(100)
+      expect(bar_text).to eql '=== 10 ==='
+    end
+
+    it 'displays the bar with an integrated percentage properly when finished' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+      progress.finish
+
+      bar_text = progressbar.bar_with_percentage(100)
+      expect(bar_text).to eql("#{'=' * 47} 100 #{'=' * 48}")
+    end
+
+    it 'calculates the remaining negative space properly with an integrated percentage ' \
+       'bar of 0 percent' do
+      progress    = Progress.new :total    => 200
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+
+      bar_text = progressbar.bar_with_percentage(100)
+      expect(bar_text).to eql ''
+
+      9.times { progress.increment }
+
+      bar_text = progressbar.bar_with_percentage(100)
+      expect(bar_text).to eql '===='
+
+      progress.increment
+
+      bar_text = progressbar.bar_with_percentage(100)
+      expect(bar_text).to eql '= 5 ='
+    end
   end
 
-  it 'returns the overridden remainder mark when a new bar is created and options ' \
-     'are passed' do
-    progressbar = Bar.new(:remainder_mark => 'o')
+  describe '#incomplete_space' do
+    it 'displays the bar with an integrated percentage properly when empty' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
 
-    expect(progressbar.remainder_mark).to eql 'o'
-  end
+      bar_text = progressbar.incomplete_space(100)
+      expect(bar_text).to eql ' ' * 100
+    end
 
-  it 'displays the bar with no indication of progress when just begun' do
-    progress    = Progress.new(:total => 50)
-    progressbar = Bar.new(:progress => progress,
-                          :length   => 100)
+    it 'displays the bar with an integrated percentage properly just before' \
+       'the percentage is displayed' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
 
-    expect(progressbar.to_s).to eql ' ' * 100
-  end
+      4.times { progress.increment }
 
-  it 'displays the bar with an indication of progress when nothing has been ' \
-     'completed and the bar is incremented' do
-    progress    = Progress.new :total    => 50
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-    progress.increment
+      bar_text = progressbar.incomplete_space(100)
+      expect(bar_text).to eql(' ' * 96)
+    end
 
-    expect(progressbar.to_s).to eql "==#{' ' * 98}"
-  end
+    it 'displays the bar with an integrated percentage properly immediately after' \
+       'the percentage is displayed' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
 
-  it 'displays the bar with no indication of progress when a fraction of a percentage ' \
-     'has been completed' do
-    progress    = Progress.new :total    => 200
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-    progress.start :at => 1
+      5.times { progress.increment }
 
-    expect(progressbar.to_s).to eql(' ' * 100)
-  end
+      bar_text = progressbar.incomplete_space(100)
+      expect(bar_text).to eql(' ' * 95)
+    end
 
-  it 'displays the bar as 100% complete when completed' do
-    progress    = Progress.new :total    => 50
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-    progress.start :at => 50
-    progress.increment
+    it 'displays the bar with an integrated percentage properly on double digit' \
+       'percentage' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
 
-    expect(progressbar.to_s).to eql '=' * 100
-  end
+      10.times { progress.increment }
 
-  it 'displays the bar as 98% complete when completed and the bar is decremented' do
-    progress    = Progress.new :total    => 50
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-    progress.start :at => 50
-    progress.decrement
+      bar_text = progressbar.incomplete_space(100)
+      expect(bar_text).to eql(' ' * 90)
+    end
 
-    expect(progressbar.to_s).to eql(('=' * 98) + (' ' * 2))
-  end
+    it 'displays the bar with an integrated percentage properly when finished' do
+      progress    = Progress.new :total    => 100
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
+      progress.finish
 
-  it 'is represented correctly when a bar has an unknown amount to completion' do
-    progress    = Progress.new :total    => nil
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 80
+      bar_text = progressbar.incomplete_space(100)
+      expect(bar_text).to eql ''
+    end
 
-    expect(progressbar.to_s).to eql('=---' * 20)
-  end
+    it 'calculates the remaining negative space properly with an integrated percentage ' \
+       'bar of 0 percent' do
+      progress    = Progress.new :total    => 200
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 100
 
-  it 'is represented after being incremented once when a bar has an unknown amount ' \
-     'to completion' do
-    progress    = Progress.new :total    => nil
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 80
+      bar_text = progressbar.incomplete_space(100)
+      expect(bar_text).to eql ' ' * 100
 
-    progress.increment
+      9.times { progress.increment }
 
-    expect(progressbar.to_s).to eql('-=--' * 20)
-  end
+      bar_text = progressbar.incomplete_space(100)
+      expect(bar_text).to eql(' ' * 96)
 
-  it 'is represented after being incremented twice when a bar has an unknown amount ' \
-     'to completion' do
-    progress    = Progress.new :total    => nil
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 80
+      progress.increment
 
-    2.times { progress.increment }
+      bar_text = progressbar.incomplete_space(100)
+      expect(bar_text).to eql(' ' * 95)
+    end
 
-    expect(progressbar.to_s).to eql('--=-' * 20)
-  end
+    it 'is represented correctly when a bar has an unknown amount to completion' do
+      progress    = Progress.new :total    => nil
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 80
 
-  it 'is represented correctly when a bar has a customized unknown animation' do
-    progress    = Progress.new :total                            => nil
-    progressbar = Bar.new      :progress                         => progress,
-                               :unknown_progress_animation_steps => ['*--', '-*-', '--*'],
-                               :length                           => 80
+      bar_text = progressbar.incomplete_space(80)
+      expect(bar_text).to eql('=---' * 20)
+    end
 
-    expect(progressbar.to_s).to eql("#{'*--' * 26}*-")
-  end
+    it 'is represented after being incremented once when a bar has an unknown amount ' \
+       'to completion' do
+      progress    = Progress.new :total    => nil
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 80
 
-  it 'displays the bar with an integrated percentage properly when empty' do
-    progress    = Progress.new :total    => 100
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
+      progress.increment
 
-    bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql ' ' * 100
-  end
+      bar_text = progressbar.incomplete_space(80)
+      expect(bar_text).to eql('-=--' * 20)
+    end
 
-  it 'displays the bar with an integrated percentage properly just before' \
-     'the percentage is displayed' do
-    progress    = Progress.new :total    => 100
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
+    it 'is represented after being incremented twice when a bar has an unknown amount ' \
+       'to completion' do
+      progress    = Progress.new :total    => nil
+      progressbar = Bar.new      :progress => progress,
+                                 :length   => 80
 
-    4.times { progress.increment }
+      2.times { progress.increment }
 
-    bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql "====#{' ' * 96}"
-  end
+      bar_text = progressbar.incomplete_space(80)
+      expect(bar_text).to eql('--=-' * 20)
+    end
 
-  it 'displays the bar with an integrated percentage properly immediately after' \
-     'the percentage is displayed' do
-    progress    = Progress.new :total    => 100
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
+    it 'is represented correctly when a bar has a customized unknown animation' do
+      progress    = Progress.new :total                            => nil
+      progressbar = Bar.new      :progress                         => progress,
+                                 :unknown_progress_animation_steps => [
+                                                                        '*--',
+                                                                        '-*-',
+                                                                        '--*'
+                                                                      ],
+                                 :length                           => 80
 
-    5.times { progress.increment }
-
-    bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql "= 5 =#{' ' * 95}"
-  end
-
-  it 'displays the bar with an integrated percentage properly on double digit' \
-     'percentage' do
-    progress    = Progress.new :total    => 100
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-
-    10.times { progress.increment }
-
-    bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql "=== 10 ===#{' ' * 90}"
-  end
-
-  it 'displays the bar with an integrated percentage properly when finished' do
-    progress    = Progress.new :total    => 100
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-    progress.finish
-
-    bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql("#{'=' * 47} 100 #{'=' * 48}")
-  end
-
-  it 'calculates the remaining negative space properly with an integrated percentage ' \
-     'bar of 0 percent' do
-    progress    = Progress.new :total    => 200
-    progressbar = Bar.new      :progress => progress,
-                               :length   => 100
-
-    bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql ' ' * 100
-
-    9.times { progress.increment }
-
-    bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql "====#{' ' * 96}"
-
-    progress.increment
-
-    bar_text = progressbar.to_s(:format => :integrated_percentage)
-    expect(bar_text).to eql "= 5 =#{' ' * 95}"
+      bar_text = progressbar.incomplete_space(80)
+      expect(bar_text).to eql("#{'*--' * 26}*-")
+    end
   end
 
   it 'raises an error when attempting to set the current value of the bar to be ' \
