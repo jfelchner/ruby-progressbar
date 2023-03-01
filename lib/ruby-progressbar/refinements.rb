@@ -1,1 +1,1 @@
-require 'ruby-progressbar/refinements/enumerator'
+require 'ruby-progressbar/refinements/progress_enumerator'
