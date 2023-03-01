@@ -1,3 +1,3 @@
 class ProgressBar
-  VERSION = '1.12.0'.freeze
+  VERSION = '1.13.0rc1'.freeze
 end
