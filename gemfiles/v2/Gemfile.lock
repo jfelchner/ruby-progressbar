@@ -41,7 +41,7 @@ DEPENDENCIES
   rspectacular (~> 0.70.6)
   ruby-prof (~> 1.6)
   ruby-progressbar!
-  timecop (~> 0.6)
+  timecop (~> 0.9)
 
 BUNDLED WITH
    2.3.24

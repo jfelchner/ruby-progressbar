@@ -28,7 +28,7 @@ GEM
       fuubar (~> 2.0)
       rspec (~> 3.1)
     ruby-prof (0.15.9)
-    timecop (0.6.0)
+    timecop (0.9.6)
 
 PLATFORMS
   ruby
@@ -41,7 +41,7 @@ DEPENDENCIES
   rspectacular (~> 0.70.6)
   ruby-prof (~> 0.15.8)
   ruby-progressbar!
-  timecop (= 0.6.0)
+  timecop (~> 0.9)
 
 BUNDLED WITH
    1.17.3
