@@ -32,9 +32,6 @@ jobs:
           - ruby:                 "2.2"
             bundler:              "1"
 
-          - ruby:                 "2.3"
-            bundler:              "1"
-
     continue-on-error: ${{ endsWith(matrix.ruby, 'head') }}
 
     env:
