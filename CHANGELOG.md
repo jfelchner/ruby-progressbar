@@ -1,3 +1,19 @@
+Version v1.12.0 - March 1, 2023
+================================================================================
+
+Add
+--------------------------------------------------------------------------------
+  * Ability To Swap Out Running Average Calculators
+  * running_average_rate As Configuration Option
+  * Wall Clock Time To Completion To The Format Elements
+
+Change
+--------------------------------------------------------------------------------
+  * Rename Running Average Calculator To Smoothed Average Calculator
+  * Rename smoothing To running_average_rate
+  * Rename smoothing_factor To rate
+  * Allow Timer's Elapsed Seconds To Calculate Even If Not Started
+
 Version v1.11.0 - December 30, 2020
 ================================================================================
 
