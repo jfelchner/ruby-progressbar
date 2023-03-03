@@ -1,6 +1,5 @@
 require 'forwardable'
 
-require 'ruby-progressbar/calculators/smoothed_average'
 require 'ruby-progressbar/components/bar'
 require 'ruby-progressbar/components/percentage'
 require 'ruby-progressbar/components/rate'
@@ -11,6 +10,7 @@ require 'ruby-progressbar/format/string'
 require 'ruby-progressbar/outputs/non_tty'
 require 'ruby-progressbar/outputs/tty'
 require 'ruby-progressbar/progress'
+require 'ruby-progressbar/projector'
 require 'ruby-progressbar/timer'
 
 class   ProgressBar
@@ -27,12 +27,14 @@ class   Base
                  :total
 
   def initialize(options = {}) # rubocop:disable Metrics/AbcSize
+    options[:projector] ||= {}
+
     self.autostart    = options.fetch(:autostart,  true)
     self.autofinish   = options.fetch(:autofinish, true)
     self.finished     = false
 
     self.timer        = Timer.new(options)
-    projector_opts    = if options[:projector]
+    projector_opts    = if options[:projector].any?
                           options[:projector]
                         elsif options[:smoothing]
                           warn "WARNING: Passing the 'smoothing' option is deprecated " \
@@ -45,7 +47,9 @@ class   Base
                         else
                           {}
                         end
-    self.projector    = Calculators::SmoothedAverage.new(projector_opts)
+    self.projector    = Projector.
+                          from_type(options[:projector][:type]).
+                          new(projector_opts)
     self.progressable = Progress.new(options)
 
     options = options.merge(:progress  => progressable,
