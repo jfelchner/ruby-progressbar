@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'ruby-progressbar/calculators/smoothed_average'
+require 'ruby-progressbar/projectors/smoothed_average'
 
 class    ProgressBar
-module   Calculators
+module   Projectors
 describe SmoothedAverage do
   describe '.calculate' do
     it 'can properly calculate a projection' do

@@ -1,10 +1,10 @@
-require 'ruby-progressbar/calculators/smoothed_average'
+require 'ruby-progressbar/projectors/smoothed_average'
 
 class   ProgressBar
 class   Projector
-  DEFAULT_PROJECTOR     = ProgressBar::Calculators::SmoothedAverage
+  DEFAULT_PROJECTOR     = ProgressBar::Projectors::SmoothedAverage
   NAME_TO_PROJECTOR_MAP = {
-    'smoothed' => ProgressBar::Calculators::SmoothedAverage
+    'smoothed' => ProgressBar::Projectors::SmoothedAverage
   }.freeze
 
   def self.from_type(name)
