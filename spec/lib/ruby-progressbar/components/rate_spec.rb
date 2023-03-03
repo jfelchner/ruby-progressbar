@@ -8,10 +8,11 @@ describe Rate do
     it 'returns the rate as a formatted integer' do
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
 
-      progress = Progress.new(:total => 100)
-      timer    = Timer.new
-      rate     = Rate.new(:progress => progress,
-                          :timer    => timer)
+      projector  = Calculators::SmoothedAverage.new
+      progress   = Progress.new(:projector => projector, :total => 100)
+      timer      = Timer.new
+      rate       = Rate.new(:progress => progress,
+                            :timer    => timer)
 
       progress.start
       timer.start
@@ -28,11 +29,12 @@ describe Rate do
     it 'can scale the rate' do
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
 
-      progress = Progress.new(:total => 100)
-      timer    = Timer.new
-      rate     = Rate.new(:progress   => progress,
-                          :timer      => timer,
-                          :rate_scale => lambda { |x| x * 2 })
+      projector  = Calculators::SmoothedAverage.new
+      progress   = Progress.new(:projector => projector, :total => 100)
+      timer      = Timer.new
+      rate       = Rate.new(:progress   => progress,
+                            :timer      => timer,
+                            :rate_scale => lambda { |x| x * 2 })
 
       progress.start
       timer.start
@@ -51,10 +53,11 @@ describe Rate do
     it 'returns the rate as a formatted integer' do
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
 
-      progress = Progress.new(:total => 100)
-      timer    = Timer.new
-      rate     = Rate.new(:progress => progress,
-                          :timer    => timer)
+      projector  = Calculators::SmoothedAverage.new
+      progress   = Progress.new(:projector => projector, :total => 100)
+      timer      = Timer.new
+      rate       = Rate.new(:progress => progress,
+                            :timer    => timer)
 
       progress.start
       timer.start

@@ -1,33 +1,20 @@
 require 'ruby-progressbar/errors/invalid_progress_error'
-require 'ruby-progressbar/calculators/smoothed_average'
 
 class   ProgressBar
 class   Progress
-  DEFAULT_TOTAL                      = 100
-  DEFAULT_BEGINNING_POSITION         = 0
-  DEFAULT_RUNNING_AVERAGE_RATE       = 0.1
-  DEFAULT_RUNNING_AVERAGE_CALCULATOR = ProgressBar::Calculators::SmoothedAverage
-
-  RUNNING_AVERAGE_CALCULATOR_MAP     = {
-    'smoothing' => ProgressBar::Calculators::SmoothedAverage
-  }.freeze
+  DEFAULT_TOTAL              = 100
+  DEFAULT_BEGINNING_POSITION = 0
 
   attr_reader               :total,
                             :progress
 
   attr_accessor             :starting_position,
                             :running_average,
-                            :running_average_calculator,
-                            :running_average_rate
+                            :running_average_calculator
 
   def initialize(options = {})
     self.total                      = options.fetch(:total, DEFAULT_TOTAL)
-    self.running_average_rate       = options[:smoothing] ||
-                                      options[:running_average_rate] ||
-                                      DEFAULT_RUNNING_AVERAGE_RATE
-    self.running_average_calculator = RUNNING_AVERAGE_CALCULATOR_MAP.
-                                        fetch(options[:running_average_calculator],
-                                              DEFAULT_RUNNING_AVERAGE_CALCULATOR)
+    self.running_average_calculator = options[:projector]
 
     start :at => DEFAULT_BEGINNING_POSITION
   end
@@ -79,8 +66,7 @@ class   Progress
     @progress = new_progress
 
     self.running_average = running_average_calculator.calculate(running_average,
-                                                                absolute,
-                                                                running_average_rate)
+                                                                absolute)
   end
 
   def total=(new_total)

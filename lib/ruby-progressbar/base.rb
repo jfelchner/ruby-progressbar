@@ -1,5 +1,6 @@
 require 'forwardable'
 
+require 'ruby-progressbar/calculators/smoothed_average'
 require 'ruby-progressbar/components/bar'
 require 'ruby-progressbar/components/percentage'
 require 'ruby-progressbar/components/rate'
@@ -31,10 +32,12 @@ class   Base
     self.finished     = false
 
     self.timer        = Timer.new(options)
-    self.progressable = Progress.new(options)
+    self.projector    = Calculators::SmoothedAverage.new(:strength => options[:smoothing])
+    self.progressable = Progress.new(options.merge(:projector => projector))
 
-    options = options.merge(:progress => progressable,
-                            :timer    => timer)
+    options = options.merge(:progress  => progressable,
+                            :projector => projector,
+                            :timer     => timer)
 
     self.title_component      = Components::Title.new(options)
     self.bar_component        = Components::Bar.new(options)
@@ -174,6 +177,7 @@ class   Base
   protected
 
   attr_accessor :output,
+                :projector,
                 :timer,
                 :progressable,
                 :title_component,

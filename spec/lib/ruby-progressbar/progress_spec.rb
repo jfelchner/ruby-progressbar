@@ -4,7 +4,8 @@ require 'ruby-progressbar/progress'
 class    ProgressBar
 describe Progress do
   it 'knows the default total when no parameters are passed' do
-    progress = Progress.new
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:projector => projector)
 
     expect(progress.total).to eql Progress::DEFAULT_TOTAL
   end
@@ -12,7 +13,8 @@ describe Progress do
   it 'knows the default beginning progress when no parameters are passed and ' \
      'the progress has not been started' do
 
-    progress = Progress.new
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:projector => projector)
 
     expect(progress.progress).to be_zero
   end
@@ -20,7 +22,8 @@ describe Progress do
   it 'knows the default starting value when no parameters are passed and the ' \
      'progress has been started' do
 
-    progress = Progress.new
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:projector => projector)
 
     progress.start
 
@@ -30,7 +33,8 @@ describe Progress do
   it 'knows the given starting value when no parameters are passed and the ' \
      'progress is started with a starting value' do
 
-    progress = Progress.new
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:projector => projector)
 
     progress.start :at => 10
 
@@ -38,21 +42,25 @@ describe Progress do
   end
 
   it 'knows how to finish itself even if the total is unknown' do
-    progress = Progress.new :total => nil
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => nil, :projector => projector)
 
     expect(progress.finish).to be(nil)
   end
 
   it 'knows the overridden total when the total is passed in' do
-    progress = Progress.new(:total          => 12,
-                            :progress_mark  => 'x',
-                            :remainder_mark => '.')
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:projector      => projector,
+                              :total          => 12,
+                              :progress_mark  => 'x',
+                              :remainder_mark => '.')
 
     expect(progress.total).to be 12
   end
 
   it 'knows the percentage completed when begun with no progress' do
-    progress = Progress.new
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:projector => projector)
 
     progress.start
 
@@ -60,7 +68,8 @@ describe Progress do
   end
 
   it 'knows the progress after it has been incremented' do
-    progress = Progress.new
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:projector => projector)
 
     progress.start
     progress.increment
@@ -69,7 +78,8 @@ describe Progress do
   end
 
   it 'knows the percentage completed after it has been incremented' do
-    progress = Progress.new(:total => 50)
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => 50, :projector => projector)
 
     progress.start
     progress.increment
@@ -78,7 +88,8 @@ describe Progress do
   end
 
   it 'knows to always round down the percentage completed' do
-    progress = Progress.new(:total => 200)
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => 200, :projector => projector)
 
     progress.start :at => 1
 
@@ -86,7 +97,8 @@ describe Progress do
   end
 
   it 'cannot increment past the total' do
-    progress = Progress.new(:total => 50)
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => 50, :projector => projector)
 
     progress.start :at => 50
     progress.increment
@@ -96,7 +108,8 @@ describe Progress do
   end
 
   it 'allow progress to be decremented once it is finished' do
-    progress = Progress.new(:total => 50)
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => 50, :projector => projector)
 
     progress.start :at => 50
     progress.decrement
@@ -107,7 +120,8 @@ describe Progress do
 
   # rubocop:disable RSpec/BeEql
   it 'knows the running average even when progress has been made' do
-    progress = Progress.new(:total => 50)
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => 50, :projector => projector)
 
     progress.running_average = 10
     progress.start :at => 0
@@ -120,7 +134,8 @@ describe Progress do
   end
 
   it 'knows the running average is reset even after progress is started' do
-    progress = Progress.new(:total => 50)
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => 50, :projector => projector)
 
     progress.running_average = 10
     progress.start :at => 0
@@ -131,24 +146,18 @@ describe Progress do
 
     expect(progress.running_average).to eql 0.0
   end
-
-  it 'allows the default running average rate to be overridden' do
-    expect(Progress.new(:running_average_rate => 0.3).running_average_rate).to eql 0.3
-  end
-
-  it 'has a default running average rate' do
-    expect(Progress.new.running_average_rate).to eql 0.1
-  end
   # rubocop:enable RSpec/BeEql
 
   it 'knows the percentage completed is 100% if the total is zero' do
-    progress = Progress.new(:total => 0)
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => 0, :projector => projector)
 
     expect(progress.percentage_completed).to be 100
   end
 
   it 'raises an error when passed a number larger than the total' do
-    progress = Progress.new(:total => 100)
+    projector  = Calculators::SmoothedAverage.new
+    progress   = Progress.new(:total => 100, :projector => projector)
 
     expect { progress.progress = 101 }.
       to \
