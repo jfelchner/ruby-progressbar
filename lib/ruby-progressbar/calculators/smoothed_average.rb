@@ -33,22 +33,18 @@ class   SmoothedAverage
     samples[1]
   end
 
-  def progress=(new_progress)
-    samples[1] = new_progress
-    calculate(absolute)
-  end
-
   def total=(_new_total); end
 
   def reset
     start(:at => samples[0])
   end
 
-  def calculate(new_value)
+  def progress=(new_progress)
+    samples[1] = new_progress
     self.projection = \
       self.class.calculate(
         @projection,
-        new_value,
+        absolute,
         strength
       )
   end

@@ -19,7 +19,7 @@ describe SmoothedAverage do
     it 'resets the projection' do
       projector = SmoothedAverage.new
       projector.start
-      projector.calculate(10)
+      projector.progress = 10
 
       expect(projector.projection).not_to be_zero
 
@@ -33,7 +33,7 @@ describe SmoothedAverage do
     it 'resets the projection' do
       projector = SmoothedAverage.new
       projector.start
-      projector.calculate(10)
+      projector.progress = 10
 
       expect(projector.projection).not_to be_zero
 
