@@ -17,6 +17,22 @@ class   ProgressBar
 class   Base
   extend Forwardable
 
+  # rubocop:disable Layout/HeredocIndentation
+  SMOOTHING_DEPRECATION_WARNING = <<-HEREDOC.tr("\n", ' ')
+WARNING: Passing the 'smoothing' option is deprecated  and will be removed
+in version 2.0. Please pass { projector: { type: 'smoothing', strength: 0.x }}.
+For more information on why this change is happening,  visit
+https://github.com/jfelchner/ruby-progressbar/wiki/Upgrading
+  HEREDOC
+
+  RUNNING_AVERAGE_RATE_DEPRECATION_WARNING = <<-HEREDOC.tr("\n", ' ')
+WARNING: Passing the 'running_average_rate' option is deprecated  and will be removed
+in version 2.0. Please pass { projector: { type: 'smoothing', strength: 0.x }}.
+For more information on why this change is happening,  visit
+https://github.com/jfelchner/ruby-progressbar/wiki/Upgrading
+  HEREDOC
+  # rubocop:enable Layout/HeredocIndentation
+
   def_delegators :output,
                  :clear,
                  :log,
@@ -32,7 +48,20 @@ class   Base
     self.finished     = false
 
     self.timer        = Timer.new(options)
-    self.projector    = Calculators::SmoothedAverage.new(:strength => options[:smoothing])
+    projector_opts    = if options[:projector]
+                          options[:projector]
+                        elsif options[:smoothing]
+                          warn SMOOTHING_DEPRECATION_WARNING
+
+                          { :strength => options[:smoothing] }
+                        elsif options[:running_average_rate]
+                          warn RUNNING_AVERAGE_RATE_DEPRECATION_WARNING
+
+                          { :strength => options[:smoothing] }
+                        else
+                          {}
+                        end
+    self.projector    = Calculators::SmoothedAverage.new(projector_opts)
     self.progressable = Progress.new(options.merge(:projector => projector))
 
     options = options.merge(:progress  => progressable,

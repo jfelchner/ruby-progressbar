@@ -232,7 +232,7 @@ describe Base do
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
 
       progressbar = ProgressBar::Base.new(:output    => output,
-                                          :smoothing => 0.0,
+                                          :projector => { :strength => 0.0 },
                                           :total     => 100,
                                           :format    => '%l')
 
@@ -251,7 +251,7 @@ describe Base do
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
 
       progressbar = ProgressBar::Base.new(:output    => output,
-                                          :smoothing => 0.0,
+                                          :projector => { :strength => 0.0 },
                                           :total     => 100,
                                           :format    => '%l')
 
@@ -274,6 +274,32 @@ describe Base do
       expect { progressbar.stop }.
         not_to raise_error
     end
+
+    # rubocop:disable RSpec/AnyInstance
+    it 'displays a warning if the user passes the deprecated "smoothing" option but ' \
+       'still processes it' do
+      expect_any_instance_of(ProgressBar::Base).
+        to receive(:warn).
+        with(include("WARNING: Passing the 'smoothing' option is deprecated"))
+
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
+
+      progressbar = ProgressBar::Base.new(:output    => output,
+                                          :smoothing => 0.0,
+                                          :total     => 100,
+                                          :format    => '%l')
+
+      progressbar.progress += 50
+
+      Timecop.freeze(::Time.utc(2020, 1, 1, 0, 30, 0))
+
+      progressbar.finish
+
+      Timecop.return
+
+      expect(progressbar.to_s).to eql '00:30:00'
+    end
+    # rubocop:enable RSpec/AnyInstance
 
     it 'appends proper ending to string for non-TTY devices' do
       progressbar = ProgressBar::Base.new(:output => non_tty_output)
