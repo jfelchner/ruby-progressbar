@@ -111,6 +111,7 @@ https://github.com/jfelchner/ruby-progressbar/wiki/Upgrading
     output.with_refresh do
       self.finished = false
       progressable.reset
+      projector.reset
       timer.reset
     end
   end
@@ -221,6 +222,7 @@ https://github.com/jfelchner/ruby-progressbar/wiki/Upgrading
   def update_progress(*args)
     output.with_refresh do
       progressable.__send__(*args)
+      projector.__send__(*args)
       timer.stop if finished?
     end
   end
