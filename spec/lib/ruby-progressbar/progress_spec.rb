@@ -129,6 +129,7 @@ describe Progress do
 
     expect(progress.running_average).to be_zero
 
+    projector.progress += 40
     progress.progress += 40
 
     expect(progress.running_average).to eql 36.0
