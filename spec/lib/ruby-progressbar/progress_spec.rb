@@ -124,6 +124,7 @@ describe Progress do
     progress   = Progress.new(:total => 50, :projector => projector)
 
     projector.__send__(:projection=, 10)
+    projector.start
     progress.start :at => 0
 
     expect(progress.running_average).to be_zero
@@ -138,6 +139,7 @@ describe Progress do
     progress   = Progress.new(:total => 50, :projector => projector)
 
     projector.__send__(:projection=, 10)
+    projector.start
     progress.start :at => 0
 
     expect(progress.running_average).to be_zero

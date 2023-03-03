@@ -19,7 +19,6 @@ class   Progress
   end
 
   def start(options = {})
-    running_average_calculator.start
     self.progress = \
       self.starting_position = options[:at] || progress
   end
