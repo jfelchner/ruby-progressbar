@@ -19,8 +19,9 @@ class   Time
   }.freeze
 
   def initialize(options = {})
-    self.timer    = options[:timer]
-    self.progress = options[:progress]
+    self.timer     = options[:timer]
+    self.progress  = options[:progress]
+    self.projector = options[:projector]
   end
 
   def estimated_with_label(out_of_bounds_time_format = nil)
@@ -57,7 +58,8 @@ class   Time
   protected
 
   attr_accessor :timer,
-                :progress
+                :progress,
+                :projector
 
   private
 
@@ -90,9 +92,9 @@ class   Time
   end
 
   def estimated_seconds_remaining
-    return if progress.unknown? || progress.none? || timer.stopped? || timer.reset?
+    return if progress.unknown? || projector.none? || progress.none? || timer.stopped? || timer.reset?
 
-    (timer.elapsed_seconds * ((progress.total / progress.running_average) - 1)).round
+    (timer.elapsed_seconds * ((progress.total / projector.projection) - 1)).round
   end
 end
 end

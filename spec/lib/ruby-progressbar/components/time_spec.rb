@@ -9,8 +9,9 @@ describe Time do
       timer      = Timer.new
       projector  = Calculators::SmoothedAverage.new
       progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       expect(time.elapsed_with_label).to eql 'Time: --:--:--'
     end
@@ -19,10 +20,12 @@ describe Time do
       timer      = Timer.new
       projector  = Calculators::SmoothedAverage.new
       progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       timer.start
+      projector.start
 
       expect(time.elapsed_with_label).to eql 'Time: 00:00:00'
     end
@@ -31,12 +34,14 @@ describe Time do
       timer      = Timer.new
       projector  = Calculators::SmoothedAverage.new
       progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-16_093)
 
       timer.start
+      projector.start
 
       Timecop.return
 
@@ -47,12 +52,14 @@ describe Time do
       timer      = Timer.new
       projector  = Calculators::SmoothedAverage.new
       progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-16_093)
 
       timer.start
+      projector.start
 
       Timecop.return
       Timecop.freeze(-32)
@@ -68,12 +75,14 @@ describe Time do
       timer      = Timer.new
       projector  = Calculators::SmoothedAverage.new
       progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-16_093)
 
       timer.start
+      projector.start
 
       Timecop.return
 
@@ -89,13 +98,18 @@ describe Time do
       projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:projector => projector,
                                 :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -107,10 +121,12 @@ describe Time do
       timer      = Timer.new
       projector  = Calculators::SmoothedAverage.new
       progress   = Progress.new(:projector => projector, :total => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       timer.start
+      projector.start
 
       expect(time.estimated_with_unknown_oob).to eql ' ETA: ??:??:??'
     end
@@ -120,17 +136,47 @@ describe Time do
       timer      = Timer.new
       projector  = Calculators::SmoothedAverage.new
       progress   = Progress.new(:projector => projector, :total => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
       progress.reset
+
+      expect(time.estimated_with_unknown_oob).to eql ' ETA: ??:??:??'
+    end
+
+    it 'displays unknown time remaining when progress has been made and then rate ' \
+       'is reset' do
+      timer      = Timer.new
+      projector  = Calculators::SmoothedAverage.new
+      progress   = Progress.new(:projector => projector, :total => 100)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
+
+      Timecop.freeze(-13_332)
+
+      timer.start
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
+
+      Timecop.return
+
+      projector.reset
 
       expect(time.estimated_with_unknown_oob).to eql ' ETA: ??:??:??'
     end
@@ -143,12 +189,17 @@ describe Time do
                                 :total     => 100)
       time       = Time.new(:out_of_bounds_time_format => :unknown,
                             :timer                     => timer,
-                            :progress                  => progress)
+                            :progress                  => progress,
+                            :projector                 => projector)
 
       Timecop.freeze(-120_000)
 
       timer.start
-      25.times { progress.increment }
+      projector.start
+      25.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -161,13 +212,18 @@ describe Time do
       projector  = Calculators::SmoothedAverage.new(:strength => 0.5)
       progress   = Progress.new(:projector => projector,
                                 :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -183,13 +239,18 @@ describe Time do
       projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:projector => projector,
                                 :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -204,12 +265,17 @@ describe Time do
                                 :total     => 100)
       time       = Time.new(:out_of_bounds_time_format => :friendly,
                             :timer                     => timer,
-                            :progress                  => progress)
+                            :progress                  => progress,
+                            :projector                 => projector)
 
       Timecop.freeze(-120_000)
 
       timer.start
-      25.times { progress.increment }
+      projector.start
+      25.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -223,13 +289,18 @@ describe Time do
       projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:projector => projector,
                                 :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -244,12 +315,17 @@ describe Time do
                                 :total     => 100)
       time       = Time.new(:out_of_bounds_time_format => nil,
                             :timer                     => timer,
-                            :progress                  => progress)
+                            :progress                  => progress,
+                            :projector                 => projector)
 
       Timecop.freeze(-120_000)
 
       timer.start
-      25.times { progress.increment }
+      projector.start
+      25.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -264,11 +340,14 @@ describe Time do
       projector  = Calculators::SmoothedAverage.new
       progress   = Progress.new(:projector => projector,
                                 :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       timer.start
+      projector.start
       progress.increment
+      projector.increment
 
       expect(time.estimated_with_label).to eql ' ETA: 00:00:00'
     end
@@ -278,13 +357,18 @@ describe Time do
       projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:projector => projector,
                                 :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -297,17 +381,25 @@ describe Time do
       projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:projector => projector,
                                 :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
-      20.times { progress.decrement }
+      20.times do
+        progress.decrement
+        projector.decrement
+      end
 
       expect(time.estimated_with_label).to eql ' ETA: 08:38:28'
     end
@@ -318,33 +410,46 @@ describe Time do
       projector  = Calculators::SmoothedAverage.new(:strength => 0.5)
       progress   = Progress.new(:projector => projector,
                                 :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      time       = Time.new(:timer     => timer,
+                            :progress  => progress,
+                            :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
-      20.times { progress.decrement }
+      20.times do
+        progress.decrement
+        projector.decrement
+      end
 
       expect(time.estimated_with_label).to eql ' ETA: 08:14:34'
     end
 
     it 'displays smoothed estimated time after progress has been made' do
-      timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.5)
-      progress   = Progress.new(:projector => projector,
-                                :total     => 100)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      timer     = Timer.new
+      projector = Calculators::SmoothedAverage.new(:strength => 0.5)
+      progress  = Progress.new(:projector => projector,
+                               :total     => 100)
+      time      = Time.new(:timer     => timer,
+                           :progress  => progress,
+                           :projector => projector)
 
       Timecop.freeze(-13_332)
 
       timer.start
-      50.times { progress.increment }
+      projector.start
+      50.times do
+        progress.increment
+        projector.increment
+      end
 
       Timecop.return
 
@@ -353,12 +458,13 @@ describe Time do
 
     it 'displays the estimated time remaining properly even for progress increments ' \
        'very short intervals' do
-      timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.1)
-      progress   = Progress.new(:projector => projector,
-                                :total     => 10)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      timer     = Timer.new
+      projector = Calculators::SmoothedAverage.new(:strength => 0.1)
+      progress  = Progress.new(:projector => projector,
+                               :total     => 10)
+      time      = Time.new(:timer     => timer,
+                           :progress  => progress,
+                           :projector => projector)
 
       estimated_time_results = []
       now                    = ::Time.now
@@ -366,10 +472,12 @@ describe Time do
       Timecop.freeze(now)
 
       timer.start
+      projector.start
 
       10.times do
         Timecop.freeze(now += 0.5)
         progress.increment
+        projector.increment
 
         estimated_time_results << time.estimated_with_label
       end
@@ -396,15 +504,17 @@ describe Time do
 
   describe '#estimated_wall_clock' do
     it 'displays the wall clock time as unknown when the timer has been reset' do
-      timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
-      progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      timer     = Timer.new
+      projector = Calculators::SmoothedAverage.new
+      progress  = Progress.new(:projector => projector)
+      time      = Time.new(:timer     => timer,
+                           :progress  => progress,
+                           :projector => projector)
 
       Timecop.freeze(-16_093)
 
       timer.start
+      projector.start
 
       Timecop.return
 
@@ -414,15 +524,17 @@ describe Time do
     end
 
     it 'displays the wall clock time as unknown when the progress has not begun' do
-      timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
-      progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      timer     = Timer.new
+      projector = Calculators::SmoothedAverage.new
+      progress  = Progress.new(:projector => projector)
+      time      = Time.new(:timer     => timer,
+                           :progress  => progress,
+                           :projector => projector)
 
       Timecop.freeze(-16_093)
 
       timer.start
+      projector.start
 
       Timecop.return
 
@@ -430,15 +542,17 @@ describe Time do
     end
 
     it 'displays the completed wall clock time if the progress is finished' do
-      timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
-      progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      timer     = Timer.new
+      projector = Calculators::SmoothedAverage.new
+      progress  = Progress.new(:projector => projector)
+      time      = Time.new(:timer     => timer,
+                           :progress  => progress,
+                           :projector => projector)
 
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
 
       timer.start
+      projector.start
 
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 30, 0))
 
@@ -451,16 +565,19 @@ describe Time do
     end
 
     it 'displays the estimated wall clock time if the progress is ongoing' do
-      timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
-      progress   = Progress.new(:projector => projector)
-      time       = Time.new(:timer    => timer,
-                            :progress => progress)
+      timer     = Timer.new
+      projector = Calculators::SmoothedAverage.new(:strength => 0.0)
+      progress  = Progress.new(:projector => projector)
+      time      = Time.new(:timer     => timer,
+                           :progress  => progress,
+                           :projector => projector)
 
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 0, 0))
 
       timer.start
-      progress.progress = 50
+      projector.start
+      progress.progress  = 50
+      projector.progress = 50
 
       Timecop.freeze(::Time.utc(2020, 1, 1, 0, 15, 0))
 
