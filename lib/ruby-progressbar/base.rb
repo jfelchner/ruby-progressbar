@@ -95,6 +95,7 @@ class   Base
     output.with_refresh do
       self.finished = false
       progressable.reset
+      projector.reset
       timer.reset
     end
   end
@@ -205,6 +206,7 @@ class   Base
   def update_progress(*args)
     output.with_refresh do
       progressable.__send__(*args)
+      projector.__send__(*args)
       timer.stop if finished?
     end
   end

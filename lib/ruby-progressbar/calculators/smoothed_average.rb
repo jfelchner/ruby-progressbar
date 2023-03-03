@@ -15,6 +15,12 @@ class   SmoothedAverage
     self.projection = 0.0
   end
 
+  def decrement; end
+  def increment; end
+  def progress=(_new_progress); end
+  def total=(_new_total); end
+  def reset; end
+
   def calculate(new_value)
     self.projection = \
       self.class.calculate(
