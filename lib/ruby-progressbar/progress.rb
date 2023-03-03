@@ -62,7 +62,6 @@ class   Progress
     end
 
     @progress = new_progress
-    running_average_calculator.calculate(absolute)
   end
 
   def running_average

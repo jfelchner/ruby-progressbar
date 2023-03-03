@@ -41,6 +41,19 @@ describe SmoothedAverage do
 
       expect(projector.projection).to be 0.0
     end
+
+    it 'resets based on the starting position' do
+      projector = SmoothedAverage.new(:strength => 0.1)
+      projector.start(:at => 10)
+      projector.progress = 20
+
+      expect(projector.projection).not_to be_zero
+
+      projector.reset
+      projector.progress = 20
+
+      expect(projector.projection).to be 9.0
+    end
   end
 
   describe '#strength' do
