@@ -62,7 +62,7 @@ https://github.com/jfelchner/ruby-progressbar/wiki/Upgrading
                           {}
                         end
     self.projector    = Calculators::SmoothedAverage.new(projector_opts)
-    self.progressable = Progress.new(options.merge(:projector => projector))
+    self.progressable = Progress.new(options)
 
     options = options.merge(:progress  => progressable,
                             :projector => projector,
