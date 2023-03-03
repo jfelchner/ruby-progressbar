@@ -7,7 +7,7 @@ describe Time do
   describe '#elapsed_with_label' do
     it 'displays unknown elapsed time when the timer has not been started' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -18,7 +18,7 @@ describe Time do
 
     it 'displays elapsed time when the timer has just been started' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -32,7 +32,7 @@ describe Time do
 
     it 'displays elapsed time if it was previously started' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -50,7 +50,7 @@ describe Time do
 
     it 'displays elapsed time frozen to a specific time if it was previously stopped' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -73,7 +73,7 @@ describe Time do
 
     it 'displays unknown elapsed time after reset has been called' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -95,7 +95,7 @@ describe Time do
   describe '#estimated_with_unknown_oob' do
     it 'displays estimated time if it is known' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -118,7 +118,7 @@ describe Time do
     it 'displays an unknown estimated time remaining when the timer has been started ' \
        'but no progress has been made' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -133,7 +133,7 @@ describe Time do
     it 'displays unknown time remaining when progress has been made and then progress ' \
        'is reset' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -158,7 +158,7 @@ describe Time do
     it 'displays unknown time remaining when progress has been made and then rate ' \
        'is reset' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -183,7 +183,7 @@ describe Time do
     it 'displays estimated time of "??:??:??" when estimated time is out of bounds ' \
        'and the out of bounds format is set to "unknown"' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:out_of_bounds_time_format => :unknown,
                             :timer                     => timer,
@@ -207,7 +207,7 @@ describe Time do
     it 'displays smoothed unknown estimated time when reset is called after progress ' \
        'is made' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.5)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.5)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -233,7 +233,7 @@ describe Time do
   describe '#estimated_with_friendly_oob' do
     it 'displays estimated time if it is known' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -256,7 +256,7 @@ describe Time do
     it 'displays estimated time of "> 4 Days" when estimated time is out of bounds ' \
        'and the out of bounds format is set to "friendly"' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:out_of_bounds_time_format => :friendly,
                             :timer                     => timer,
@@ -281,7 +281,7 @@ describe Time do
   describe '#estimated_with_no_oob' do
     it 'displays estimated time if it is known' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -304,7 +304,7 @@ describe Time do
     it 'displays actual estimated time when estimated time is out of bounds and the ' \
        'out of bounds format is unset' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:out_of_bounds_time_format => nil,
                             :timer                     => timer,
@@ -330,7 +330,7 @@ describe Time do
     it 'does not display unknown time remaining when the timer has been started and ' \
        'it is incremented' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new
+      projector  = Projectors::SmoothedAverage.new
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -346,7 +346,7 @@ describe Time do
 
     it 'displays unsmoothed time remaining when progress has been made' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -369,7 +369,7 @@ describe Time do
     it 'displays unsmoothed time remaining when progress has been made even after the ' \
        'bar is decremented' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -397,7 +397,7 @@ describe Time do
     it 'displays smoothed estimated time properly even when taking decrements into ' \
        'account' do
       timer      = Timer.new
-      projector  = Calculators::SmoothedAverage.new(:strength => 0.5)
+      projector  = Projectors::SmoothedAverage.new(:strength => 0.5)
       progress   = Progress.new(:total => 100)
       time       = Time.new(:timer     => timer,
                             :progress  => progress,
@@ -424,7 +424,7 @@ describe Time do
 
     it 'displays smoothed estimated time after progress has been made' do
       timer     = Timer.new
-      projector = Calculators::SmoothedAverage.new(:strength => 0.5)
+      projector = Projectors::SmoothedAverage.new(:strength => 0.5)
       progress  = Progress.new(:total => 100)
       time      = Time.new(:timer     => timer,
                            :progress  => progress,
@@ -447,7 +447,7 @@ describe Time do
     it 'displays the estimated time remaining properly even for progress increments ' \
        'very short intervals' do
       timer     = Timer.new
-      projector = Calculators::SmoothedAverage.new(:strength => 0.1)
+      projector = Projectors::SmoothedAverage.new(:strength => 0.1)
       progress  = Progress.new(:total => 10)
       time      = Time.new(:timer     => timer,
                            :progress  => progress,
@@ -492,7 +492,7 @@ describe Time do
   describe '#estimated_wall_clock' do
     it 'displays the wall clock time as unknown when the timer has been reset' do
       timer     = Timer.new
-      projector = Calculators::SmoothedAverage.new
+      projector = Projectors::SmoothedAverage.new
       progress  = Progress.new
       time      = Time.new(:timer     => timer,
                            :progress  => progress,
@@ -512,7 +512,7 @@ describe Time do
 
     it 'displays the wall clock time as unknown when the progress has not begun' do
       timer     = Timer.new
-      projector = Calculators::SmoothedAverage.new
+      projector = Projectors::SmoothedAverage.new
       progress  = Progress.new
       time      = Time.new(:timer     => timer,
                            :progress  => progress,
@@ -530,7 +530,7 @@ describe Time do
 
     it 'displays the completed wall clock time if the progress is finished' do
       timer     = Timer.new
-      projector = Calculators::SmoothedAverage.new
+      projector = Projectors::SmoothedAverage.new
       progress  = Progress.new
       time      = Time.new(:timer     => timer,
                            :progress  => progress,
@@ -553,7 +553,7 @@ describe Time do
 
     it 'displays the estimated wall clock time if the progress is ongoing' do
       timer     = Timer.new
-      projector = Calculators::SmoothedAverage.new(:strength => 0.0)
+      projector = Projectors::SmoothedAverage.new(:strength => 0.0)
       progress  = Progress.new
       time      = Time.new(:timer     => timer,
                            :progress  => progress,

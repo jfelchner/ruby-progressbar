@@ -7,13 +7,13 @@ describe Projector do
     it 'has a default projector' do
       projector = Projector.from_type(nil)
 
-      expect(projector).to be ProgressBar::Calculators::SmoothedAverage
+      expect(projector).to be ProgressBar::Projectors::SmoothedAverage
     end
 
     it 'can return a specific projector' do
       projector = Projector.from_type('smoothed')
 
-      expect(projector).to be ProgressBar::Calculators::SmoothedAverage
+      expect(projector).to be ProgressBar::Projectors::SmoothedAverage
     end
   end
 end

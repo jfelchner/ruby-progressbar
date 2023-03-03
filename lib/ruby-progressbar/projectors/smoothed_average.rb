@@ -1,5 +1,5 @@
 class   ProgressBar
-module  Calculators
+module  Projectors
 class   SmoothedAverage
   DEFAULT_STRENGTH           = 0.1
   DEFAULT_BEGINNING_POSITION = 0
