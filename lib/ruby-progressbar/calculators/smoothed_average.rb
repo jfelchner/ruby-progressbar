@@ -19,7 +19,10 @@ class   SmoothedAverage
   def increment; end
   def progress=(_new_progress); end
   def total=(_new_total); end
-  def reset; end
+
+  def reset
+    start
+  end
 
   def calculate(new_value)
     self.projection = \
@@ -28,6 +31,10 @@ class   SmoothedAverage
         new_value,
         strength
       )
+  end
+
+  def none?
+    projection.zero?
   end
 
   def self.calculate(current_projection, new_value, rate)

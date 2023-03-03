@@ -29,6 +29,20 @@ describe SmoothedAverage do
     end
   end
 
+  describe '#reset' do
+    it 'resets the projection' do
+      projector = SmoothedAverage.new
+      projector.start
+      projector.calculate(10)
+
+      expect(projector.projection).not_to be_zero
+
+      projector.reset
+
+      expect(projector.projection).to be 0.0
+    end
+  end
+
   describe '#strength' do
     it 'allows the default strength to be overridden' do
       projector = SmoothedAverage.new(:strength => 0.3)

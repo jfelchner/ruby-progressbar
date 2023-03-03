@@ -92,7 +92,7 @@ class   Progress
   end
 
   def none?
-    running_average.zero? || progress.zero?
+    progress.zero?
   end
 
   def unknown?
