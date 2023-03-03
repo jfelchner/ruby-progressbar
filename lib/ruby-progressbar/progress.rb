@@ -7,13 +7,10 @@ class   Progress
 
   attr_reader               :total,
                             :progress
-
-  attr_accessor             :starting_position,
-                            :running_average_calculator
+  attr_accessor             :starting_position
 
   def initialize(options = {})
-    self.total                      = options.fetch(:total, DEFAULT_TOTAL)
-    self.running_average_calculator = options[:projector]
+    self.total = options.fetch(:total, DEFAULT_TOTAL)
 
     start(:at => DEFAULT_BEGINNING_POSITION)
   end
@@ -62,10 +59,6 @@ class   Progress
     end
 
     @progress = new_progress
-  end
-
-  def running_average
-    running_average_calculator.projection
   end
 
   def total=(new_total)
