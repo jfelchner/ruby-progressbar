@@ -123,7 +123,7 @@ describe Progress do
     projector  = Calculators::SmoothedAverage.new
     progress   = Progress.new(:total => 50, :projector => projector)
 
-    progress.running_average = 10
+    projector.__send__(:projection=, 10)
     progress.start :at => 0
 
     expect(progress.running_average).to be_zero
@@ -137,7 +137,7 @@ describe Progress do
     projector  = Calculators::SmoothedAverage.new
     progress   = Progress.new(:total => 50, :projector => projector)
 
-    progress.running_average = 10
+    projector.__send__(:projection=, 10)
     progress.start :at => 0
 
     expect(progress.running_average).to be_zero

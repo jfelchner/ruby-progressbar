@@ -4,7 +4,7 @@ require 'ruby-progressbar/calculators/smoothed_average'
 class    ProgressBar
 module   Calculators
 describe SmoothedAverage do
-  it 'can properly calculate a projector' do
+  it 'can properly calculate a projection' do
     first_projection = SmoothedAverage.calculate(4.5,  12,  0.1)
     expect(first_projection).to be_within(0.001).of 11.25
 
@@ -13,6 +13,20 @@ describe SmoothedAverage do
 
     third_projection = SmoothedAverage.calculate(41.8, 100, 0.59)
     expect(third_projection).to be_within(0.001).of 65.662
+  end
+
+  describe '#start' do
+    it 'resets the projection' do
+      projector = SmoothedAverage.new
+      projector.start
+      projector.calculate(10)
+
+      expect(projector.projection).not_to be_zero
+
+      projector.start
+
+      expect(projector.projection).to be 0.0
+    end
   end
 
   describe '#strength' do
