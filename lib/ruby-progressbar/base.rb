@@ -32,7 +32,20 @@ class   Base
     self.finished     = false
 
     self.timer        = Timer.new(options)
-    self.projector    = Calculators::SmoothedAverage.new(:strength => options[:smoothing])
+    projector_opts    = if options[:projector]
+                          options[:projector]
+                        elsif options[:smoothing]
+                          warn "WARNING: Passing the 'smoothing' option is deprecated " \
+                               "and will be removed in version 2.0. Please pass " \
+                               "{ projector: { type: 'smoothing', strength: 0.x }}. " \
+                               "For more information on why this change is happening, " \
+                               "visit https://github.com/jfelchner/ruby-progressbar/wiki/Upgrading"
+
+                          { :strength => options[:smoothing] }
+                        else
+                          {}
+                        end
+    self.projector    = Calculators::SmoothedAverage.new(projector_opts)
     self.progressable = Progress.new(options.merge(:projector => projector))
 
     options = options.merge(:progress  => progressable,
