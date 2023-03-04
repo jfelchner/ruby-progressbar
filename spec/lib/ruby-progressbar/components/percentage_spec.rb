@@ -6,8 +6,7 @@ module   Components
 describe Percentage do
   describe '#percentage' do
     it 'returns the percentage' do
-      projector  = Projectors::SmoothedAverage.new
-      progress   = Progress.new(:projector => projector, :total => 10)
+      progress   = Progress.new(:total => 10)
       percentage = Percentage.new(:progress => progress)
 
       progress.progress = 5
@@ -18,8 +17,7 @@ describe Percentage do
 
   describe '#percentage_with_precision' do
     it 'returns the percentage' do
-      projector  = Projectors::SmoothedAverage.new
-      progress   = Progress.new(:projector => projector, :total => 10)
+      progress   = Progress.new(:total => 10)
       percentage = Percentage.new(:progress => progress)
 
       progress.progress = 5
@@ -30,8 +28,7 @@ describe Percentage do
 
   describe '#justified_percentage' do
     it 'returns the percentage' do
-      projector  = Projectors::SmoothedAverage.new
-      progress   = Progress.new(:projector => projector, :total => 10)
+      progress   = Progress.new(:total => 10)
       percentage = Percentage.new(:progress => progress)
 
       progress.progress = 5
@@ -42,8 +39,7 @@ describe Percentage do
 
   describe '#justified_percentage_with_precision' do
     it 'returns the percentage' do
-      projector  = Projectors::SmoothedAverage.new
-      progress   = Progress.new(:projector => projector, :total => 10)
+      progress   = Progress.new(:total => 10)
       percentage = Percentage.new(:progress => progress)
 
       progress.progress = 5

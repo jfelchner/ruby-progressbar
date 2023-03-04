@@ -30,8 +30,7 @@ describe Bar do
 
   describe '#bar' do
     it 'displays the bar with no indication of progress when just begun' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 50)
+      progress    = Progress.new(:total => 50)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -41,8 +40,7 @@ describe Bar do
 
     it 'displays the bar with an indication of progress when nothing has been ' \
        'completed and the bar is incremented' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 50)
+      progress    = Progress.new(:total => 50)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
       progress.increment
@@ -53,8 +51,7 @@ describe Bar do
 
     it 'displays the bar with no indication of progress when a fraction of a percentage ' \
        'has been completed' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 200)
+      progress    = Progress.new(:total => 200)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
       progress.start :at => 1
@@ -64,8 +61,7 @@ describe Bar do
     end
 
     it 'displays the bar as 100% complete when completed' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 50)
+      progress    = Progress.new(:total => 50)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
       progress.start :at => 50
@@ -76,8 +72,7 @@ describe Bar do
     end
 
     it 'displays the bar as 98% complete when completed and the bar is decremented' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 50)
+      progress    = Progress.new(:total => 50)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
       progress.start :at => 50
@@ -90,8 +85,7 @@ describe Bar do
 
   describe '#bar_with_percentage' do
     it 'displays the bar with an integrated percentage properly when empty' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -101,8 +95,7 @@ describe Bar do
 
     it 'displays the bar with an integrated percentage properly just before' \
        'the percentage is displayed' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -114,8 +107,7 @@ describe Bar do
 
     it 'displays the bar with an integrated percentage properly immediately after' \
        'the percentage is displayed' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -127,8 +119,7 @@ describe Bar do
 
     it 'displays the bar with an integrated percentage properly on double digit' \
        'percentage' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -139,8 +130,7 @@ describe Bar do
     end
 
     it 'displays the bar with an integrated percentage properly when finished' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
       progress.finish
@@ -151,8 +141,7 @@ describe Bar do
 
     it 'calculates the remaining negative space properly with an integrated percentage ' \
        'bar of 0 percent' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 200)
+      progress    = Progress.new(:total => 200)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -173,8 +162,7 @@ describe Bar do
 
   describe '#incomplete_space' do
     it 'displays the bar with an integrated percentage properly when empty' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -184,8 +172,7 @@ describe Bar do
 
     it 'displays the bar with an integrated percentage properly just before' \
        'the percentage is displayed' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -197,8 +184,7 @@ describe Bar do
 
     it 'displays the bar with an integrated percentage properly immediately after' \
        'the percentage is displayed' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -210,8 +196,7 @@ describe Bar do
 
     it 'displays the bar with an integrated percentage properly on double digit' \
        'percentage' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -222,8 +207,7 @@ describe Bar do
     end
 
     it 'displays the bar with an integrated percentage properly when finished' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 100)
+      progress    = Progress.new(:total => 100)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
       progress.finish
@@ -234,8 +218,7 @@ describe Bar do
 
     it 'calculates the remaining negative space properly with an integrated percentage ' \
        'bar of 0 percent' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => 200)
+      progress    = Progress.new(:total => 200)
       progressbar = Bar.new(:progress => progress,
                             :length   => 100)
 
@@ -254,8 +237,7 @@ describe Bar do
     end
 
     it 'is represented correctly when a bar has an unknown amount to completion' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => nil)
+      progress    = Progress.new(:total => nil)
       progressbar = Bar.new(:progress => progress,
                             :length   => 80)
 
@@ -265,8 +247,7 @@ describe Bar do
 
     it 'is represented after being incremented once when a bar has an unknown amount ' \
        'to completion' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => nil)
+      progress    = Progress.new(:total => nil)
       progressbar = Bar.new(:progress => progress,
                             :length   => 80)
 
@@ -278,8 +259,7 @@ describe Bar do
 
     it 'is represented after being incremented twice when a bar has an unknown amount ' \
        'to completion' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => nil)
+      progress    = Progress.new(:total => nil)
       progressbar = Bar.new(:progress => progress,
                             :length   => 80)
 
@@ -290,8 +270,7 @@ describe Bar do
     end
 
     it 'is represented correctly when a bar has a customized unknown animation' do
-      projector   = Projectors::SmoothedAverage.new
-      progress    = Progress.new(:projector => projector, :total => nil)
+      progress    = Progress.new(:total => nil)
       progressbar = Bar.new(:progress                         => progress,
                             :unknown_progress_animation_steps => [
                                                                    '*--',
@@ -307,8 +286,7 @@ describe Bar do
 
   it 'raises an error when attempting to set the current value of the bar to be ' \
      'greater than the total' do
-    projector    = Projectors::SmoothedAverage.new
-    progress     = Progress.new(:projector => projector, :total => 10)
+    progress     = Progress.new(:total => 10)
     _progressbar = Bar.new(:progress => progress)
 
     expect { progress.start :at => 11 }.
