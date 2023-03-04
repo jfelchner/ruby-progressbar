@@ -1,7 +1,7 @@
 if Module.private_instance_methods.include?(:using)
 
 require 'spec_helper'
-require 'ruby-progressbar/refinements/enumerator'
+require 'ruby-progressbar/refinements/progress_enumerator'
 
 class    ProgressBar
 module   Refinements
@@ -83,6 +83,16 @@ describe Enumerator do
     enumerator = (0...10).each.with_progressbar
 
     expect(enumerator.map(&transform)).to eql((0...10).map(&transform))
+  end
+
+  it 'passes the progressbar instance to the block when two arguments are requested for the block' do
+    progress     = 0
+    current_item = -1
+
+    (0...10).each.with_progressbar do |item, progress_bar|
+      expect(progress_bar.progress).to be(progress += 1)
+      expect(item).to be(current_item += 1)
+    end
   end
 end
 end
