@@ -10,11 +10,28 @@ require 'ruby-progressbar/format/string'
 require 'ruby-progressbar/outputs/non_tty'
 require 'ruby-progressbar/outputs/tty'
 require 'ruby-progressbar/progress'
+require 'ruby-progressbar/projector'
 require 'ruby-progressbar/timer'
 
 class   ProgressBar
 class   Base
   extend Forwardable
+
+  # rubocop:disable Layout/HeredocIndentation
+  SMOOTHING_DEPRECATION_WARNING = <<-HEREDOC.tr("\n", ' ')
+WARNING: Passing the 'smoothing' option is deprecated  and will be removed
+in version 2.0. Please pass { projector: { type: 'smoothing', strength: 0.x }}.
+For more information on why this change is happening,  visit
+https://github.com/jfelchner/ruby-progressbar/wiki/Upgrading
+  HEREDOC
+
+  RUNNING_AVERAGE_RATE_DEPRECATION_WARNING = <<-HEREDOC.tr("\n", ' ')
+WARNING: Passing the 'running_average_rate' option is deprecated  and will be removed
+in version 2.0. Please pass { projector: { type: 'smoothing', strength: 0.x }}.
+For more information on why this change is happening,  visit
+https://github.com/jfelchner/ruby-progressbar/wiki/Upgrading
+  HEREDOC
+  # rubocop:enable Layout/HeredocIndentation
 
   def_delegators :output,
                  :clear,
@@ -26,15 +43,34 @@ class   Base
                  :total
 
   def initialize(options = {}) # rubocop:disable Metrics/AbcSize
+    options[:projector] ||= {}
+
     self.autostart    = options.fetch(:autostart,  true)
     self.autofinish   = options.fetch(:autofinish, true)
     self.finished     = false
 
     self.timer        = Timer.new(options)
+    projector_opts    = if options[:projector].any?
+                          options[:projector]
+                        elsif options[:smoothing]
+                          warn SMOOTHING_DEPRECATION_WARNING
+
+                          { :strength => options[:smoothing] }
+                        elsif options[:running_average_rate]
+                          warn RUNNING_AVERAGE_RATE_DEPRECATION_WARNING
+
+                          { :strength => options[:smoothing] }
+                        else
+                          {}
+                        end
+    self.projector    = Projector.
+                          from_type(options[:projector][:type]).
+                          new(projector_opts)
     self.progressable = Progress.new(options)
 
-    options = options.merge(:progress => progressable,
-                            :timer    => timer)
+    options = options.merge(:progress  => progressable,
+                            :projector => projector,
+                            :timer     => timer)
 
     self.title_component      = Components::Title.new(options)
     self.bar_component        = Components::Bar.new(options)
@@ -79,6 +115,7 @@ class   Base
     output.with_refresh do
       self.finished = false
       progressable.reset
+      projector.reset
       timer.reset
     end
   end
@@ -174,6 +211,7 @@ class   Base
   protected
 
   attr_accessor :output,
+                :projector,
                 :timer,
                 :progressable,
                 :title_component,
@@ -188,6 +226,7 @@ class   Base
   def update_progress(*args)
     output.with_refresh do
       progressable.__send__(*args)
+      projector.__send__(*args)
       timer.stop if finished?
     end
   end

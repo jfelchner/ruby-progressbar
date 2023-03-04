@@ -1,40 +1,22 @@
 require 'ruby-progressbar/errors/invalid_progress_error'
-require 'ruby-progressbar/calculators/smoothed_average'
 
 class   ProgressBar
 class   Progress
-  DEFAULT_TOTAL                      = 100
-  DEFAULT_BEGINNING_POSITION         = 0
-  DEFAULT_RUNNING_AVERAGE_RATE       = 0.1
-  DEFAULT_RUNNING_AVERAGE_CALCULATOR = ProgressBar::Calculators::SmoothedAverage
-
-  RUNNING_AVERAGE_CALCULATOR_MAP     = {
-    'smoothing' => ProgressBar::Calculators::SmoothedAverage
-  }.freeze
+  DEFAULT_TOTAL              = 100
+  DEFAULT_BEGINNING_POSITION = 0
 
   attr_reader               :total,
                             :progress
-
-  attr_accessor             :starting_position,
-                            :running_average,
-                            :running_average_calculator,
-                            :running_average_rate
+  attr_accessor             :starting_position
 
   def initialize(options = {})
-    self.total                      = options.fetch(:total, DEFAULT_TOTAL)
-    self.running_average_rate       = options[:smoothing] ||
-                                      options[:running_average_rate] ||
-                                      DEFAULT_RUNNING_AVERAGE_RATE
-    self.running_average_calculator = RUNNING_AVERAGE_CALCULATOR_MAP.
-                                        fetch(options[:running_average_calculator],
-                                              DEFAULT_RUNNING_AVERAGE_CALCULATOR)
+    self.total = options.fetch(:total, DEFAULT_TOTAL)
 
-    start :at => DEFAULT_BEGINNING_POSITION
+    start(:at => DEFAULT_BEGINNING_POSITION)
   end
 
   def start(options = {})
-    self.running_average   = 0
-    self.progress          = \
+    self.progress = \
       self.starting_position = options[:at] || progress
   end
 
@@ -67,7 +49,7 @@ class   Progress
   end
 
   def reset
-    start :at => starting_position
+    start(:at => starting_position)
   end
 
   def progress=(new_progress)
@@ -77,10 +59,6 @@ class   Progress
     end
 
     @progress = new_progress
-
-    self.running_average = running_average_calculator.calculate(running_average,
-                                                                absolute,
-                                                                running_average_rate)
   end
 
   def total=(new_total)
@@ -105,7 +83,7 @@ class   Progress
   end
 
   def none?
-    running_average.zero? || progress.zero?
+    progress.zero?
   end
 
   def unknown?

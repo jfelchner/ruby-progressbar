@@ -105,42 +105,6 @@ describe Progress do
     expect(progress.percentage_completed).to be 98
   end
 
-  # rubocop:disable RSpec/BeEql
-  it 'knows the running average even when progress has been made' do
-    progress = Progress.new(:total => 50)
-
-    progress.running_average = 10
-    progress.start :at => 0
-
-    expect(progress.running_average).to be_zero
-
-    progress.progress += 40
-
-    expect(progress.running_average).to eql 36.0
-  end
-
-  it 'knows the running average is reset even after progress is started' do
-    progress = Progress.new(:total => 50)
-
-    progress.running_average = 10
-    progress.start :at => 0
-
-    expect(progress.running_average).to be_zero
-
-    progress.start :at => 40
-
-    expect(progress.running_average).to eql 0.0
-  end
-
-  it 'allows the default running average rate to be overridden' do
-    expect(Progress.new(:running_average_rate => 0.3).running_average_rate).to eql 0.3
-  end
-
-  it 'has a default running average rate' do
-    expect(Progress.new.running_average_rate).to eql 0.1
-  end
-  # rubocop:enable RSpec/BeEql
-
   it 'knows the percentage completed is 100% if the total is zero' do
     progress = Progress.new(:total => 0)
 
