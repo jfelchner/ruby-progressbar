@@ -1,3 +1,20 @@
+Version v1.13.0 - March 4, 2023
+================================================================================
+
+Add
+--------------------------------------------------------------------------------
+  * Ability To Allow Different Projectors To Be Used For Time Estimates
+  * Concept Of A Projector
+  * Ability To Access Progress Bar Instance Using Enumerator Refinement
+
+Remove
+--------------------------------------------------------------------------------
+  * smoothing Option
+
+Change
+--------------------------------------------------------------------------------
+  * Issue Caused By Ruby Bug
+
 Version v1.12.0 - March 1, 2023
 ================================================================================
 
