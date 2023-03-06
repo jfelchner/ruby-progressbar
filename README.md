@@ -19,7 +19,7 @@ Ruby/ProgressBar
   </a>
 
   <a href="https://github.com/jfelchner/ruby-progressbar/actions?query=workflow%3ABuild" alt="Build Status">
-    <img src="https://img.shields.io/github/workflow/status/jfelchner/ruby-progressbar/Build?label=CI&style=flat-square&logo=github" alt="Build Status" />
+    <img src="https://img.shields.io/github/actions/workflow/status/jfelchner/ruby-progressbar/testing.yml?branch=master&label=CI&style=flat-square&logo=github" alt="Build Status" />
   </a>
 
   <a href="#" alt="Maintainability">
