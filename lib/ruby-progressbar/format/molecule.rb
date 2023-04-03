@@ -16,6 +16,7 @@ class   Molecule
     :E => [:time_component,       :estimated_with_friendly_oob],
     :f => [:time_component,       :estimated_with_no_oob],
     :l => [:time_component,       :estimated_wall_clock],
+    :d => [:time_component,       :estimated_with_days],
     :B => [:bar_component,        :complete_bar],
     :b => [:bar_component,        :bar],
     :W => [:bar_component,        :complete_bar_with_percentage],

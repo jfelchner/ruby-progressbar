@@ -5,6 +5,7 @@ class   ProgressBar
 module  Components
 class   Time
   TIME_FORMAT            = '%02d:%02d:%02d'.freeze
+  DAY_FORMAT            = '%dd %02d:%02d:%02d'.freeze
   OOB_TIME_FORMATS       = [:unknown, :friendly, nil].freeze
   OOB_LIMIT_IN_HOURS     = 99
   OOB_UNKNOWN_TIME_TEXT  = '??:??:??'.freeze
@@ -42,6 +43,16 @@ class   Time
 
   def estimated_with_friendly_oob
     estimated_with_elapsed_fallback(:friendly)
+  end
+
+  def estimated_with_days
+    memo_estimated_seconds_remaining = estimated_seconds_remaining
+
+    return OOB_UNKNOWN_TIME_TEXT unless memo_estimated_seconds_remaining
+
+    hours, minutes, seconds = timer.divide_seconds(memo_estimated_seconds_remaining)
+    days, hours = hours / 24, hours % 24
+    DAY_FORMAT % [days, hours, minutes, seconds]
   end
 
   def estimated_wall_clock
