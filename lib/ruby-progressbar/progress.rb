@@ -16,8 +16,7 @@ class   Progress
   end
 
   def start(options = {})
-    self.progress = \
-      self.starting_position = options[:at] || progress
+    self.progress = self.starting_position = options[:at] || progress
   end
 
   def finish

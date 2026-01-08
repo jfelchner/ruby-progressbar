@@ -1,0 +1,32 @@
+---
+
+# Last updated to 2.29.0
+
+plugins:
+  - 'rubocop-rspec_rails'
+
+RSpecRails/AvoidSetupHook:
+  Enabled:                        true
+
+RSpecRails/HaveHttpStatus:
+  Enabled:                        true
+  ResponseMethods:
+    - 'response'
+    - 'last_response'
+
+RSpecRails/HttpStatus:
+  Enabled:                        true
+  EnforcedStyle:                  'numeric'
+
+RSpecRails/InferredSpecType:
+  Enabled:                        true
+
+RSpecRails/MinitestAssertions:
+  Enabled:                        true
+
+RSpecRails/NegationBeValid:
+  Enabled:                        true
+  EnforcedStyle:                  'not_to'
+
+RSpecRails/TravelAround:
+  Enabled:                        true

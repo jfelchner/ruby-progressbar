@@ -71,7 +71,7 @@ class   Bar
   def integrated_percentage_complete_string
     return standard_complete_string if completed_length < 5
 
-    " #{progress.percentage_completed} ".to_s.center(completed_length, progress_mark)
+    " #{progress.percentage_completed} ".center(completed_length, progress_mark)
   end
 
   def standard_complete_string

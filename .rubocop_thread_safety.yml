@@ -1,0 +1,32 @@
+---
+
+# Last updated to 0.7.3
+
+plugins:
+  - 'rubocop-thread_safety'
+
+ThreadSafety/ClassAndModuleAttributes:
+  Enabled:                        true
+
+ThreadSafety/ClassInstanceVariable:
+  Enabled:                        true
+
+ThreadSafety/DirChdir:
+  Enabled:                        true
+  AllowCallWithBlock:             false
+
+ThreadSafety/MutableClassInstanceVariable:
+  Enabled:                        true
+  EnforcedStyle:                  'literals'
+
+ThreadSafety/NewThread:
+  Enabled:                        true
+
+ThreadSafety/RackMiddlewareInstanceVariable:
+  Enabled:                        true
+  Include:
+    - 'app/middleware/**/*.rb'
+    - 'lib/middleware/**/*.rb'
+    - 'app/middlewares/**/*.rb'
+    - 'lib/middlewares/**/*.rb'
+  AllowedIdentifiers:             []

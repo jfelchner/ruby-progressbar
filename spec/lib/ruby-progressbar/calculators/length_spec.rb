@@ -5,13 +5,13 @@ class     ProgressBar
 module    Calculators
 describe  Length do
   let(:tty_output) do
-    IO.new(IO.sysopen('/dev/null', 'w')).tap do |io|
+    IO.new(IO.sysopen(::File::NULL, 'w')).tap do |io|
       allow(io).to receive(:tty?).and_return true
     end
   end
 
   let(:non_tty_output) do
-    IO.new(IO.sysopen('/dev/null', 'w')).tap do |io|
+    IO.new(IO.sysopen(::File::NULL, 'w')).tap do |io|
       allow(io).to receive(:tty?).and_return false
     end
   end
@@ -50,8 +50,8 @@ describe  Length do
   it 'can calculate the width of the terminal in Unix environments' do
     length_calculator = Calculators::Length.new
 
-    allow(length_calculator).to receive(:unix?).and_return(true)
-    allow(length_calculator).to receive(:dynamic_width).and_return(99)
+    allow(length_calculator).to receive_messages(:unix?         => true,
+                                                 :dynamic_width => 99)
 
     expect(length_calculator.length).to be 99
   end
@@ -100,8 +100,8 @@ describe  Length do
   it 'defaults to 80 if the width is less than 20' do
     length_calculator = Calculators::Length.new
 
-    allow(length_calculator).to receive(:unix?).and_return(true)
-    allow(length_calculator).to receive(:dynamic_width).and_return(19)
+    allow(length_calculator).to receive_messages(:unix?         => true,
+                                                 :dynamic_width => 19)
 
     expect(length_calculator.length).to be 80
   end

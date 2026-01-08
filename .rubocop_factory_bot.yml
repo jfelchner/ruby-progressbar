@@ -1,0 +1,53 @@
+---
+
+# Last updated to 2.26.1
+
+plugins:
+  - 'rubocop-factory_bot'
+
+FactoryBot/AssociationStyle:
+  Enabled:                        true
+  EnforcedStyle:                  'explicit'
+
+FactoryBot/AttributeDefinedStatically:
+  Enabled:                        true
+
+FactoryBot/ConsistentParenthesesStyle:
+  Enabled:                        true
+  ExplicitOnly:                   false
+
+FactoryBot/CreateList:
+  Enabled:                        true
+  ExplicitOnly:                   false
+
+FactoryBot/ExcessiveCreateList:
+  Enabled:                        true
+
+FactoryBot/FactoryAssociationWithStrategy:
+  Enabled:                        true
+  Include:
+    - '**/*_spec.rb'
+    - '**/spec/**/*'
+    - '**/test/**/*'
+    - '**/features/support/factories/**/*.rb'
+
+FactoryBot/FactoryClassName:
+  Enabled:                        true
+
+FactoryBot/FactoryNameStyle:
+  Enabled:                        true
+  ExplicitOnly:                   false
+
+FactoryBot/IdSequence:
+  Enabled:                        true
+
+FactoryBot/RedundantFactoryOption:
+  Enabled:                        true
+  Include:
+    - '**/*_spec.rb'
+    - '**/spec/**/*'
+    - '**/test/**/*'
+    - '**/features/support/factories/**/*.rb'
+
+FactoryBot/SyntaxMethods:
+  Enabled:                        true

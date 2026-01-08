@@ -41,12 +41,11 @@ class   SmoothedAverage
 
   def progress=(new_progress)
     samples[1] = new_progress
-    self.projection = \
-      self.class.calculate(
-        @projection,
-        absolute,
-        strength
-      )
+    self.projection = self.class.calculate(
+                        @projection,
+                        absolute,
+                        strength
+                      )
   end
 
   def none?

@@ -49,7 +49,7 @@ describe Enumerator do
   end
 
   it 'calls progressbar.increment the right number of times' do
-    mock = instance_double('ProgressBar::Progress')
+    mock = instance_double(ProgressBar::Progress)
 
     allow(ProgressBar).to receive(:create).and_return(mock)
     allow(mock).to        receive(:increment)

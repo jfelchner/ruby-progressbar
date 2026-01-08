@@ -49,6 +49,9 @@ Style/OptionHash:
 Style/SafeNavigation:
   Enabled: false
 
+Style/SendWithLiteralMethodName:
+  Enabled: false
+
 Style/SlicingWithRange:
   Enabled: false
 

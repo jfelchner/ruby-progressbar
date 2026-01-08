@@ -1,8 +1,8 @@
 ---
 
-# Last updated to 1.16.0
+# Last updated to 1.26.1
 
-require:
+plugins:
   - 'rubocop-performance'
 
 ################################################################################
@@ -87,6 +87,9 @@ Performance/IoReadlines:
 Performance/MapCompact:
   Enabled:                                    true
 
+Performance/MapMethodChain:
+  Enabled:                                    true
+
 Performance/MethodObjectAsBlock:
   Enabled:                                    true
 
@@ -103,6 +106,7 @@ Performance/RedundantBlockCall:
 
 Performance/RedundantEqualityComparisonBlock:
   Enabled:                                    true
+  AllowRegexpMatch:                           false
 
 Performance/RedundantMatch:
   Enabled:                                    true
@@ -144,6 +148,9 @@ Performance/Squeeze:
 Performance/StartWith:
   Enabled:                                    true
 
+Performance/StringBytesize:
+  Enabled:                                    true
+
 Performance/StringIdentifierArgument:
   Enabled:                                    true
 
@@ -165,4 +172,7 @@ Performance/UnfreezeString:
   Enabled:                                    true
 
 Performance/UriDefaultParser:
+  Enabled:                                    true
+
+Performance/ZipWithoutBlock:
   Enabled:                                    true

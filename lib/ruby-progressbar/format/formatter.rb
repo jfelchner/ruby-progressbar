@@ -8,7 +8,7 @@ class   Formatter
       processed_string.gsub!(molecule.full_key, molecule.lookup_value(bar, nil))
     end
 
-    processed_string.gsub!(/%%/, '%')
+    processed_string.gsub!('%%', '%')
 
     bar_length         = max_length -
                          processed_string.displayable_length +
