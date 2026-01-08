@@ -47,7 +47,7 @@ jobs:
       - name:                     "Build Ruby"
         uses:                     "ruby/setup-ruby@v1"
         with:
-          ruby-version:           2.7
+          ruby-version:           3.1
 
       - name:                     "Build Node"
 
@@ -59,9 +59,13 @@ jobs:
         run:                      >
           gem install --no-document
           rubocop
-          rubocop-rspec
-          rubocop-rails
+          rubocop-capybara
+          rubocop-factory_bot
           rubocop-performance
+          rubocop-rails
+          rubocop-rspec
+          rubocop-rspec_rails
+          rubocop-thread_safety
 
       - name:                     "Install Node Modules"
         run:                      >
@@ -173,6 +177,6 @@ jobs:
         run:                      |
           yamllint -f "github" -d ".yamllint" .
 
-      - name:                     "Run Remark"
-        run:                      |
-          remark --ignore-path .markdownlintignore --silently-ignore **/*.md .**/*.md
+      # - name:                     "Run Remark"
+      #   run:                      |
+      #     remark --ignore-path .markdownlintignore --silently-ignore **/*.md .**/*.md

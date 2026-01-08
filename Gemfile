@@ -1,1 +1,1 @@
-./gemfiles/v2/Gemfile
+./gemfiles/v2.4/Gemfile

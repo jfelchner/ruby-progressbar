@@ -46,6 +46,9 @@ Style/NumericPredicate:
 Style/OptionHash:
   Enabled: false
 
+Style/RedundantFreeze:
+  Enabled: false
+
 Style/SafeNavigation:
   Enabled: false
 

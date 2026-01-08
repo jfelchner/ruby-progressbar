@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+group :console do
+  gem 'awesome_print', '~> 1.6'
+end
+
+gemspec :name => 'ruby-progressbar'
