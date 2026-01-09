@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.signing_key   = File.expand_path('~/.gem/certs/jfelchner-private_key.pem') if $0 =~ /gem\z/
 
   spec.executables   = []
-  spec.files         = Dir['{app,config,db,lib/ruby-progressbar}/**/*'] + %w{lib/progressbar.rb Rakefile README.md LICENSE.txt}
+  spec.files         = Dir['{app,config,db,lib/ruby-progressbar}/**/*'] + %w{lib/progressbar.rb lib/ruby-progressbar.rb Rakefile README.md LICENSE.txt}
 
   spec.metadata      = {
     'bug_tracker_uri'   => 'https://github.com/jfelchner/ruby-progressbar/issues',
